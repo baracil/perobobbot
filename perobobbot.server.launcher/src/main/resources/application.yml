@@ -1,0 +1,27 @@
+micronaut:
+  application:
+    name: demo
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      swagger-ui:
+        paths: classpath:META-INF/swagger/views/swagger-ui
+        mapping: /swagger-ui/**
+
+datasources:
+  default:
+    driverClassName: org.postgresql.Driver
+    db-type: postgresql
+    schema-generate: CREATE_DROP
+    dialect: POSTGRES
+    jdbc-url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: password
+
+jpa.default.properties.hibernate.hbm2ddl.auto: update
+netty:
+  default:
+    allocator:
+      max-order: 3
