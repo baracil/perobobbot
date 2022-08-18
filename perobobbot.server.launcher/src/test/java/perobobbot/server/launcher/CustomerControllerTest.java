@@ -29,8 +29,10 @@ public class CustomerControllerTest {
 
         Mockito.when(customerService.findCustomers("Dupont")).thenAnswer((Answer<ImmutableList<CustomerView>>) invocationOnMock -> expectedCustomers);
 
-        final var actualCustomers = client.getCustomers("Dupont").collectList().block();
+        Mockito.when(customerService.findCustomers("Dupont"))
+               .thenReturn(expectedCustomers);
 
+        final var actualCustomers = client.getCustomers("Dupont").collectList().block();
 
         Assertions.assertAll(
                 () -> Assertions.assertNotNull(actualCustomers),
