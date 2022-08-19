@@ -3,13 +3,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>perobobbot-server-service-jpa</artifactId>
+    <artifactId>perobobbot-server-service-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
         <groupId>perobobbot</groupId>
         <artifactId>perobobbot</artifactId>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../../../pom.xml</relativePath>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
@@ -23,22 +23,6 @@
         <dependency>
             <groupId>perobobbot</groupId>
             <artifactId>perobobbot-server-io</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>perobobbot</groupId>
-            <artifactId>perobobbot-server-service-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.micronaut.beanvalidation</groupId>
-            <artifactId>micronaut-hibernate-validator</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.data</groupId>
-            <artifactId>micronaut-data-hibernate-jpa</artifactId>
-            <scope>compile</scope>
         </dependency>
 
     </dependencies>

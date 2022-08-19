@@ -9,7 +9,7 @@
     <parent>
         <groupId>perobobbot</groupId>
         <artifactId>perobobbot</artifactId>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../../../pom.xml</relativePath>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 

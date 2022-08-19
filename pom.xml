@@ -31,16 +31,16 @@
     <modules>
         <module>docs</module>
 
-        <module>com/perobobbot.server.io</module>
+        <module>app/perobobbot.server.io</module>
 
-        <module>secondary/perobobbot.server.service.api</module>
-        <module>secondary/perobobbot.server.service.jpa</module>
+        <module>app/secondary/perobobbot.server.service.api</module>
+        <module>app/secondary/perobobbot.server.service.jpa</module>
 
-        <module>primary/perobobbot.server.web.api</module>
-        <module>primary/perobobbot.server.web.client</module>
-        <module>primary/perobobbot.server.web.controller</module>
+        <module>app/primary/perobobbot.server.web.api</module>
+        <module>app/primary/perobobbot.server.web.client</module>
+        <module>app/primary/perobobbot.server.web.controller</module>
 
-        <module>perobobbot.server.launcher</module>
+        <module>app/perobobbot.server.launcher</module>
     </modules>
 
     <dependencies>
@@ -116,6 +116,16 @@
 
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources-with-filtering</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>io.micronaut.build</groupId>

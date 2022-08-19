@@ -3,26 +3,36 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>perobobbot-server-service-api</artifactId>
+    <artifactId>perobobbot-server-web-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
         <groupId>perobobbot</groupId>
         <artifactId>perobobbot</artifactId>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../../../pom.xml</relativePath>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
 
     <dependencies>
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>perobobbot</groupId>
             <artifactId>perobobbot-server-io</artifactId>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-http</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-core-reactive</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
         </dependency>
 
     </dependencies>
