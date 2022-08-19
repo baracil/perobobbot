@@ -1,11 +1,7 @@
 package perobobbot.server.io;
 
 import lombok.NonNull;
-import lombok.Value;
 
-@Value
-public class CreateCustomerParameters {
+public record CreateCustomerParameters(@NonNull String firstName, @NonNull String lastName) {
 
-    @NonNull String firstName;
-    @NonNull String lastName;
 }

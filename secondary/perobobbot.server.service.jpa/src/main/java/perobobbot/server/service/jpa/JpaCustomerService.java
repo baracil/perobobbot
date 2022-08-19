@@ -23,7 +23,7 @@ public class JpaCustomerService implements CustomerService {
 
     @Override
     public @NonNull CustomerView createCustomer(@NonNull CreateCustomerParameters parameters) {
-        final var customer = new Customer(parameters.getFirstName(), parameters.getLastName());
+        final var customer = new Customer(parameters.firstName(), parameters.lastName());
         return customerRepository.save(customer).toView();
     }
 
