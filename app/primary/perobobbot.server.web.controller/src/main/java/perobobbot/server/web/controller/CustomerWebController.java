@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono;
                 version = "0.0"
         )
 )
-@Controller(value = "/customer")
+@Controller(value = "/v1/customer")
 @RequiredArgsConstructor
 public class CustomerWebController implements CustomerWebApi {
 

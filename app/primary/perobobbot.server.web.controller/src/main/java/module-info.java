@@ -15,4 +15,5 @@ module perobobbot.server.web.controller {
     requires perobobbot.server.service.api;
     requires perobobbot.server.web.api;
     requires com.google.common;
+
 }
