@@ -1,4 +1,5 @@
 module perobobbot.server.web.client {
+    exports perobobbot.server.web.client;
 
     requires io.micronaut.http_client_core;
 

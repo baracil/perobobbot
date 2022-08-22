@@ -19,6 +19,7 @@ pom.xml.versionsBackup
 
 # Log file
 *.log
+.micronaut
 
 # BlueJ files
 *.ctxt

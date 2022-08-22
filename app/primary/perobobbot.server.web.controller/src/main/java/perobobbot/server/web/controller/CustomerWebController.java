@@ -1,5 +1,6 @@
 package perobobbot.server.web.controller;
 
+import com.google.common.collect.ImmutableList;
 import io.micronaut.http.annotation.Controller;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -10,8 +11,6 @@ import perobobbot.server.io.CreateCustomerParameters;
 import perobobbot.server.io.view.CustomerView;
 import perobobbot.server.service.api.CustomerService;
 import perobobbot.server.web.api.CustomerWebApi;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @OpenAPIDefinition(
         info = @Info(
@@ -19,7 +18,7 @@ import reactor.core.publisher.Mono;
                 version = "0.0"
         )
 )
-@Controller(value = "/v1/customer")
+@Controller(value = "/api/v1/customer")
 @RequiredArgsConstructor
 public class CustomerWebController implements CustomerWebApi {
 
@@ -27,15 +26,12 @@ public class CustomerWebController implements CustomerWebApi {
     @Inject CustomerService customerService;
 
     @Override
-    public Flux<CustomerView> getCustomers(@NonNull String lastName) {
-        return Mono.fromCallable(() -> customerService.findCustomers(lastName))
-                   .flatMapMany(Flux::fromIterable)
-                   .subscribeOn(TaskSchedulers.DB);
+    public @NonNull ImmutableList<CustomerView> getCustomers(@NonNull String lastName) {
+        return customerService.findCustomers(lastName);
     }
 
     @Override
-    public Mono<CustomerView> createCustomer(@NonNull CreateCustomerParameters parameters) {
-        return Mono.fromCallable(() -> customerService.createCustomer(parameters))
-                   .subscribeOn(TaskSchedulers.DB);
+    public @NonNull CustomerView createCustomer(@NonNull CreateCustomerParameters parameters) {
+        return customerService.createCustomer(parameters);
     }
 }

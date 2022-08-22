@@ -1,4 +1,6 @@
 module perobobbot.server.web.controller {
+    exports perobobbot.server.web.controller;
+
     requires static lombok;
     requires java.desktop;
 
@@ -16,5 +18,4 @@ module perobobbot.server.web.controller {
     requires perobobbot.server.web.api;
     requires com.google.common;
 
-    exports perobobbot.server.web.controller;
 }
