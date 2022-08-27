@@ -30,18 +30,17 @@
 
     <modules>
 
-        <module>app/common/perobobbot.server.io</module>
 
-        <module>app/secondary/perobobbot.server.service.api</module>
-        <module>app/secondary/perobobbot.server.service.jpa</module>
+        <module>secondary/perobobbot.data.service.api</module>
+        <module>secondary/perobobbot.data.service.jpa</module>
 
-        <module>app/primary/perobobbot.server.web.api</module>
-        <module>app/primary/perobobbot.server.web.client</module>
-        <module>app/primary/perobobbot.server.web.controller</module>
+        <module>primary/perobobbot.data.io</module>
+        <module>primary/perobobbot.data.web.api</module>
+        <module>primary/perobobbot.data.web.client</module>
+        <module>primary/perobobbot.data.web.controller</module>
 
-        <module>app/perobobbot.server.launcher</module>
+        <module>perobobbot.data.launcher</module>
 
-        <module>app/test/perobobbot.server.web.test</module>
     </modules>
 
     <dependencies>
@@ -60,34 +59,34 @@
         <dependencies>
             <dependency>
                 <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-server-io</artifactId>
+                <artifactId>perobobbot-data-io</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-server-web-api</artifactId>
+                <artifactId>perobobbot-data-web-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-server-web-client</artifactId>
+                <artifactId>perobobbot-data-web-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-server-web-controller</artifactId>
+                <artifactId>perobobbot-data-web-controller</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-server-service-api</artifactId>
+                <artifactId>perobobbot-data-service-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-server-service-jpa</artifactId>
+                <artifactId>perobobbot-data-service-jpa</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
