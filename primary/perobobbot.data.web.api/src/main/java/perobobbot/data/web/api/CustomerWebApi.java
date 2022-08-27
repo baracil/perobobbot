@@ -12,6 +12,8 @@ import perobobbot.data.io.view.CustomerView;
 
 public interface CustomerWebApi {
 
+    String PATH = "/api/v1/customer";
+
     @Get("/{lastName}")
     @NonNull ImmutableList<CustomerView> getCustomers(@NonNull @PathVariable String lastName);
 

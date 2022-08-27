@@ -18,7 +18,7 @@ import perobobbot.data.web.api.CustomerWebApi;
                 version = "0.0"
         )
 )
-@Controller(value = "/api/v1/customer")
+@Controller(value = CustomerWebApi.PATH)
 @RequiredArgsConstructor
 public class CustomerWebController implements CustomerWebApi {
 
