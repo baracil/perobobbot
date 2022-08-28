@@ -17,6 +17,34 @@
     <dependencies>
 
         <dependency>
+            <groupId>perobobbot.discovery</groupId>
+            <artifactId>discovery-zookeeper-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot.discovery</groupId>
+            <artifactId>discovery-zookeeper-curator</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micronaut.serde</groupId>
+            <artifactId>micronaut-serde-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.serde</groupId>
+            <artifactId>micronaut-serde-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.serde</groupId>
+            <artifactId>micronaut-serde-support</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>perobobbot</groupId>
             <artifactId>perobobbot-data-service-jpa</artifactId>
             <scope>runtime</scope>
@@ -28,22 +56,11 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.18.0</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.18.0</version>
-            <scope>runtime</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+            <version>42.4.2</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -71,6 +88,10 @@
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-inject</artifactId>
         </dependency>
 
 

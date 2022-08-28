@@ -20,9 +20,21 @@ datasources:
     username: ${PERO_DB_USER_NAME:admin}
     password: ${PERO_DB_PASSWORD:password}
 
+
+zookeeper:
+  curator:
+    connect-string: localhost:2181
+    enabled: true
+    prefix: perobobbot
+
 jpa.default.properties.hibernate.hbm2ddl.auto: update
+
 
 netty:
   default:
     allocator:
       max-order: 3
+jpa:
+  default:
+    entity-scan:
+      packages: perobobbot.data.service.jpa.domain

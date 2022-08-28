@@ -29,7 +29,7 @@ public class JpaCustomerService implements CustomerService {
 
     @Override
     public @NonNull ImmutableList<CustomerView> findCustomers(@NonNull String lastName) {
-        return customerRepository.findByLastName(lastName)
+        return customerRepository.findByLastName(lastName).stream()
                                  .map(Customer::toView)
                                  .collect(ImmutableList.toImmutableList());
     }
