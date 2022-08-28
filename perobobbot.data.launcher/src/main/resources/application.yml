@@ -20,12 +20,20 @@ datasources:
     username: ${PERO_DB_USER_NAME:admin}
     password: ${PERO_DB_PASSWORD:password}
 
-
-zookeeper:
-  curator:
-    connect-string: localhost:2181
-    enabled: true
+curator:
+  enabled: true
+  client:
+    connect-string: ${CURATOR_CONNECT_STRING:`localhost:2181`}
     prefix: perobobbot
+  discovery:
+    serviceId: perobobbot-data
+    host: ${SERVICE_HOST:`localhost`}
+    port: ${SERVICE_PORT:8080}
+    ssl-port: ${SERVICE_SSL_PORT:-1}
+
+
+
+
 
 jpa.default.properties.hibernate.hbm2ddl.auto: update
 

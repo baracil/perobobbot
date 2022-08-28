@@ -10,7 +10,7 @@ import perobobbot.data.io.CreateCustomerParameters;
 import perobobbot.data.io.view.CustomerView;
 
 
-public interface CustomerWebApi {
+public interface CustomerWebApi extends WebService {
 
     String PATH = "/api/v1/customer";
 
