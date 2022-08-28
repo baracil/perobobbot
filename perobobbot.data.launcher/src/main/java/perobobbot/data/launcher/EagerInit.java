@@ -1,4 +1,4 @@
-package perobobbot.server.launcher;
+package perobobbot.data.launcher;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

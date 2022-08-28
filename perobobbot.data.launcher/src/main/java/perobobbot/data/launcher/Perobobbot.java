@@ -1,4 +1,4 @@
-package perobobbot.server.launcher;
+package perobobbot.data.launcher;
 
 import io.micronaut.runtime.Micronaut;
 

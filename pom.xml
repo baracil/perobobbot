@@ -25,7 +25,7 @@
 <!--        <micronaut.test.resources.enabled>false</micronaut.test.resources.enabled>-->
         <micronaut.runtime>netty</micronaut.runtime>
         <micronaut.data.version>3.7.2</micronaut.data.version>
-        <exec.mainClass>perobobbot.server.launcher.Perobobbot</exec.mainClass>
+        <exec.mainClass>perobobbot.data.launcher.Perobobbot</exec.mainClass>
         <zookeeper-discovery.version>0.0.1-SNAPSHOT</zookeeper-discovery.version>
     </properties>
 

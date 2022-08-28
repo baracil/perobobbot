@@ -1,4 +1,4 @@
-package perobobbot.server.launcher;
+package perobobbot.data.launcher;
 
 import jakarta.inject.Singleton;
 import lombok.NonNull;
