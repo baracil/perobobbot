@@ -3,7 +3,7 @@ module perobobbot.data.service.api {
     requires java.desktop;
 
     requires com.google.common;
-    requires perobobbot.server.io;
+    requires perobobbot.data.io;
 
     exports perobobbot.data.service.api;
 }

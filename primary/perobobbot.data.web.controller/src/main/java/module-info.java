@@ -8,7 +8,7 @@ module perobobbot.data.web.controller {
     requires jakarta.inject;
     requires reactor.core;
 
-    requires perobobbot.server.io;
+    requires perobobbot.data.io;
     requires perobobbot.server.web.api;
     requires perobobbot.data.service.api;
 

@@ -1,4 +1,4 @@
-module perobobbot.server.io {
+module perobobbot.data.io {
     requires static lombok;
     requires java.desktop;
 

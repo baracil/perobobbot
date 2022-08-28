@@ -9,6 +9,7 @@ module perobobbot.data.launcher {
     requires org.slf4j;
     requires jakarta.inject;
     requires discovery.zookeeper.api;
+    requires discovery.zookeeper.curator;
     requires java.annotation;
     requires java.sql;
 

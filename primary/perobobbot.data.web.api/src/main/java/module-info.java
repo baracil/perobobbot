@@ -4,7 +4,7 @@ module perobobbot.server.web.api {
 
     requires com.google.common;
     requires io.micronaut.http;
-    requires perobobbot.server.io;
+    requires perobobbot.data.io;
 
     exports perobobbot.data.web.api;
 }
