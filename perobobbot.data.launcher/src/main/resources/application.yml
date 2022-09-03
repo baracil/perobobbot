@@ -10,29 +10,12 @@ micronaut:
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
 
-datasources:
-  default:
-    driverClassName: org.postgresql.Driver
-    db-type: postgresql
-    schema-generate: CREATE_DROP
-    dialect: POSTGRES
-    jdbc-url: ${PERO_DB_URL:`jdbc:postgresql://192.168.42.37:5432/perobobbot`}
-    username: ${PERO_DB_USER_NAME:admin}
-    password: ${PERO_DB_PASSWORD:password}
-
 curator:
   enabled: true
   client:
-    connect-string: ${CURATOR_CONNECT_STRING:`localhost:2181`}
-    prefix: perobobbot
+    prefix: perobobbot/discovery
   discovery:
     serviceId: perobobbot-data
-    host: ${SERVICE_HOST:`localhost`}
-    port: ${SERVICE_PORT:8080}
-    ssl-port: ${SERVICE_SSL_PORT:-1}
-
-
-
 
 
 jpa.default.properties.hibernate.hbm2ddl.auto: update

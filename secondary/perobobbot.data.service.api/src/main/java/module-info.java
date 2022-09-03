@@ -3,7 +3,8 @@ module perobobbot.data.service.api {
     requires java.desktop;
 
     requires com.google.common;
-    requires perobobbot.data.io;
+    requires transitive perobobbot.data.io;
+    requires transitive fpc.tools.cipher;
 
     exports perobobbot.data.service.api;
 }

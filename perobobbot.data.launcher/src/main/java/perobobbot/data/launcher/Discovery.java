@@ -11,7 +11,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import java.util.UUID;
 
-@EagerInit
 @Singleton
 @Slf4j
 @RequiredArgsConstructor

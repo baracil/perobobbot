@@ -7,7 +7,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
-        <groupId>perobobbot</groupId>
+        <groupId>perobobbot-data</groupId>
         <artifactId>perobobbot</artifactId>
         <relativePath>../../pom.xml</relativePath>
         <version>0.0.1-SNAPSHOT</version>
@@ -16,15 +16,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>perobobbot</groupId>
+            <groupId>perobobbot-data</groupId>
             <artifactId>perobobbot-data-io</artifactId>
         </dependency>
         <dependency>
-            <groupId>perobobbot</groupId>
+            <groupId>perobobbot-data</groupId>
             <artifactId>perobobbot-data-web-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>perobobbot</groupId>
+            <groupId>perobobbot-data</groupId>
             <artifactId>perobobbot-data-service-api</artifactId>
         </dependency>
 
@@ -37,10 +37,34 @@
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-http</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>netty-codec</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-http-client</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>netty-codec</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>netty-common</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>netty-resolver</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>netty-transport</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>io.micronaut</groupId>
@@ -56,6 +80,10 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>net.femtoparsec.tools</groupId>
+            <artifactId>fpc-tools-cipher</artifactId>
+        </dependency>
 
     </dependencies>
 

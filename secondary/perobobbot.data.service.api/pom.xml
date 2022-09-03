@@ -7,7 +7,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
-        <groupId>perobobbot</groupId>
+        <groupId>perobobbot-data</groupId>
         <artifactId>perobobbot</artifactId>
         <relativePath>../../pom.xml</relativePath>
         <version>0.0.1-SNAPSHOT</version>
@@ -21,10 +21,14 @@
         </dependency>
 
         <dependency>
-            <groupId>perobobbot</groupId>
+            <groupId>perobobbot-data</groupId>
             <artifactId>perobobbot-data-io</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>net.femtoparsec.tools</groupId>
+            <artifactId>fpc-tools-cipher</artifactId>
+        </dependency>
     </dependencies>
 
 

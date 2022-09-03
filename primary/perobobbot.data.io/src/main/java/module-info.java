@@ -8,6 +8,8 @@ module perobobbot.data.io {
     requires static io.micronaut.core;
     requires static io.micronaut.inject;
 
+    requires fpc.tools.lang;
+
     exports perobobbot.data.io;
     exports perobobbot.data.io.view;
 }

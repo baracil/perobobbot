@@ -1,0 +1,21 @@
+micronaut:
+  server:
+    port: 9090
+
+datasources:
+  default:
+    driverClassName: org.postgresql.Driver
+    db-type: postgresql
+    schema-generate: CREATE_DROP
+    dialect: POSTGRES
+    jdbc-url: jdbc:postgresql://192.168.42.37:5432/perobobbot
+    username: admin
+    password: password
+
+curator:
+  client:
+    connect-string: 192.168.42.37:2181
+  discovery:
+    host: 192.168.42.37
+    port: 9090
+    ssl-port: -1

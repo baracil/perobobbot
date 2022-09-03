@@ -3,30 +3,30 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>perobobbot</groupId>
+    <groupId>perobobbot-data</groupId>
     <artifactId>perobobbot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <parent>
-        <groupId>io.micronaut</groupId>
-        <artifactId>micronaut-parent</artifactId>
-        <version>3.6.1</version>
+        <groupId>perobobbot</groupId>
+        <artifactId>perobobbot-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <properties>
         <jdk.version>17</jdk.version>
         <release.version>17</release.version>
-        <micronaut.version>3.6.1</micronaut.version>
+<!--        <micronaut.version>3.6.1</micronaut.version>-->
         <asciidoctor.maven.plugin.version>2.2.2</asciidoctor.maven.plugin.version>
         <asciidoctorj.version>2.5.3</asciidoctorj.version>
         <asciidoctorj.diagram.version>2.2.3</asciidoctorj.diagram.version>
         <jruby.version>9.3.6.0</jruby.version>
-<!--        <micronaut.test.resources.enabled>false</micronaut.test.resources.enabled>-->
         <micronaut.runtime>netty</micronaut.runtime>
         <micronaut.data.version>3.7.2</micronaut.data.version>
         <exec.mainClass>perobobbot.data.launcher.Perobobbot</exec.mainClass>
         <zookeeper-discovery.version>0.0.1-SNAPSHOT</zookeeper-discovery.version>
+        <fpc-tools.version>0.1.1-SNAPSHOT</fpc-tools.version>
     </properties>
 
     <modules>
@@ -59,6 +59,12 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec-socks</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>perobobbot.discovery</groupId>
                 <artifactId>discovery-zookeeper-api</artifactId>
                 <version>${zookeeper-discovery.version}</version>
@@ -70,38 +76,45 @@
             </dependency>
 
             <dependency>
-                <groupId>perobobbot</groupId>
+                <groupId>perobobbot-data</groupId>
                 <artifactId>perobobbot-data-io</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>perobobbot</groupId>
+                <groupId>perobobbot-data</groupId>
                 <artifactId>perobobbot-data-web-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>perobobbot</groupId>
+                <groupId>perobobbot-data</groupId>
                 <artifactId>perobobbot-data-web-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>perobobbot</groupId>
+                <groupId>perobobbot-data</groupId>
                 <artifactId>perobobbot-data-web-controller</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>perobobbot</groupId>
+                <groupId>perobobbot-data</groupId>
                 <artifactId>perobobbot-data-service-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>perobobbot</groupId>
+                <groupId>perobobbot-data</groupId>
                 <artifactId>perobobbot-data-service-jpa</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>net.femtoparsec.tools</groupId>
+                <artifactId>fpc-tools-bom</artifactId>
+                <version>${fpc-tools.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <dependency>
                 <groupId>com.google.guava</groupId>

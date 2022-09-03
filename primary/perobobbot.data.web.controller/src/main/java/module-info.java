@@ -7,8 +7,8 @@ module perobobbot.data.web.controller {
     requires io.swagger.v3.oas.annotations;
     requires jakarta.inject;
     requires reactor.core;
+    requires io.micronaut.core;
 
-    requires perobobbot.data.io;
     requires perobobbot.server.web.api;
     requires perobobbot.data.service.api;
 

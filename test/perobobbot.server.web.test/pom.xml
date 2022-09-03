@@ -7,7 +7,7 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
-        <groupId>perobobbot</groupId>
+        <groupId>perobobbot-data</groupId>
         <artifactId>perobobbot</artifactId>
         <relativePath>../../pom.xml</relativePath>
         <version>0.0.1-SNAPSHOT</version>
@@ -29,12 +29,12 @@
         </dependency>
 
         <dependency>
-            <groupId>perobobbot</groupId>
+            <groupId>perobobbot-data</groupId>
             <artifactId>perobobbot-data-web-api</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>perobobbot</groupId>
+            <groupId>perobobbot-data</groupId>
             <artifactId>perobobbot-data-web-controller</artifactId>
             <scope>test</scope>
         </dependency>

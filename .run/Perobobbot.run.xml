@@ -8,7 +8,7 @@
     <option name="passParentEnvs" value="true" />
     <option name="programParameters" value="" />
     <option name="shortenCommandLine" value="NONE" />
-    <option name="vmParameters" value="-DPERO_DB_URL=&quot;jdbc:postgresql://127.0.0.1:5432/perobobbot&quot;" />
+    <option name="vmParameters" value="-Dmicronaut.environments=dev" />
     <option name="workingDirectory" value="" />
     <method v="2">
       <option name="Make" enabled="true" />

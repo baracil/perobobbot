@@ -4,7 +4,10 @@ module perobobbot.server.web.api {
 
     requires com.google.common;
     requires io.micronaut.http;
-    requires perobobbot.data.io;
+
+    requires io.micronaut.core;
+    requires transitive fpc.tools.cipher;
+    requires transitive perobobbot.data.io;
 
     exports perobobbot.data.web.api;
 }
