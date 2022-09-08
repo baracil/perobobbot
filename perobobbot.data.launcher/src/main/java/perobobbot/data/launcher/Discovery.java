@@ -1,5 +1,6 @@
 package perobobbot.data.launcher;
 
+import fpc.tools.micronaut.EagerInit;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import javax.annotation.PreDestroy;
 import java.util.UUID;
 
 @Singleton
+@EagerInit
 @Slf4j
 @RequiredArgsConstructor
 public class Discovery {

@@ -19,3 +19,7 @@ curator:
     host: 192.168.42.37
     port: 9090
     ssl-port: -1
+
+perobobbot:
+  data:
+    dbPassPhrase: ${DB_PASSPHRASE}

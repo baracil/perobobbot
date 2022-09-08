@@ -1,6 +1,6 @@
 micronaut:
   application:
-    name: Perobobbot
+    name: Perobobbot Data
   router:
     static-resources:
       swagger:
