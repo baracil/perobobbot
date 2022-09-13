@@ -19,22 +19,19 @@ import java.util.UUID;
 public class Discovery {
 
     private final @NonNull ZookeeperOperations zookeeperOperations;
-    private UUID instanceId = null;
+    private final @NonNull String id = UUID.randomUUID().toString();
 
 
     @PostConstruct
     public void registerService() {
         LOG.info("Register application to Zookeeper");
-        instanceId = zookeeperOperations.addService(ServicePayload.defaultPayload());
+        zookeeperOperations.registerService(id, ServicePayload.defaultPayload());
     }
 
     @PreDestroy
     public void unregisterService() {
-        if (instanceId == null) {
-            return;
-        }
         LOG.info("Unregister application from Zookeeper");
-        zookeeperOperations.removeService(instanceId);
+        zookeeperOperations.unregisterService(id);
     }
 
 

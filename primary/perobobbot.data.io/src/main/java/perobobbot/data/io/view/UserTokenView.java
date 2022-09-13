@@ -1,5 +1,6 @@
 package perobobbot.data.io.view;
 
+import fpc.tools.cipher.TextEncryptor;
 import fpc.tools.lang.Secret;
 import lombok.NonNull;
 
@@ -13,4 +14,14 @@ public record UserTokenView(@NonNull String platform,
                             @NonNull List<String> scopes,
                             @NonNull String tokenType) {
 
+    public @NonNull EncryptedUserTokenView encrypt(@NonNull TextEncryptor textEncryptor) {
+        return new EncryptedUserTokenView(
+                platform,
+                textEncryptor.encrypt(accessToken),
+                textEncryptor.encrypt(refreshToken),
+                expiringInstant,
+                scopes,
+                tokenType
+        );
+    }
 }

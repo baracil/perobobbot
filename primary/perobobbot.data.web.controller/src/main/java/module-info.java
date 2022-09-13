@@ -8,8 +8,10 @@ module perobobbot.data.web.controller {
     requires jakarta.inject;
     requires reactor.core;
     requires io.micronaut.core;
+    requires io.micronaut.serde.serde_api;
 
     requires perobobbot.server.web.api;
     requires perobobbot.data.service.api;
+    requires io.micronaut.http_server;
 
 }

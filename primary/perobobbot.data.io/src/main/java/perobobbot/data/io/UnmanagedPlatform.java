@@ -1,15 +1,13 @@
 package perobobbot.data.io;
 
-import lombok.Getter;
 import lombok.NonNull;
 
-public class ApplicationForPlatformMissing extends EntityNotFound {
+public class UnmanagedPlatform extends EntityNotFound {
 
-    @Getter
     private final @NonNull Platform platform;
 
-    public ApplicationForPlatformMissing(@NonNull Platform platform) {
-        super("No application for the platform '"+ platform.name() +"' exists.");
+    public UnmanagedPlatform(@NonNull Platform platform) {
+        super("Platform '"+platform+"' is not managed");
         this.platform = platform;
     }
 

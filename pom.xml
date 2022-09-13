@@ -42,6 +42,8 @@
 
         <module>perobobbot.data.launcher</module>
 
+        <module>test/perobobbot.data.test</module>
+
     </modules>
 
     <dependencies>
@@ -144,10 +146,10 @@
             </resource>
         </resources>
         <plugins>
-            <plugin>
-                <groupId>io.micronaut.build</groupId>
-                <artifactId>micronaut-maven-plugin</artifactId>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>io.micronaut.build</groupId>-->
+<!--                <artifactId>micronaut-maven-plugin</artifactId>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -173,11 +175,6 @@
                         </path>
                         <path>
                             <groupId>io.micronaut</groupId>
-                            <artifactId>micronaut-graal</artifactId>
-                            <version>${micronaut.version}</version>
-                        </path>
-                        <path>
-                            <groupId>io.micronaut</groupId>
                             <artifactId>micronaut-http-validation</artifactId>
                             <version>${micronaut.version}</version>
                         </path>
@@ -185,11 +182,6 @@
                             <groupId>io.micronaut</groupId>
                             <artifactId>micronaut-validation</artifactId>
                             <version>${micronaut.version}</version>
-                        </path>
-                        <path>
-                            <groupId>io.micronaut.serde</groupId>
-                            <artifactId>micronaut-serde-processor</artifactId>
-                            <version>${micronaut.serialization.version}</version>
                         </path>
                         <path>
                             <groupId>io.micronaut.openapi</groupId>

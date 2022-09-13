@@ -15,11 +15,20 @@ import java.time.Instant;
 @Getter @Setter(AccessLevel.PROTECTED)
 public class ApplicationToken extends SimplePersistentObject {
 
+    /**
+     * The application this token apply
+     */
     @OneToOne(orphanRemoval = true)
     private @NonNull Application application;
 
+    /**
+     * The encrypted access token
+     */
     private @NonNull String accessToken;
 
+    /**
+     * The expiration date of the token
+     */
     private @NonNull Instant expirationInstant;
 
     public @NonNull ApplicationTokenView toView(@NonNull TextDecryptor cipher) {

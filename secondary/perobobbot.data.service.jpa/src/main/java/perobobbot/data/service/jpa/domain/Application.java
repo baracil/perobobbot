@@ -3,6 +3,7 @@ package perobobbot.data.service.jpa.domain;
 import fpc.tools.cipher.TextDecryptor;
 import fpc.tools.persistence.SimplePersistentObject;
 import lombok.*;
+import perobobbot.data.io.Platform;
 import perobobbot.data.io.view.ApplicationView;
 
 import javax.persistence.*;
@@ -14,25 +15,26 @@ import java.time.Instant;
 @Table(uniqueConstraints = {@UniqueConstraint(name = "UC_PLATFORM",columnNames = {"platform"})})
 public class Application extends SimplePersistentObject {
 
-    @Column(nullable = false, columnDefinition = "text")
-    private @NonNull String platform;
+    @Column(nullable = false)
+    @Convert(converter = PlatformConverter.class)
+    private @NonNull Platform platform;
 
-    @Column(nullable = false, columnDefinition = "text")
+    @Column(nullable = false)
     @Setter
     private @NonNull String name;
 
-    @Column(nullable = false, columnDefinition = "text")
+    @Column(nullable = false)
     @Setter
     private @NonNull String clientId;
 
-    @Column(nullable = false, columnDefinition = "text")
+    @Column(nullable = false)
     @Setter
     private @NonNull String clientSecret;
 
     @OneToOne(mappedBy = "application",cascade = CascadeType.ALL)
     private ApplicationToken token;
 
-    public Application(@NonNull String platform, @NonNull String name, @NonNull String clientId, @NonNull String clientSecret) {
+    public Application(@NonNull Platform platform, @NonNull String name, @NonNull String clientId, @NonNull String clientSecret) {
         this.platform = platform;
         this.name = name;
         this.clientId = clientId;

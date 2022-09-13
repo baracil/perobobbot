@@ -14,6 +14,9 @@ public class TextCipherFactory {
 
     private final @NonNull @Inject DataConfiguration dataConfiguration;
 
+    /**
+     * @return the text cipher that is used to crypt/decrypt data to/from the database
+     */
     @Named("dbCipher")
     @Singleton
     public @NonNull TextCipher textCipher() {

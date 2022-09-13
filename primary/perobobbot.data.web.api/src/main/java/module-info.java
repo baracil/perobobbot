@@ -3,9 +3,12 @@ module perobobbot.server.web.api {
     requires java.desktop;
 
     requires com.google.common;
-    requires io.micronaut.http;
+    requires jakarta.inject;
 
+    requires io.micronaut.http;
     requires io.micronaut.core;
+    requires io.micronaut.inject;
+
     requires transitive fpc.tools.cipher;
     requires transitive perobobbot.data.io;
 

@@ -8,6 +8,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.data.io.CreateApplicationParameter;
 import perobobbot.data.io.CreateApplicationTokenParameter;
+import perobobbot.data.io.Platform;
 import perobobbot.data.io.view.ApplicationTokenView;
 import perobobbot.data.io.view.ApplicationView;
 import perobobbot.data.service.api.ApplicationService;
@@ -31,17 +32,17 @@ public class JpaApplicationService implements ApplicationService {
     @Named("dbCipher") TextCipher textCipher;
 
     @Override
-    public @NonNull Optional<ApplicationView> findApplication(@NonNull String platform) {
+    public @NonNull Optional<ApplicationView> findApplication(@NonNull Platform platform) {
         return applicationRepository.findByPlatform(platform).map(a -> a.toView(textCipher));
     }
 
     @Override
-    public @NonNull Optional<ApplicationTokenView> findApplicationToken(@NonNull String platform) {
+    public @NonNull Optional<ApplicationTokenView> findApplicationToken(@NonNull Platform platform) {
         return applicationTokenRepository.findByApplicationPlatform(platform).map(token -> token.toView(textCipher));
     }
 
     @Override
-    public @NonNull ApplicationView saveApplication(@NonNull String platform, @NonNull CreateApplicationParameter parameter) {
+    public @NonNull ApplicationView saveApplication(@NonNull Platform platform, @NonNull CreateApplicationParameter parameter) {
         final var existing = applicationRepository.findByPlatform(platform).orElse(null);
         final var name = parameter.name();
         final var clientId = parameter.clientId();
@@ -58,7 +59,7 @@ public class JpaApplicationService implements ApplicationService {
     }
 
     @Override
-    public @NonNull ApplicationTokenView saveApplicationToken(@NonNull String platform, @NonNull CreateApplicationTokenParameter parameter) {
+    public @NonNull ApplicationTokenView saveApplicationToken(@NonNull Platform platform, @NonNull CreateApplicationTokenParameter parameter) {
         final var application = applicationRepository.getByPlatform(platform);
         final var token = application.setToken(textCipher.encrypt(parameter.accessToken()), parameter.expirationInstant());
 
