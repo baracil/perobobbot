@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>perobobbot-data-test</artifactId>
+    <artifactId>perobobbot-test</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
-        <groupId>perobobbot-data</groupId>
-        <artifactId>perobobbot-data</artifactId>
+        <groupId>perobobbot</groupId>
+        <artifactId>perobobbot</artifactId>
         <relativePath>../../pom.xml</relativePath>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -29,13 +29,13 @@
         </dependency>
 
         <dependency>
-            <groupId>perobobbot-data</groupId>
-            <artifactId>perobobbot-data-web-api</artifactId>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-web-api</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>perobobbot-data</groupId>
-            <artifactId>perobobbot-data-web-controller</artifactId>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-web-controller</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

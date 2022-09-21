@@ -7,8 +7,8 @@
     <version>0.0.1-SNAPSHOT</version>
 
     <parent>
-        <groupId>perobobbot-data</groupId>
-        <artifactId>perobobbot-data</artifactId>
+        <groupId>perobobbot</groupId>
+        <artifactId>perobobbot</artifactId>
         <relativePath>../pom.xml</relativePath>
         <version>0.0.1-SNAPSHOT</version>
     </parent>

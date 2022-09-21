@@ -1,10 +1,10 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Perobobbot" type="MicronautRunConfigurationType" factoryName="Micronaut">
-    <module name="perobobbot-data-launcher" />
+    <module name="perobobbot-launcher" />
     <option name="alternativeJrePath" />
     <option name="alternativeJrePathEnabled" value="false" />
     <option name="includeProvidedScope" value="false" />
-    <option name="mainClass" value="perobobbot.data.launcher.Perobobbot" />
+    <option name="mainClass" value="perobobbot.launcher.Perobobbot" />
     <option name="passParentEnvs" value="true" />
     <option name="programParameters" value="" />
     <option name="shortenCommandLine" value="NONE" />

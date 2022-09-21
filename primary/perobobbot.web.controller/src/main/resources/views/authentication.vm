@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="refresh" content="3; url='${callbackUrl}'" />
+</head>
+<body>
+<p>Please follow <a href="${callbackUrl}">this link</a>.</p>
+</body>
+</html>

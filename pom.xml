@@ -3,44 +3,58 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>perobobbot-data</groupId>
-    <artifactId>perobobbot-data</artifactId>
+    <groupId>perobobbot</groupId>
+    <artifactId>perobobbot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <parent>
-        <groupId>perobobbot</groupId>
-        <artifactId>perobobbot-parent</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <groupId>io.micronaut</groupId>
+        <artifactId>micronaut-parent</artifactId>
+        <version>3.7.0</version>
     </parent>
 
     <properties>
         <jdk.version>17</jdk.version>
         <release.version>17</release.version>
+
+        <application.name>Perobobbot</application.name>
 <!--        <micronaut.version>3.6.1</micronaut.version>-->
         <asciidoctor.maven.plugin.version>2.2.2</asciidoctor.maven.plugin.version>
         <asciidoctorj.version>2.5.3</asciidoctorj.version>
         <asciidoctorj.diagram.version>2.2.3</asciidoctorj.diagram.version>
         <jruby.version>9.3.6.0</jruby.version>
-        <micronaut.runtime>netty</micronaut.runtime>
-        <micronaut.data.version>3.7.2</micronaut.data.version>
-        <exec.mainClass>perobobbot.data.launcher.Perobobbot</exec.mainClass>
+
+        <exec.mainClass>perobobbot.launcher.Perobobbot</exec.mainClass>
         <zookeeper-discovery.version>0.0.1-SNAPSHOT</zookeeper-discovery.version>
+
+        <micronaut.version>3.7.0</micronaut.version>
+        <micronaut.runtime>netty</micronaut.runtime>
+        <micronaut.data.version>3.8.0</micronaut.data.version>
+
+        <asciidoctor.maven.plugin.version>2.2.2</asciidoctor.maven.plugin.version>
+        <asciidoctorj.version>2.5.3</asciidoctorj.version>
+        <asciidoctorj.diagram.version>2.2.3</asciidoctorj.diagram.version>
+        <jruby.version>9.3.6.0</jruby.version>
+
+
         <fpc-tools.version>0.1.1-SNAPSHOT</fpc-tools.version>
+
     </properties>
 
     <modules>
 
 
-        <module>secondary/perobobbot.data.service.api</module>
-        <module>secondary/perobobbot.data.service.jpa</module>
+        <module>secondary/perobobbot.oauth</module>
+        <module>secondary/perobobbot.service.api</module>
+        <module>secondary/perobobbot.service.jpa</module>
 
-        <module>primary/perobobbot.data.io</module>
-        <module>primary/perobobbot.data.web.api</module>
-        <module>primary/perobobbot.data.web.client</module>
-        <module>primary/perobobbot.data.web.controller</module>
+        <module>perobobbot.api</module>
+        <module>primary/perobobbot.web.api</module>
+        <module>primary/perobobbot.web.client</module>
+        <module>primary/perobobbot.web.controller</module>
 
-        <module>perobobbot.data.launcher</module>
+        <module>perobobbot.launcher</module>
 
         <module>test/perobobbot.data.test</module>
 
@@ -78,44 +92,41 @@
             </dependency>
 
             <dependency>
-                <groupId>perobobbot-data</groupId>
-                <artifactId>perobobbot-data-io</artifactId>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>perobobbot-data</groupId>
-                <artifactId>perobobbot-data-web-api</artifactId>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-web-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>perobobbot-data</groupId>
-                <artifactId>perobobbot-data-web-client</artifactId>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-web-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>perobobbot-data</groupId>
-                <artifactId>perobobbot-data-web-controller</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>perobobbot-data</groupId>
-                <artifactId>perobobbot-data-service-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot-data</groupId>
-                <artifactId>perobobbot-data-service-jpa</artifactId>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-web-controller</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>net.femtoparsec.tools</groupId>
-                <artifactId>fpc-tools-bom</artifactId>
-                <version>${fpc-tools.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-oauth</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-service-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-service-jpa</artifactId>
+                <version>${project.version}</version>
             </dependency>
 
             <dependency>
@@ -129,6 +140,15 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+
+            <dependency>
+                <groupId>net.femtoparsec.tools</groupId>
+                <artifactId>fpc-tools-bom</artifactId>
+                <version>${fpc-tools.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
