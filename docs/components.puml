@@ -1,0 +1,36 @@
+@startuml
+
+scale 2
+interface HTTP as TwitchWebClient
+interface WebSocket as TwitchChat
+
+[Twitch] -- TwitchWebClient : Apiv5
+[Twitch] -- TwitchChat : Chat
+
+component "Perobobbot" as Perobobbot {
+}
+
+database PeroDb #FF0000 {
+}
+queue "Bus" as Bus
+
+TwitchWebClient -- Perobobbot
+TwitchChat -- Perobobbot #FF0000
+
+interface "Pulsar C/P" as Pulsar
+
+Perobobbot - Pulsar #FF0000
+Pulsar - Bus #FF0000
+Bus - WebSocket
+WebSocket - [Godot]
+
+Perobobbot -- JDBC
+JDBC - PeroDb
+
+
+
+
+
+
+
+@enduml

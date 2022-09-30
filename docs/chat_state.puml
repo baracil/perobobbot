@@ -1,0 +1,23 @@
+@startuml
+scale 2
+[*] --> Disconnected
+
+state Disconnected
+state Connecting
+state Connected
+
+state "Post Connection" as c <<choice>>
+
+Disconnected -> Connecting : Trigger?
+
+Connecting --> Disconnected : Error/Disconnected
+
+Connecting -> c : Connected Event
+c --> Disconnected : Auth Failed
+
+c --> Connected : Auth Succeed
+
+Connected --> Disconnected : Disconnected Event
+
+
+@enduml

@@ -1,0 +1,39 @@
+@startuml
+
+class Application {
+  name : String
+  clientId : String
+  clientSecret : String
+  platform : Platform
+}
+
+class ApplicationToken {
+  accessToken : String
+  expirationInstant : Instant
+  application : Application
+}
+
+class UserIdentity {
+  userId : String
+  login : String
+  name : Instant
+  platform : Platform
+}
+
+class UserToken {
+  accessToken : String
+  refreshToken : String
+  tokenType : String
+  main : boolean
+  platform : Platform
+  scopes : List<Scope>
+  expirationInstant : Instant
+  userIdentity : UserIdentity
+}
+
+Application "1"--"1" ApplicationToken
+
+UserIdentity "1"--"1" UserToken
+
+
+@enduml
