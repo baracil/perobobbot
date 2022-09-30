@@ -10,7 +10,7 @@ public interface AuthorizationCodeGranFlow {
 
     @NonNull URI getUri();
 
-    void whenComplete(Consumer<UserToken> onResult, @NonNull Consumer<Throwable> onError);
+    void whenComplete(Consumer<UserToken.Decrypted> onResult, @NonNull Consumer<Throwable> onError);
 
     void setFailed(@NonNull Failure failure);
 }

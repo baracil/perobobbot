@@ -2,13 +2,12 @@ module perobobbot.service.jpa {
     requires static lombok;
     requires java.desktop;
 
-    requires perobobbot.api;
-
     requires java.persistence;
     requires jakarta.inject;
     requires java.transaction;
     requires com.google.common;
 
+    requires jplugman.annotation;
 
     requires org.hibernate.orm.core;
 
@@ -20,6 +19,7 @@ module perobobbot.service.jpa {
     requires fpc.tools.persistence;
     requires fpc.tools.cipher;
 
+    requires perobobbot.api;
     requires perobobbot.service.api;
 
 

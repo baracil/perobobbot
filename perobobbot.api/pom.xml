@@ -44,6 +44,11 @@
             <groupId>net.femtoparsec.tools</groupId>
             <artifactId>fpc-tools-micronaut</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>jplugman</groupId>
+            <artifactId>jplugman-annotation</artifactId>
+        </dependency>
     </dependencies>
 
 

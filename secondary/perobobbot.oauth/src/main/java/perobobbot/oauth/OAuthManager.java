@@ -2,9 +2,13 @@ package perobobbot.oauth;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import fpc.tools.lang.Secret;
+import fpc.tools.lang.Subscription;
 import lombok.NonNull;
 import net.femtoparsec.perobobbot.oauth.DefaultOAuthManager;
 import perobobbot.api.data.Platform;
+import perobobbot.api.data.view.UserToken;
 import perobobbot.api.oauth.PlatformOAuth;
 import perobobbot.service.api.ApplicationService;
 
@@ -13,6 +17,8 @@ import perobobbot.service.api.ApplicationService;
  */
 public interface OAuthManager {
 
+    int VERSION = 1;
+
     /**
      * Start an authorization code grant flow
      *
@@ -20,6 +26,9 @@ public interface OAuthManager {
      * @return the flow to perform the authorization
      */
     @NonNull AuthorizationCodeGranFlow startAuthorizationCodeGrantFlow(@NonNull Platform platform);
+
+
+    @NonNull UserToken.Decrypted refresh(@NonNull Platform platform, @NonNull Secret refreshToken);
 
     /**
      * Handle the callback from the platform
@@ -37,7 +46,12 @@ public interface OAuthManager {
      */
     void failFlow(@NonNull String state, @NonNull Failure failure);
 
-    static @NonNull OAuthManager create(@NonNull ImmutableList<PlatformOAuth> platformOAuths, @NonNull ApplicationService applicationService) {
-        return DefaultOAuthManager.create(applicationService, platformOAuths);
+    @NonNull Subscription register(@NonNull PlatformOAuth platformOAuth);
+
+    static @NonNull OAuthManager create(@NonNull ApplicationService applicationService, @NonNull ImmutableList<PlatformOAuth> platformOAuths) {
+        return new DefaultOAuthManager(applicationService,platformOAuths);
     }
+
+    @NonNull ImmutableSet<Platform> getManagedPlatforms();
+
 }

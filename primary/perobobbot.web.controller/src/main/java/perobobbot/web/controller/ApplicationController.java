@@ -1,10 +1,8 @@
 package perobobbot.web.controller;
 
-import fpc.tools.cipher.TextCipher;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.PathVariable;
-import jakarta.inject.Named;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.data.CreateApplicationParameter;
@@ -17,7 +15,6 @@ import perobobbot.web.api.ApplicationApi;
 public class ApplicationController implements ApplicationApi {
 
     private final @NonNull ApplicationService applicationService;
-    private final @NonNull @Named("Client") TextCipher textCipher;
 
     @Override
     public @NonNull String getApplicationClientId(@NonNull @PathVariable Platform platform) {

@@ -2,13 +2,13 @@ package perobobbot.service.jpa.domain;
 
 import lombok.*;
 import perobobbot.api.data.Platform;
-import perobobbot.api.data.view.EncryptedApplication;
+import perobobbot.api.data.view.Application;
 
 import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
-@NoArgsConstructor
+@NoArgsConstructor(access=AccessLevel.PROTECTED)
 @Getter @Setter(AccessLevel.PROTECTED)
 @Table(name = "APPLICATION")
 public class ApplicationEntity extends BaseEntity {
@@ -45,7 +45,7 @@ public class ApplicationEntity extends BaseEntity {
         return token;
     }
 
-    public @NonNull EncryptedApplication toView() {
-        return new EncryptedApplication(platform,name,clientId,clientSecret);
+    public @NonNull Application.Encrypted toView() {
+        return new Application.Encrypted(platform,name,clientId,clientSecret);
     }
 }

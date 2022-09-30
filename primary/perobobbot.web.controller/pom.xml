@@ -82,6 +82,11 @@
             <artifactId>fpc-tools-cipher</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>perobobbot-twitch</groupId>
+            <artifactId>perobobbot-twitch-service-api</artifactId>
+        </dependency>
+
     </dependencies>
 
 

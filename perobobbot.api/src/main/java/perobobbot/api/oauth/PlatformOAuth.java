@@ -1,5 +1,6 @@
 package perobobbot.api.oauth;
 
+import fpc.tools.lang.Secret;
 import lombok.NonNull;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.view.Application;
@@ -30,6 +31,8 @@ public interface PlatformOAuth {
      * @param code the code to finalize the authorization code grant flow
      * @return a completion stage that completes with the requested {@link UserToken}
      */
-    @NonNull CompletionStage<UserToken> finalizeAuthorizationCodeGrantFlow(@NonNull Application application, @NonNull String code);
+    @NonNull CompletionStage<UserToken.Decrypted> finalizeAuthorizationCodeGrantFlow(@NonNull Application.Decrypted application, @NonNull String code);
+
+    @NonNull UserToken.Decrypted refreshToken(@NonNull Application.Decrypted application, @NonNull Secret refreshToken);
 
 }

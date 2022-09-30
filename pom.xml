@@ -15,18 +15,19 @@
     </parent>
 
     <properties>
-        <jdk.version>17</jdk.version>
-        <release.version>17</release.version>
 
         <application.name>Perobobbot</application.name>
-<!--        <micronaut.version>3.6.1</micronaut.version>-->
+
         <asciidoctor.maven.plugin.version>2.2.2</asciidoctor.maven.plugin.version>
         <asciidoctorj.version>2.5.3</asciidoctorj.version>
         <asciidoctorj.diagram.version>2.2.3</asciidoctorj.diagram.version>
-        <jruby.version>9.3.6.0</jruby.version>
 
         <exec.mainClass>perobobbot.launcher.Perobobbot</exec.mainClass>
+
+        <jdk.version>17</jdk.version>
+        <release.version>17</release.version>
         <zookeeper-discovery.version>0.0.1-SNAPSHOT</zookeeper-discovery.version>
+        <jplugman.version>3.0.0-SNAPSHOT</jplugman.version>
 
         <micronaut.version>3.7.0</micronaut.version>
         <micronaut.runtime>netty</micronaut.runtime>
@@ -39,22 +40,26 @@
 
 
         <fpc-tools.version>0.1.1-SNAPSHOT</fpc-tools.version>
+        <pb-twitch.version>0.0.1-SNAPSHOT</pb-twitch.version>
+
 
     </properties>
 
     <modules>
+
+        <module>perobobbot.api</module>
 
 
         <module>secondary/perobobbot.oauth</module>
         <module>secondary/perobobbot.service.api</module>
         <module>secondary/perobobbot.service.jpa</module>
 
-        <module>perobobbot.api</module>
         <module>primary/perobobbot.web.api</module>
         <module>primary/perobobbot.web.client</module>
         <module>primary/perobobbot.web.controller</module>
 
         <module>perobobbot.launcher</module>
+        <module>bom</module>
 
         <module>test/perobobbot.data.test</module>
 
@@ -129,6 +134,29 @@
                 <version>${project.version}</version>
             </dependency>
 
+
+            <dependency>
+                <groupId>perobobbot-twitch</groupId>
+                <artifactId>perobobbot-twitch-api</artifactId>
+                <version>${pb-twitch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot-twitch</groupId>
+                <artifactId>perobobbot-twitch-oauth</artifactId>
+                <version>${pb-twitch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot-twitch</groupId>
+                <artifactId>perobobbot-twitch-service-api</artifactId>
+                <version>${pb-twitch.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot-twitch</groupId>
+                <artifactId>perobobbot-twitch-service-client</artifactId>
+                <version>${pb-twitch.version}</version>
+            </dependency>
+
+
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
@@ -149,6 +177,13 @@
                 <scope>import</scope>
             </dependency>
 
+            <dependency>
+                <groupId>jplugman</groupId>
+                <artifactId>jplugman-bom</artifactId>
+                <version>${jplugman.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
@@ -166,10 +201,10 @@
             </resource>
         </resources>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>io.micronaut.build</groupId>-->
-<!--                <artifactId>micronaut-maven-plugin</artifactId>-->
-<!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>io.micronaut.build</groupId>-->
+            <!--                <artifactId>micronaut-maven-plugin</artifactId>-->
+            <!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

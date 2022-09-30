@@ -28,6 +28,6 @@ curator:
 perobobbot:
   data:
     dbPassPhrase: pass-phrase
+  plugin:
+    folder: /home/perococco/Perobobbot/plugins
 
-client:
-  secret: toto

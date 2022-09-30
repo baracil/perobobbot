@@ -1,15 +1,14 @@
 package perobobbot.service.jpa.domain;
 
-import com.google.common.collect.ImmutableList;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import perobobbot.api.data.Platform;
-import perobobbot.api.data.view.EncryptedUserToken;
+import perobobbot.api.data.view.UserToken;
+import perobobbot.api.oauth.Scope;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "USER_TOKEN")
@@ -19,6 +18,10 @@ import java.time.Instant;
 @Setter(AccessLevel.PROTECTED)
 public class UserTokenEntity extends BaseEntity {
 
+    @JoinColumn(name = "USER_IDENTITY_ID",nullable = false)
+    @OneToOne
+    private @NonNull UserIdentityEntity userIdentity;
+
     @Column(name = "PLATFORM", nullable = false)
     @Type(type = "perobobbot.service.jpa.domain.PlatformType")
     private @NonNull Platform platform;
@@ -26,7 +29,7 @@ public class UserTokenEntity extends BaseEntity {
     @Column(name = "ACCESS_TOKEN", columnDefinition = "VARCHAR", nullable = false)
     private @NonNull String accessToken;
 
-    @Column(name = "REFRESH_TOKEN", columnDefinition = "VARCHAR", nullable = false)
+    @Column(name = "REFRESH_TOKEN", columnDefinition = "VARCHAR")
     private @NonNull String refreshToken;
 
     @Column(name = "EXPIRATION_INSTANT", nullable = false)
@@ -38,33 +41,43 @@ public class UserTokenEntity extends BaseEntity {
     @Column(name = "TOKEN_TYPE", columnDefinition = "VARCHAR", nullable = false)
     private @NonNull String tokenType;
 
-    public static UserTokenEntity createWith(EncryptedUserToken token) {
+    @Column(name = "MAIN",nullable = false)
+    private boolean main;
+
+    public static UserTokenEntity createWith(@NonNull UserIdentityEntity userIdentity,@NonNull UserToken.Encrypted userToken, boolean main) {
         return new UserTokenEntity(
-                token.platform(),
-                token.accessToken(),
-                token.refreshToken(),
-                token.expiringInstant(),
-                String.join(",", token.scopes()),
-                token.tokenType()
+                userIdentity,
+                userToken.platform(),
+                userToken.accessToken(),
+                userToken.refreshToken(),
+                userToken.expirationInstant(),
+                userToken.scopes().stream().map(Scope::getName).collect(Collectors.joining(",")),
+                userToken.tokenType(),
+                main
         );
     }
 
-    public @NonNull EncryptedUserToken toView() {
-        return new EncryptedUserToken(
+    public @NonNull UserToken.Encrypted toView() {
+        return new UserToken.Encrypted(
+                userIdentity.toView(),
                 platform,
                 accessToken,
                 refreshToken,
                 expirationInstant,
-                ImmutableList.copyOf(scopes.split(",")),
+                Scope.splitScopes(scopes,','),
                 tokenType
         );
     }
 
-    public void updateWith(@NonNull EncryptedUserToken encryptedToken) {
-        this.accessToken = encryptedToken.accessToken();
-        this.refreshToken = encryptedToken.refreshToken();
-        this.expirationInstant = encryptedToken.expiringInstant();
-        this.scopes = String.join(",", encryptedToken.scopes());
-        this.tokenType = encryptedToken.tokenType();
+    void setMain() {
+        this.main = true;
+    }
+
+    public void updateWith(@NonNull UserToken<String> encryptedUserToken) {
+        this.accessToken = encryptedUserToken.accessToken();
+        this.refreshToken = encryptedUserToken.refreshToken();
+        this.expirationInstant = encryptedUserToken.expirationInstant();
+        this.scopes = Scope.joinScopeNames(encryptedUserToken.scopes(),',');
+        this.tokenType = encryptedUserToken.tokenType();
     }
 }

@@ -1,6 +1,8 @@
 package perobobbot.api.data.view;
 
+import fpc.tools.cipher.Decryptable;
 import fpc.tools.cipher.Encryptable;
+import fpc.tools.cipher.TextDecryptor;
 import fpc.tools.cipher.TextEncryptor;
 import fpc.tools.lang.Secret;
 import io.micronaut.serde.annotation.Serdeable;
@@ -9,13 +11,38 @@ import perobobbot.api.data.Platform;
 
 import java.time.Instant;
 
-@Serdeable
-public record ApplicationToken(@NonNull Platform platform,
-                               @NonNull Secret accessToken,
-                               @NonNull Instant expirationInstant) implements Encryptable<EncryptedApplicationToken> {
+public sealed interface ApplicationToken<T> extends Decryptable<ApplicationToken.Decrypted>, Encryptable<ApplicationToken.Encrypted> permits ApplicationToken.Decrypted, ApplicationToken.Encrypted {
 
+    @NonNull Platform platform();
 
-    public @NonNull EncryptedApplicationToken encrypt(@NonNull TextEncryptor textEncryptor) {
-        return new EncryptedApplicationToken(platform,textEncryptor.encrypt(accessToken),expirationInstant);
+    @NonNull T accessToken();
+
+    @NonNull Instant expirationInstant();
+
+    @Serdeable
+    record Decrypted(@NonNull Platform platform, @NonNull Secret accessToken,
+                     @NonNull Instant expirationInstant) implements ApplicationToken<Secret> {
+
+        public @NonNull ApplicationToken.Encrypted encrypt(@NonNull TextEncryptor textEncryptor) {
+            return new Encrypted(platform, textEncryptor.encrypt(accessToken), expirationInstant);
+        }
+
+        @Override
+        public @NonNull ApplicationToken.Decrypted decrypt(@NonNull TextDecryptor textDecryptor) {
+            return this;
+        }
+    }
+
+    @Serdeable
+    record Encrypted(@NonNull Platform platform, @NonNull String accessToken,
+                     @NonNull Instant expirationInstant) implements ApplicationToken<String> {
+        public @NonNull ApplicationToken.Decrypted decrypt(@NonNull TextDecryptor textDecryptor) {
+            return new Decrypted(platform, textDecryptor.decrypt(accessToken), expirationInstant);
+        }
+
+        @Override
+        public @NonNull ApplicationToken.Encrypted encrypt(@NonNull TextEncryptor textEncryptor) {
+            return this;
+        }
     }
 }

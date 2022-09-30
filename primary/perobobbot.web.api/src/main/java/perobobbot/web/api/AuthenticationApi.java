@@ -11,20 +11,23 @@ import perobobbot.api.data.Platform;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Map;
+import java.util.Set;
 
 public interface AuthenticationApi extends WebService {
 
     String PATH = ROOT_PATH+"/oauth";
 
+    @Get("/platform")
+    @NonNull Set<Platform> listManagedPlatforms();
 
-    @Get("/{platform}/user/uri")
+    @Get("/user/{platform}/uri")
     @NonNull URI startAuthorizationCodeGrantFlow(@NonNull @PathVariable Platform platform);
 
-    @Get("/{platform}/user/launch")
+    @Get("/user/{platform}/launch")
     void launchAuthorizationCodeGrantFlow(@NonNull @PathVariable Platform platform) throws IOException;
 
-    @Get("/{platform}/user")
-    @NonNull HttpResponse<?> authenticate(@NonNull @PathVariable String platform);
+    @Get("/user/{platform}")
+    @NonNull HttpResponse<?> authenticate(@NonNull @PathVariable Platform platform);
 
     @Get("/callback/{platform}{?values*}")
     void getCallback(@NonNull @PathVariable Platform platform,

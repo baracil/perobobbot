@@ -34,7 +34,7 @@ public class RendezvousMaker {
     }
 
     @Synchronized
-    public @NonNull Optional<CompletableFuture<UserToken>> extractFlow(@NonNull String state) {
+    public @NonNull Optional<CompletableFuture<UserToken.Decrypted>> extractFlow(@NonNull String state) {
         return Optional.ofNullable(rdvs.remove(state)).map(Rendezvous::flow).map(DefaultAuthorizationCodeGranFlow::getFuture);
     }
 

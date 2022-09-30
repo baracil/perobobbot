@@ -10,7 +10,7 @@ import lombok.NonNull;
 @Named("Db")
 public class DbTextCipher extends ProxyTextCipher {
 
-    public DbTextCipher(@NonNull DataConfiguration dataConfiguration) {
-        super(TextCipher.createAES(dataConfiguration.getDbPassPhrase()));
+    public DbTextCipher(@NonNull PerobobbotConfiguration configuration) {
+        super(TextCipher.createAES(configuration.getData().getDbPassPhrase()));
     }
 }

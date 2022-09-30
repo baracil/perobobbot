@@ -16,6 +16,8 @@ module perobobbot.web.controller {
 
     requires perobobbot.web.api;
     requires perobobbot.service.api;
+    requires perobobbot.twitch.api;
+    requires perobobbot.twitch.service.api;
     requires io.micronaut.http_server;
     requires perobobbot.api;
     requires perobobbot.oauth;

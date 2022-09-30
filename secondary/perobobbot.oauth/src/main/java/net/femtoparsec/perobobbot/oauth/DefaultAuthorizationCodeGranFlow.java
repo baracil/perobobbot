@@ -19,10 +19,10 @@ public class DefaultAuthorizationCodeGranFlow implements AuthorizationCodeGranFl
     private final @NonNull String state;
     private final @NonNull DefaultOAuthManager defaultOAuthManager;
     @Getter
-    private final @NonNull CompletableFuture<UserToken> future = new CompletableFuture<>();
+    private final @NonNull CompletableFuture<UserToken.Decrypted> future = new CompletableFuture<>();
 
     @Override
-    public void whenComplete(Consumer<UserToken> onResult, @NonNull Consumer<Throwable> onError) {
+    public void whenComplete(Consumer<UserToken.Decrypted> onResult, @NonNull Consumer<Throwable> onError) {
         future.whenComplete((r,t) -> {
             if (t != null) {
                 onError.accept(t);

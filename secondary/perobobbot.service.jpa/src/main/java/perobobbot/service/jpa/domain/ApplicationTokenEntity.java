@@ -1,14 +1,14 @@
 package perobobbot.service.jpa.domain;
 
 import lombok.*;
-import perobobbot.api.data.view.EncryptedApplicationToken;
+import perobobbot.api.data.view.ApplicationToken;
 
 import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
 @Table(name = "APPLICATION_TOKEN")
-@NoArgsConstructor
+@NoArgsConstructor(access=AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter @Setter(AccessLevel.PROTECTED)
 public class ApplicationTokenEntity extends BaseEntity {
@@ -32,8 +32,8 @@ public class ApplicationTokenEntity extends BaseEntity {
     @Column(name = "EXPIRATION_INSTANT",nullable = false)
     private @NonNull Instant expirationInstant;
 
-    public @NonNull EncryptedApplicationToken toView() {
-        return new EncryptedApplicationToken(application.getPlatform(), accessToken, expirationInstant);
+    public @NonNull ApplicationToken.Encrypted toView() {
+        return new ApplicationToken.Encrypted(application.getPlatform(), accessToken, expirationInstant);
     }
 
 }

@@ -13,8 +13,16 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <properties>
+    </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>jplugman</groupId>
+            <artifactId>jplugman-base</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>net.femtoparsec.tools</groupId>
@@ -70,50 +78,9 @@
         </dependency>
 
 
-
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.micronaut.serde</groupId>
-            <artifactId>micronaut-serde-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.serde</groupId>
-            <artifactId>micronaut-serde-jackson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.serde</groupId>
-            <artifactId>micronaut-serde-support</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>perobobbot-twitch</groupId>
-            <artifactId>perobobbot-twitch-oauth</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.5.0</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.sql</groupId>
-            <artifactId>micronaut-jdbc-hikari</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-http-server-netty</artifactId>
-            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -128,11 +95,93 @@
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-inject</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.micronaut.serde</groupId>
+            <artifactId>micronaut-serde-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.serde</groupId>
+            <artifactId>micronaut-serde-jackson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.serde</groupId>
+            <artifactId>micronaut-serde-support</artifactId>
+        </dependency>
 
+
+        <!-- Runtime Dependency -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.5.0</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.sql</groupId>
+            <artifactId>micronaut-jdbc-hikari</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-http-server-netty</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot-twitch</groupId>
+            <artifactId>perobobbot-twitch-oauth</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot-twitch</groupId>
+            <artifactId>perobobbot-twitch-service-client</artifactId>
+            <scope>runtime</scope>
+        </dependency>
 
 
 
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>list</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>list</goal>
+                        </goals>
+                        <configuration>
+                            <includeScope>runtime</includeScope>
+                            <sort>true</sort>
+                            <silent>true</silent>
+                            <outputFile>${project.build.directory}/classes/dependencies.txt</outputFile>
+<!--                            <outputFile>${project.basedir}/../bom/dependencies.txt</outputFile>-->
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.johnpoth</groupId>
+                <artifactId>jshell-maven-plugin</artifactId>
+                <version>1.3</version>
+                <executions>
+                    <execution>
+                        <id>pom</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <scripts>scripts/test.jshell</scripts>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

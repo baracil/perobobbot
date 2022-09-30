@@ -10,7 +10,6 @@ public class Perobobbot {
         Micronaut.build(args)
                  .classes(Perobobbot.class)
                  .eagerInitAnnotated(fpc.tools.micronaut.EagerInit.class)
-                 .start()
-        ;
+                 .start();
     }
 }

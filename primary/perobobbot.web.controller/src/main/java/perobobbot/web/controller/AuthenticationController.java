@@ -9,7 +9,6 @@ import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.QueryValue;
 import io.micronaut.views.View;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.view.UserToken;
 import perobobbot.oauth.Failure;
@@ -21,13 +20,25 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Map;
+import java.util.Set;
 
 @Controller(AuthenticationApi.PATH)
-@RequiredArgsConstructor
 public class AuthenticationController implements AuthenticationApi {
 
     private final @NonNull OAuthManager oAuthManager;
     private final @NonNull UserTokenService userTokenService;
+
+    public AuthenticationController(@NonNull OAuthManager oAuthManager, @NonNull UserTokenService userTokenService) {
+        this.oAuthManager = oAuthManager;
+        this.userTokenService = userTokenService;
+    }
+
+
+    @Override
+    public @NonNull Set<Platform> listManagedPlatforms() {
+        return oAuthManager.getManagedPlatforms();
+    }
+
 
     @Override
     public @NonNull URI startAuthorizationCodeGrantFlow(@NonNull @PathVariable Platform platform) {
@@ -52,8 +63,8 @@ public class AuthenticationController implements AuthenticationApi {
 
     @View("authentication")
     @Override
-    public @NonNull HttpResponse<?> authenticate(@NonNull @PathVariable  String platform) {
-        final var flow = oAuthManager.startAuthorizationCodeGrantFlow(new Platform(platform));
+    public @NonNull HttpResponse<?> authenticate(@NonNull @PathVariable  Platform platform) {
+        final var flow = oAuthManager.startAuthorizationCodeGrantFlow(platform);
         flow.whenComplete(this::onUserToken, this::onFailure);
 
         return HttpResponse.ok(CollectionUtils.mapOf("callbackUrl", flow.getUri().toString()));
@@ -67,8 +78,12 @@ public class AuthenticationController implements AuthenticationApi {
     }
 
 
-    private void onUserToken(@NonNull UserToken userToken) {
-        userTokenService.setUserToken(userToken);
+    private void onUserToken(@NonNull UserToken.Decrypted userToken) {
+        try {
+            userTokenService.setUserToken(userToken);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
     private void onFailure(@NonNull Throwable throwable) {

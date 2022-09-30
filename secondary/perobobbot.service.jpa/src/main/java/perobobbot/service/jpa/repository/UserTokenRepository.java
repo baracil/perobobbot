@@ -14,4 +14,8 @@ public interface UserTokenRepository extends JpaRepository<UserTokenEntity,Long>
     @NonNull Optional<UserTokenEntity> findByPlatform(@NonNull Platform platform);
 
     void deleteByPlatform(@NonNull Platform platform);
+
+    @NonNull Optional<UserTokenEntity> findByPlatformAndUserIdentityLogin(@NonNull Platform platform, @NonNull String login);
+
+    @NonNull Optional<UserTokenEntity> findByPlatformAndMainTrue(@NonNull Platform platform);
 }

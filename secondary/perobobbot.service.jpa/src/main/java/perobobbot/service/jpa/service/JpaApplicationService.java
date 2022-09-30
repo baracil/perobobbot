@@ -11,6 +11,8 @@ import perobobbot.api.data.CreateApplicationTokenParameter;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.view.Application;
 import perobobbot.api.data.view.ApplicationToken;
+import perobobbot.api.plugin.PerobobbotService;
+import perobobbot.api.plugin.PerobobbotServices;
 import perobobbot.service.api.ApplicationService;
 import perobobbot.service.jpa.domain.ApplicationEntity;
 import perobobbot.service.jpa.domain.ApplicationTokenEntity;
@@ -23,6 +25,7 @@ import java.util.Optional;
 @Singleton
 @RequiredArgsConstructor
 @Transactional
+@PerobobbotServices({@PerobobbotService(apiVersion = 1,serviceType = ApplicationService.class)})
 public class JpaApplicationService implements ApplicationService {
 
     private final @NonNull
@@ -33,14 +36,14 @@ public class JpaApplicationService implements ApplicationService {
     @Named("Db") TextCipher textCipher;
 
     @Override
-    public @NonNull Optional<Application> findApplication(@NonNull Platform platform) {
+    public @NonNull Optional<Application.Decrypted> findApplication(@NonNull Platform platform) {
         return applicationRepository.findByPlatform(platform)
                                     .map(ApplicationEntity::toView)
                                     .map(textCipher::decrypt);
     }
 
     @Override
-    public @NonNull Optional<ApplicationToken> findApplicationToken(@NonNull Platform platform) {
+    public @NonNull Optional<ApplicationToken.Decrypted> findApplicationToken(@NonNull Platform platform) {
         return applicationTokenRepository.findByApplicationPlatform(platform)
                                          .map(ApplicationTokenEntity::toView)
                                          .map(textCipher::decrypt);
@@ -52,7 +55,7 @@ public class JpaApplicationService implements ApplicationService {
     }
 
     @Override
-    public @NonNull Application saveApplication(@NonNull Platform platform, @NonNull CreateApplicationParameter parameter) {
+    public @NonNull Application.Decrypted saveApplication(@NonNull Platform platform, @NonNull CreateApplicationParameter parameter) {
         final var existing = applicationRepository.findByPlatform(platform).orElse(null);
         final var name = parameter.name();
         final var clientId = parameter.clientId();
@@ -71,7 +74,7 @@ public class JpaApplicationService implements ApplicationService {
     }
 
     @Override
-    public @NonNull ApplicationToken saveApplicationToken(@NonNull Platform platform, @NonNull CreateApplicationTokenParameter parameter) {
+    public @NonNull ApplicationToken.Decrypted saveApplicationToken(@NonNull Platform platform, @NonNull CreateApplicationTokenParameter parameter) {
         final var application = applicationRepository.getByPlatform(platform);
         final var token = application.setToken(textCipher.encrypt(parameter.accessToken()), parameter.expirationInstant());
 
