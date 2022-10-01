@@ -24,4 +24,8 @@ public interface UserIdentityRepository extends JpaRepository<UserIdentityEntity
     default @NonNull UserIdentityEntity getByPlatformAndUserId(@NonNull Platform platform, @NonNull String userId) {
         return findByPlatformAndUserId(platform,userId).orElseThrow(() -> new UserNotFound(platform,userId));
     }
+
+    default @NonNull UserIdentityEntity getByPlatformAndLogin(@NonNull Platform platform, @NonNull String login) {
+        return findByPlatformAndUserId(platform,login).orElseThrow(() -> new UserNotFound(platform,login));
+    }
 }

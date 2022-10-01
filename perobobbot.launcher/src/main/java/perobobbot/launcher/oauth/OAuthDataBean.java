@@ -10,14 +10,14 @@ import perobobbot.api.data.view.AccessTokenProvider;
 import perobobbot.api.data.view.ApplicationToken;
 import perobobbot.api.data.view.UserIdentity;
 import perobobbot.api.data.view.UserToken;
-import perobobbot.api.oauth.AData;
 import perobobbot.api.oauth.OAuthAccessMode;
+import perobobbot.api.oauth.OAuthData;
 import perobobbot.oauth.OAuthManager;
 import perobobbot.service.api.ApplicationService;
 import perobobbot.service.api.UserTokenService;
 
 @RequiredArgsConstructor
-public class OAuthDataBean implements AData {
+public class OAuthDataBean implements OAuthData {
 
     @Getter
     private final @NonNull UserIdentity userIdentity;

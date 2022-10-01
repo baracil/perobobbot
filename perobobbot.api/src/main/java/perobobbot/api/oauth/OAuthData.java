@@ -6,18 +6,23 @@ import perobobbot.api.data.Platform;
 import perobobbot.api.data.view.UserIdentity;
 
 
-public interface AData {
+public interface OAuthData {
 
     @NonNull UserIdentity getUserIdentity();
 
     @NonNull String getClientId();
 
+    @NonNull Secret getAccessToken(@NonNull OAuthAccessMode oAuthAccessMode);
+
+    void refresh(@NonNull OAuthAccessMode oAuthAccessMode);
+
+
     default @NonNull Platform getPlatform() {
         return getUserIdentity().platform();
     }
 
-    @NonNull Secret getAccessToken(@NonNull OAuthAccessMode oAuthAccessMode);
-
-    void refresh(@NonNull OAuthAccessMode oAuthAccessMode);
+    default @NonNull String getLogin() {
+        return getUserIdentity().login();
+    }
 
 }
