@@ -45,6 +45,12 @@ public class DefaultOAuthManager implements OAuthManager {
         return flow;
     }
 
+    @Override
+    public void validateToken(@NonNull UserToken<Secret> userToken) {
+        final var platformOAuth = platforms.get(userToken.platform());
+        platformOAuth.validate(userToken.accessToken());
+    }
+
     @NonNull
     @Override
     public ApplicationToken.Decrypted getAppToken(@NonNull Platform platform) {

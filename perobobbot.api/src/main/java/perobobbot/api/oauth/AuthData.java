@@ -41,7 +41,7 @@ public class AuthData {
         final var provider = switch (mode) {
             case APP_ONLY -> applicationToken;
             case USER_ONLY -> userToken;
-            case BOTH -> applicationToken==null?userToken:applicationToken;
+            case BOTH_ACCEPTED -> applicationToken==null?userToken:applicationToken;
         };
 
         if (provider == null) {

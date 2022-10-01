@@ -26,7 +26,7 @@ public class MicronautOAuthRefresher implements OAuthRefresher {
         return switch (mode) {
             case USER_ONLY -> authData;
             case APP_ONLY -> prepareForAppOnly(authData);
-            case BOTH -> prepareForBoth(authData);
+            case BOTH_ACCEPTED -> prepareForBoth(authData);
         };
     }
 
@@ -35,7 +35,7 @@ public class MicronautOAuthRefresher implements OAuthRefresher {
         return switch (mode) {
             case USER_ONLY -> refreshUserOnly(authData);
             case APP_ONLY -> refreshAppOnly(authData);
-            case BOTH -> refreshBoth(authData);
+            case BOTH_ACCEPTED -> refreshBoth(authData);
         };
     }
 

@@ -39,4 +39,6 @@ public interface PlatformOAuth {
     @NonNull ApplicationToken.Decrypted getAppToken(@NonNull Application<Secret> application);
 
     void revoke(@NonNull String clientId, @NonNull Secret accessToken);
+
+    void validate(@NonNull Secret accessToken);
 }

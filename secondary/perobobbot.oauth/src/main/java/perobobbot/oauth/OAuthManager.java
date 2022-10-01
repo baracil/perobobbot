@@ -57,6 +57,7 @@ public interface OAuthManager {
 
     void revokeToken(@NonNull ApplicationToken<Secret> userToken);
 
+    void validateToken(@NonNull UserToken<Secret> userToken);
 
     static @NonNull OAuthManager create(@NonNull ApplicationService applicationService, @NonNull ImmutableList<PlatformOAuth> platformOAuths) {
         return new DefaultOAuthManager(applicationService,platformOAuths);
