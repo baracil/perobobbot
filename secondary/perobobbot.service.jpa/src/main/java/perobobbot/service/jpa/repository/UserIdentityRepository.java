@@ -5,6 +5,7 @@ import io.micronaut.data.jpa.repository.JpaRepository;
 import lombok.NonNull;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.view.UserIdentity;
+import perobobbot.service.api.UserNotFound;
 import perobobbot.service.jpa.domain.UserIdentityEntity;
 
 import java.util.Optional;
@@ -18,5 +19,9 @@ public interface UserIdentityRepository extends JpaRepository<UserIdentityEntity
 
     default @NonNull Optional<UserIdentityEntity> findByPlatformAndUserId(@NonNull UserIdentity userIdentity) {
         return findByPlatformAndUserId(userIdentity.platform(),userIdentity.userId());
+    }
+
+    default @NonNull UserIdentityEntity getByPlatformAndUserId(@NonNull Platform platform, @NonNull String userId) {
+        return findByPlatformAndUserId(platform,userId).orElseThrow(() -> new UserNotFound(platform,userId));
     }
 }

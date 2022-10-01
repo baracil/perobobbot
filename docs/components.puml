@@ -10,8 +10,9 @@ interface WebSocket as TwitchChat
 component "Perobobbot" as Perobobbot {
 }
 
-database PeroDb #FF0000 {
+database PeroDb {
 }
+
 queue "Bus" as Bus
 
 TwitchWebClient -- Perobobbot

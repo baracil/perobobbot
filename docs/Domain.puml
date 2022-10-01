@@ -31,9 +31,16 @@ class UserToken {
   userIdentity : UserIdentity
 }
 
+class Channel {
+  userIdentity : UserIdentity
+  channelName : String
+  mute : Boolean
+}
+
 Application "1"--"1" ApplicationToken
 
 UserIdentity "1"--"1" UserToken
 
+UserIdentity --* Channel
 
 @enduml

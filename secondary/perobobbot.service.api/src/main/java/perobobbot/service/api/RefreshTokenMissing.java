@@ -1,8 +1,6 @@
 package perobobbot.service.api;
 
-import perobobbot.api.PerobobbotException;
-
-public class RefreshTokenMissing extends PerobobbotException {
+public class RefreshTokenMissing extends DomainException {
 
     public RefreshTokenMissing() {
         super("Refresh token is missing");
