@@ -19,9 +19,10 @@ public sealed interface ApplicationToken<T> extends Decryptable<ApplicationToken
 
     @NonNull Instant expirationInstant();
 
+
     @Serdeable
     record Decrypted(@NonNull Platform platform, @NonNull Secret accessToken,
-                     @NonNull Instant expirationInstant) implements ApplicationToken<Secret> {
+                     @NonNull Instant expirationInstant) implements ApplicationToken<Secret>, AccessTokenProvider {
 
         public @NonNull ApplicationToken.Encrypted encrypt(@NonNull TextEncryptor textEncryptor) {
             return new Encrypted(platform, textEncryptor.encrypt(accessToken), expirationInstant);
@@ -30,6 +31,11 @@ public sealed interface ApplicationToken<T> extends Decryptable<ApplicationToken
         @Override
         public @NonNull ApplicationToken.Decrypted decrypt(@NonNull TextDecryptor textDecryptor) {
             return this;
+        }
+
+        @Override
+        public <T> @NonNull T accept(@NonNull Visitor<T> visitor) {
+            return visitor.visit(this);
         }
     }
 

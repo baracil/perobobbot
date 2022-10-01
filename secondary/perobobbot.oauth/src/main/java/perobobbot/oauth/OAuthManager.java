@@ -8,6 +8,7 @@ import fpc.tools.lang.Subscription;
 import lombok.NonNull;
 import net.femtoparsec.perobobbot.oauth.DefaultOAuthManager;
 import perobobbot.api.data.Platform;
+import perobobbot.api.data.view.ApplicationToken;
 import perobobbot.api.data.view.UserToken;
 import perobobbot.api.oauth.PlatformOAuth;
 import perobobbot.service.api.ApplicationService;
@@ -28,7 +29,9 @@ public interface OAuthManager {
     @NonNull AuthorizationCodeGranFlow startAuthorizationCodeGrantFlow(@NonNull Platform platform);
 
 
-    @NonNull UserToken.Decrypted refresh(@NonNull Platform platform, @NonNull Secret refreshToken);
+    @NonNull UserToken.Decrypted refreshUserToken(@NonNull Platform platform, @NonNull Secret refreshToken);
+
+    @NonNull ApplicationToken.Decrypted getAppToken(@NonNull Platform platform);
 
     /**
      * Handle the callback from the platform
@@ -48,10 +51,16 @@ public interface OAuthManager {
 
     @NonNull Subscription register(@NonNull PlatformOAuth platformOAuth);
 
+    @NonNull ImmutableSet<Platform> getManagedPlatforms();
+
+    void revokeToken(@NonNull UserToken<Secret> userToken);
+
+    void revokeToken(@NonNull ApplicationToken<Secret> userToken);
+
+
     static @NonNull OAuthManager create(@NonNull ApplicationService applicationService, @NonNull ImmutableList<PlatformOAuth> platformOAuths) {
         return new DefaultOAuthManager(applicationService,platformOAuths);
     }
 
-    @NonNull ImmutableSet<Platform> getManagedPlatforms();
 
 }

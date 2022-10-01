@@ -11,6 +11,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.data.Platform;
+import perobobbot.api.data.view.ApplicationToken;
 import perobobbot.api.data.view.UserToken;
 import perobobbot.api.oauth.PlatformOAuth;
 import perobobbot.oauth.AuthorizationCodeGranFlow;
@@ -44,11 +45,19 @@ public class DefaultOAuthManager implements OAuthManager {
         return flow;
     }
 
+    @NonNull
     @Override
-    public @NonNull UserToken.Decrypted refresh(@NonNull Platform platform, @NonNull Secret refreshToken) {
+    public ApplicationToken.Decrypted getAppToken(@NonNull Platform platform) {
         final var application = applicationService.getApplication(platform);
         final var platformOAuth = platforms.get(platform);
-        return platformOAuth.refreshToken(application, refreshToken);
+        return platformOAuth.getAppToken(application);
+    }
+
+    @Override
+    public @NonNull UserToken.Decrypted refreshUserToken(@NonNull Platform platform, @NonNull Secret refreshToken) {
+        final var application = applicationService.getApplication(platform);
+        final var platformOAuth = platforms.get(platform);
+        return platformOAuth.refreshUserToken(application, refreshToken);
     }
 
     public void failFlow(@NonNull String state, @NonNull Failure failure) {
@@ -65,6 +74,19 @@ public class DefaultOAuthManager implements OAuthManager {
         return platforms.add(platformOAuth);
     }
 
+    @Override
+    public void revokeToken(@NonNull UserToken<Secret> userToken) {
+        final var application = applicationService.getApplication(userToken.platform());
+        platforms.get(userToken.platform())
+                .revoke(application.clientId(),userToken.accessToken());
+    }
+
+    @Override
+    public void revokeToken(@NonNull ApplicationToken<Secret> appToken) {
+        final var application = applicationService.getApplication(appToken.platform());
+        platforms.get(appToken.platform())
+                 .revoke(application.clientId(),appToken.accessToken());
+    }
 
     @Override
     public void handleCallback(@NonNull Platform platform, @NonNull ImmutableMap<String, String> queryValues) {

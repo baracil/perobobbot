@@ -35,7 +35,7 @@ public sealed interface UserToken<T> extends Decryptable<UserToken.Decrypted>, E
     record Decrypted(@NonNull UserIdentity identity,
                      @NonNull Platform platform, @NonNull Secret accessToken,
                      @NonNull Secret refreshToken, @NonNull Instant expirationInstant,
-                     @NonNull ImmutableSet<Scope> scopes, @NonNull String tokenType) implements UserToken<Secret> {
+                     @NonNull ImmutableSet<Scope> scopes, @NonNull String tokenType) implements UserToken<Secret>, AccessTokenProvider {
 
             @Override
             public @NonNull UserTokenBuilder<Secret> toBuilder() {
@@ -58,7 +58,12 @@ public sealed interface UserToken<T> extends Decryptable<UserToken.Decrypted>, E
             public @NonNull UserToken.Decrypted decrypt(@NonNull TextDecryptor textDecryptor) {
                 return this;
             }
+
+        @Override
+        public <T> @NonNull T accept(@NonNull Visitor<T> visitor) {
+            return visitor.visit(this);
         }
+    }
 
     @Serdeable
     record Encrypted(@NonNull UserIdentity identity, @NonNull Platform platform, @NonNull String accessToken,

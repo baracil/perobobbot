@@ -1,7 +1,11 @@
 package perobobbot.service.api;
 
+import fpc.tools.lang.Secret;
 import lombok.NonNull;
-import perobobbot.api.data.*;
+import perobobbot.api.data.ApplicationForPlatformMissing;
+import perobobbot.api.data.ApplicationTokenDoesNotExist;
+import perobobbot.api.data.CreateApplicationParameter;
+import perobobbot.api.data.Platform;
 import perobobbot.api.data.view.Application;
 import perobobbot.api.data.view.ApplicationToken;
 
@@ -53,11 +57,10 @@ public interface ApplicationService {
     @NonNull Application.Decrypted saveApplication(@NonNull Platform platform, @NonNull CreateApplicationParameter parameter);
 
     /**
-     * @param platform the platform
-     * @param parameter the parameter to create the token
+     * @param applicationToken the platform
      * @return the newly created token
      */
-    @NonNull ApplicationToken.Decrypted saveApplicationToken(@NonNull Platform platform, @NonNull CreateApplicationTokenParameter parameter);
+    @NonNull ApplicationToken.Decrypted saveApplicationToken(@NonNull ApplicationToken<Secret> applicationToken);
 
 
 

@@ -1,13 +1,13 @@
 package perobobbot.service.jpa.service;
 
 import fpc.tools.cipher.TextCipher;
+import fpc.tools.lang.Secret;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.data.CreateApplicationParameter;
-import perobobbot.api.data.CreateApplicationTokenParameter;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.view.Application;
 import perobobbot.api.data.view.ApplicationToken;
@@ -74,9 +74,9 @@ public class JpaApplicationService implements ApplicationService {
     }
 
     @Override
-    public @NonNull ApplicationToken.Decrypted saveApplicationToken(@NonNull Platform platform, @NonNull CreateApplicationTokenParameter parameter) {
-        final var application = applicationRepository.getByPlatform(platform);
-        final var token = application.setToken(textCipher.encrypt(parameter.accessToken()), parameter.expirationInstant());
+    public @NonNull ApplicationToken.Decrypted saveApplicationToken(@NonNull ApplicationToken<Secret> applicationToken) {
+        final var application = applicationRepository.getByPlatform(applicationToken.platform());
+        final var token = application.setToken(textCipher.encrypt(applicationToken.accessToken()), applicationToken.expirationInstant());
 
         return applicationTokenRepository.save(token).toView().decrypt(textCipher);
     }
