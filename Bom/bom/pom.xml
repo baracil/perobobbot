@@ -1,0 +1,863 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>perobobbot</groupId>
+    <artifactId>perobobbot-bom</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>4.0.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-buffer</artifactId>
+                <version>4.1.82.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jplugman</groupId>
+                <artifactId>jplugman-annotation</artifactId>
+                <version>3.0.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-common</artifactId>
+                <version>4.1.79.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.transaction</groupId>
+                <artifactId>jakarta.transaction-api</artifactId>
+                <version>1.3.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>2.0.1.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut.sql</groupId>
+                <artifactId>micronaut-jdbc-hikari</artifactId>
+                <version>4.6.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.postgresql</groupId>
+                <artifactId>postgresql</artifactId>
+                <version>42.5.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-api</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-core-reactive</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
+                <version>3.4.23</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-graphics</artifactId>
+                <version>17.0.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot-twitch</groupId>
+                <artifactId>perobobbot-twitch-chat</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec-http2</artifactId>
+                <version>4.1.82.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-client</artifactId>
+                <version>5.3.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>1.32</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-http</artifactId>
+                <version>9.4.43.v20210629</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>5.3.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.femtoparsec.tools</groupId>
+                <artifactId>fpc-tools-advanced-chat</artifactId>
+                <version>0.1.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut.data</groupId>
+                <artifactId>micronaut-data-tx</artifactId>
+                <version>3.7.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.2.11</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcpkix-jdk15on</artifactId>
+                <version>1.70</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.logging</groupId>
+                <artifactId>jboss-logging</artifactId>
+                <version>3.4.2.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut.sql</groupId>
+                <artifactId>micronaut-jdbc</artifactId>
+                <version>4.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-http-client-core</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate.common</groupId>
+                <artifactId>hibernate-commons-annotations</artifactId>
+                <version>5.1.2.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>1.10.22</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.reactivestreams</groupId>
+                <artifactId>reactive-streams</artifactId>
+                <version>1.0.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-transport-native-unix-common</artifactId>
+                <version>4.1.82.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-buffer-netty</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.jetty.websocket</groupId>
+                <artifactId>websocket-api</artifactId>
+                <version>9.4.43.v20210629</version>
+            </dependency>
+
+            <dependency>
+                <groupId>antlr</groupId>
+                <artifactId>antlr</artifactId>
+                <version>2.7.7</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut.sql</groupId>
+                <artifactId>micronaut-hibernate-jpa</artifactId>
+                <version>4.6.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.activation</groupId>
+                <artifactId>javax.activation-api</artifactId>
+                <version>1.2.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.checkerframework</groupId>
+                <artifactId>checker-qual</artifactId>
+                <version>3.5.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-jackson-core</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>jaxb-runtime</artifactId>
+                <version>2.3.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-io</artifactId>
+                <version>9.4.43.v20210629</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.websocket</groupId>
+                <artifactId>jakarta.websocket-api</artifactId>
+                <version>2.0.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.glassfish.jaxb</groupId>
+                <artifactId>txw2</artifactId>
+                <version>2.3.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.xml.bind</groupId>
+                <artifactId>jaxb-api</artifactId>
+                <version>2.3.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>5.6.10.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut.discovery</groupId>
+                <artifactId>micronaut-discovery-client</artifactId>
+                <version>3.2.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-json-core</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-web-controller</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-router</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut.data</groupId>
+                <artifactId>micronaut-data-hibernate-jpa</artifactId>
+                <version>3.7.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.femtoparsec.tools</groupId>
+                <artifactId>fpc-tools-state</artifactId>
+                <version>0.1.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.femtoparsec.tools</groupId>
+                <artifactId>fpc-tools-fp</artifactId>
+                <version>0.1.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot-twitch</groupId>
+                <artifactId>perobobbot-twitch-web-client</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec-socks</artifactId>
+                <version>4.1.82.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.inject</groupId>
+                <artifactId>jakarta.inject-api</artifactId>
+                <version>2.0.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sun.activation</groupId>
+                <artifactId>jakarta.activation</artifactId>
+                <version>1.2.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-service-jpa</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-client</artifactId>
+                <version>9.4.43.v20210629</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>listenablefuture</artifactId>
+                <version>9999.0-empty-to-avoid-conflict-with-guava</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss</groupId>
+                <artifactId>jandex</artifactId>
+                <version>2.4.2.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.annotation</groupId>
+                <artifactId>javax.annotation-api</artifactId>
+                <version>1.3.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jplugman</groupId>
+                <artifactId>jplugman-base</artifactId>
+                <version>3.0.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.femtoparsec.tools</groupId>
+                <artifactId>fpc-tools-serde</artifactId>
+                <version>0.1.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-transport-native-epoll</artifactId>
+                <version>4.1.82.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut.views</groupId>
+                <artifactId>micronaut-views-velocity</artifactId>
+                <version>3.5.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-runtime</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>2.13.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.femtoparsec.tools</groupId>
+                <artifactId>fpc-tools-lang</artifactId>
+                <version>0.1.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-core</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot-twitch</groupId>
+                <artifactId>perobobbot-twitch-service-client</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>2.2.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jplugman</groupId>
+                <artifactId>jplugman-loader</artifactId>
+                <version>3.0.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut.views</groupId>
+                <artifactId>micronaut-views-core</artifactId>
+                <version>3.5.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-inject</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut.serde</groupId>
+                <artifactId>micronaut-serde-support</artifactId>
+                <version>1.3.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-base</artifactId>
+                <version>17.0.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>3.6.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot-twitch</groupId>
+                <artifactId>perobobbot-twitch-oauth</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.12.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut.serde</groupId>
+                <artifactId>micronaut-serde-api</artifactId>
+                <version>1.3.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jplugman</groupId>
+                <artifactId>jplugman-tools</artifactId>
+                <version>3.0.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.yetus</groupId>
+                <artifactId>audience-annotations</artifactId>
+                <version>0.5.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.femtoparsec.tools</groupId>
+                <artifactId>fpc-tools-hibernate</artifactId>
+                <version>0.1.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-util</artifactId>
+                <version>9.4.43.v20210629</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>2.3.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.femtoparsec.tools</groupId>
+                <artifactId>fpc-tools-persistence</artifactId>
+                <version>0.1.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper-jute</artifactId>
+                <version>3.6.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.femtoparsec.tools</groupId>
+                <artifactId>fpc-tools-cipher</artifactId>
+                <version>0.1.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot-twitch</groupId>
+                <artifactId>perobobbot-twitch-service-api</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-oauth</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-handler-proxy</artifactId>
+                <version>4.1.82.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>5.3.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml</groupId>
+                <artifactId>classmate</artifactId>
+                <version>1.5.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot-twitch</groupId>
+                <artifactId>perobobbot-twitch-chat-impl</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.femtoparsec.tools</groupId>
+                <artifactId>fpc-tools-irc</artifactId>
+                <version>0.1.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-graphics</artifactId>
+                <version>linux</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>31.0.1-jre</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sun.istack</groupId>
+                <artifactId>istack-commons-runtime</artifactId>
+                <version>3.0.12</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>failureaccess</artifactId>
+                <version>1.0.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-transport-classes-epoll</artifactId>
+                <version>4.1.79.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-web-api</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-http-client</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-engine-core</artifactId>
+                <version>2.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut.data</groupId>
+                <artifactId>micronaut-data-model</artifactId>
+                <version>3.7.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-http-server-netty</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-handler</artifactId>
+                <version>4.1.82.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec-http</artifactId>
+                <version>4.1.82.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot.discovery</groupId>
+                <artifactId>discovery-zookeeper-api</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut.data</groupId>
+                <artifactId>micronaut-data-runtime</artifactId>
+                <version>3.7.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut.data</groupId>
+                <artifactId>micronaut-data-tx-hibernate</artifactId>
+                <version>3.7.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-http-server</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-transport</artifactId>
+                <version>4.1.79.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.femtoparsec.tools</groupId>
+                <artifactId>fpc-tools-micronaut</artifactId>
+                <version>0.1.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>1.70</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-x-discovery</artifactId>
+                <version>5.3.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-aop</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot.discovery</groupId>
+                <artifactId>discovery-zookeeper-curator</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.annotation</groupId>
+                <artifactId>jakarta.annotation-api</artifactId>
+                <version>2.1.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-resolver</artifactId>
+                <version>4.1.79.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-websocket</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>2.13.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-http</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-validation</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>1.2.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.persistence</groupId>
+                <artifactId>jakarta.persistence-api</artifactId>
+                <version>2.2.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jplugman</groupId>
+                <artifactId>jplugman-manager</artifactId>
+                <version>3.0.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.jetty.websocket</groupId>
+                <artifactId>websocket-common</artifactId>
+                <version>9.4.43.v20210629</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcutil-jdk15on</artifactId>
+                <version>1.70</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-http-netty</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.transaction</groupId>
+                <artifactId>javax.transaction-api</artifactId>
+                <version>1.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.jetty.websocket</groupId>
+                <artifactId>websocket-client</artifactId>
+                <version>9.4.49.v20220914</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jplugman</groupId>
+                <artifactId>jplugman-api</artifactId>
+                <version>3.0.0-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.13.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-codec</artifactId>
+                <version>4.1.79.Final</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.femtoparsec.tools</groupId>
+                <artifactId>fpc-tools-chat</artifactId>
+                <version>0.1.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-service-api</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot-twitch</groupId>
+                <artifactId>perobobbot-twitch-api</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut.serde</groupId>
+                <artifactId>micronaut-serde-jackson</artifactId>
+                <version>1.3.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-context</artifactId>
+                <version>3.7.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.femtoparsec.tools</groupId>
+                <artifactId>fpc-tools-state-chat</artifactId>
+                <version>0.1.1-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.j2objc</groupId>
+                <artifactId>j2objc-annotations</artifactId>
+                <version>1.3</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.36</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.errorprone</groupId>
+                <artifactId>error_prone_annotations</artifactId>
+                <version>2.7.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-base</artifactId>
+                <version>linux</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+</project>

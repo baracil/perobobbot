@@ -23,7 +23,10 @@
             <artifactId>jplugman-base</artifactId>
         </dependency>
 
-
+        <dependency>
+            <groupId>net.femtoparsec.tools</groupId>
+            <artifactId>fpc-tools-state</artifactId>
+        </dependency>
         <dependency>
             <groupId>net.femtoparsec.tools</groupId>
             <artifactId>fpc-tools-serde</artifactId>
@@ -108,6 +111,17 @@
             <artifactId>micronaut-serde-support</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>perobobbot-twitch</groupId>
+            <artifactId>perobobbot-twitch-chat</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>perobobbot-twitch</groupId>
+            <artifactId>perobobbot-twitch-chat-impl</artifactId>
+<!--            <scope>runtime</scope>-->
+        </dependency>
+
 
         <!-- Runtime Dependency -->
         <dependency>
@@ -136,8 +150,48 @@
             <artifactId>perobobbot-twitch-service-client</artifactId>
             <scope>runtime</scope>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.eclipse.jetty.websocket</groupId>-->
+<!--            <artifactId>javax-websocket-client-impl</artifactId>-->
+<!--            <version>9.4.43.v20210629</version>-->
+<!--        </dependency>-->
 
 
+<!--        <dependency>-->
+<!--            <groupId>org.eclipse.jetty.websocket</groupId>-->
+<!--            <artifactId>javax-websocket-client-impl</artifactId>-->
+<!--            <version>9.4.43.v20210629</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.eclipse.jetty.websocket</groupId>-->
+<!--            <artifactId>javax-websocket-server-impl</artifactId>-->
+<!--            <version>9.4.43.v20210629</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.eclipse.jetty.websocket</groupId>-->
+<!--            <artifactId>websocket-api</artifactId>-->
+<!--            <version>9.4.43.v20210629</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.eclipse.jetty.websocket</groupId>-->
+<!--            <artifactId>websocket-client</artifactId>-->
+<!--            <version>9.4.43.v20210629</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.eclipse.jetty.websocket</groupId>-->
+<!--            <artifactId>websocket-common</artifactId>-->
+<!--            <version>9.4.43.v20210629</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.eclipse.jetty.websocket</groupId>-->
+<!--            <artifactId>websocket-server</artifactId>-->
+<!--            <version>9.4.43.v20210629</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.eclipse.jetty.websocket</groupId>-->
+<!--            <artifactId>websocket-servlet</artifactId>-->
+<!--            <version>9.4.43.v20210629</version>-->
+<!--        </dependency>-->
 
     </dependencies>
 
@@ -176,7 +230,7 @@
                             <goal>run</goal>
                         </goals>
                         <configuration>
-                            <scripts>scripts/test.jshell</scripts>
+                            <scripts>${project.basedir}/scripts/test.jshell</scripts>
                         </configuration>
                     </execution>
                 </executions>
