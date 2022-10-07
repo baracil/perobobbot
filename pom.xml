@@ -11,7 +11,7 @@
     <parent>
         <groupId>io.micronaut</groupId>
         <artifactId>micronaut-parent</artifactId>
-        <version>3.7.0</version>
+        <version>3.7.1</version>
     </parent>
 
     <properties>
@@ -27,14 +27,14 @@
         <jdk.version>17</jdk.version>
         <release.version>17</release.version>
 
-        <micronaut.version>3.7.0</micronaut.version>
+        <micronaut.version>3.7.1</micronaut.version>
         <micronaut.runtime>netty</micronaut.runtime>
         <micronaut.data.version>3.8.0</micronaut.data.version>
 
         <asciidoctor.maven.plugin.version>2.2.2</asciidoctor.maven.plugin.version>
-        <asciidoctorj.version>2.5.3</asciidoctorj.version>
+        <asciidoctorj.version>2.5.5</asciidoctorj.version>
         <asciidoctorj.diagram.version>2.2.3</asciidoctorj.diagram.version>
-        <jruby.version>9.3.6.0</jruby.version>
+        <jruby.version>9.3.7.0</jruby.version>
 
 
         <fpc-tools.version>0.1.1-SNAPSHOT</fpc-tools.version>
@@ -51,6 +51,7 @@
         <module>Twitch</module>
         <module>perobobbot.launcher</module>
 
+        <module>Bom/bom-generator</module>
         <module>Bom/bom</module>
 
 
@@ -122,6 +123,11 @@
             <dependency>
                 <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-service-jpa</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-launcher</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

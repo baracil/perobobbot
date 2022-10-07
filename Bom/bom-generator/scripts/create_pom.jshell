@@ -1,5 +1,5 @@
-import perobobbot.launcher.plugin.Bom;
-import perobobbot.launcher.plugin.BomReader;
+import perobobbot.bom.generator.Bom;
+import perobobbot.bom.generator.BomReader;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -7,13 +7,15 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.stream.Collectors;
+    Path project = Path.of("/home/perococco/dev/stream/perobobbot/perobobbot");
 
-    Path root = Path.of("/home/perococco/dev/stream/perobobbot/perobobbot/bom");
+    Path targetDir = project.resolve("Bom/bom");
+    Path sourceDir = project.resolve("Bom/bom-generator");
 
     Bom bom = BomReader.read();
 
-    Path output = root.resolve("pom.xml");
-    Files.write(output, Files.readAllLines(root.resolve("data/pom.xml_prefix"), StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+    Path output = targetDir.resolve("pom.xml");
+    Files.write(output, Files.readAllLines(sourceDir.resolve("data/pom.xml_prefix"), StandardCharsets.UTF_8), StandardCharsets.UTF_8);
 
     String[] dep = bom.getDependencies().stream().map(d -> """
                <dependency>
@@ -25,6 +27,6 @@ import java.util.stream.Collectors;
     ).toArray(String[]::new);
 
     Files.write(output, Arrays.asList(dep), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
-    Files.write(output, Files.readAllLines(root.resolve("data/pom.xml_suffix"), StandardCharsets.UTF_8), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+    Files.write(output, Files.readAllLines(sourceDir.resolve("data/pom.xml_suffix"), StandardCharsets.UTF_8), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
 
 /exit

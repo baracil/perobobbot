@@ -1,4 +1,4 @@
-package perobobbot.launcher.plugin;
+package perobobbot.bom.generator;
 
 import com.google.common.collect.ImmutableSet;
 import lombok.Getter;

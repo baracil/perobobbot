@@ -1,4 +1,4 @@
-package perobobbot.launcher.plugin;
+package perobobbot.bom.generator;
 
 import lombok.NonNull;
 import lombok.Value;
