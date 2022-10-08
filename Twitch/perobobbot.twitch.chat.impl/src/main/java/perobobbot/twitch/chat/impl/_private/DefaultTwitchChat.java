@@ -1,4 +1,4 @@
-package perobobbot.twitch.chat.impl;
+package perobobbot.twitch.chat.impl._private;
 
 import fpc.tools.advanced.chat.DispatchSlip;
 import fpc.tools.advanced.chat.ReceiptSlip;
@@ -8,12 +8,10 @@ import fpc.tools.lang.Subscription;
 import fpc.tools.lang.ThrowableTool;
 import lombok.NonNull;
 import lombok.Synchronized;
-import perobobbot.api.ChannelProviderForUser;
+import perobobbot.api.JoinedChannelProviderForUser;
 import perobobbot.api.oauth.OAuthData;
 import perobobbot.twitch.chat.TwitchChat;
 import perobobbot.twitch.chat.TwitchChatListener;
-import perobobbot.twitch.chat.impl._private.TwitchChatStateListener;
-import perobobbot.twitch.chat.impl._private.TwitchChatStateManager;
 import perobobbot.twitch.chat.message.from.MessageFromTwitch;
 import perobobbot.twitch.chat.message.to.CommandToTwitch;
 import perobobbot.twitch.chat.message.to.MessageToTwitch;
@@ -32,7 +30,7 @@ public class DefaultTwitchChat implements TwitchChat, TwitchChatListener {
 
 
     public DefaultTwitchChat(@NonNull OAuthData oAuthData,
-                             @NonNull ChannelProviderForUser channelProvider,
+                             @NonNull JoinedChannelProviderForUser channelProvider,
                              @NonNull Instants instants) {
         this.twitchChatStateListener = new TwitchChatStateListener(oAuthData);
         this.twitchChatStateManager = new TwitchChatStateManager(oAuthData.getLogin(), twitchChatStateListener, instants);
@@ -71,12 +69,12 @@ public class DefaultTwitchChat implements TwitchChat, TwitchChatListener {
 
 
     @Override
-    public @NonNull CompletionStage<DispatchSlip<MessageFromTwitch>> sendCommand(@NonNull CommandToTwitch command) {
+    public @NonNull CompletionStage<DispatchSlip> sendCommand(@NonNull CommandToTwitch command) {
         return twitchChatStateManager.sendCommand(command);
     }
 
     @Override
-    public @NonNull <A> CompletionStage<ReceiptSlip<A, MessageFromTwitch>> sendRequest(@NonNull RequestToTwitch<A> request) {
+    public @NonNull <A> CompletionStage<ReceiptSlip<A>> sendRequest(@NonNull RequestToTwitch<A> request) {
         return twitchChatStateManager.sendRequest(request);
     }
 

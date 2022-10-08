@@ -11,6 +11,7 @@ module perobobbot.twitch.chat.impl {
     requires fpc.tools.irc;
 
     requires perobobbot.api;
+    requires perobobbot.chat.api;
 
     requires perobobbot.twitch.oauth;
     requires perobobbot.twitch.api;
@@ -21,6 +22,5 @@ module perobobbot.twitch.chat.impl {
     requires io.micronaut.runtime;
 
     exports perobobbot.twitch.chat.impl;
-    exports perobobbot.twitch.chat.impl._private;
 
 }

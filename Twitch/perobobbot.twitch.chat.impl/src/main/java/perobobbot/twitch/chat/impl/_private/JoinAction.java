@@ -4,41 +4,41 @@ import fpc.tools.advanced.chat.AdvancedIO;
 import fpc.tools.advanced.chat.ReceiptSlip;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perobobbot.api.data.Channel;
-import perobobbot.twitch.chat.message.from.MessageFromTwitch;
+import perobobbot.api.data.JoinedChannel;
 import perobobbot.twitch.chat.message.from.UserState;
 import perobobbot.twitch.chat.message.to.MessageToTwitch;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import java.util.function.Function;
 
 @RequiredArgsConstructor
 public class JoinAction implements ChatAction {
-    private final @NonNull Set<Channel> joinedChannels;
-    private final @NonNull Channel channel;
+
+    private final @NonNull Set<JoinedChannel> joinedChannels;
+
+    private final @NonNull JoinedChannel channelToJoin;
 
 
     @Override
-    public @NonNull CompletionStage<AdvancedIO<MessageFromTwitch>> execute(@NonNull AdvancedIO<MessageFromTwitch> io) {
-        return io.sendRequest(MessageToTwitch.join(channel))
+    public @NonNull CompletionStage<AdvancedIO> execute(@NonNull AdvancedIO io) {
+        return io.sendRequest(MessageToTwitch.join(channelToJoin.channelName()))
                  .whenComplete(this::handleResult)
-                 .thenCompose(this::sendHelloMessage);
+                 .thenCompose(r -> this.sendHelloMessage(io));
     }
 
-    private void handleResult(ReceiptSlip<UserState, MessageFromTwitch> receipt, Throwable throwable) {
+    private void handleResult(ReceiptSlip<UserState> receipt, Throwable throwable) {
         if (receipt != null) {
-            joinedChannels.add(channel);
+            joinedChannels.add(channelToJoin);
         }
     }
 
-    private CompletionStage<AdvancedIO<MessageFromTwitch>> sendHelloMessage(ReceiptSlip<UserState, MessageFromTwitch> receiptSlip) {
-        if (channel.mute()) {
-            return CompletableFuture.completedFuture(receiptSlip);
+    private CompletionStage<AdvancedIO> sendHelloMessage(@NonNull AdvancedIO io) {
+        if (channelToJoin.readOnly()) {
+            return CompletableFuture.completedFuture(io);
         }
-        return receiptSlip.sendCommand(MessageToTwitch.privateMsg(channel, "Hello"))
-                          .thenApply(Function.identity());
+        return io.sendCommand(MessageToTwitch.privateMsg(channelToJoin.channelName(), "Hello"))
+                 .thenApply(r -> io);
     }
 
 

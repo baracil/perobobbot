@@ -1,6 +1,9 @@
 package perobobbot.api.data;
 
+import io.micronaut.serde.annotation.Serdeable;
 import lombok.NonNull;
+
+import java.util.List;
 
 public abstract class EntityNotFound extends DataException {
 
@@ -8,7 +11,9 @@ public abstract class EntityNotFound extends DataException {
         super(message);
     }
 
-    public abstract @NonNull String searchedCriteria();
-    public abstract @NonNull String searchedValue();
+    public abstract @NonNull List<Criteria> searchedCriteria();
+
+    @Serdeable
+    public record Criteria(@NonNull String key, @NonNull Object value) { }
 
 }

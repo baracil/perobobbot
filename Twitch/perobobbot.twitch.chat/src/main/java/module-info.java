@@ -8,7 +8,8 @@ module perobobbot.twitch.chat {
     requires fpc.tools.lang;
     requires fpc.tools.irc;
 
-    requires perobobbot.api;
+    requires transitive perobobbot.api;
+    requires transitive perobobbot.twitch.api;
     requires io.github.bucket4j.core;
 
     exports perobobbot.twitch.chat;

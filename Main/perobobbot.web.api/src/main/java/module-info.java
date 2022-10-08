@@ -8,10 +8,12 @@ module perobobbot.web.api {
     requires io.micronaut.http;
     requires io.micronaut.core;
     requires io.micronaut.inject;
+    requires io.micronaut.serde.serde_api;
 
     requires transitive perobobbot.api;
 
     requires transitive fpc.tools.cipher;
+    requires jakarta.annotation;
 
     exports perobobbot.web.api;
 }

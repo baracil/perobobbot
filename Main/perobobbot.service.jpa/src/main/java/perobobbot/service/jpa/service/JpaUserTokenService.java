@@ -35,7 +35,7 @@ public class JpaUserTokenService implements UserTokenService {
 
     @Override
     public @NonNull Optional<UserToken.Decrypted> findUserToken(@NonNull Platform platform, @NonNull String userId) {
-        return userTokenRepository.findByPlatformAndUserIdentityUserId(platform,userId).map(UserTokenEntity::toView).map(textCipher::decrypt);
+        return userTokenRepository.findByPlatformAndPlatformUserId(platform,userId).map(UserTokenEntity::toView).map(textCipher::decrypt);
     }
 
     @Override

@@ -3,6 +3,8 @@ package perobobbot.api.data;
 import lombok.Getter;
 import lombok.NonNull;
 
+import java.util.List;
+
 public class ApplicationForPlatformMissing extends EntityNotFound {
 
     @Getter
@@ -13,13 +15,9 @@ public class ApplicationForPlatformMissing extends EntityNotFound {
         this.platform = platform;
     }
 
-    @Override
-    public @NonNull String searchedCriteria() {
-        return "platform";
-    }
 
     @Override
-    public @NonNull String searchedValue() {
-        return platform.name();
+    public @NonNull List<Criteria> searchedCriteria() {
+        return List.of(new Criteria("platform",platform));
     }
 }

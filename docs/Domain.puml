@@ -13,6 +13,11 @@ class ApplicationToken {
   application : Application
 }
 
+class User {
+    name : String
+    identities : List<UserIdentity>
+}
+
 class UserIdentity {
   userId : String
   login : String
@@ -21,26 +26,34 @@ class UserIdentity {
 }
 
 class UserToken {
+  userIdentity : UserIdentity
   accessToken : String
   refreshToken : String
   tokenType : String
-  main : boolean
   platform : Platform
   scopes : List<Scope>
   expirationInstant : Instant
-  userIdentity : UserIdentity
 }
 
 class Channel {
-  userIdentity : UserIdentity
+  platform: Platform
   channelName : String
-  mute : Boolean
+}
+
+class JoinedChannel {
+  user: User
+  channel : Channel
 }
 
 Application "1"--"1" ApplicationToken
 
+User --* UserIdentity
+User --* JoinedChannel
+
+Channel --* JoinedChannel
+
 UserIdentity "1"--"1" UserToken
 
-UserIdentity --* Channel
+
 
 @enduml

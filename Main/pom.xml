@@ -18,6 +18,10 @@
     <modules>
         <module>perobobbot.api</module>
 
+        <module>perobobbot.chat.api</module>
+        <module>perobobbot.chat.impl</module>
+
+
         <module>perobobbot.oauth</module>
         <module>perobobbot.service.api</module>
         <module>perobobbot.service.jpa</module>

@@ -10,18 +10,18 @@ import perobobbot.api.UserInfo;
 public class DefaultUserTypeProvider implements UserTypeProvider {
 
     @Override
-    public @NonNull UserType getUserType(@NonNull UserInfo userInfo) {
+    public @NonNull UserIdentityType getUserType(@NonNull UserInfo userInfo) {
         if (userInfo.platform().equals(new Platform("TWITCH"))) {
             return getTwitchUserType(userInfo);
         }
-        return UserType.VIEWER;
+        return UserIdentityType.VIEWER;
     }
 
-    private UserType getTwitchUserType(UserInfo userInfo) {
+    private UserIdentityType getTwitchUserType(UserInfo userInfo) {
         return switch (userInfo.login().toLowerCase()) {
-            case "perococco" -> UserType.BROADCASTER;
-            case "perobobbot" -> UserType.BOT;
-            default -> UserType.VIEWER;
+            case "perococco" -> UserIdentityType.BROADCASTER;
+            case "perobobbot" -> UserIdentityType.BOT;
+            default -> UserIdentityType.VIEWER;
         };
     }
 }

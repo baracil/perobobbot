@@ -10,18 +10,20 @@ import io.micronaut.serde.annotation.Serdeable;
 import jakarta.inject.Singleton;
 import perobobbot.api.data.EntityNotFound;
 
+import java.util.List;
+
 @Produces
 @Singleton
 public class EntityNotFoundHandler implements ExceptionHandler<EntityNotFound, HttpResponse<EntityNotFoundHandler.Body>> {
 
     @Override
     public HttpResponse<Body> handle(HttpRequest request, EntityNotFound exception) {
-        final var body = new Body(exception.searchedCriteria(), exception.searchedValue());
+        final var body = new Body(exception.getMessage(), exception.searchedCriteria());
         return HttpResponse.notFound(body);
     }
 
 
     @Serdeable
     @Introspected
-    public record Body(@NonNull String criteria, @NonNull String value) {}
+    public record Body(@NonNull String message, @NonNull List<EntityNotFound.Criteria> searchedCriteria) {}
 }

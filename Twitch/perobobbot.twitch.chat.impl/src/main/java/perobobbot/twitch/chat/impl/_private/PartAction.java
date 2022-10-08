@@ -4,33 +4,31 @@ import fpc.tools.advanced.chat.AdvancedIO;
 import fpc.tools.advanced.chat.ReceiptSlip;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perobobbot.api.data.Channel;
-import perobobbot.twitch.chat.message.from.MessageFromTwitch;
+import perobobbot.api.data.JoinedChannel;
 import perobobbot.twitch.chat.message.from.Part;
 import perobobbot.twitch.chat.message.to.MessageToTwitch;
 
 import java.util.Set;
 import java.util.concurrent.CompletionStage;
-import java.util.function.Function;
 
 @RequiredArgsConstructor
 public class PartAction implements ChatAction {
-    private final @NonNull Set<Channel> joinedChannels;
-    private final @NonNull Channel channel;
+    private final @NonNull Set<JoinedChannel> joinedChannels;
+    private final @NonNull JoinedChannel channelToPart;
 
     @Override
-    public @NonNull CompletionStage<AdvancedIO<MessageFromTwitch>> execute(@NonNull AdvancedIO<MessageFromTwitch> io) {
-        return io.sendRequest(MessageToTwitch.part(channel))
+    public @NonNull CompletionStage<AdvancedIO> execute(@NonNull AdvancedIO io) {
+        return io.sendCommand(MessageToTwitch.privateMsg(channelToPart.channelName(), "C'est l'heure de vous quitter"))
+                 .thenCompose(c -> io.sendRequest(MessageToTwitch.part(channelToPart.channelName())))
                  .whenComplete(this::handleResult)
-                 .thenApply(Function.identity());
+                .thenApply(r -> io);
     }
 
-    private void handleResult(ReceiptSlip<Part,MessageFromTwitch> part, Throwable throwable) {
+    private void handleResult(ReceiptSlip<Part> part, Throwable throwable) {
         if (part != null) {
-            joinedChannels.remove(channel);
+            joinedChannels.remove(channelToPart);
         }
     }
-
 
 
 }

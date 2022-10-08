@@ -1,16 +1,12 @@
-package perobobbot.twitch.chat.impl;
+package perobobbot.twitch.chat.impl._private;
 
 import com.google.common.collect.Sets;
 import fpc.tools.advanced.chat.AdvancedIO;
 import fpc.tools.lang.LoopAction;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perobobbot.api.ChannelProviderForUser;
-import perobobbot.api.data.Channel;
-import perobobbot.twitch.chat.impl._private.ChatAction;
-import perobobbot.twitch.chat.impl._private.JoinAction;
-import perobobbot.twitch.chat.impl._private.PartAction;
-import perobobbot.twitch.chat.message.from.MessageFromTwitch;
+import perobobbot.api.JoinedChannelProviderForUser;
+import perobobbot.api.data.JoinedChannel;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -20,10 +16,10 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class ChannelJoiner implements LoopAction {
 
-    private final ChannelProviderForUser channelProvider;
-    private final AdvancedIO<MessageFromTwitch> io;
+    private final JoinedChannelProviderForUser channelProvider;
+    private final AdvancedIO io;
 
-    private final Set<Channel> joined = Collections.synchronizedSet(new HashSet<>());
+    private final Set<JoinedChannel> joined = Collections.synchronizedSet(new HashSet<>());
 
     @Override
     public @NonNull NextState beforeLooping() {

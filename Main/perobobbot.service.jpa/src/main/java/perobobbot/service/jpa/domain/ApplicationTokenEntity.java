@@ -16,7 +16,8 @@ public class ApplicationTokenEntity extends BaseEntity {
     /**
      * The application this token apply
      */
-    @JoinColumn(name = "APPLICATION_ID")
+    @JoinColumn(name = "APPLICATION_ID",
+            foreignKey = @ForeignKey(name = "FK_APPLICATION_TOKEN__APPLICATION"))
     @OneToOne(orphanRemoval = true)
     private @NonNull ApplicationEntity application;
 

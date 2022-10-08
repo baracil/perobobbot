@@ -19,6 +19,7 @@ public class PerobobbotConfiguration {
     @Getter @Setter
     public static class Data {
         private @NonNull Secret dbPassPhrase;
+        private @NonNull String user;
     }
 
     @ConfigurationProperties("plugin")

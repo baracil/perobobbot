@@ -2,20 +2,19 @@ package perobobbot.service.api;
 
 import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
-import perobobbot.api.ChannelProvider;
-import perobobbot.api.Identification;
 import perobobbot.api.data.Channel;
+import perobobbot.api.data.Platform;
 
-public interface ChannelService extends ChannelProvider {
+public interface ChannelService  {
 
-    @NonNull ImmutableSet<Channel> getChannelsForUser(@NonNull Identification identification);
+    @NonNull ImmutableSet<Channel> getChannels(int page, int size);
 
-    @NonNull Channel joinChannel(@NonNull Identification identification,
-                                 @NonNull String channelName,
-                                 boolean mute);
+    @NonNull Channel createChannel(@NonNull Platform platform, @NonNull String name);
 
-    void partChannel(@NonNull Identification identification, @NonNull String channelName);
-
+    void deleteChannel(@NonNull Platform platform, @NonNull String name);
 
 
+    @NonNull Channel getChannelById(long id);
+
+    @NonNull Channel getChannel(@NonNull Platform platform, @NonNull String name);
 }

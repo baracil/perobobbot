@@ -6,6 +6,8 @@ open module perobobbot.api {
 
     requires io.micronaut.serde.serde_api;
 
+    requires com.fasterxml.jackson.databind;
+
     requires io.micronaut.context;
     requires io.micronaut.runtime;
     requires io.micronaut.core;

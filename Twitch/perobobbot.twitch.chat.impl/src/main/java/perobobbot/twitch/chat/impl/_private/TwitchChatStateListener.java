@@ -38,9 +38,6 @@ public class TwitchChatStateListener implements ChatStateListener<MessageFromTwi
     private final Listeners<TwitchChatListener> listeners = Listeners.create();
     private final ConnectionResult connectionResult = new ConnectionResult();
 
-    private CompletableFuture<ConnectionResult> completedConnection = null;
-
-
     public @NonNull Subscription addChatListener(@NonNull TwitchChatListener listener) {
         return listeners.addListener(listener);
     }
@@ -84,8 +81,8 @@ public class TwitchChatStateListener implements ChatStateListener<MessageFromTwi
 
             LOG.info("Send PASS and NICK to connect to Twitch Chat (nick='"+nick+"'");
             final var receipt = chat.sendRequest(cap)
-                                    .thenCompose(r -> r.sendCommand(pass))
-                                    .thenCompose(v -> v.sendRequest(nick))
+                                    .thenCompose(r -> chat.sendCommand(pass))
+                                    .thenCompose(v -> chat.sendRequest(nick))
                                     .thenApply(ReceiptSlip::getAnswer)
                                     .toCompletableFuture()
                                     .get();
@@ -118,10 +115,6 @@ public class TwitchChatStateListener implements ChatStateListener<MessageFromTwi
             return true;
         }
         return e.getCause() instanceof TwitchChatAuthenticationFailure;
-    }
-
-    public @NonNull CompletionStage<ConnectionResult> getCompletion() {
-        return Objects.requireNonNull(completedConnection);
     }
 
 

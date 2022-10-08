@@ -4,11 +4,11 @@ import fpc.tools.lang.Instants;
 import fpc.tools.lang.Secret;
 import lombok.Getter;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
 import perobobbot.api.Identification;
 import perobobbot.api.data.view.AccessTokenProvider;
 import perobobbot.api.data.view.ApplicationToken;
+import perobobbot.api.data.view.UserIdentity;
 import perobobbot.api.data.view.UserToken;
 import perobobbot.api.oauth.OAuthAccessMode;
 import perobobbot.api.oauth.OAuthData;
@@ -17,7 +17,6 @@ import perobobbot.service.api.ApplicationService;
 import perobobbot.service.api.RefreshTokenInfo;
 import perobobbot.service.api.UserTokenService;
 
-@RequiredArgsConstructor
 public class SimpleOAuthData implements OAuthData {
 
     @Getter
@@ -29,6 +28,14 @@ public class SimpleOAuthData implements OAuthData {
     private final @NonNull OAuthManager oAuthManager;
     private final @NonNull Instants instants;
 
+    public SimpleOAuthData(@NonNull UserIdentity userIdentity, @NonNull UserTokenService userTokenService, @NonNull ApplicationService applicationService, @NonNull OAuthManager oAuthManager, @NonNull Instants instants) {
+        this.identification = userIdentity.identification();
+        this.login = userIdentity.login();
+        this.userTokenService = userTokenService;
+        this.applicationService = applicationService;
+        this.oAuthManager = oAuthManager;
+        this.instants = instants;
+    }
 
     @Override
     public @NonNull String getClientId() {

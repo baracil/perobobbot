@@ -10,10 +10,12 @@ import java.time.Instant;
 @Entity
 @NoArgsConstructor(access=AccessLevel.PROTECTED)
 @Getter @Setter(AccessLevel.PROTECTED)
-@Table(name = "APPLICATION")
+@Table(name = "APPLICATION", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_platform", columnNames = {"PLATFORM"})
+})
 public class ApplicationEntity extends BaseEntity {
 
-    @Column(name = "PLATFORM", nullable = false,unique = true)
+    @Column(name = "PLATFORM", nullable = false)
     @Convert(converter = PlatformConverter.class)
     private @NonNull Platform platform;
 

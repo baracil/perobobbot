@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Setter(AccessLevel.PROTECTED)
 public class UserTokenEntity extends BaseEntity {
 
-    @JoinColumn(name = "USER_IDENTITY_ID",nullable = false)
+    @JoinColumn(name = "USER_IDENTITY_ID",nullable = false, foreignKey = @ForeignKey(name = "FK_TOKEN__USER_IDENTITY"))
     @OneToOne
     private @NonNull UserIdentityEntity userIdentity;
 

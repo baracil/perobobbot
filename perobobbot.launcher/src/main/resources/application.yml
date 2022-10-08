@@ -1,6 +1,6 @@
 micronaut:
   application:
-    name: Perobobbot Data
+    name: Perobobbot
   router:
     static-resources:
       swagger:
@@ -10,6 +10,13 @@ micronaut:
         paths: classpath:META-INF/swagger/views/swagger-ui
         mapping: /swagger-ui/**
 
+netty:
+  default:
+    allocator:
+      max-order: 3
+
+
+
 curator:
   enabled: true
   client:
@@ -17,17 +24,12 @@ curator:
   discovery:
     serviceId: perobobbot
 
-client:
-  secret: ${CLIENT_SECRET}
 
-jpa.default.properties.hibernate.hbm2ddl.auto: update
-
-
-netty:
-  default:
-    allocator:
-      max-order: 3
 jpa:
   default:
     entity-scan:
       packages: perobobbot.service.jpa.domain
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update

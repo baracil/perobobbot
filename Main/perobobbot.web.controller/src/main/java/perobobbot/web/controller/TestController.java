@@ -17,6 +17,6 @@ public class TestController {
     @Get("/chat/{msg}")
     public void sendMessage(@NonNull @PathVariable String msg) {
         twitchChat.sendRequest(MessageToTwitch.join("perococco"))
-                  .thenCompose(c -> c.sendCommand(MessageToTwitch.privateMsg("perococco", msg)));
+                  .thenCompose(c -> twitchChat.sendCommand(MessageToTwitch.privateMsg("perococco", msg)));
     }
 }

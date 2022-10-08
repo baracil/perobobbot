@@ -27,6 +27,7 @@ curator:
 
 perobobbot:
   data:
+    user: Perobobbot
     dbPassPhrase: pass-phrase
   plugin:
     folder: /home/perococco/Perobobbot/plugins

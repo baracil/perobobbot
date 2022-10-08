@@ -1,10 +1,11 @@
 package perobobbot.service.jpa.domain;
 
+import com.google.common.collect.ImmutableList;
 import lombok.*;
 import perobobbot.api.Identification;
 import perobobbot.api.UserInfo;
 import perobobbot.api.data.Platform;
-import perobobbot.api.data.UserType;
+import perobobbot.api.data.UserIdentityType;
 import perobobbot.api.data.view.UserIdentity;
 import perobobbot.api.data.view.UserToken;
 
@@ -13,9 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "USER_IDENTITY", uniqueConstraints = {@UniqueConstraint(columnNames = {"PLATFORM", "USER_ID"})})
+@Table(name = "USER_IDENTITY", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"PLATFORM", "USER_ID"},name = "uk_platform__user_id"),
+})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @EqualsAndHashCode(of = {"platform", "userId"}, callSuper = false)
@@ -36,20 +39,22 @@ public class UserIdentityEntity extends BaseEntity {
 
     @Column(name = "USER_TYPE", nullable = false)
     @Enumerated(EnumType.STRING)
-    private @NonNull UserType userType;
+    private @NonNull UserIdentityType userIdentityType;
 
     @OneToOne(mappedBy = "userIdentity", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserTokenEntity tokenEntity;
 
-    @OneToMany(mappedBy = "userIdentity", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<ChannelEntity> channels = new ArrayList<>();
+    @OneToMany(mappedBy = "userIdentity", cascade = CascadeType.ALL,orphanRemoval = true)
+    private @NonNull List<JoinedChannelEntity> joinedChannels = new ArrayList<>();
 
-    public static @NonNull UserIdentityEntity createWith(@NonNull UserInfo userInfo, @NonNull UserType userType) {
-        return new UserIdentityEntity(userInfo.platform(),
+
+    public static @NonNull UserIdentityEntity createWith(@NonNull UserInfo userInfo, @NonNull UserIdentityType userIdentityType) {
+        return new UserIdentityEntity(
+                userInfo.platform(),
                 userInfo.userId(),
                 userInfo.login(),
                 userInfo.name(),
-                userType,
+                userIdentityType,
                 null,
                 new ArrayList<>());
     }
@@ -58,9 +63,10 @@ public class UserIdentityEntity extends BaseEntity {
         return new UserIdentity(
                 getId(),
                 createIdentification(),
-                userType,
+                userIdentityType,
                 login,
-                name
+                name,
+                joinedChannels.stream().map(JoinedChannelEntity::toView).collect(ImmutableList.toImmutableList())
         );
     }
 
@@ -69,23 +75,23 @@ public class UserIdentityEntity extends BaseEntity {
     }
 
     public @NonNull UserIdentityEntity updateToken(@NonNull UserToken.Encrypted userToken) {
-        createIdentification().checkSamePerson(userToken.identification());
+        createIdentification().checkSameIdentity(userToken.identification());
         this.tokenEntity = UserTokenEntity.createWith(this, userToken);
         return this;
     }
 
 
-    public @NonNull ChannelEntity addChannel(@NonNull String channelName, boolean mute) {
-        final var channel = new ChannelEntity(this, channelName, mute);
-        this.channels.add(channel);
-        return channel;
+    public boolean isSameIdentity(@NonNull Identification identification) {
+        return identification.isSameIdentity(platform, userId);
     }
 
-    public void removeChannel(@NonNull String channelName) {
-        this.channels.removeIf(c -> c.getChannelName().equals(channelName));
+    public @NonNull JoinedChannelEntity joinedChannel(@NonNull String channelName, boolean readOnly) {
+        final var result = new JoinedChannelEntity(this,channelName,readOnly);
+        this.joinedChannels.add(result);
+        return result;
     }
 
-    public UserInfo toUserInfo() {
-        return null;
+    public boolean partChannel(@NonNull String channelName) {
+        return this.joinedChannels.removeIf(jc -> jc.getName().equals(channelName));
     }
 }

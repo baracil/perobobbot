@@ -6,6 +6,6 @@ import perobobbot.api.UserInfo;
 
 public interface UserTypeProvider {
 
-    @NonNull UserType getUserType(@NonNull UserInfo userInfo);
+    @NonNull UserIdentityType getUserType(@NonNull UserInfo userInfo);
 
 }

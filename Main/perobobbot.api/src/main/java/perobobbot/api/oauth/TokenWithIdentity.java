@@ -8,7 +8,7 @@ import perobobbot.api.data.view.UserToken;
 
 public record TokenWithIdentity(@NonNull UserToken.Decrypted token, @NonNull UserInfo userInfo) implements Identification.Provider {
     public TokenWithIdentity {
-        token.checkSamePerson(userInfo);
+        token.checkSameIdentity(userInfo);
     }
 
     @Override
