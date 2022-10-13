@@ -16,15 +16,6 @@ netty:
       max-order: 3
 
 
-
-curator:
-  enabled: true
-  client:
-    prefix: perobobbot/discovery
-  discovery:
-    serviceId: perobobbot
-
-
 jpa:
   default:
     entity-scan:

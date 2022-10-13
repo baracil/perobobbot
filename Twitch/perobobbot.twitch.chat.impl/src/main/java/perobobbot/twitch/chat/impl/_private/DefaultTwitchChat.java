@@ -8,8 +8,12 @@ import fpc.tools.lang.Subscription;
 import fpc.tools.lang.ThrowableTool;
 import lombok.NonNull;
 import lombok.Synchronized;
+import perobobbot.api.Identification;
 import perobobbot.api.JoinedChannelProviderForUser;
 import perobobbot.api.oauth.OAuthData;
+import perobobbot.chat.api.ChatMessage;
+import perobobbot.chat.api.ChatMessageDispatcher;
+import perobobbot.chat.api.irc.MessageData;
 import perobobbot.twitch.chat.TwitchChat;
 import perobobbot.twitch.chat.TwitchChatListener;
 import perobobbot.twitch.chat.message.from.MessageFromTwitch;
@@ -24,18 +28,24 @@ import java.util.concurrent.CompletionStage;
 
 public class DefaultTwitchChat implements TwitchChat, TwitchChatListener {
 
-    private final TwitchChatStateListener twitchChatStateListener;
-    private final TwitchChatStateManager twitchChatStateManager;
-    private final Looper channelJoiner;
+    private final @NonNull Identification identification;
+    private final @NonNull TwitchChatStateListener twitchChatStateListener;
+    private final @NonNull TwitchChatStateManager twitchChatStateManager;
+    private final @NonNull Looper channelJoiner;
+    private final @NonNull ChatMessageDispatcher messageDispatcher;
 
 
-    public DefaultTwitchChat(@NonNull OAuthData oAuthData,
+    public DefaultTwitchChat(@NonNull Identification identification,
+                             @NonNull OAuthData oAuthData,
                              @NonNull JoinedChannelProviderForUser channelProvider,
-                             @NonNull Instants instants) {
+                             @NonNull Instants instants,
+                             @NonNull ChatMessageDispatcher messageDispatcher) {
+        this.identification = identification;
         this.twitchChatStateListener = new TwitchChatStateListener(oAuthData);
         this.twitchChatStateManager = new TwitchChatStateManager(oAuthData.getLogin(), twitchChatStateListener, instants);
         this.channelJoiner = Looper.scheduled(new ChannelJoiner(channelProvider, twitchChatStateManager), Duration.ofSeconds(1), Duration.ofSeconds(10));
         this.twitchChatStateListener.addChatListener(this);
+        this.messageDispatcher = messageDispatcher;
     }
 
     @Override
@@ -104,5 +114,8 @@ public class DefaultTwitchChat implements TwitchChat, TwitchChatListener {
 
     @Override
     public void onReceivedMessage(@NonNull Instant receptionInstant, @NonNull MessageFromTwitch message) {
+        final var payload = MessageData.fromFpc(message.getIrcParsing());
+        final var chatMessage = new ChatMessage(identification,payload);
+        messageDispatcher.sendMessage(chatMessage);
     }
 }

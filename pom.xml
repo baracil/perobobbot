@@ -106,6 +106,16 @@
 
             <dependency>
                 <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-callback-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-callback-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-web-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -229,7 +239,6 @@
                 <configuration>
                     <!-- Uncomment to enable incremental compilation -->
                     <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
-
                     <annotationProcessorPaths combine.self="override">
                         <path>
                             <groupId>org.projectlombok</groupId>

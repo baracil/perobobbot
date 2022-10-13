@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import perobobbot.api.JoinedChannelProvider;
 import perobobbot.api.data.view.UserIdentity;
 import perobobbot.api.oauth.OAuthDataFactory;
+import perobobbot.chat.api.ChatMessageDispatcher;
 import perobobbot.twitch.chat.TwitchChat;
 import perobobbot.twitch.chat.TwitchChatFactory;
 import perobobbot.twitch.chat.impl._private.DefaultTwitchChat;
@@ -15,6 +16,7 @@ import perobobbot.twitch.chat.impl._private.DefaultTwitchChat;
 @RequiredArgsConstructor
 public class DefaultTwitchChatFactory implements TwitchChatFactory {
 
+    private final @NonNull ChatMessageDispatcher messageDispatcher;
     private final @NonNull OAuthDataFactory authDataFactory;
     private final @NonNull JoinedChannelProvider joinedChannelProvider;
     private final @NonNull Instants instants;
@@ -22,8 +24,10 @@ public class DefaultTwitchChatFactory implements TwitchChatFactory {
     @Override
     public @NonNull TwitchChat create(@NonNull UserIdentity userIdentity) {
         return new DefaultTwitchChat(
+                userIdentity.identification(),
                 authDataFactory.create(userIdentity),
                 joinedChannelProvider.forUserIdentity(userIdentity.id()),
-                instants);
+                instants,
+                messageDispatcher);
     }
 }

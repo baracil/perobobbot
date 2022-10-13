@@ -1,0 +1,29 @@
+= TWITCH Packages
+
+== perobobbot.twitch.api
+
+The common structures used by all twitch packages
+
+== perobobbot.twitch.service.api
+
+The interfaces of the services used communicate with Twitch
+
+== perobobbot.twitch.chat
+
+The interfaces and structures used for to connect/listen to Twitch chat.
+
+== perobobbot.twitch.service.client
+
+The implementations of the services using web clients to request the Twitch API
+
+== perobobbot.twitch.web.client
+
+The declaration client to perform the request to the Twitch API
+
+== perobobbot.twitch.chat.impl
+
+Implementation of the Twitch chat
+
+== perobobbot.twitch.oauth
+
+Classes used to perform OAuth and token injection

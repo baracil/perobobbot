@@ -14,8 +14,7 @@ open module perobobbot.launcher {
     requires org.bouncycastle.provider;
     requires com.google.common;
 
-    requires discovery.zookeeper.api;
-    requires discovery.zookeeper.curator;
+    requires com.fasterxml.jackson.databind;
 
     requires perobobbot.api;
     requires perobobbot.oauth;

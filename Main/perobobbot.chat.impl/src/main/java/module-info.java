@@ -9,6 +9,7 @@ module perobobbot.chat.impl {
 
     requires jakarta.annotation;
     requires io.micronaut.core;
+    requires io.micronaut.runtime;
     requires jakarta.inject;
 
     exports perobobbot.chat.impl;
