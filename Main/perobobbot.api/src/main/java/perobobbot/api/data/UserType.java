@@ -1,6 +1,6 @@
 package perobobbot.api.data;
 
-public enum UserIdentityType {
+public enum UserType {
     BOT,
     BROADCASTER,
     VIEWER

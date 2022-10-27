@@ -7,12 +7,12 @@ import lombok.NonNull;
 import perobobbot.api.Identification;
 import perobobbot.api.data.JoinedChannel;
 import perobobbot.api.data.Platform;
-import perobobbot.api.data.UserIdentityType;
+import perobobbot.api.data.UserType;
 
 @Serdeable
 public record UserIdentity(long id,
                            @NonNull Identification identification,
-                           @NonNull UserIdentityType userIdentityType,
+                           @NonNull UserType userType,
                            @NonNull String login, @NonNull String name,
                            @NonNull ImmutableList<JoinedChannel> joinedChannels) {
     @JsonIgnore

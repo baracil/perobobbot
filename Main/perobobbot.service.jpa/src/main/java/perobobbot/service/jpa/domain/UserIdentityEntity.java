@@ -5,7 +5,7 @@ import lombok.*;
 import perobobbot.api.Identification;
 import perobobbot.api.UserInfo;
 import perobobbot.api.data.Platform;
-import perobobbot.api.data.UserIdentityType;
+import perobobbot.api.data.UserType;
 import perobobbot.api.data.view.UserIdentity;
 import perobobbot.api.data.view.UserToken;
 
@@ -39,7 +39,7 @@ public class UserIdentityEntity extends BaseEntity {
 
     @Column(name = "USER_TYPE", nullable = false)
     @Enumerated(EnumType.STRING)
-    private @NonNull UserIdentityType userIdentityType;
+    private @NonNull UserType userType;
 
     @OneToOne(mappedBy = "userIdentity", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserTokenEntity tokenEntity;
@@ -48,13 +48,13 @@ public class UserIdentityEntity extends BaseEntity {
     private @NonNull List<JoinedChannelEntity> joinedChannels = new ArrayList<>();
 
 
-    public static @NonNull UserIdentityEntity createWith(@NonNull UserInfo userInfo, @NonNull UserIdentityType userIdentityType) {
+    public static @NonNull UserIdentityEntity createWith(@NonNull UserInfo userInfo, @NonNull UserType userType) {
         return new UserIdentityEntity(
                 userInfo.platform(),
                 userInfo.userId(),
                 userInfo.login(),
                 userInfo.name(),
-                userIdentityType,
+                userType,
                 null,
                 new ArrayList<>());
     }
@@ -63,7 +63,7 @@ public class UserIdentityEntity extends BaseEntity {
         return new UserIdentity(
                 getId(),
                 createIdentification(),
-                userIdentityType,
+                userType,
                 login,
                 name,
                 joinedChannels.stream().map(JoinedChannelEntity::toView).collect(ImmutableList.toImmutableList())

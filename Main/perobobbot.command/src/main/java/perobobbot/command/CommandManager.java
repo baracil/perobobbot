@@ -10,5 +10,5 @@ public interface CommandManager {
     @NonNull Subscription addCommand(@NonNull String command,
                                      @NonNull Consumer1<? super CommandBinding> execution);
 
-    void handleMessage(@NonNull UserIdentity sender, @NonNull String message);
+    void handleMessage(@NonNull UserIdentity sender, @NonNull String channelName, @NonNull String message);
 }

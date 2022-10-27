@@ -9,19 +9,21 @@ import perobobbot.api.UserInfo;
 @Fallback
 public class DefaultUserTypeProvider implements UserTypeProvider {
 
+    public static final Platform TWITCH = new Platform("TWITCH");
+
     @Override
-    public @NonNull UserIdentityType getUserType(@NonNull UserInfo userInfo) {
-        if (userInfo.platform().equals(new Platform("TWITCH"))) {
+    public @NonNull UserType getUserType(@NonNull UserInfo userInfo) {
+        if (userInfo.platform().equals(TWITCH)) {
             return getTwitchUserType(userInfo);
         }
-        return UserIdentityType.VIEWER;
+        return UserType.VIEWER;
     }
 
-    private UserIdentityType getTwitchUserType(UserInfo userInfo) {
+    private UserType getTwitchUserType(UserInfo userInfo) {
         return switch (userInfo.login().toLowerCase()) {
-            case "perococco" -> UserIdentityType.BROADCASTER;
-            case "perobobbot" -> UserIdentityType.BOT;
-            default -> UserIdentityType.VIEWER;
+            case "perococco" -> UserType.BROADCASTER;
+            case "perobobbot" -> UserType.BOT;
+            default -> UserType.VIEWER;
         };
     }
 }

@@ -4,7 +4,6 @@ import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
-import perobobbot.api.data.Channel;
 
 /**
  * @author Bastien Aracil
@@ -23,11 +22,6 @@ public class TwitchChannel {
         } else {
             return new TwitchChannel(channelName.toLowerCase());
         }
-    }
-
-    @NonNull
-    public static TwitchChannel create(@NonNull Channel channel) {
-        return create(channel.name());
     }
 
     @Override

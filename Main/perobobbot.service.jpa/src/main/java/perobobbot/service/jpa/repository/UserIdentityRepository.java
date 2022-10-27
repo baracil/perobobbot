@@ -8,7 +8,7 @@ import lombok.NonNull;
 import perobobbot.api.Identification;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.UnknownUserIdentityId;
-import perobobbot.api.data.UserIdentityType;
+import perobobbot.api.data.UserType;
 import perobobbot.service.jpa.domain.UserIdentityEntity;
 
 import java.util.Optional;
@@ -21,9 +21,9 @@ public interface UserIdentityRepository extends JpaRepository<UserIdentityEntity
 
     @NonNull Optional<UserIdentityEntity> findByPlatformAndUserId(@NonNull Platform platform, @NonNull String userId);
 
-    @NonNull Optional<UserIdentityEntity> findByPlatformAndUserIdentityType(@NonNull Platform platform, @NonNull UserIdentityType userIdentityId);
+    @NonNull Optional<UserIdentityEntity> findByPlatformAndUserType(@NonNull Platform platform, @NonNull UserType userIdentityId);
 
-    @NonNull Stream<UserIdentityEntity> findByUserIdentityType(@NonNull UserIdentityType userIdentityType);
+    @NonNull Stream<UserIdentityEntity> findByUserType(@NonNull UserType userType);
 
     default @NonNull UserIdentityEntity getById(long userIdentityId) {
         return findById(userIdentityId).orElseThrow(() -> new UnknownUserIdentityId(userIdentityId));

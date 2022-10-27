@@ -4,6 +4,7 @@ import fpc.tools.fp.Consumer1;
 import fpc.tools.lang.Subscription;
 import lombok.NonNull;
 import lombok.Synchronized;
+import perobobbot.api.data.Platform;
 import perobobbot.api.data.view.UserIdentity;
 import perobobbot.command.CommandBinding;
 import perobobbot.command.CommandManager;
@@ -46,8 +47,14 @@ public class PeroCommandManager implements CommandManager {
 
     @Override
     @Synchronized
-    public void handleMessage(@NonNull UserIdentity userIdentity,  @NonNull String message) {
-        final var name = extractName(message.trim());
+    public void handleMessage(@NonNull UserIdentity sender,
+                              @NonNull String channelName,
+                              @NonNull String message) {
+        final var prepareMessage=  prepareMessage(sender.platform(),message);
+        if (prepareMessage == null) {
+            return;
+        }
+        final var name = extractName(prepareMessage);
         final var set = commands.get(name);
         if (set == null) {
             return;
@@ -59,6 +66,15 @@ public class PeroCommandManager implements CommandManager {
         }
 
     }
+
+    private String prepareMessage(@NonNull Platform platform, @NonNull String message) {
+        final var trimmed = message.trim();
+        return switch (platform.name()) {
+            case "TWITCH" -> trimmed.startsWith("!")?trimmed.substring(1):null;
+            default -> null;
+        };
+    }
+
 
     private @NonNull String extractName(@NonNull String message) {
         final var idx = message.indexOf(" ");

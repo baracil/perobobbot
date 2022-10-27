@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import perobobbot.api.Identification;
 import perobobbot.api.data.JoinedChannel;
 import perobobbot.api.data.Platform;
-import perobobbot.api.data.UserIdentityType;
+import perobobbot.api.data.UserType;
 import perobobbot.api.data.view.UserIdentity;
 import perobobbot.service.api.NoBotDefined;
 import perobobbot.service.api.UserIdentityService;
@@ -50,13 +50,13 @@ public class JpaUserIdentityService implements UserIdentityService {
 
     @Override
     public @NonNull UserIdentity getBotForPlatform(@NonNull Platform platform) {
-        return userIdentityRepository.findByPlatformAndUserIdentityType(platform, UserIdentityType.BOT)
+        return userIdentityRepository.findByPlatformAndUserType(platform, UserType.BOT)
                 .orElseThrow(() -> new NoBotDefined(platform)).toView();
     }
 
     @Override
     public @NonNull Optional<UserIdentity> findBotForPlatform(@NonNull Platform platform) {
-        return userIdentityRepository.findByPlatformAndUserIdentityType(platform,UserIdentityType.BOT)
+        return userIdentityRepository.findByPlatformAndUserType(platform, UserType.BOT)
                                      .map(UserIdentityEntity::toView);
     }
 
@@ -96,8 +96,8 @@ public class JpaUserIdentityService implements UserIdentityService {
 
     @Override
     public @NonNull ImmutableMap<Identification,UserIdentity> findBots() {
-        return userIdentityRepository.findByUserIdentityType(UserIdentityType.BOT)
+        return userIdentityRepository.findByUserType(UserType.BOT)
                                      .map(UserIdentityEntity::toView)
-                                     .collect(ImmutableMap.toImmutableMap(u -> u.identification(),u -> u));
+                                     .collect(ImmutableMap.toImmutableMap(UserIdentity::identification, u -> u));
     }
 }
