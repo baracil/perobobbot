@@ -15,7 +15,7 @@ public class CallbackController implements WebService {
 
     private final @NonNull CallbackManager callbackManager;
 
-    @Get("/{id}")
+    @Get("/{id}/**")
     public HttpResponse<?> get(@NonNull String id, @NonNull HttpRequest<?> request) {
         System.out.println("GET");
         return callbackManager.findCallback(id)

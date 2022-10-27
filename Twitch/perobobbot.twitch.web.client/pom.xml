@@ -19,6 +19,10 @@
             <artifactId>micronaut-http-client</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>perobobbot-twitch</groupId>
+            <artifactId>perobobbot-twitch-web-dto</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>perobobbot-twitch</groupId>

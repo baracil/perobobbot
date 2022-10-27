@@ -6,6 +6,10 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.chat.api.ChatMessage;
 import perobobbot.chat.api.ChatMessageDispatcher;
+import perobobbot.chat.api.irc.MessageData;
+import perobobbot.chat.api.irc.Tag;
+
+import java.util.Map;
 
 @Singleton
 @Fallback
@@ -18,6 +22,7 @@ public class FallbackChatMessageDispatcher implements ChatMessageDispatcher {
 
     @Override
     public void sendMessage(@NonNull ChatMessage message) {
-        System.out.println(message);
+        final var messageData = message.data();
+        System.out.println(messageData.getCommand());
     }
 }

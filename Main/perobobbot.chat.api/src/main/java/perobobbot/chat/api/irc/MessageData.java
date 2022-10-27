@@ -63,4 +63,8 @@ public class MessageData {
                 Params.fromFpc(ircParsing.getParams())
         );
     }
+
+    public Optional<String> getPrivateMessage() {
+        return null;
+    }
 }

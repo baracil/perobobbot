@@ -5,7 +5,7 @@ import io.micronaut.http.annotation.QueryValue;
 import io.micronaut.http.client.annotation.Client;
 import lombok.NonNull;
 import perobobbot.twitch.api.Twitch;
-import perobobbot.twitch.web.client.dto.GetChannelInformationResponse;
+import perobobbot.twitch.web.dto.GetChannelInformationResponse;
 
 import java.util.Set;
 

@@ -23,9 +23,11 @@
         <module>perobobbot.twitch.oauth</module>
         <module>perobobbot.twitch.chat</module>
         <module>perobobbot.twitch.chat.impl</module>
+        <module>perobobbot.twitch.web.dto</module>
         <module>perobobbot.twitch.web.client</module>
         <module>perobobbot.twitch.service.api</module>
         <module>perobobbot.twitch.service.client</module>
+        <module>perobobbot.twitch.eventsub</module>
     </modules>
 
 
