@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
     Path project = Path.of("/home/perococco/dev/stream/perobobbot/perobobbot");
 
-    Path targetDir = project.resolve("Bom/bom");
-    Path sourceDir = project.resolve("Bom/bom-generator");
+    Path targetDir = project.resolve("bom/bom");
+    Path sourceDir = project.resolve("bom/bom-generator");
 
     Bom bom = BomReader.read();
 
