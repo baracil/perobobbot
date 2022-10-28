@@ -45,14 +45,25 @@
     </properties>
 
     <modules>
+        <module>bot</module>
+
+<!--        <module>Main/perobobbot.command</module>-->
+<!--        <module>Main/perobobbot.oauth</module>-->
+
+<!--        <module>Main/perobobbot.chat.impl</module>-->
+<!--        <module>Main/perobobbot.callback.impl</module>-->
+<!--        <module>Main/perobobbot.web.client</module>-->
+<!--        <module>Main/perobobbot.web.controller</module>-->
 
 
-        <module>Main</module>
-        <module>Twitch</module>
-        <module>perobobbot.launcher</module>
+<!--        <module>Main/perobobbot.service.jpa</module>-->
 
-        <module>Bom/bom-generator</module>
-        <module>Bom/bom</module>
+
+
+<!--        <module>Twitch</module>-->
+
+        <module>bom/bom-generator</module>
+        <module>bom/bom</module>
 
 
     </modules>
@@ -69,167 +80,16 @@
         </dependency>
     </dependencies>
 
+
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>io.netty</groupId>
-                <artifactId>netty-codec-socks</artifactId>
-                <version>${netty.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>perobobbot.discovery</groupId>
-                <artifactId>discovery-zookeeper-api</artifactId>
-                <version>${zookeeper-discovery.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot.discovery</groupId>
-                <artifactId>discovery-zookeeper-curator</artifactId>
-                <version>${zookeeper-discovery.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-chat-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-chat-impl</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-callback-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-callback-impl</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-web-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-web-client</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-web-controller</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-oauth</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-service-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-service-jpa</artifactId>
-                <version>${project.version}</version>
-            </dependency>
             <dependency>
                 <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-launcher</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
-
-            <dependency>
-                <groupId>perobobbot-twitch</groupId>
-                <artifactId>perobobbot-twitch-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot-twitch</groupId>
-                <artifactId>perobobbot-twitch-oauth</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot-twitch</groupId>
-                <artifactId>perobobbot-twitch-web-dto</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot-twitch</groupId>
-                <artifactId>perobobbot-twitch-web-client</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot-twitch</groupId>
-                <artifactId>perobobbot-twitch-service-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot-twitch</groupId>
-                <artifactId>perobobbot-twitch-service-client</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot-twitch</groupId>
-                <artifactId>perobobbot-twitch-chat</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot-twitch</groupId>
-                <artifactId>perobobbot-twitch-chat-impl</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot-twitch</groupId>
-                <artifactId>perobobbot-twitch-eventsub</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
-
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>31.0.1-jre</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.google.code.findbugs</groupId>
-                        <artifactId>jsr305</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
-                <groupId>net.femtoparsec.tools</groupId>
-                <artifactId>fpc-tools-bom</artifactId>
-                <version>${fpc-tools.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>jplugman</groupId>
-                <artifactId>jplugman-bom</artifactId>
-                <version>${jplugman.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
         </dependencies>
     </dependencyManagement>
-
 
     <build>
         <resources>
