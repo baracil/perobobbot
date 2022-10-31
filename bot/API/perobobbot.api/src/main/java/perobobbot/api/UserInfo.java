@@ -4,15 +4,15 @@ import lombok.NonNull;
 import perobobbot.api.data.Platform;
 
 public record UserInfo(
-        @NonNull Identification identification,
+        @NonNull Identity identity,
         @NonNull String login,
-        @NonNull String name) implements Identification.Provider {
+        @NonNull String name) implements Identity.Provider {
 
     public @NonNull Platform platform() {
-        return identification.platform();
+        return identity.platform();
     }
 
     public @NonNull String userId() {
-        return identification.userId();
+        return identity.userId();
     }
 }

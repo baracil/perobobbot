@@ -21,13 +21,12 @@ open module perobobbot.launcher {
     requires perobobbot.oauth;
     requires perobobbot.service.api;
     requires perobobbot.twitch.chat;
-    requires perobobbot.twitch.chat.impl;
+//    requires perobobbot.twitch.chat.impl;
 
     requires jplugman.base;
 
     requires fpc.tools.lang;
     requires fpc.tools.state;
-    requires fpc.tools.serde;
     requires fpc.tools.cipher;
     requires fpc.tools.micronaut;
     requires io.micronaut.runtime;

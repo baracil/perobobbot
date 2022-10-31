@@ -52,7 +52,8 @@ public class DefaultOAuthManager implements OAuthManager {
     public ApplicationToken.Decrypted getAppToken(@NonNull Platform platform) {
         final var application = applicationService.getApplication(platform);
         final var platformOAuth = platforms.get(platform);
-        return platformOAuth.getAppToken(application);
+        final var token =  platformOAuth.getAppToken(application);
+        return applicationService.saveApplicationToken(token);
     }
 
     @Override

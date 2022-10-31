@@ -11,6 +11,9 @@ import perobobbot.twitch.api.Twitch;
 import perobobbot.twitch.chat.TwitchChatFactory;
 import perobobbot.twitch.chat.impl._private.wrapping.TwitchChatWrapper;
 
+/**
+ * Adapt a {@link TwitchChatFactory} to a {@link PlatformChatFactory}
+ */
 @RequiredArgsConstructor
 @Singleton
 public class PlatformChatFactoryWrapper implements PlatformChatFactory {

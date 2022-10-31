@@ -20,6 +20,14 @@ curator:
     port: 9090
     ssl-port: -1
 
+
 perobobbot:
   data:
-    dbPassPhrase: ${DB_PASSPHRASE}
+    user: Perobobbot
+    dbPassPhrase: pass-phrase
+  plugin:
+    folder: /home/perococco/Perobobbot/plugins
+  eventsub:
+    secret: 8Aasd*()AS(D23{@!ASFD987AS@!&*ASC
+
+

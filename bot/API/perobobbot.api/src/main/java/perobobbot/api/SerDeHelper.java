@@ -5,5 +5,6 @@ import lombok.NonNull;
 
 public interface SerDeHelper {
 
-    @NonNull ImmutableMap<String,String> deser(@NonNull String data);
+    @NonNull String serializeMap(@NonNull ImmutableMap<String,String> map);
+    @NonNull ImmutableMap<String,String> deserializeMap(@NonNull String data);
 }

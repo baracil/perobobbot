@@ -44,12 +44,14 @@ public class TwitchRequestValidator {
     private @NonNull Optional<TwitchRequestContent<String>> validate() {
         this.retrieveTwitchHeaders();
         if (!areAllHeadersDefined()) {
+            LOG.warn("Missing some headers in the request");
             return Optional.empty();
         }
         this.readRequestBodyContent();
         this.computeMacSignatureBytes();
         this.transformSignatureBytesToString();
         if (!isRequestValid()) {
+            LOG.warn("Request from Twitch is not valid");
             return Optional.empty();
         }
         final var bodyAsString = new String(bodyContent, request.getCharacterEncoding());
@@ -57,10 +59,10 @@ public class TwitchRequestValidator {
     }
 
     private void retrieveTwitchHeaders() {
-        messageId = TwitchEventSubHeader.TWITCH_EVENTSUB_MESSAGE_ID.getHeader(request).orElse(null);
-        timeStamp = TwitchEventSubHeader.TWITCH_EVENTSUB_MESSAGE_TIMESTAMP.getHeader(request).orElse(null);
-        type = TwitchEventSubHeader.TWITCH_EVENTSUB_MESSAGE_TYPE.getHeader(request).orElse(null);
-        signature = TwitchEventSubHeader.TWITCH_EVENTSUB_MESSAGE_SIGNATURE.getHeader(request).orElse(null);
+        messageId = TwitchEventSubConstant.TWITCH_EVENTSUB_MESSAGE_ID.getHeader(request).orElse(null);
+        timeStamp = TwitchEventSubConstant.TWITCH_EVENTSUB_MESSAGE_TIMESTAMP.getHeader(request).orElse(null);
+        type = TwitchEventSubConstant.TWITCH_EVENTSUB_MESSAGE_TYPE.getHeader(request).orElse(null);
+        signature = TwitchEventSubConstant.TWITCH_EVENTSUB_MESSAGE_SIGNATURE.getHeader(request).orElse(null);
         LOG.debug("Received request from Twitch");
         LOG.debug(" messageId : {} ", messageId);
         LOG.debug(" timeStamp : {} ", timeStamp);

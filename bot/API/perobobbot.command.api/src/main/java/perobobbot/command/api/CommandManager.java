@@ -7,6 +7,9 @@ import perobobbot.api.data.UserIdentity;
 
 public interface CommandManager {
 
+    int VERSION = 1;
+
+
     @NonNull Subscription addCommand(@NonNull String command,
                                      @NonNull Consumer1<? super CommandBinding> execution);
 

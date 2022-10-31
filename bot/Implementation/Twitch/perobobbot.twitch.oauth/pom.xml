@@ -20,7 +20,6 @@
             <artifactId>micronaut-http-client</artifactId>
         </dependency>
 
-
         <dependency>
             <groupId>perobobbot</groupId>
             <artifactId>perobobbot-twitch-api</artifactId>

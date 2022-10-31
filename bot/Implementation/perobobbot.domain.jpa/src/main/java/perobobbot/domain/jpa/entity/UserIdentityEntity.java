@@ -2,7 +2,7 @@ package perobobbot.domain.jpa.entity;
 
 import com.google.common.collect.ImmutableList;
 import lombok.*;
-import perobobbot.api.Identification;
+import perobobbot.api.Identity;
 import perobobbot.api.UserInfo;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.UserIdentity;
@@ -70,19 +70,19 @@ public class UserIdentityEntity extends BaseEntity {
         );
     }
 
-    public @NonNull Identification createIdentification() {
-        return new Identification(platform, userId);
+    public @NonNull Identity createIdentification() {
+        return new Identity(platform, userId);
     }
 
     public @NonNull UserIdentityEntity updateToken(@NonNull UserToken.Encrypted userToken) {
-        createIdentification().checkSameIdentity(userToken.identification());
+        createIdentification().checkSameIdentity(userToken.identity());
         this.tokenEntity = UserTokenEntity.createWith(this, userToken);
         return this;
     }
 
 
-    public boolean isSameIdentity(@NonNull Identification identification) {
-        return identification.isSameIdentity(platform, userId);
+    public boolean isSameIdentity(@NonNull Identity identity) {
+        return identity.isSameIdentity(platform, userId);
     }
 
     public @NonNull JoinedChannelEntity joinedChannel(@NonNull String channelName, boolean readOnly) {

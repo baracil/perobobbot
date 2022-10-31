@@ -5,8 +5,8 @@ import io.micronaut.http.annotation.*;
 import io.micronaut.http.client.annotation.Client;
 import lombok.NonNull;
 import perobobbot.twitch.api.Twitch;
-import perobobbot.twitch.web.api.eventsub.TwitchSubscriptionData;
-import perobobbot.twitch.web.api.eventsub.TwitchSubscriptionRequest;
+import perobobbot.twitch.api.eventsub.TwitchSubscriptionData;
+import perobobbot.twitch.api.eventsub.TwitchSubscriptionRequest;
 
 @Client(Twitch.HELIX_URL)
 public interface EventSubClient {

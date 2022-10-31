@@ -2,10 +2,12 @@ package perobobbot.command.impl;
 
 import fpc.tools.fp.Consumer1;
 import fpc.tools.lang.Subscription;
+import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.Synchronized;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.UserIdentity;
+import perobobbot.api.plugin.PerobobbotService;
 import perobobbot.command.api.CommandBinding;
 import perobobbot.command.api.CommandManager;
 
@@ -14,6 +16,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+@Singleton
+@PerobobbotService(serviceType = CommandManager.class, apiVersion = CommandManager.VERSION)
 public class PeroCommandManager implements CommandManager {
 
     private final @NonNull CommandParser parser = CommandParser.chain(CommandParser.fullMatch(), CommandParser.regexp());

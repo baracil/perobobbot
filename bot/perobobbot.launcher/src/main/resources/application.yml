@@ -24,3 +24,8 @@ jpa:
       hibernate:
         hbm2ddl:
           auto: update
+perobobbot:
+  oauth:
+    defaultIds:
+      TWITCH: "Perococco"
+      DISCORD: "toto"

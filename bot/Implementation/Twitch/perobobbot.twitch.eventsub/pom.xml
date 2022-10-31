@@ -17,8 +17,39 @@
     <dependencies>
         <dependency>
             <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-twitch-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
             <artifactId>perobobbot-callback-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-tools</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-twitch-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-twitch-service-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-service-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-runtime</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-context</artifactId>
+        </dependency>
+
+
     </dependencies>
 
 </project>

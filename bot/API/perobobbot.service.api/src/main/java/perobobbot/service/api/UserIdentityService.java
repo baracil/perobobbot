@@ -4,10 +4,12 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
-import perobobbot.api.Identification;
+import perobobbot.api.Id;
+import perobobbot.api.Identity;
 import perobobbot.api.JoinedChannelProvider;
 import perobobbot.api.data.JoinedChannel;
 import perobobbot.api.data.Platform;
+import perobobbot.api.data.UnknownUserId;
 import perobobbot.api.data.UserIdentity;
 
 import java.util.Optional;
@@ -21,8 +23,15 @@ public interface UserIdentityService extends JoinedChannelProvider {
      */
     @NonNull UserIdentity getUserIdentity(long userIdentityId);
 
+    default @NonNull UserIdentity getUserIdentity(@NonNull Id id) {
+        return findUserIdentity(id).orElseThrow(() -> new UnknownUserId(id));
+    }
+
+    @NonNull Optional<UserIdentity> findUserIdentity(@NonNull Id id);
+
     /**
      * List all the user identities
+     *
      * @param page the page number
      * @param size the size of the page (-1 for no size)
      * @return a list of the {@link UserIdentity} for the provided page information
@@ -43,5 +52,5 @@ public interface UserIdentityService extends JoinedChannelProvider {
 
     @NonNull Optional<UserIdentity> findBotForPlatform(@NonNull Platform platform);
 
-    @NonNull ImmutableMap<Identification, UserIdentity> findBots();
+    @NonNull ImmutableMap<Identity, UserIdentity> findBots();
 }

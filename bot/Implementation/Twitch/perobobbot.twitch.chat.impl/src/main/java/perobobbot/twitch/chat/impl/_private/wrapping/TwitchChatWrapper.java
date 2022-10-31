@@ -11,6 +11,9 @@ import perobobbot.twitch.chat.message.to.MessageToTwitch;
 
 import java.util.concurrent.CompletionStage;
 
+/**
+ * Wrap a {@link TwitchChat} to a simple {@link Chat}
+ */
 @RequiredArgsConstructor
 public class TwitchChatWrapper implements Chat {
 
@@ -27,8 +30,8 @@ public class TwitchChatWrapper implements Chat {
     }
 
     @Override
-    public void requestDisconnection() {
-        twitchChat.requestDisconnection();
+    public @NonNull CompletionStage<?> requestDisconnection() {
+        return twitchChat.requestDisconnection();
     }
 
     @Override

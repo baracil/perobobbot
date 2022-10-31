@@ -32,10 +32,6 @@
             <artifactId>micronaut-http</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.micronaut.serde</groupId>
-            <artifactId>micronaut-serde-api</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>

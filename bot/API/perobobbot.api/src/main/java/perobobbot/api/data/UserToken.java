@@ -8,16 +8,16 @@ import fpc.tools.cipher.TextEncryptor;
 import fpc.tools.lang.Secret;
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.NonNull;
-import perobobbot.api.Identification;
+import perobobbot.api.Identity;
 import perobobbot.api.Scope;
 
 import java.time.Instant;
 
 public sealed interface UserToken<T>
-        extends Decryptable<UserToken.Decrypted>, Encryptable<UserToken.Encrypted>, Identification.Provider
+        extends Decryptable<UserToken.Decrypted>, Encryptable<UserToken.Encrypted>, Identity.Provider
         permits UserToken.Encrypted, UserToken.Decrypted {
 
-    @NonNull Identification identification();
+    @NonNull Identity identity();
 
     @NonNull T accessToken();
 
@@ -32,11 +32,11 @@ public sealed interface UserToken<T>
     @NonNull UserTokenBuilder<T> toBuilder();
 
     default @NonNull Platform platform() {
-        return identification().platform();
+        return identity().platform();
     }
 
     @Serdeable
-    record Decrypted(@NonNull Identification identification,
+    record Decrypted(@NonNull Identity identity,
                      @NonNull Secret accessToken,
                      @NonNull Secret refreshToken, @NonNull Instant expirationInstant,
                      @NonNull ImmutableSet<Scope> scopes,
@@ -50,7 +50,7 @@ public sealed interface UserToken<T>
         @Override
         public @NonNull UserToken.Encrypted encrypt(@NonNull TextEncryptor textEncryptor) {
             return new Encrypted(
-                    identification,
+                    identity,
                     textEncryptor.encrypt(accessToken),
                     textEncryptor.encrypt(refreshToken),
                     expirationInstant,
@@ -70,7 +70,7 @@ public sealed interface UserToken<T>
     }
 
     @Serdeable
-    record Encrypted(@NonNull Identification identification,
+    record Encrypted(@NonNull Identity identity,
                      @NonNull String accessToken,
                      @NonNull String refreshToken, @NonNull Instant expirationInstant,
                      @NonNull ImmutableSet<Scope> scopes, @NonNull String tokenType) implements UserToken<String> {
@@ -87,7 +87,7 @@ public sealed interface UserToken<T>
         @Override
         public @NonNull UserToken.Decrypted decrypt(@NonNull TextDecryptor textDecryptor) {
             return new Decrypted(
-                    identification,
+                    identity,
                     textDecryptor.decrypt(accessToken),
                     textDecryptor.decrypt(refreshToken),
                     expirationInstant,

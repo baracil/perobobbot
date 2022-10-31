@@ -10,6 +10,7 @@ module perobobbot.twitch.oauth {
 
     requires java.sql;
     requires jakarta.inject;
+    requires jakarta.annotation;
 
     requires io.micronaut.serde.serde_api;
     requires com.fasterxml.jackson.annotation;

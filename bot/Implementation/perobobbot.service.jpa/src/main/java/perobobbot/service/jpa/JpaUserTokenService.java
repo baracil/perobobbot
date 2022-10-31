@@ -48,7 +48,7 @@ public class JpaUserTokenService implements UserTokenService {
     @Override
     public void setUserToken(@NonNull TokenWithIdentity tokenWithIdentity) {
 
-        final var identity = userIdentityRepository.findByIdentification(tokenWithIdentity.identification()).orElse(null);
+        final var identity = userIdentityRepository.findByIdentification(tokenWithIdentity.identity()).orElse(null);
         final var encrypted = tokenWithIdentity.getEncryptedToken(textCipher);
 
         if (identity == null) {

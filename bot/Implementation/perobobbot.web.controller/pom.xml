@@ -41,14 +41,6 @@
             <artifactId>guava</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>io.micronaut.serde</groupId>
-            <artifactId>micronaut-serde-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.serde</groupId>
-            <artifactId>micronaut-serde-jackson</artifactId>
-        </dependency>
 
 
         <dependency>

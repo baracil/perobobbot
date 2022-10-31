@@ -9,7 +9,6 @@ import jplugman.base.JPlugman;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.launcher.PerobobbotConfiguration;
-import perobobbot.oauth.api.OAuthManager;
 
 import javax.annotation.PreDestroy;
 
@@ -22,7 +21,7 @@ public class PerobobbotJPlugman implements ApplicationEventListener<ServiceReady
 
     public PerobobbotJPlugman(@NonNull ApplicationContext applicationContext,
                               @NonNull PerobobbotConfiguration configuration) {
-        final var application = new PluginApplication(VersionedServiceLister.list(applicationContext), applicationContext.getBean(OAuthManager.class));
+        final var application = new PluginApplication(VersionedServiceLister.list(applicationContext));
         this.jPlugman = new JPlugman(application, configuration.getPlugin().getFolder());
     }
 

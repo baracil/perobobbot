@@ -2,15 +2,15 @@ package perobobbot.service.api;
 
 import lombok.Getter;
 import lombok.NonNull;
-import perobobbot.api.Identification;
+import perobobbot.api.Identity;
 
 @Getter
 public class UserNotFound extends DomainException {
 
-    private final @NonNull Identification identification;
+    private final @NonNull Identity identity;
 
-    public UserNotFound(@NonNull Identification identification) {
-        super("Could not find any user on platform '"+identification.platform()+"' with user Id '"+identification.userId()+"'");
-        this.identification = identification;
+    public UserNotFound(@NonNull Identity identity) {
+        super("Could not find any user on platform '"+ identity.platform()+"' with user Id '"+ identity.userId()+"'");
+        this.identity = identity;
     }
 }

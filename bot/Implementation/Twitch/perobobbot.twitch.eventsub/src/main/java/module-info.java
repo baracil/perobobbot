@@ -3,11 +3,27 @@ module perobobbot.twitch.eventsub {
     requires java.desktop;
 
     requires io.micronaut.http;
+    requires io.micronaut.inject;
+    requires io.micronaut.context;
 
     requires fpc.tools.lang;
 
+    requires jakarta.inject;
+    requires jakarta.annotation;
+    requires com.google.common;
+    requires org.slf4j;
+
+    requires com.fasterxml.jackson.databind;
+
+    requires perobobbot.tools;
     requires perobobbot.api;
+    requires perobobbot.twitch.api;
     requires perobobbot.callback.api;
+    requires perobobbot.service.api;
+    requires perobobbot.twitch.service.api;
+
 
     exports perobobbot.twitch.eventsub;
+    exports perobobbot.twitch.eventsub.callback;
+    exports perobobbot.twitch.eventsub.sync;
 }

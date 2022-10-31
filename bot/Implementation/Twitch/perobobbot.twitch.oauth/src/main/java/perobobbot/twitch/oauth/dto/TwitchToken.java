@@ -6,11 +6,12 @@ import fpc.tools.lang.Secret;
 import fpc.tools.lang.Todo;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.serde.annotation.Serdeable;
+import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Value;
-import perobobbot.api.Identification;
+import perobobbot.api.Identity;
 import perobobbot.api.Scope;
 import perobobbot.api.data.ApplicationToken;
 import perobobbot.api.data.UserToken;
@@ -29,12 +30,14 @@ public class TwitchToken {
     @JsonProperty("access_token")
     @NonNull String accessToken;
     @JsonProperty("refresh_token")
+    @Nullable
     String refreshToken;
     @JsonProperty("expires_in")
     double expiresIn;
 
     @JsonProperty("scope")
     @Getter(AccessLevel.NONE)
+    @Nullable
     String[] scope;
     @JsonProperty("token_type")
     @NonNull String tokenType;
@@ -43,7 +46,7 @@ public class TwitchToken {
         return new ApplicationToken.Decrypted(Twitch.PLATFORM, Secret.of(accessToken), now.plusSeconds((long) expiresIn));
     }
 
-    public @NonNull UserToken.Decrypted toUserToken(@NonNull Identification identification, @NonNull Instant now) {
+    public @NonNull UserToken.Decrypted toUserToken(@NonNull Identity identity, @NonNull Instant now) {
 
         final var twitchScopes = prepareScopes();
         final long duration = (long) expiresIn;
@@ -53,7 +56,7 @@ public class TwitchToken {
         }
 
         return new UserToken.Decrypted(
-                identification,
+                identity,
                 Secret.of(accessToken),
                 Secret.of(refreshToken),
                 now.plusSeconds(duration),

@@ -24,7 +24,7 @@ public class DefaultTwitchChatFactory implements TwitchChatFactory {
     @Override
     public @NonNull TwitchChat create(@NonNull UserIdentity userIdentity) {
         return new DefaultTwitchChat(
-                userIdentity.identification(),
+                userIdentity.identity(),
                 authDataFactory.create(userIdentity),
                 joinedChannelProvider.forUserIdentity(userIdentity.id()),
                 instants,

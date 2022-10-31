@@ -1,28 +1,27 @@
 package perobobbot.chat.impl;
 
 import com.google.common.collect.Sets;
-import fpc.tools.lang.LoopAction;
-import fpc.tools.lang.Looper;
+import fpc.tools.fp.Nil;
 import fpc.tools.lang.ThrowableTool;
 import fpc.tools.micronaut.EagerInit;
-import jakarta.annotation.PostConstruct;
+import io.micronaut.scheduling.annotation.Scheduled;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
-import perobobbot.api.Identification;
+import perobobbot.api.Identity;
 import perobobbot.api.data.UserIdentity;
 import perobobbot.chat.api.*;
 import perobobbot.service.api.UserIdentityService;
 
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
 
 @Singleton
 @Slf4j
@@ -32,85 +31,69 @@ public class DefaultChatManager implements ChatManager {
     private final @NonNull UserIdentityService userIdentityService;
     private final @NonNull ChatFactory chatFactory;
 
-    private final Map<Identification, Chat> chats = new HashMap<>();
-
-    private final Lock lock = new ReentrantLock();
-    private final Looper looper = Looper.scheduled(new ConnectionAction(), Duration.ofSeconds(10));
+    private final Map<Identity, Chat> chats = new HashMap<>();
 
     public DefaultChatManager(
             @NonNull UserIdentityService userIdentityService,
             @NonNull List<PlatformChatFactory> platformChatFactories
-            ) {
+    ) {
         this.userIdentityService = userIdentityService;
         this.chatFactory = DefaultChatFactory.create(platformChatFactories);
     }
 
     @Override
+    @Synchronized
     public @NonNull Optional<ChatIO> findChat(@NonNull UserIdentity userIdentity) {
-        lock.lock();
-        try {
-            return Optional.ofNullable(chats.get(userIdentity.identification()));
-        } finally {
-            lock.unlock();
-        }
+        return Optional.ofNullable(chats.get(userIdentity.identity()));
     }
 
-    @PostConstruct
-    @Synchronized
-    public void start() {
-        looper.start();
+
+    @Scheduled(fixedDelay = "10s", fixedRate = "10s")
+    public void handleConnectionChanges() {
+        try {
+            manageChanges();
+        } catch (Throwable t) {
+            ThrowableTool.interruptIfCausedByInterruption(t);
+            LOG.warn("Fail to handle connection changes", t);
+        }
     }
 
     @PreDestroy
     @Synchronized
-    public void stop() {
-        looper.requestStop();
+    public void disconnectAll() throws ExecutionException, InterruptedException {
+        final var collect = chats.values()
+                                 .stream()
+                                 .<CompletionStage<?>>map(Chat::requestDisconnection)
+                                 .reduce((c1, c2) -> c1.runAfterBoth(c2, () -> {}));
+        collect.orElseGet(() -> CompletableFuture.completedFuture(Nil.NULL)).toCompletableFuture().get();
     }
 
-    private class ConnectionAction implements LoopAction {
+    @Synchronized
+    private void manageChanges() {
+        final var bots = userIdentityService.findBots();
+        final var newBots = Sets.difference(bots.keySet(), chats.keySet());
+        final var oldBots = Sets.difference(chats.keySet(), bots.keySet());
 
-        @Override
-        public @NonNull NextState performOneIteration() throws Throwable {
-            lock.lock();
+        for (Identity oldBot : oldBots) {
+            final var chat = chats.remove(oldBot);
+            if (chat != null) {
+                LOG.info("Disconnect {} from chat", oldBot);
+                chat.requestDisconnection();
+            }
+        }
+
+        for (Identity newBot : newBots) {
+            final var botIdentity = bots.get(newBot);
             try {
-                perform();
-            } finally {
-                lock.unlock();
-            }
-            return NextState.CONTINUE;
-        }
-
-        private void perform() {
-            final var bots = userIdentityService.findBots();
-            final var newBots = Sets.difference(bots.keySet(),chats.keySet());
-            final var oldBots = Sets.difference(chats.keySet(),bots.keySet());
-
-            for (Identification oldBot : oldBots) {
-                final var chat = chats.remove(oldBot);
-                if (chat != null) {
-                    LOG.info("Disconnect {} from chat",oldBot);
-                    chat.requestDisconnection();
+                if (botIdentity != null) {
+                    final var chat = chatFactory.create(botIdentity);
+                    chats.put(newBot, chat);
                 }
+            } catch (Exception e) {
+                ThrowableTool.interruptIfCausedByInterruption(e);
+                LOG.warn("Could not start chat for {}", botIdentity, e);
             }
-
-            for (Identification newBot : newBots) {
-                final var botIdentity = bots.get(newBot);
-                try {
-                    if (botIdentity != null) {
-                        final var chat = chatFactory.create(botIdentity);
-                        chats.put(newBot,chat);
-                    }
-                } catch (Exception e) {
-                    ThrowableTool.interruptIfCausedByInterruption(e);
-                    LOG.warn("Could not start chat for {}",botIdentity,e);
-                }
-            }
-
         }
 
-        @Override
-        public boolean shouldStopOnError(@NonNull Throwable error) {
-            return false;
-        }
     }
 }

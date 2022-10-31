@@ -21,6 +21,10 @@
             <artifactId>perobobbot-api</artifactId>
         </dependency>
         <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-twitch-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>net.femtoparsec.tools</groupId>
             <artifactId>fpc-tools-persistence</artifactId>
         </dependency>

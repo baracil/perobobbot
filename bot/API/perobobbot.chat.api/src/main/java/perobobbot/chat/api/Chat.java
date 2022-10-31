@@ -10,5 +10,5 @@ public interface Chat extends ChatIO {
 
     void connect() throws InterruptedException;
 
-    void requestDisconnection();
+    @NonNull CompletionStage<?> requestDisconnection();
 }

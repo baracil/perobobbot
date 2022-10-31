@@ -12,7 +12,7 @@ public interface ChatFactory {
      *
      * If no credential can be found, this method will fail
      *
-     * @param userIdentity the use identity to use to get the chat
+     * @param userIdentity the user identity to use to connect to the chat
      * @return the chat for the provided userIdentity
      */
     @NonNull Chat create(@NonNull UserIdentity userIdentity) throws InterruptedException;

@@ -8,7 +8,6 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.plugin.PerobobbotPlugin;
 import perobobbot.api.plugin.PerobobbotPluginData;
-import perobobbot.oauth.api.OAuthManager;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -16,13 +15,9 @@ import java.util.Optional;
 @Slf4j
 public class PluginApplication extends ApplicationBase<PerobobbotPlugin> {
 
-    private final @NonNull OAuthManager oAuthManager;
 
-    public PluginApplication(
-            @NonNull ImmutableSet<VersionedService> versionedServices,
-            @NonNull OAuthManager oAuthManager) {
+    public PluginApplication(@NonNull ImmutableSet<VersionedService> versionedServices) {
         super(versionedServices, PerobobbotPlugin.class);
-        this.oAuthManager = oAuthManager;
     }
 
     @Override

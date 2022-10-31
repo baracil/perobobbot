@@ -7,7 +7,8 @@ import io.micronaut.data.model.Pageable;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perobobbot.api.Identification;
+import perobobbot.api.Id;
+import perobobbot.api.Identity;
 import perobobbot.api.data.JoinedChannel;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.UserIdentity;
@@ -33,6 +34,12 @@ public class JpaUserIdentityService implements UserIdentityService {
     @Override
     public @NonNull UserIdentity getUserIdentity(long userIdentityId) {
         return userIdentityRepository.getById(userIdentityId).toView();
+    }
+
+
+    @Override
+    public @NonNull Optional<UserIdentity> findUserIdentity(@NonNull Id id) {
+        return id.accept(new UserIdentityFinder(userIdentityRepository)).map(UserIdentityEntity::toView);
     }
 
     @Override
@@ -95,9 +102,9 @@ public class JpaUserIdentityService implements UserIdentityService {
     }
 
     @Override
-    public @NonNull ImmutableMap<Identification,UserIdentity> findBots() {
+    public @NonNull ImmutableMap<Identity,UserIdentity> findBots() {
         return userIdentityRepository.findByUserType(UserType.BOT)
                                      .map(UserIdentityEntity::toView)
-                                     .collect(ImmutableMap.toImmutableMap(UserIdentity::identification, u -> u));
+                                     .collect(ImmutableMap.toImmutableMap(UserIdentity::identity, u -> u));
     }
 }

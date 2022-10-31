@@ -27,9 +27,9 @@
         <jdk.version>17</jdk.version>
         <release.version>17</release.version>
 
-        <micronaut.version>3.7.1</micronaut.version>
+        <micronaut.version>3.7.3</micronaut.version>
         <micronaut.runtime>netty</micronaut.runtime>
-        <micronaut.data.version>3.8.0</micronaut.data.version>
+        <micronaut.data.version>3.8.1</micronaut.data.version>
 
         <asciidoctor.maven.plugin.version>2.2.2</asciidoctor.maven.plugin.version>
         <asciidoctorj.version>2.5.5</asciidoctorj.version>
@@ -77,6 +77,10 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.serde</groupId>
+            <artifactId>micronaut-serde-api</artifactId>
         </dependency>
     </dependencies>
 

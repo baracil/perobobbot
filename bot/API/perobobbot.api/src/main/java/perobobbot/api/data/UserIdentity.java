@@ -4,22 +4,22 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.ImmutableList;
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.NonNull;
-import perobobbot.api.Identification;
+import perobobbot.api.Identity;
 
 @Serdeable
 public record UserIdentity(long id,
-                           @NonNull Identification identification,
+                           @NonNull Identity identity,
                            @NonNull UserType userType,
                            @NonNull String login, @NonNull String name,
                            @NonNull ImmutableList<JoinedChannel> joinedChannels) {
     @JsonIgnore
     public @NonNull Platform platform() {
-        return identification.platform();
+        return identity.platform();
     }
 
     @JsonIgnore
     public @NonNull String userId() {
-        return identification.userId();
+        return identity.userId();
     }
 
 

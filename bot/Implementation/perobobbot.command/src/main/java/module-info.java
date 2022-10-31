@@ -6,6 +6,7 @@ module perobobbot.command {
 
     requires org.slf4j;
 
+    requires jakarta.inject;
     requires io.micronaut.serde.serde_api;
 
     requires transitive perobobbot.api;

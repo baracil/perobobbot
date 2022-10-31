@@ -14,6 +14,8 @@ module perobobbot.service.jpa {
     requires io.micronaut.data.data_model;
     requires io.micronaut.data.data_hibernate_jpa;
 
+    requires com.fasterxml.jackson.databind;
+
     requires fpc.tools.lang;
     requires fpc.tools.hibernate;
     requires fpc.tools.persistence;

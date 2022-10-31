@@ -5,7 +5,7 @@ import io.micronaut.core.annotation.Introspected;
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.NonNull;
 import lombok.Value;
-import perobobbot.api.Identification;
+import perobobbot.api.Identity;
 import perobobbot.api.UserInfo;
 import perobobbot.twitch.api.Twitch;
 
@@ -20,8 +20,8 @@ public class UserDTO {
     @JsonProperty("display_name")
     @NonNull String displayName;
 
-    public @NonNull Identification getIdentification() {
-        return new Identification(Twitch.PLATFORM, id);
+    public @NonNull Identity getIdentification() {
+        return new Identity(Twitch.PLATFORM, id);
     }
 
     public @NonNull UserInfo toUserInfo() {

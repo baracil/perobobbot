@@ -11,7 +11,6 @@ module perobobbot.twitch.web.client {
     requires org.reactivestreams;
 
     requires perobobbot.twitch.api;
-    requires perobobbot.twitch.web.api;
     requires perobobbot.api;
 
     requires com.google.common;

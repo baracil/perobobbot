@@ -3,14 +3,14 @@ package perobobbot.domain.jpa.entity;
 import lombok.*;
 import org.hibernate.annotations.Type;
 import perobobbot.api.SerDeHelper;
-import perobobbot.api.Subscription;
+import perobobbot.api.SubscriptionView;
 import perobobbot.api.data.Platform;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@NoArgsConstructor(access= AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter(AccessLevel.PROTECTED)
 @Table(name = "SUBSCRIPTION")
@@ -21,17 +21,25 @@ public class SubscriptionEntity extends BaseEntity {
 
     private @NonNull String type;
 
+    @Setter
+    private @NonNull String subscriptionId;
+
     private @NonNull String data;
+
+    private @NonNull String callback;
 
     public SubscriptionEntity(@NonNull Platform platform,
                               @NonNull String type,
-                              @NonNull String data) {
+                              @NonNull String data,
+                              @NonNull String callback) {
         this.platform = platform;
         this.type = type;
+        this.subscriptionId = "";
         this.data = data;
+        this.callback = callback;
     }
 
-    public @NonNull Subscription toView(@NonNull SerDeHelper serDeHelper) {
-        return new Subscription(platform,type,serDeHelper.deser(data));
+    public @NonNull SubscriptionView toView(@NonNull SerDeHelper serDeHelper) {
+        return new SubscriptionView(getId(), platform, type, serDeHelper.deserializeMap(data), subscriptionId, callback);
     }
 }

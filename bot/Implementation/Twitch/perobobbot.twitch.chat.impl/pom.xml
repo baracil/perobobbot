@@ -23,10 +23,6 @@
             <groupId>perobobbot</groupId>
             <artifactId>perobobbot-chat-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.micronaut.serde</groupId>
-            <artifactId>micronaut-serde-api</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>perobobbot</groupId>

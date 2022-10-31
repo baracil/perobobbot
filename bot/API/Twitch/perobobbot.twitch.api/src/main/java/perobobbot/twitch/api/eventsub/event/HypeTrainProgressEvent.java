@@ -1,0 +1,25 @@
+package perobobbot.twitch.api.eventsub.event;
+
+import com.google.common.collect.ImmutableList;
+import lombok.NonNull;
+import lombok.Value;
+import perobobbot.twitch.api.UserInfo;
+
+import java.time.Instant;
+
+@Value
+public class HypeTrainProgressEvent implements HypeTrainEvent {
+
+    @NonNull String id;
+    @NonNull UserInfo broadcaster;
+    int total;
+
+    int level;
+    int progress;
+    int goal;
+    @NonNull ImmutableList<Contribution> topContributions;
+    @NonNull Contribution lastContribution;
+    @NonNull Instant startedAt;
+    @NonNull Instant expiresAt;
+
+}

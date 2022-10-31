@@ -69,7 +69,7 @@ public class TwitchOAuth implements PlatformOAuth {
 
     private @NonNull TokenWithIdentity create(@NonNull Application<Secret> application, @NonNull TwitchToken token) {
         final var userInfo = identify(application, token);
-        return new TokenWithIdentity(token.toUserToken(userInfo.identification(), instants.now()), userInfo);
+        return new TokenWithIdentity(token.toUserToken(userInfo.identity(), instants.now()), userInfo);
     }
 
     @Override

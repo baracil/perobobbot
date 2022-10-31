@@ -29,10 +29,6 @@
         </dependency>
         <dependency>
             <groupId>net.femtoparsec.tools</groupId>
-            <artifactId>fpc-tools-serde</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.femtoparsec.tools</groupId>
             <artifactId>fpc-tools-cipher</artifactId>
         </dependency>
         <dependency>
@@ -45,6 +41,11 @@
             <artifactId>perobobbot-oauth</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-command</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>perobobbot</groupId>
             <artifactId>perobobbot-service-jpa</artifactId>
@@ -63,6 +64,21 @@
         <dependency>
             <groupId>perobobbot</groupId>
             <artifactId>perobobbot-web-controller</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-twitch-eventsub</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-twitch-chat</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-twitch-chat-impl</artifactId>
             <scope>runtime</scope>
         </dependency>
 
@@ -86,6 +102,11 @@
         </dependency>
 
         <dependency>
+            <groupId>io.micronaut.serde</groupId>
+            <artifactId>micronaut-serde-jackson</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-core</artifactId>
         </dependency>
@@ -97,29 +118,7 @@
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-inject</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.micronaut.serde</groupId>
-            <artifactId>micronaut-serde-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.serde</groupId>
-            <artifactId>micronaut-serde-jackson</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut.serde</groupId>
-            <artifactId>micronaut-serde-support</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>perobobbot</groupId>
-            <artifactId>perobobbot-twitch-chat</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>perobobbot</groupId>
-            <artifactId>perobobbot-twitch-chat-impl</artifactId>
-<!--            <scope>runtime</scope>-->
-        </dependency>
 
 
         <!-- Runtime Dependency -->
@@ -137,6 +136,12 @@
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-http-server-netty</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-codec</artifactId>
+            <version>4.1.84.Final</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>

@@ -10,7 +10,7 @@ public interface TwitchChat extends TwitchIO {
 
     void connect() throws InterruptedException;
 
-    void requestDisconnection();
+    @NonNull CompletionStage<?> requestDisconnection();
 
 
 }

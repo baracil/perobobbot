@@ -9,7 +9,11 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import perobobbot.oauth.api.*;
+import perobobbot.oauth.api.AuthHolder;
+import perobobbot.oauth.api.HeaderHolder;
+import perobobbot.oauth.api.OAuthAccessMode;
+import perobobbot.oauth.api.OAuthData;
+import perobobbot.twitch.api.Twitch;
 import perobobbot.twitch.service.api.AppAuth;
 import perobobbot.twitch.service.api.UserAuth;
 
@@ -26,33 +30,76 @@ public class TwitchServiceInterceptor implements MethodInterceptor<Object, Objec
 
     @Override
     public Object intercept(MethodInvocationContext<Object, Object> context) {
-        final var userAuth = context.getAnnotation(UserAuth.class);
-        final var appAuth = context.getAnnotation(AppAuth.class);
-        final var mode = OAuthAccessMode.evaluateMode(userAuth != null, appAuth != null);
-        final var adata = authHolder.getOrElseThrow(NoOAuthDataAvailable::new);
-
-        final var result = mode.map(m -> callWithOAuth(new Caller(context, m, adata), false))
-                               .orElseGet(() -> proceed(context));
-
-        return result.throwIfFailure().orElse(null);
+        return new Interception(context).intercept();
     }
 
-    private @NonNull TryResult<RuntimeException, Optional<Object>> callWithOAuth(@NonNull Caller caller,
+    @RequiredArgsConstructor
+    private class Interception {
+        private final @NonNull MethodInvocationContext<Object, Object> context;
+        private OAuthAccessMode accessMode;
+        private OAuthData oAuthData;
+        private TryResult<RuntimeException, Optional<Object>> result;
+
+        public Object intercept() {
+            this.extractAccessMode();
+            if (hasNoAccessMode()) {
+                this.proceedWithoutAccessMode();
+            } else {
+                this.getOAuthData();
+                this.proceedWithAccessMode();
+            }
+            return result.throwIfFailure().orElse(null);
+        }
+
+        private void extractAccessMode() {
+            final var userAuth = context.getAnnotation(UserAuth.class);
+            final var appAuth = context.getAnnotation(AppAuth.class);
+            accessMode = OAuthAccessMode.evaluateMode(userAuth != null, appAuth != null).orElse(null);
+        }
+
+        private boolean hasNoAccessMode() {
+            return accessMode == null;
+        }
+
+        private void proceedWithoutAccessMode() {
+            result = proceed(context);
+        }
+
+        private void getOAuthData() {
+            oAuthData = authHolder.get(Twitch.PLATFORM);
+        }
+
+        private void proceedWithAccessMode() {
+            assert oAuthData != null;
+            assert accessMode != null;
+            final var wrappedMethod = new WrappedMethod(context, accessMode, oAuthData);
+            result = callWithOAuth(wrappedMethod, false);
+        }
+    }
+
+
+    private @NonNull TryResult<RuntimeException, Optional<Object>> callWithOAuth(@NonNull WrappedMethod method,
                                                                                  boolean refreshFirst
-                                                                                 ) {
-
-        final var callerResult = caller.call(refreshFirst);
-
-        if (refreshFirst) {
+    ) {
+        final var callerResult = method.call(refreshFirst);
+        if (refreshFirst || callerResult.getEither().merge(this::isNotDuToInvalidToken, s -> true)) {
             //cannot refresh anymore
             return callerResult;
         }
         LOG.info("Retry call with refreshed token");
-        return callWithOAuth(caller,true);
+        return callWithOAuth(method, true);
+    }
+
+    private boolean isNotDuToInvalidToken(@NonNull RuntimeException error) {
+        final var msg = error.getMessage();
+        if (msg == null) {
+            return true;
+        }
+        return !(msg.contains("invalid") && msg.contains("oauth") && msg.contains("token"));
     }
 
     @RequiredArgsConstructor
-    private class Caller {
+    private class WrappedMethod {
 
         private final @NonNull MethodInvocationContext<Object, Object> context;
         @Getter
@@ -66,15 +113,13 @@ public class TwitchServiceInterceptor implements MethodInterceptor<Object, Objec
                 oauthData.refresh(oAuthAccessMode);
             }
 
-            final var authData = authHolder.getOrElseThrow(NoOAuthDataAvailable::new);
-
-            final var clientId = authData.getClientId();
-            final var accessToken = authData.getAccessToken(oAuthAccessMode);
+            final var clientId = oauthData.getClientId();
+            final var accessToken = oauthData.getAccessToken(oAuthAccessMode);
 
             final var headerBuilder = headerHolder.withPrevious();
 
             headerBuilder.put("Client-Id", clientId);
-            headerBuilder.put("Authorization", "Bearer " + accessToken);
+            headerBuilder.put("Authorization", "Bearer " + accessToken.value());
 
             return headerHolder.callWith(headerBuilder.build(), () -> proceed(context));
         }

@@ -4,8 +4,6 @@ open module perobobbot.api {
 
     requires jakarta.inject;
 
-    requires io.micronaut.serde.serde_api;
-
     requires com.fasterxml.jackson.databind;
 
     requires io.micronaut.context;
@@ -19,6 +17,7 @@ open module perobobbot.api {
     requires com.google.common;
 
     requires jplugman.annotation;
+    requires io.micronaut.serde.serde_api;
 
     exports perobobbot.api.data.serde;
     exports perobobbot.api.data;

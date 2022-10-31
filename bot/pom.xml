@@ -22,14 +22,14 @@
         <module>API/perobobbot.command.api</module>
         <module>API/perobobbot.service.api</module>
         <module>API/perobobbot.web.api</module>
+        <module>API/perobobbot.oauth.api</module>
 
         <module>API/Twitch/perobobbot.twitch.api</module>
-        <module>API/Twitch/perobobbot.twitch.web.api</module>
         <module>API/Twitch/perobobbot.twitch.service.api</module>
 
-        <module>Core/perobobbot.oauth.api</module>
         <module>Core/perobobbot.oauth</module>
         <module>Core/perobobbot.twitch.chat</module>
+        <module>Core/perobobbot.tools</module>
 
         <module>Implementation/perobobbot.web.client</module>
         <module>Implementation/perobobbot.web.controller</module>
@@ -121,6 +121,17 @@
 
             <dependency>
                 <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-command</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-tools</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-oauth</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -144,11 +155,6 @@
             <dependency>
                 <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-twitch-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-twitch-web-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

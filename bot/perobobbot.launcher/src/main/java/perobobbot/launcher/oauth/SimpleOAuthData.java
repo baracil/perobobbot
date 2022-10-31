@@ -5,7 +5,7 @@ import fpc.tools.lang.Secret;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Synchronized;
-import perobobbot.api.Identification;
+import perobobbot.api.Identity;
 import perobobbot.api.data.*;
 import perobobbot.oauth.api.OAuthAccessMode;
 import perobobbot.oauth.api.OAuthData;
@@ -16,7 +16,7 @@ import perobobbot.service.api.UserTokenService;
 public class SimpleOAuthData implements OAuthData {
 
     @Getter
-    private final @NonNull Identification identification;
+    private final @NonNull Identity identity;
     @Getter
     private final @NonNull String login;
     private final @NonNull UserTokenService userTokenService;
@@ -25,7 +25,7 @@ public class SimpleOAuthData implements OAuthData {
     private final @NonNull Instants instants;
 
     public SimpleOAuthData(@NonNull UserIdentity userIdentity, @NonNull UserTokenService userTokenService, @NonNull ApplicationService applicationService, @NonNull OAuthManager oAuthManager, @NonNull Instants instants) {
-        this.identification = userIdentity.identification();
+        this.identity = userIdentity.identity();
         this.login = userIdentity.login();
         this.userTokenService = userTokenService;
         this.applicationService = applicationService;
@@ -34,8 +34,13 @@ public class SimpleOAuthData implements OAuthData {
     }
 
     @Override
+    public @NonNull Platform getPlatform() {
+        return identity.platform();
+    }
+
+    @Override
     public @NonNull String getClientId() {
-        return applicationService.getApplicationClientId(identification.platform());
+        return applicationService.getApplicationClientId(identity.platform());
     }
 
     @Override
@@ -45,6 +50,11 @@ public class SimpleOAuthData implements OAuthData {
             case APP_ONLY -> refreshApplicationToken();
             case BOTH_ACCEPTED -> refreshForBoth();
         }
+    }
+
+    @Override
+    public @NonNull String getUserId() {
+        return identity.userId();
     }
 
     @Override
@@ -59,7 +69,7 @@ public class SimpleOAuthData implements OAuthData {
 
     @Synchronized
     private @NonNull AccessTokenProvider getForBothAccepted() {
-        final var userToken = userTokenService.findUserToken(identification.platform(), identification.userId()).orElse(null);
+        final var userToken = userTokenService.findUserToken(identity.platform(), identity.userId()).orElse(null);
         if (userToken != null) {
             return userToken;
         }
@@ -68,29 +78,29 @@ public class SimpleOAuthData implements OAuthData {
 
     @Synchronized
     private @NonNull UserToken.Decrypted getUserToken() {
-        return userTokenService.getUserToken(identification.platform(), identification.userId());
+        return userTokenService.getUserToken(identity.platform(), identity.userId());
     }
 
     @Synchronized
     private @NonNull ApplicationToken.Decrypted getApplicationToken() {
-        final var platform = identification.platform();
+        final var platform = identity.platform();
         final var token = applicationService.findApplicationToken(platform).orElse(null);
         if (token != null) {
             return token;
         }
         oAuthManager.getAppToken(platform);
-        return applicationService.getApplicationToken(identification.platform());
+        return applicationService.getApplicationToken(identity.platform());
     }
 
     private void refreshForBoth() {
-        userTokenService.findUserRefreshToken(identification.platform(), identification.userId())
+        userTokenService.findUserRefreshToken(identity.platform(), identity.userId())
                         .ifPresentOrElse(this::refreshUserToken, this::refreshApplicationToken);
     }
 
     @Synchronized
     private void refreshUserToken() {
-        final var platform = identification.platform();
-        final var token = userTokenService.findUserRefreshToken(platform, identification.userId()).orElse(null);
+        final var platform = identity.platform();
+        final var token = userTokenService.findUserRefreshToken(platform, identity.userId()).orElse(null);
         if (token == null) {
             return;
         }
@@ -98,9 +108,9 @@ public class SimpleOAuthData implements OAuthData {
     }
 
     private void refreshUserToken(@NonNull RefreshTokenInfo<Secret> token) {
-//        if (token.expirationInstant().isAfter(instants.now())) {
-//            return;
-//        }
+        if (token.expirationInstant().isAfter(instants.now())) {
+            return;
+        }
 
         final var refreshed = oAuthManager.refreshUserToken(token.platform(), token.refreshToken());
         userTokenService.setUserToken(refreshed);
@@ -109,7 +119,7 @@ public class SimpleOAuthData implements OAuthData {
 
     @Synchronized
     private void refreshApplicationToken() {
-        final var platform = identification.platform();
+        final var platform = identity.platform();
         final var token = applicationService.findApplicationToken(platform).orElse(null);
         if (token != null && token.expirationInstant().isAfter(instants.now())) {
             return;

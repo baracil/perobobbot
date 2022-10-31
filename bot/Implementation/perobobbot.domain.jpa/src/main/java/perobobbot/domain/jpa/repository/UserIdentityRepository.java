@@ -5,7 +5,7 @@ import io.micronaut.data.jpa.repository.JpaRepository;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import lombok.NonNull;
-import perobobbot.api.Identification;
+import perobobbot.api.Identity;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.UnknownUserIdentityId;
 import perobobbot.api.data.UserType;
@@ -21,6 +21,8 @@ public interface UserIdentityRepository extends JpaRepository<UserIdentityEntity
 
     @NonNull Optional<UserIdentityEntity> findByPlatformAndUserId(@NonNull Platform platform, @NonNull String userId);
 
+    @NonNull Optional<UserIdentityEntity> findByPlatformAndLoginIgnoreCase(@NonNull Platform platform, @NonNull String login);
+
     @NonNull Optional<UserIdentityEntity> findByPlatformAndUserType(@NonNull Platform platform, @NonNull UserType userIdentityId);
 
     @NonNull Stream<UserIdentityEntity> findByUserType(@NonNull UserType userType);
@@ -30,8 +32,8 @@ public interface UserIdentityRepository extends JpaRepository<UserIdentityEntity
     }
 
 
-    default @NonNull Optional<UserIdentityEntity> findByIdentification(@NonNull Identification identification) {
-        return findByPlatformAndUserId(identification.platform(), identification.userId());
+    default @NonNull Optional<UserIdentityEntity> findByIdentification(@NonNull Identity identity) {
+        return findByPlatformAndUserId(identity.platform(), identity.userId());
     }
 
 }
