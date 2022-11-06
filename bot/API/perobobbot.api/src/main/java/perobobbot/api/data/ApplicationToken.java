@@ -5,7 +5,7 @@ import fpc.tools.cipher.Encryptable;
 import fpc.tools.cipher.TextDecryptor;
 import fpc.tools.cipher.TextEncryptor;
 import fpc.tools.lang.Secret;
-import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.core.annotation.Introspected;
 import lombok.NonNull;
 
 import java.time.Instant;
@@ -19,7 +19,7 @@ public sealed interface ApplicationToken<T> extends Decryptable<ApplicationToken
     @NonNull Instant expirationInstant();
 
 
-    @Serdeable
+    @Introspected
     record Decrypted(@NonNull Platform platform, @NonNull Secret accessToken,
                      @NonNull Instant expirationInstant) implements ApplicationToken<Secret>, AccessTokenProvider {
 
@@ -38,7 +38,7 @@ public sealed interface ApplicationToken<T> extends Decryptable<ApplicationToken
         }
     }
 
-    @Serdeable
+    @Introspected
     record Encrypted(@NonNull Platform platform, @NonNull String accessToken,
                      @NonNull Instant expirationInstant) implements ApplicationToken<String> {
         public @NonNull ApplicationToken.Decrypted decrypt(@NonNull TextDecryptor textDecryptor) {

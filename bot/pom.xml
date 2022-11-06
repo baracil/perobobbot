@@ -47,6 +47,7 @@
 
         <module>perobobbot.launcher</module>
 
+        <module>Test</module>
     </modules>
 
     <dependencyManagement>
@@ -56,6 +57,17 @@
                 <artifactId>netty-codec-socks</artifactId>
                 <version>${netty.version}</version>
             </dependency>
+<!--            <dependency>-->
+<!--                <groupId>io.micronaut</groupId>-->
+<!--                <artifactId>micronaut-core</artifactId>-->
+<!--                <version>${micronaut.core.version}</version>-->
+<!--                <exclusions>-->
+<!--                    <exclusion>-->
+<!--                        <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--                        <artifactId>jackson-databind</artifactId>-->
+<!--                    </exclusion>-->
+<!--                </exclusions>-->
+<!--            </dependency>-->
 
             <dependency>
                 <groupId>perobobbot</groupId>

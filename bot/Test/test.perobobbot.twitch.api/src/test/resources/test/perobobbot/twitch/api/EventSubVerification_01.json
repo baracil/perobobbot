@@ -1,0 +1,19 @@
+{
+  "subscription": {
+    "id": "c1cfe582-a7e5-4721-b50b-51a4dbb438de",
+    "status": "webhook_callback_verification_pending",
+    "type": "channel.channel_points_custom_reward_redemption.add",
+    "version": "1",
+    "condition": {
+      "broadcaster_user_id": "211307900",
+      "reward_id": ""
+    },
+    "transport": {
+      "method": "webhook",
+      "callback": "https://femtoparsec.net/bot/callback/twitch"
+    },
+    "created_at": "2022-11-04T20:57:18.449268502Z",
+    "cost": 0
+  },
+  "challenge": "xEeWtzd-iVR3Ypi3cXqSSYxpmeknEUarkBfQvbIOBfw"
+}

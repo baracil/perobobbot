@@ -78,20 +78,35 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.micronaut.serde</groupId>
-            <artifactId>micronaut-serde-api</artifactId>
-        </dependency>
     </dependencies>
 
 
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.jetbrains</groupId>
+                <artifactId>annotations</artifactId>
+                <version>23.0.0</version>
+            </dependency>
+
+            <dependency>
                 <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-launcher</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>io.micronaut</groupId>
+                <artifactId>micronaut-runtime</artifactId>
+                <version>${micronaut.core.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>io.micronaut</groupId>
+                        <artifactId>micronaut-jackson-databind</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -138,6 +153,11 @@
                             <groupId>io.micronaut</groupId>
                             <artifactId>micronaut-validation</artifactId>
                             <version>${micronaut.version}</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut.serde</groupId>
+                            <artifactId>micronaut-serde-processor</artifactId>
+                            <version>${micronaut.serialization.version}</version>
                         </path>
                         <path>
                             <groupId>io.micronaut.openapi</groupId>

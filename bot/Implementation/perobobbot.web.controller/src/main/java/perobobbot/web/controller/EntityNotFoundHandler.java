@@ -6,7 +6,6 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Produces;
 import io.micronaut.http.server.exceptions.ExceptionHandler;
-import io.micronaut.serde.annotation.Serdeable;
 import jakarta.inject.Singleton;
 import perobobbot.api.data.EntityNotFound;
 
@@ -23,7 +22,6 @@ public class EntityNotFoundHandler implements ExceptionHandler<EntityNotFound, H
     }
 
 
-    @Serdeable
     @Introspected
     public record Body(@NonNull String message, @NonNull List<EntityNotFound.Criteria> searchedCriteria) {}
 }

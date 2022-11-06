@@ -1,6 +1,8 @@
 package perobobbot.api;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import io.micronaut.retry.annotation.Fallback;
+import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 
@@ -14,8 +16,16 @@ public class FallbackPerobobbotExecutors implements PerobobbotExecutors {
     private final @NonNull ScheduledExecutorService scheduledExecutorService;
 
     public FallbackPerobobbotExecutors() {
-        this.executorService = Executors.newCachedThreadPool();
-        this.scheduledExecutorService = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors());
+        this.executorService = Executors.newCachedThreadPool(new ThreadFactoryBuilder().setDaemon(true).setNameFormat("Pero CachedThreadPool-%d").build());
+        this.scheduledExecutorService = Executors.newScheduledThreadPool(Runtime.getRuntime().availableProcessors(),
+                new ThreadFactoryBuilder().setDaemon(true).setNameFormat("Pero ScheduledThreadPool-%d").build());
+    }
+
+
+    @PreDestroy
+    public void shutdown() {
+        executorService.shutdown();
+        scheduledExecutorService.shutdown();
     }
 
     @Override

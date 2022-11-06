@@ -3,6 +3,7 @@ package perobobbot.launcher.plugin;
 import com.google.common.collect.ImmutableSet;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.core.annotation.AnnotationValue;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import jplugman.api.VersionedService;
@@ -40,14 +41,19 @@ public class VersionedServiceLister {
     private @NonNull Stream<VersionedService> extractVersionServices(@NonNull BeanDefinition<?> beanDefinition) {
         final var bean = applicationContext.getBean(beanDefinition);
         return extractAnnotations(beanDefinition)
-                .map(perobobbotService -> createVersionService(bean, perobobbotService));
+                .map(perobobbotService -> createVersionService(bean, perobobbotService))
+                .filter(Objects::nonNull);
     }
 
-    private @NonNull VersionedService createVersionService(@NonNull Object bean, @NonNull AnnotationValue<PerobobbotService> perobobbotService) {
+    private @Nullable VersionedService createVersionService(@NonNull Object bean, @NonNull AnnotationValue<PerobobbotService> perobobbotService) {
         final var apiVersion = perobobbotService.getRequiredValue(PerobobbotService.API_VERSION, Integer.class);
         final var serviceType = perobobbotService.getRequiredValue(PerobobbotService.SERVICE_TYPE, Class.class);
 
-        return new VersionedService(serviceType, bean, apiVersion);
+        if (serviceType.isInstance(bean)) {
+            return new VersionedService(serviceType, bean, apiVersion);
+        }
+        return null;
+
     }
 
     private @NonNull Stream<AnnotationValue<PerobobbotService>> extractAnnotations(@NonNull BeanDefinition<?> definition) {

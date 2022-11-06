@@ -1,7 +1,7 @@
 package perobobbot.api.data;
 
-import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.core.annotation.Introspected;
 
-@Serdeable
+@Introspected
 public record JoinChannelParameters(boolean readOnly) {
 }

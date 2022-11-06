@@ -2,7 +2,7 @@ package perobobbot.twitch.api;
 
 import com.google.common.collect.ImmutableMap;
 import fpc.tools.lang.IdentifiedEnumTools;
-import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.core.annotation.Introspected;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Value;
@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Getter
 @Value
-@Serdeable
+@Introspected
 public class Conditions implements Iterable<Map.Entry<CriteriaType, String>> {
 
     @NonNull ImmutableMap<CriteriaType, String> values;

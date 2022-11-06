@@ -3,6 +3,8 @@ package perobobbot.web.controller;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.data.CreateApplicationParameter;
@@ -15,6 +17,7 @@ import java.util.List;
 
 @Controller(PlatformApi.PATH)
 @RequiredArgsConstructor
+@ExecuteOn(TaskExecutors.IO)
 public class PlatformController implements PlatformApi {
 
     private final @NonNull ApplicationService applicationService;

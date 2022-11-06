@@ -6,5 +6,5 @@ import lombok.NonNull;
 
 public interface CallContext {
 
-    @NonNull HttpResponse<?> proceed(@NonNull HttpRequest<?> request);
+    @NonNull HttpResponse<?> proceed(@NonNull HttpRequest<?> request, @NonNull String body);
 }

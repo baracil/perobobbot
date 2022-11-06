@@ -4,6 +4,8 @@ import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.QueryValue;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
 import jakarta.annotation.Nullable;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.util.Optional;
 
 @Controller(UserIdentityApi.PATH)
 @RequiredArgsConstructor
+@ExecuteOn(TaskExecutors.IO)
 public class UserIdentityController implements UserIdentityApi {
 
     private final @NonNull UserIdentityService userIdentityService;

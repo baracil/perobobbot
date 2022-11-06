@@ -4,13 +4,14 @@ import com.google.common.collect.ImmutableList;
 import lombok.NonNull;
 import lombok.Value;
 import lombok.experimental.NonFinal;
+import perobobbot.twitch.api.TwitchApiPayload;
 import perobobbot.twitch.api.UserInfo;
 
 import java.time.Instant;
 
 @Value
 @NonFinal
-public abstract class PollEvent implements BroadcasterProvider, EventSubEvent {
+public abstract class PollEvent implements BroadcasterProvider, EventSubEvent, TwitchApiPayload {
 
     @NonNull String id;
     @NonNull UserInfo broadcaster;

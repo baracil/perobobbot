@@ -1,10 +1,10 @@
 package perobobbot.api;
 
-import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.core.annotation.Introspected;
 import lombok.NonNull;
 import perobobbot.api.data.Platform;
 
-@Serdeable
+@Introspected
 public record Identity(@NonNull Platform platform, @NonNull String userId) implements Id {
 
 

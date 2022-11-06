@@ -1,0 +1,74 @@
+{
+  "subscription": {
+    "id": "2a58aec0-edb8-ca1e-c7e0-554f7880fc79",
+    "status": "enabled",
+    "type": "channel.prediction.progress",
+    "version": "1",
+    "condition": {
+      "broadcaster_user_id": "75846073"
+    },
+    "transport": {
+      "method": "webhook",
+      "callback": "null"
+    },
+    "created_at": "2022-11-05T17:55:37.889475365Z",
+    "cost": 0
+  },
+  "event": {
+    "id": "d66ecd70-389a-d266-5e6c-f3283420b219",
+    "broadcaster_user_id": "75846073",
+    "broadcaster_user_login": "testBroadcaster",
+    "broadcaster_user_name": "testBroadcaster",
+    "title": "Will the developer finish this program?",
+    "outcomes": [
+      {
+        "id": "1a7b22a0-3407-6601-df68-3326ddc9578f",
+        "title": "yes",
+        "color": "blue",
+        "users": 3,
+        "channel_points": 15579,
+        "top_predictors": [
+          {
+            "user_id": "29679589",
+            "user_login": "testLogin",
+            "user_name": "testLogin",
+            "channel_points_won": null,
+            "channel_points_used": 9134
+          },
+          {
+            "user_id": "3294232",
+            "user_login": "testLogin",
+            "user_name": "testLogin",
+            "channel_points_won": null,
+            "channel_points_used": 5916
+          },
+          {
+            "user_id": "28129543",
+            "user_login": "testLogin",
+            "user_name": "testLogin",
+            "channel_points_won": null,
+            "channel_points_used": 529
+          }
+        ]
+      },
+      {
+        "id": "cfb0e769-9011-0a48-c22e-fd16e5d9e306",
+        "title": "no",
+        "color": "pink",
+        "users": 1,
+        "channel_points": 9337,
+        "top_predictors": [
+          {
+            "user_id": "32756892",
+            "user_login": "testLogin",
+            "user_name": "testLogin",
+            "channel_points_won": null,
+            "channel_points_used": 9337
+          }
+        ]
+      }
+    ],
+    "started_at": "2022-11-05T17:55:37.889475365Z",
+    "locks_at": "0001-01-01T00:10:00Z"
+  }
+}

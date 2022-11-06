@@ -11,7 +11,7 @@ import perobobbot.twitch.api.eventsub.subscription.*;
 import java.util.Arrays;
 
 /**
- * set temp1 to tbody in page https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types
+ * set temp1 to tbody in page <a href="https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types">SubscriptionTypes</a>
  * <p>
  * for(i=0;i<temp1.children.length;i++) {
  * item = temp1.children[i];
@@ -47,7 +47,7 @@ public enum SubscriptionType implements IdentifiedEnum {
     CHANNEL_PREDICTION_BEGIN("channel.prediction.begin", "1", PredictionBeginEvent.class, ChannelPredictionBegin.FACTORY, "A Prediction started on a specified channel."),
     CHANNEL_PREDICTION_PROGRESS("channel.prediction.progress", "1", PredictionProgressEvent.class, ChannelPredictionProgress.FACTORY, "Users participated in a Prediction on a specified channel."),
     CHANNEL_PREDICTION_LOCK("channel.prediction.lock", "1", PredictionLockEvent.class, ChannelPredictionLock.FACTORY, "A Prediction was locked on a specified channel."),
-    CHANNEL_PREDICTION_END("channel.prediction.end", "1", PredictionEndEvent.class, ChannelPredictionEnd.FACTORY, "A Prediction ended on a specified channel."),
+    CHANNEL_PREDICTION_END("channel.prediction.end", "1", ChannelPredictionEndEvent.class, ChannelPredictionEnd.FACTORY, "A Prediction ended on a specified channel."),
     CHANNEL_CHARITY_CAMPAIGN_DONATE("channel.charity_campaign.donate", "beta", ChannelCharityCampaignDonateEvent.class, ChannelCharityCampaignDonate.FACTORY, "Sends an event notification when a user donates to the broadcaster’s charity campaign."),
     DROP_ENTITLEMENT_GRANT("drop.entitlement.grant", "1", DropEntitlementGrantEvent.class, DropEntitlementGrant.FACTORY, "An entitlement for a Drop is granted to a user."),
     EXTENSION_BITS_TRANSACTION_CREATE("extension.bits_transaction.create", "1", ExtensionBitsTransactionCreateEvent.class, ExtensionBitsTransactionCreate.FACTORY, "A Bits transaction occurred for a specified Twitch Extension."),

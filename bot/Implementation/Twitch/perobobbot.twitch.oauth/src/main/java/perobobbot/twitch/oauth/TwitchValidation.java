@@ -2,7 +2,6 @@ package perobobbot.twitch.oauth;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.serde.annotation.Serdeable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -15,7 +14,6 @@ import java.util.Optional;
 
 @Introspected
 @Value
-@Serdeable
 public class TwitchValidation {
 
     @JsonAlias("client_id")

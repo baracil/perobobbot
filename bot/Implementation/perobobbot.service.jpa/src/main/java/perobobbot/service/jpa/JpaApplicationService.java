@@ -13,7 +13,6 @@ import perobobbot.api.data.ApplicationToken;
 import perobobbot.api.data.CreateApplicationParameter;
 import perobobbot.api.data.Platform;
 import perobobbot.api.plugin.PerobobbotService;
-import perobobbot.api.plugin.PerobobbotServices;
 import perobobbot.domain.jpa.entity.ApplicationEntity;
 import perobobbot.domain.jpa.entity.ApplicationTokenEntity;
 import perobobbot.domain.jpa.repository.ApplicationRepository;
@@ -26,7 +25,7 @@ import java.util.Optional;
 @Singleton
 @RequiredArgsConstructor
 @Transactional
-@PerobobbotServices({@PerobobbotService(apiVersion = 1,serviceType = ApplicationService.class)})
+@PerobobbotService(apiVersion = 1,serviceType = ApplicationService.class)
 public class JpaApplicationService implements ApplicationService {
 
     private final @NonNull

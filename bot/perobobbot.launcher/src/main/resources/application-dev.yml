@@ -32,6 +32,6 @@ perobobbot:
   plugin:
     folder: /home/perococco/Perobobbot/plugins
   eventsub:
-    secret: 8Aasd*()AS(D23{@!ASFD987AS@!&*ASC
+    secret: babasdhdasdkajsdhkajsdh
     backupMessages: true
     callbackURL: https://femtoparsec.net/bot/callback/twitch

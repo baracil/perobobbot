@@ -1,9 +1,9 @@
 package perobobbot.api.data;
 
-import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.core.annotation.Introspected;
 import lombok.NonNull;
 
-@Serdeable
+@Introspected
 public record JoinedChannel(long id, long userId, @NonNull String channelName, boolean readOnly) {
 
 }

@@ -19,6 +19,10 @@
             <groupId>perobobbot</groupId>
             <artifactId>perobobbot-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-service-api</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>net.femtoparsec.tools</groupId>

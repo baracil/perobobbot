@@ -20,21 +20,21 @@ public class EventSubCallback implements Callback {
     }
 
     @Override
-    public @NonNull HttpResponse<?> handleCall(@NonNull HttpRequest<?> request) {
-        return new Context().proceed(request);
+    public @NonNull HttpResponse<?> handleCall(@NonNull HttpRequest<?> request, @NonNull String body) {
+        return new Context().proceed(request, body);
     }
 
     private class Context implements CallContext {
         private int index = 0;
 
         @Override
-        public @NonNull HttpResponse<?> proceed(@NonNull HttpRequest<?> request) {
+        public @NonNull HttpResponse<?> proceed(@NonNull HttpRequest<?> request, @NonNull String body) {
             if (index >= handlers.size()) {
                 return HttpResponse.notFound();
             }
             final var handler = handlers.get(index);
             index++;
-            return handler.handleCall(request, this);
+            return handler.handleCall(request, body, this);
         }
     }
 }

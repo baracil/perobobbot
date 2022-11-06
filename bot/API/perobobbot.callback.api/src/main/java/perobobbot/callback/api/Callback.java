@@ -6,5 +6,5 @@ import lombok.NonNull;
 
 public interface Callback {
 
-    @NonNull HttpResponse<?> handleCall(@NonNull HttpRequest<?> request);
+    @NonNull HttpResponse<?> handleCall(@NonNull HttpRequest<?> request, @NonNull String body);
 }

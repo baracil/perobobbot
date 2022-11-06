@@ -5,7 +5,7 @@ import fpc.tools.cipher.Encryptable;
 import fpc.tools.cipher.TextDecryptor;
 import fpc.tools.cipher.TextEncryptor;
 import fpc.tools.lang.Secret;
-import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.core.annotation.Introspected;
 import lombok.NonNull;
 
 public sealed interface Application<T>
@@ -24,7 +24,7 @@ public sealed interface Application<T>
         return new SafeApplication(platform(),name(),clientId());
     }
 
-    @Serdeable
+    @Introspected
     record Encrypted(@NonNull Platform platform,
                      @NonNull String name,
                      @NonNull String clientId,
@@ -41,7 +41,7 @@ public sealed interface Application<T>
         }
     }
 
-    @Serdeable
+    @Introspected
     record Decrypted(@NonNull Platform platform,
                      @NonNull String name,
                      @NonNull String clientId,

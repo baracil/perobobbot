@@ -1,9 +1,9 @@
 package perobobbot.api.data;
 
-import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.core.annotation.Introspected;
 import lombok.NonNull;
 
-@Serdeable
+@Introspected
 public record Platform(@NonNull String name) {
 
     public Platform(@NonNull String name) {

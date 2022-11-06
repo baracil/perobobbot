@@ -3,11 +3,12 @@ module perobobbot.callback.impl {
     requires java.desktop;
 
     requires io.micronaut.http;
-    requires perobobbot.web.api;
     requires jakarta.inject;
     requires com.google.common;
 
+    requires io.micronaut.core;
     requires transitive perobobbot.callback.api;
+    requires perobobbot.web.api;
 
     exports perobobbot.callback.impl;
 }

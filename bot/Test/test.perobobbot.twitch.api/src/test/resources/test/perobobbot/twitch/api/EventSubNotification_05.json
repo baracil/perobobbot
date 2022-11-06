@@ -1,0 +1,23 @@
+{
+  "subscription": {
+    "id": "b485935a-3643-4a10-9b37-81ecd1f6c708",
+    "status": "enabled",
+    "type": "user.authorization.revoke",
+    "version": "1",
+    "condition": {
+      "client_id": "m01e1fb0emhtr0toc6eydvl9zkuecu"
+    },
+    "transport": {
+      "method": "webhook",
+      "callback": "null"
+    },
+    "created_at": "2022-11-05T17:55:38.258782505Z",
+    "cost": 1
+  },
+  "event": {
+    "user_id": "79342267",
+    "user_login": "testFromUser",
+    "user_name": "testFromUser",
+    "client_id": "m01e1fb0emhtr0toc6eydvl9zkuecu"
+  }
+}

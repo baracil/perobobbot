@@ -20,8 +20,10 @@ public class Match {
     private final @NonNull ImmutableMap<Long, SubscriptionData> toReplaces;
     @Singular
     private final @NonNull ImmutableList<SubscriptionView> toRefreshSubs;
+    @Singular
+    private final @NonNull ImmutableList<SubscriptionView> toCreates;
 
     public boolean hasAnyChange() {
-        return !toRevokeSubs.isEmpty() || !toUpdateSubs.isEmpty() || !toRefreshSubs.isEmpty();
+        return !toRevokeSubs.isEmpty() || !toUpdateSubs.isEmpty() || !toRefreshSubs.isEmpty() || !toCreates.isEmpty();
     }
 }

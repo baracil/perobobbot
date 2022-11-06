@@ -13,7 +13,7 @@ module perobobbot.twitch.eventsub {
     requires com.google.common;
     requires org.slf4j;
 
-    requires com.fasterxml.jackson.databind;
+    requires io.micronaut.serde.serde_api;
 
     requires perobobbot.tools;
     requires perobobbot.api;

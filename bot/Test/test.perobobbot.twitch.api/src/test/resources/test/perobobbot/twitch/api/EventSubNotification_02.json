@@ -1,0 +1,36 @@
+{
+  "subscription": {
+    "id": "cc1fd57a-5183-45cf-b526-77ed7409662e",
+    "status": "enabled",
+    "type": "channel.channel_points_custom_reward_redemption.update",
+    "version": "1",
+    "condition": {
+      "broadcaster_user_id": "211307900",
+      "reward_id": ""
+    },
+    "transport": {
+      "method": "webhook",
+      "callback": "https://google.net/bot/callback/twitch"
+    },
+    "created_at": "2022-11-05T17:35:43.096507265Z",
+    "cost": 0
+  },
+  "event": {
+    "broadcaster_user_id": "211307900",
+    "broadcaster_user_login": "perococco",
+    "broadcaster_user_name": "Perococco",
+    "id": "7ec94c23-6324-4db2-8771-467c66eedd2c",
+    "user_id": "211307900",
+    "user_login": "perococco",
+    "user_name": "Perococco",
+    "user_input": "",
+    "status": "canceled",
+    "redeemed_at": "2022-11-05T17:36:01.523006738Z",
+    "reward": {
+      "id": "12e867c1-94b9-41b5-89b6-8f7753619f56",
+      "title": "God Mod",
+      "prompt": "Le survivant devient invincible pendant 1min //god_mod:20000:#81d381",
+      "cost": 1
+    }
+  }
+}

@@ -1,13 +1,13 @@
 package perobobbot.twitch.api;
 
-import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.core.annotation.Introspected;
 import lombok.NonNull;
 import lombok.Value;
 
 import java.util.Optional;
 
 @Value
-@Serdeable
+@Introspected
 public class Transport {
     @NonNull String method;
     @NonNull String callback;

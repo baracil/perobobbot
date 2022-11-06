@@ -32,25 +32,33 @@ public class Matcher {
     private final @NonNull ImmutableList<SubscriptionView> onBot;
 
 
-    private Map<Key, List<TwitchSubscription>> validOnPlatformPerKey;
+    private Map<Key, List<TwitchSubscription>> onPlatformPerKey;
     private Map<Key, SubscriptionView> onBotPerKey;
 
     private Match.MatchBuilder builder = Match.builder();
 
 
     private @NonNull Match match() {
-//        this.display();
         this.dispatchPerKey();
         this.checkAllKeys();
         this.handleInvalids();
         return builder.build();
     }
 
-    private void display() {
-        System.out.println("ON PLATFORM");
-        onPlatform.forEach(s -> System.out.println(s.getSubscriptionId()+ "  " + s.getCallbackUrl()));
-        System.out.println("ON BOT");
-        onBot.forEach(s -> System.out.println(s.getSubscriptionId() + "  "+s.getCallbackUrl()));
+    private void dispatchPerKey() {
+        this.onPlatformPerKey = onPlatform.stream().collect(Collectors.groupingBy(Key::from));
+        this.onBotPerKey = onBot.stream().collect(Collectors.toMap(Key::from, s -> s));
+    }
+
+    private boolean isValid(@NonNull TwitchSubscription twitchSubscription) {
+        return twitchSubscription.getStatus() == SubscriptionStatus.ENABLED;
+    }
+
+    private void checkAllKeys() {
+        Stream.concat(
+                onPlatformPerKey.keySet().stream(),
+                onBotPerKey.keySet().stream()
+        ).distinct().forEach(this::checkForOneKey);
     }
 
     private void handleInvalids() {
@@ -59,60 +67,65 @@ public class Matcher {
                   .forEach(v -> builder.toRevokeSub(v.getSubscriptionId()));
     }
 
-    private boolean isValid(@NonNull TwitchSubscription twitchSubscription) {
-        return twitchSubscription.getStatus() == SubscriptionStatus.ENABLED;
+    private void display() {
+        System.out.println("ON PLATFORM");
+        onPlatform.forEach(s -> System.out.println(s.getSubscriptionId() + "  " + s.getCallbackUrl()));
+        System.out.println("ON BOT");
+        onBot.forEach(s -> System.out.println(s.getSubscriptionId() + "  " + s.getCallbackUrl()));
     }
 
-    private void dispatchPerKey() {
-        this.validOnPlatformPerKey = onPlatform.stream()
-                                               .filter(this::isValid)
-                                               .collect(Collectors.groupingBy(Key::from));
 
-        this.onBotPerKey = onBot.stream()
-                                .collect(Collectors.toMap(Key::from, s -> s));
-    }
-
-    private void checkAllKeys() {
-        Stream.concat(
-                validOnPlatformPerKey.keySet().stream(),
-                onBotPerKey.keySet().stream()
-        ).distinct().forEach(this::checkForOneData);
-    }
-
-    private void checkForOneData(@NonNull Key key) {
-        final var listOfValidOnPlatform = validOnPlatformPerKey.getOrDefault(key,List.of());
+    private void checkForOneKey(@NonNull Key key) {
+        final var onPlatform = onPlatformPerKey.getOrDefault(key, List.of());
         final var onBot = onBotPerKey.get(key);
 
-        if (listOfValidOnPlatform.isEmpty()) {
-            if (onBot != null) {
+        if (onPlatform.isEmpty() && onBot == null) {
+            return;
+        }
+
+        if (onPlatform.isEmpty()) {
+            if (onBot.hasPlatformId()) {
                 builder.toRefreshSub(onBot);
+            } else {
+                builder.toCreate(onBot);
             }
             return;
         }
 
         if (onBot == null) {
-            listOfValidOnPlatform.stream()
-             .map(TwitchSubscription::getSubscriptionId)
-             .forEach(builder::toRevokeSub);
+            onPlatform.stream()
+                      .filter(this::isRevokable)
+                      .map(TwitchSubscription::getSubscriptionId)
+                      .forEach(builder::toRevokeSub);
             return;
         }
 
         final Predicate<TwitchSubscription> sameIdPredicate = s -> s.getSubscriptionId().equals(onBot.getSubscriptionId());
 
-        final boolean match = listOfValidOnPlatform.stream().anyMatch(sameIdPredicate);
+        final boolean match = onPlatform.stream().anyMatch(sameIdPredicate);
         if (match) {
-            listOfValidOnPlatform.stream()
-             .filter(not(sameIdPredicate))
-             .map(TwitchSubscription::getSubscriptionId)
-             .forEach(builder::toRevokeSub);
+            onPlatform.stream()
+                      .filter(not(sameIdPredicate))
+                      .filter(this::isRevokable)
+                      .map(TwitchSubscription::getSubscriptionId)
+                      .forEach(builder::toRevokeSub);
         } else {
-            builder.toUpdateSub(onBot.getId(), listOfValidOnPlatform.get(0));
-            listOfValidOnPlatform.stream()
-             .skip(1)
-             .map(TwitchSubscription::getSubscriptionId)
-             .forEach(builder::toRevokeSub);
+            builder.toUpdateSub(onBot.getId(), onPlatform.get(0));
+            onPlatform.stream()
+                      .skip(1)
+                      .filter(this::isRevokable)
+                      .map(TwitchSubscription::getSubscriptionId)
+                      .forEach(builder::toRevokeSub);
         }
 
+    }
+
+    private boolean isRevokable(TwitchSubscription subscription) {
+        return switch (subscription.getStatus()) {
+            case ENABLED, NOTIFICATION_FAILURES_EXCEEDED, WEBHOOK_CALLBACK_VERIFICATION_FAILED, WEBHOOK_CALLBACK_VERIFICATION_PENDING ->
+                    true;
+            case AUTHORIZATION_REVOKED, USER_REMOVED -> false;
+        };
     }
 
     @Value

@@ -1,6 +1,5 @@
 package perobobbot.chat.api.irc;
 
-import io.micronaut.serde.annotation.Serdeable;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +8,6 @@ import lombok.Value;
 import java.util.Optional;
 
 @Value
-@Serdeable
 @Builder
 @RequiredArgsConstructor
 public class Tag {

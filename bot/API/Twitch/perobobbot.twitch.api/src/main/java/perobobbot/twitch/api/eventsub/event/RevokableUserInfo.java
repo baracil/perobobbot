@@ -1,5 +1,6 @@
 package perobobbot.twitch.api.eventsub.event;
 
+import io.micronaut.serde.annotation.Serdeable;
 import lombok.NonNull;
 import lombok.Value;
 import perobobbot.twitch.api.UserInfo;
@@ -7,6 +8,7 @@ import perobobbot.twitch.api.UserInfo;
 import java.util.Optional;
 
 @Value
+@Serdeable
 public class RevokableUserInfo {
 
     @NonNull String id;

@@ -2,11 +2,9 @@ package perobobbot.twitch.api.channelpoints;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Value;
 import lombok.experimental.NonFinal;
 import lombok.experimental.SuperBuilder;
-import perobobbot.twitch.api.serde.ColorSerDe;
 
 import java.awt.*;
 
@@ -18,7 +16,6 @@ public class CustomRewardParameterBase {
     String prompt;
     @JsonProperty("is_enabled")
     Boolean enabled;//true
-    @JsonSerialize(using = ColorSerDe.Serializer.class)
     Color backgroundColor;
     @JsonProperty("is_user_input_required")
     Boolean userInputRequired;//false

@@ -1,7 +1,6 @@
 package perobobbot.twitch.oauth.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.NonNull;
 import lombok.Value;
@@ -11,7 +10,6 @@ import perobobbot.twitch.api.Twitch;
 
 @Value
 @Serdeable
-@Introspected
 public class UserDTO {
     @JsonProperty("id")
     @NonNull String id;

@@ -8,11 +8,12 @@ module perobobbot.twitch.oauth {
     requires io.micronaut.http_client_core;
 
 
+    requires io.micronaut.serde.serde_api;
+
     requires java.sql;
     requires jakarta.inject;
     requires jakarta.annotation;
 
-    requires io.micronaut.serde.serde_api;
     requires com.fasterxml.jackson.annotation;
     requires com.google.common;
 

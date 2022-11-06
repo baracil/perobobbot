@@ -1,6 +1,5 @@
 package perobobbot.chat.api.irc;
 
-import io.micronaut.serde.annotation.Serdeable;
 import lombok.Builder;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import java.util.Optional;
 
 @Value
 @Builder
-@Serdeable
 @RequiredArgsConstructor
 public class Prefix {
 

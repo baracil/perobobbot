@@ -1,0 +1,118 @@
+{
+  "subscription": {
+    "id": "c797b9a7-380e-b8cd-d321-c5d5761b24e7",
+    "status": "enabled",
+    "type": "channel.prediction.end",
+    "version": "1",
+    "condition": {
+      "broadcaster_user_id": "24690083"
+    },
+    "transport": {
+      "method": "webhook",
+      "callback": "null"
+    },
+    "created_at": "2022-11-05T17:55:33.420300565Z",
+    "cost": 0
+  },
+  "event": {
+    "id": "4a4fee59-4243-2cf5-e5d6-5cdfadd74f42",
+    "broadcaster_user_id": "24690083",
+    "broadcaster_user_login": "testBroadcaster",
+    "broadcaster_user_name": "testBroadcaster",
+    "title": "Will the developer finish this program?",
+    "winning_outcome_id": "5d86c01a-7c35-722c-c530-4f79938bc8df",
+    "outcomes": [
+      {
+        "id": "5d86c01a-7c35-722c-c530-4f79938bc8df",
+        "title": "yes",
+        "color": "blue",
+        "users": 4,
+        "channel_points": 35427,
+        "top_predictors": [
+          {
+            "user_id": "74323618",
+            "user_login": "testLogin",
+            "user_name": "testLogin",
+            "channel_points_won": 19460,
+            "channel_points_used": 9730
+          },
+          {
+            "user_id": "55094859",
+            "user_login": "testLogin",
+            "user_name": "testLogin",
+            "channel_points_won": 14188,
+            "channel_points_used": 7094
+          },
+          {
+            "user_id": "26256592",
+            "user_login": "testLogin",
+            "user_name": "testLogin",
+            "channel_points_won": 17458,
+            "channel_points_used": 8729
+          },
+          {
+            "user_id": "99228311",
+            "user_login": "testLogin",
+            "user_name": "testLogin",
+            "channel_points_won": 19748,
+            "channel_points_used": 9874
+          }
+        ]
+      },
+      {
+        "id": "82e74ae5-80c5-9e8c-4640-5b60a11cba86",
+        "title": "no",
+        "color": "pink",
+        "users": 6,
+        "channel_points": 33727,
+        "top_predictors": [
+          {
+            "user_id": "93677373",
+            "user_login": "testLogin",
+            "user_name": "testLogin",
+            "channel_points_won": 0,
+            "channel_points_used": 727
+          },
+          {
+            "user_id": "61433175",
+            "user_login": "testLogin",
+            "user_name": "testLogin",
+            "channel_points_won": 0,
+            "channel_points_used": 8343
+          },
+          {
+            "user_id": "17506745",
+            "user_login": "testLogin",
+            "user_name": "testLogin",
+            "channel_points_won": 0,
+            "channel_points_used": 5971
+          },
+          {
+            "user_id": "6412738",
+            "user_login": "testLogin",
+            "user_name": "testLogin",
+            "channel_points_won": 0,
+            "channel_points_used": 3190
+          },
+          {
+            "user_id": "69289789",
+            "user_login": "testLogin",
+            "user_name": "testLogin",
+            "channel_points_won": 0,
+            "channel_points_used": 5514
+          },
+          {
+            "user_id": "21626619",
+            "user_login": "testLogin",
+            "user_name": "testLogin",
+            "channel_points_won": 0,
+            "channel_points_used": 9982
+          }
+        ]
+      }
+    ],
+    "started_at": "2022-11-05T17:55:33.420300565Z",
+    "ended_at": "0001-01-01T00:10:00Z",
+    "status": "resolved"
+  }
+}

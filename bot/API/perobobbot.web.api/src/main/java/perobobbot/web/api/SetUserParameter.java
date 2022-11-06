@@ -1,9 +1,9 @@
 package perobobbot.web.api;
 
-import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.core.annotation.Introspected;
 import lombok.NonNull;
 
-@Serdeable
+@Introspected
 public record SetUserParameter(@NonNull String userName) {
 
 }

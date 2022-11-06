@@ -11,5 +11,5 @@ public interface EventSubHandler {
 
     int priority();
 
-    @NonNull HttpResponse<?> handleCall(@NonNull HttpRequest<?> request, @NonNull CallContext context);
+    @NonNull HttpResponse<?> handleCall(@NonNull HttpRequest<?> request, @NonNull String body, @NonNull CallContext context);
 }

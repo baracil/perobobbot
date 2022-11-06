@@ -1,7 +1,6 @@
 package perobobbot.twitch.api.eventsub;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.micronaut.core.annotation.Introspected;
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.NonNull;
 import lombok.Value;
@@ -10,11 +9,12 @@ import perobobbot.twitch.api.Conditions;
 import perobobbot.twitch.api.SubscriptionType;
 import perobobbot.twitch.api.Twitch;
 import perobobbot.twitch.api.eventsub.event.EventSubEvent;
+import perobobbot.twitch.api.serde.ISOInstantSerde;
+import perobobbot.twitch.api.serde.MySerdeable;
 
 import java.time.Instant;
 
 @Value
-@Introspected
 @Serdeable
 public class TwitchSubscription {
 
@@ -24,7 +24,11 @@ public class TwitchSubscription {
     @NonNull SubscriptionStatus status;
     int cost;
     @NonNull Conditions condition;
+
+
+    @MySerdeable(property = "created_at",serwith = ISOInstantSerde.class, deserwith = ISOInstantSerde.class)
     @NonNull Instant createdAt;
+
     @NonNull Transport transport;
 
     @JsonIgnore

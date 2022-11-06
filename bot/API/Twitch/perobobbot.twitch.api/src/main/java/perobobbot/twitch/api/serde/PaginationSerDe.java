@@ -1,50 +1,41 @@
 package perobobbot.twitch.api.serde;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import fpc.tools.jackson.Registrable;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.core.type.Argument;
+import io.micronaut.serde.Decoder;
+import io.micronaut.serde.Encoder;
+import io.micronaut.serde.Serde;
+import jakarta.inject.Singleton;
 import lombok.NonNull;
 import perobobbot.twitch.api.Pagination;
 
 import java.io.IOException;
 
-public class PaginationSerDe implements Registrable {
+@Singleton
+public class PaginationSerDe implements Serde<Pagination> {
 
     @Override
-    public void register(@NonNull SimpleModule simpleModule) {
-        simpleModule.addDeserializer(Pagination.class, new Deserializer());
-        simpleModule.addSerializer(Pagination.class, new Serializer());
-    }
-
-    public static class Deserializer extends JsonDeserializer<Pagination> {
-        @Override
-        public Pagination deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
-            final ObjectNode node = p.readValueAsTree();
-            final var cursor = node.get("cursor");
-            if (cursor == null || cursor.isNull()) {
-                return null;
-            }
-            return new Pagination(cursor.asText());
+    public void serialize(Encoder encoder, @NonNull EncoderContext context, @NonNull Argument<? extends Pagination> type, Pagination value) throws IOException {
+        try (var e = encoder.encodeObject(Argument.mapOf(String.class, String.class))) {
+            e.encodeKey("cursor");
+            e.encodeString(value.getCursor());
         }
     }
 
-    public static class Serializer extends JsonSerializer<Pagination> {
-
-        @Override
-        public void serialize(Pagination value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-            if (value == null) {
-                gen.writeNull();
-            } else {
-                gen.writeString(value.getCursor());
+    @Nullable
+    @Override
+    public Pagination deserialize(Decoder decoder, DecoderContext context, Argument<? super Pagination> type) throws IOException {
+        try (var d = decoder.decodeObject()) {
+            String key;
+            while (null != (key = d.decodeKey())) {
+                if ("cursor".equals(key)) {
+                    final var cursor = decoder.decodeString();
+                    return new Pagination(cursor);
+                }
+                d.skipValue();
             }
         }
-
+        return null;
     }
+
 }

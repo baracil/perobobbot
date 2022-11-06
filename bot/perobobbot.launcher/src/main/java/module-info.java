@@ -7,6 +7,7 @@ open module perobobbot.launcher {
     requires io.micronaut.core;
     requires io.micronaut.inject;
     requires io.micronaut.serde.serde_api;
+    requires io.micronaut.aop;
 
     requires org.slf4j;
     requires jakarta.inject;
@@ -15,7 +16,6 @@ open module perobobbot.launcher {
     requires org.bouncycastle.provider;
     requires com.google.common;
 
-    requires com.fasterxml.jackson.databind;
 
     requires perobobbot.api;
     requires perobobbot.oauth;

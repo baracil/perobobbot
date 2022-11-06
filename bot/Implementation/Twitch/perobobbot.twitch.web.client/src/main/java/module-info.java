@@ -6,7 +6,6 @@ module perobobbot.twitch.web.client {
     requires io.micronaut.aop;
     requires io.micronaut.http;
     requires io.micronaut.http_client_core;
-    requires io.micronaut.serde.serde_api;
 
     requires org.reactivestreams;
 

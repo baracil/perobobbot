@@ -1,16 +1,16 @@
 package perobobbot.twitch.api.eventsub.event;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
+import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.serde.config.naming.SnakeCaseStrategy;
 import lombok.NonNull;
 import lombok.Value;
 
 @Value
+@Serdeable(naming = SnakeCaseStrategy.class)
 public class PollChoices {
     @NonNull String id;
     @NonNull String title;
-    @JsonAlias("bits_votes")
     int bitsVotes;
-    @JsonAlias("channel_points_votes")
     int channelPointVotes;
     int votes;
 }

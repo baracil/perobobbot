@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.ImmutableMap;
 import fpc.tools.irc.IRCParsing;
 import fpc.tools.lang.MapTool;
-import io.micronaut.serde.annotation.Serdeable;
 import lombok.NonNull;
 import lombok.Value;
 
@@ -12,7 +11,6 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @Value
-@Serdeable
 public class MessageData {
 
     @NonNull String rawMessage;

@@ -3,15 +3,16 @@ module perobobbot.web.controller {
     requires java.desktop;
 
     requires com.google.common;
-    requires io.micronaut.http;
     requires io.swagger.v3.oas.annotations;
     requires jakarta.inject;
     requires reactor.core;
+
+    requires io.micronaut.http;
     requires io.micronaut.core;
-    requires io.micronaut.serde.serde_api;
     requires io.micronaut.inject;
     requires io.micronaut.views.views_velocity;
     requires io.micronaut.views.views_core;
+    requires io.micronaut.context;
 
 
     requires perobobbot.web.api;

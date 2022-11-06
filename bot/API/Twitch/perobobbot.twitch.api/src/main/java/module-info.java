@@ -6,19 +6,20 @@ open module perobobbot.twitch.api {
 
     requires org.slf4j;
 
-    requires perobobbot.api;
-    requires com.fasterxml.jackson.annotation;
-    requires com.fasterxml.jackson.databind;
-    requires com.fasterxml.jackson.datatype.guava;
-    requires com.fasterxml.jackson.datatype.jdk8;
-    requires com.fasterxml.jackson.datatype.jsr310;
     requires jakarta.inject;
-    requires fpc.tools.jackson;
-    requires io.micronaut.inject;
-    requires io.micronaut.core;
     requires jakarta.annotation;
 
+    requires io.micronaut.inject;
+    requires io.micronaut.core;
     requires io.micronaut.serde.serde_api;
+
+    requires com.fasterxml.jackson.annotation;
+
+    requires fpc.tools.serde;
+
+    requires perobobbot.api;
+    requires io.micronaut.json_core;
+    requires org.jetbrains.annotations;
 
     exports perobobbot.twitch.api;
     exports perobobbot.twitch.api.serde;

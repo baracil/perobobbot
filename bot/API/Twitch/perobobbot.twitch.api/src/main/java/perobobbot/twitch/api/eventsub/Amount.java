@@ -1,17 +1,15 @@
 package perobobbot.twitch.api.eventsub;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.serde.config.naming.SnakeCaseStrategy;
 import lombok.Value;
-import perobobbot.twitch.api.serde.CurrencySerDe;
 
 import java.util.Currency;
 
 @Value
+@Serdeable(naming = SnakeCaseStrategy.class)
 public class Amount {
     int value;
     int decimalPlaces;
-    @JsonSerialize(using = CurrencySerDe.Serializer.class)
-    @JsonDeserialize(using = CurrencySerDe.Deserializer.class)
-    Currency currency;
+   Currency currency;
 }

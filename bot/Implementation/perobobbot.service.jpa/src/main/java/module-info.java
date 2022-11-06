@@ -11,10 +11,11 @@ module perobobbot.service.jpa {
 
     requires org.hibernate.orm.core;
 
+    requires io.micronaut.serde.serde_api;
+    requires io.micronaut.serde.serde_jackson;
     requires io.micronaut.data.data_model;
     requires io.micronaut.data.data_hibernate_jpa;
 
-    requires com.fasterxml.jackson.databind;
 
     requires fpc.tools.lang;
     requires fpc.tools.hibernate;
@@ -24,6 +25,7 @@ module perobobbot.service.jpa {
     requires perobobbot.api;
     requires perobobbot.service.api;
     requires perobobbot.domain.jpa;
+    requires io.micronaut.core;
 
 
 }

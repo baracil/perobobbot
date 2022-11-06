@@ -4,9 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.ImmutableSet;
 import fpc.tools.lang.Secret;
 import fpc.tools.lang.Todo;
-import io.micronaut.core.annotation.Introspected;
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.serde.annotation.Serdeable;
-import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -22,9 +21,8 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.Optional;
 
-@Introspected
-@Value
 @Serdeable
+@Value
 public class TwitchToken {
 
     @JsonProperty("access_token")

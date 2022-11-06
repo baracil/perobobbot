@@ -1,7 +1,7 @@
 package perobobbot.twitch.eventsub;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
+import io.micronaut.serde.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

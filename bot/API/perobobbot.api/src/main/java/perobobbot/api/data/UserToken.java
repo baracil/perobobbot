@@ -6,7 +6,7 @@ import fpc.tools.cipher.Encryptable;
 import fpc.tools.cipher.TextDecryptor;
 import fpc.tools.cipher.TextEncryptor;
 import fpc.tools.lang.Secret;
-import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.core.annotation.Introspected;
 import lombok.NonNull;
 import perobobbot.api.Identity;
 import perobobbot.api.Scope;
@@ -35,7 +35,7 @@ public sealed interface UserToken<T>
         return identity().platform();
     }
 
-    @Serdeable
+    @Introspected
     record Decrypted(@NonNull Identity identity,
                      @NonNull Secret accessToken,
                      @NonNull Secret refreshToken, @NonNull Instant expirationInstant,
@@ -69,7 +69,7 @@ public sealed interface UserToken<T>
         }
     }
 
-    @Serdeable
+    @Introspected
     record Encrypted(@NonNull Identity identity,
                      @NonNull String accessToken,
                      @NonNull String refreshToken, @NonNull Instant expirationInstant,

@@ -1,0 +1,56 @@
+{
+  "subscription": {
+    "id": "011be4a1-dbf7-95bf-0aa6-be6466a1ad70",
+    "status": "enabled",
+    "type": "channel.channel_points_custom_reward.update",
+    "version": "1",
+    "condition": {
+      "broadcaster_user_id": "94855854"
+    },
+    "transport": {
+      "method": "webhook",
+      "callback": "null"
+    },
+    "created_at": "2022-11-05T17:55:34.951842833Z",
+    "cost": 0
+  },
+  "event": {
+    "id": "011be4a1-dbf7-95bf-0aa6-be6466a1ad70",
+    "broadcaster_user_id": "94855854",
+    "broadcaster_user_login": "testBroadcaster",
+    "broadcaster_user_name": "testBroadcaster",
+    "is_enabled": true,
+    "is_paused": false,
+    "is_in_stock": true,
+    "title": "Test Reward from CLI",
+    "cost": 150,
+    "prompt": "Redeem Your Test Reward from CLI",
+    "is_user_input_required": true,
+    "should_redemptions_skip_request_queue": false,
+    "cooldown_expires_at": "2022-11-05T17:55:34.951842833Z",
+    "redemptions_redeemed_current_stream": 0,
+    "max_per_stream": {
+      "is_enabled": true,
+      "value": 100
+    },
+    "max_per_user_per_stream": {
+      "is_enabled": true,
+      "value": 100
+    },
+    "global_cooldown": {
+      "is_enabled": true,
+      "seconds": 300
+    },
+    "background_color": "#c0ffee",
+    "image": {
+      "url_1x": "https://static-cdn.jtvnw.net/image-1.png",
+      "url_2x": "https://static-cdn.jtvnw.net/image-2.png",
+      "url_4x": "https://static-cdn.jtvnw.net/image-4.png"
+    },
+    "default_image": {
+      "url_1x": "https://static-cdn.jtvnw.net/default-1.png",
+      "url_2x": "https://static-cdn.jtvnw.net/default-2.png",
+      "url_4x": "https://static-cdn.jtvnw.net/default-4.png"
+    }
+  }
+}

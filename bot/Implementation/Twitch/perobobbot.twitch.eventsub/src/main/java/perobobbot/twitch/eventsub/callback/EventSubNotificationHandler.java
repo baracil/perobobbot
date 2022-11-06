@@ -1,16 +1,16 @@
 package perobobbot.twitch.eventsub.callback;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
+import io.micronaut.serde.ObjectMapper;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import perobobbot.api.PerobobbotExecutors;
+import perobobbot.api.bus.Bus;
 import perobobbot.tools.MessageSaver;
+import perobobbot.twitch.api.eventsub.EventSubNotification;
 import perobobbot.twitch.api.eventsub.EventSubRequest;
-import perobobbot.twitch.api.eventsub.EventSubRequestDispatcher;
 import perobobbot.twitch.api.eventsub.EventSubVerification;
 import perobobbot.twitch.api.eventsub.TwitchEventSubConfiguration;
 import perobobbot.twitch.eventsub.TwitchRequestContent;
@@ -22,10 +22,9 @@ import perobobbot.twitch.eventsub.TwitchRequestValidator;
 @RequiredArgsConstructor
 public class EventSubNotificationHandler implements EventSubHandler {
 
-    private final @NonNull PerobobbotExecutors executors;
     private final @NonNull ObjectMapper objectMapper;
     private final @NonNull TwitchEventSubConfiguration configuration;
-    private final @NonNull EventSubRequestDispatcher eventDispatcher;
+    private final @NonNull Bus bus;
     private final @NonNull MessageSaver messageSaver = new MessageSaver("event_sub", ".json");
 
     @Override
@@ -34,32 +33,36 @@ public class EventSubNotificationHandler implements EventSubHandler {
     }
 
     @Override
-    public @NonNull HttpResponse<?> handleCall(@NonNull HttpRequest<?> request, @NonNull CallContext context) {
-        return new Executor(request).execute();
+    public @NonNull HttpResponse<?> handleCall(@NonNull HttpRequest<?> request, @NonNull String body, @NonNull CallContext context) {
+        return new Executor(request,body).execute();
     }
 
     @RequiredArgsConstructor
     private class Executor {
         private final @NonNull HttpRequest<?> request;
+        private final @NonNull String body;
         private TwitchRequestContent<String> validatedRequest;
         private EventSubRequest eventSubRequest;
         private HttpResponse<?> response;
 
         public @NonNull HttpResponse<?> execute() {
+            LOG.debug("[EventSub] Receive request");
             this.validateRequest();
             if (requestIsNotValid()) {
+                LOG.debug("[EventSub] request is invalid");
                 return HttpResponse.notFound();
             }
             this.saveBodyContent();
             this.deserializeRequestBody();
-            this.dispatchNotification();
+            LOG.debug("[EventSub] deserialized : " + eventSubRequest);
+            this.dispatchEventSubRequest();
             this.prepareResponse();
             return response;
         }
 
 
         private void validateRequest() {
-            validatedRequest = TwitchRequestValidator.validate(request, configuration.getSecret()).orElse(null);
+            validatedRequest = TwitchRequestValidator.validate(request, body,configuration.getSecret()).orElse(null);
         }
 
         private boolean requestIsNotValid() {
@@ -68,6 +71,7 @@ public class EventSubNotificationHandler implements EventSubHandler {
 
         private void saveBodyContent() {
             if (configuration.isBackupMessages()) {
+                LOG.debug("[EventSub] Save body message");
                 messageSaver.saveMessage(validatedRequest.content());
             }
         }
@@ -77,15 +81,15 @@ public class EventSubNotificationHandler implements EventSubHandler {
         }
 
 
-        private void dispatchNotification() {
-            if (eventSubRequest != null) {
-                executors.submit(() -> eventDispatcher.dispatchEventSub(eventSubRequest));
+        private void dispatchEventSubRequest() {
+            if (eventSubRequest instanceof EventSubNotification notification) {
+                notification.getEvents().forEach(bus::publishEvent);
             }
         }
 
         private void prepareResponse() {
             if (eventSubRequest instanceof EventSubVerification verification) {
-                LOG.info("Send challenge : {}",verification.getChallenge());
+                LOG.info("Send challenge : {}", verification.getChallenge());
                 this.response = HttpResponse.ok(verification.getChallenge());
             } else {
                 this.response = HttpResponse.ok();

@@ -1,37 +1,47 @@
 package perobobbot.twitch.api.eventsub.event;
 
-import lombok.AccessLevel;
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.micronaut.core.annotation.Nullable;
+import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.serde.config.naming.SnakeCaseStrategy;
 import lombok.NonNull;
 import lombok.Value;
 import perobobbot.twitch.api.Image;
+import perobobbot.twitch.api.TwitchApiPayload;
 import perobobbot.twitch.api.UserInfo;
+import perobobbot.twitch.api.serde.ISOInstantSerde;
 
 import java.time.Instant;
 import java.util.Optional;
 
 @Value
-public class ChannelPointsCustomRewardAddEvent implements BroadcasterProvider, EventSubEvent {
+@Serdeable(naming = SnakeCaseStrategy.class)
+public class ChannelPointsCustomRewardAddEvent implements BroadcasterProvider, EventSubEvent, TwitchApiPayload {
 
     @NonNull String id;
     @NonNull UserInfo broadcaster;
+    @JsonProperty("is_enabled")
     boolean enabled;
+    @JsonProperty("is_paused")
     boolean paused;
+    @JsonProperty("is_in_stock")
     boolean inStock;
     @NonNull String title;
     int cost;
     @NonNull String prompt;
+    @JsonProperty("is_user_input_required")
     boolean userInputRequired;
-    @Getter(AccessLevel.NONE)
     boolean shouldRedemptionsSkipRequestQueue;
-    Limit maxPerStream;
-    Limit maxPerUserPerStream;
+    @Nullable Limit maxPerStream;
+    @Nullable Limit maxPerUserPerStream;
     @NonNull String backgroundColor;
-    Image image;
+    @Nullable Image image;
     @NonNull Image defaultImage;
     @NonNull GlobalCooldown globalCooldown;
-    Instant cooldownExpiresAt;
-    Integer redemptionsRedeemedCurrentStream;
+    @Serdeable.Serializable(using = ISOInstantSerde.class)
+    @Serdeable.Deserializable(using = ISOInstantSerde.class)
+    @Nullable Instant cooldownExpiresAt;
+    @Nullable Integer redemptionsRedeemedCurrentStream;
 
 
     public @NonNull Optional<Instant> getCooldownExpiresAt() {
@@ -40,10 +50,6 @@ public class ChannelPointsCustomRewardAddEvent implements BroadcasterProvider, E
 
     public @NonNull Optional<Integer> getRedemptionsRedeemedCurrentStream() {
         return Optional.ofNullable(redemptionsRedeemedCurrentStream);
-    }
-
-    public boolean shouldRedemptionsSkipRequestQueue() {
-        return shouldRedemptionsSkipRequestQueue;
     }
 
     public @NonNull Optional<Limit> getMaxPerStream() {

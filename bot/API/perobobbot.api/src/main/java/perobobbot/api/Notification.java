@@ -1,4 +1,6 @@
 package perobobbot.api;
 
-public interface Notification {
+import perobobbot.api.bus.Event;
+
+public interface Notification extends Event {
 }

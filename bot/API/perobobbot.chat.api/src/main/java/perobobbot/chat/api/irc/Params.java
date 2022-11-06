@@ -2,12 +2,10 @@ package perobobbot.chat.api.irc;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.ImmutableList;
-import io.micronaut.serde.annotation.Serdeable;
 import lombok.NonNull;
 import lombok.Value;
 
 @Value
-@Serdeable
 public class Params {
 
     @NonNull ImmutableList<String> parameters;

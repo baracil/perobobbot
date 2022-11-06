@@ -1,21 +1,22 @@
 package perobobbot.service.jpa;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
+import io.micronaut.core.type.Argument;
+import io.micronaut.serde.ObjectMapper;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.SerDeHelper;
 
+import java.io.IOException;
 import java.io.UncheckedIOException;
 
 @Singleton
 @RequiredArgsConstructor
 public class DefaultSerDeHelper implements SerDeHelper {
 
-    private final @NonNull TypeReference<ImmutableMap<String,String>> MAP_REFERENCE = new TypeReference<>() {};
+    public static final Argument<ImmutableMap<String, String>> ARGUMENT = Argument.of((Class<ImmutableMap<String, String>>) ((Class) ImmutableMap.class), String.class, String.class);
+
 
     private final @NonNull ObjectMapper objectMapper;
 
@@ -23,7 +24,7 @@ public class DefaultSerDeHelper implements SerDeHelper {
     public @NonNull String serializeMap(@NonNull ImmutableMap<String, String> map) {
         try {
             return objectMapper.writeValueAsString(map);
-        } catch (JsonProcessingException e) {
+        } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
     }
@@ -31,8 +32,8 @@ public class DefaultSerDeHelper implements SerDeHelper {
     @Override
     public @NonNull ImmutableMap<String, String> deserializeMap(@NonNull String data) {
         try {
-            return objectMapper.readValue(data, MAP_REFERENCE);
-        } catch (JsonProcessingException e) {
+            return objectMapper.readValue(data, ARGUMENT);
+        } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
     }

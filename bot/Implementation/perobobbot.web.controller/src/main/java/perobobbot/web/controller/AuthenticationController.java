@@ -7,6 +7,8 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.QueryValue;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.views.View;
 import lombok.NonNull;
 import perobobbot.api.data.Platform;
@@ -23,6 +25,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Controller(AuthenticationApi.PATH)
+@ExecuteOn(TaskExecutors.IO)
 public class AuthenticationController implements AuthenticationApi {
 
     private final @NonNull OAuthManager oAuthManager;

@@ -21,7 +21,6 @@ public class SubscriptionEntity extends BaseEntity {
 
     private @NonNull String type;
 
-    @Setter
     private @NonNull String subscriptionId;
 
     private @NonNull String data;
@@ -41,5 +40,10 @@ public class SubscriptionEntity extends BaseEntity {
 
     public @NonNull SubscriptionView toView(@NonNull SerDeHelper serDeHelper) {
         return new SubscriptionView(getId(), platform, type, serDeHelper.deserializeMap(data), subscriptionId, callback);
+    }
+
+    public void update(@NonNull String subscriptionId, @NonNull String callback) {
+        this.subscriptionId = subscriptionId;
+        this.callback = callback;
     }
 }

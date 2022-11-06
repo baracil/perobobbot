@@ -1,38 +1,27 @@
 package perobobbot.twitch.api.serde;
 
-import com.fasterxml.jackson.core.JacksonException;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.module.SimpleModule;
-import fpc.tools.jackson.Registrable;
+import io.micronaut.core.type.Argument;
+import io.micronaut.serde.Decoder;
+import io.micronaut.serde.Encoder;
+import io.micronaut.serde.util.NullableSerde;
+import jakarta.inject.Singleton;
 import lombok.NonNull;
 
 import java.awt.*;
 import java.io.IOException;
 
-public class ColorSerDe implements Registrable {
+@Singleton
+public class ColorSerDe implements NullableSerde<Color> {
 
     @Override
-    public void register(@NonNull SimpleModule simpleModule) {
-        simpleModule.addSerializer(Color.class, new Serializer());
-        simpleModule.addDeserializer(Color.class, new Deserializer());
+    public @NonNull Color deserializeNonNull(Decoder decoder, DecoderContext decoderContext, Argument<? super Color> type) throws IOException {
+        return Color.decode(decoder.decodeString());
     }
 
-    public static class Serializer extends JsonSerializer<Color> {
-        public void serialize(Color value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
-            final var webFormat = "#%02X%02X%02X".formatted(value.getRed(), value.getGreen(), value.getBlue());
-            gen.writeString(webFormat);
-        }
+    @Override
+    public void serialize(Encoder encoder, @NonNull EncoderContext context, @NonNull Argument<? extends Color> type, @NonNull Color value) throws IOException {
+        final var webFormat = "#%02X%02X%02X".formatted(value.getRed(), value.getGreen(), value.getBlue());
+        encoder.encodeString(webFormat);
     }
 
-    public static class Deserializer extends JsonDeserializer<Color> {
-        @Override
-        public Color deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JacksonException {
-            return Color.decode(p.getValueAsString());
-        }
-    }
 }

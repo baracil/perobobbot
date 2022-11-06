@@ -1,0 +1,28 @@
+{
+  "subscription": {
+    "id": "915237a8-dbb1-1bc7-04a5-b562565474f0",
+    "status": "enabled",
+    "type": "channel.unban",
+    "version": "1",
+    "condition": {
+      "broadcaster_user_id": "7538701"
+    },
+    "transport": {
+      "method": "webhook",
+      "callback": "null"
+    },
+    "created_at": "2022-11-05T17:55:34.666818548Z",
+    "cost": 0
+  },
+  "event": {
+    "user_id": "39089430",
+    "user_login": "testFromUser",
+    "user_name": "testFromUser",
+    "broadcaster_user_id": "7538701",
+    "broadcaster_user_login": "testBroadcaster",
+    "broadcaster_user_name": "testBroadcaster",
+    "moderator_user_id": "72651090",
+    "moderator_user_login": "CLIModerator",
+    "moderator_user_name": "CLIModerator"
+  }
+}

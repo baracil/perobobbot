@@ -10,8 +10,8 @@ import lombok.NonNull;
 import lombok.Synchronized;
 import perobobbot.api.Identity;
 import perobobbot.api.JoinedChannelProviderForUser;
+import perobobbot.api.bus.Bus;
 import perobobbot.chat.api.ChatMessage;
-import perobobbot.chat.api.ChatMessageDispatcher;
 import perobobbot.chat.api.irc.MessageData;
 import perobobbot.oauth.api.OAuthData;
 import perobobbot.twitch.chat.TwitchChat;
@@ -32,20 +32,20 @@ public class DefaultTwitchChat implements TwitchChat, TwitchChatListener {
     private final @NonNull TwitchChatStateListener twitchChatStateListener;
     private final @NonNull TwitchChatStateManager twitchChatStateManager;
     private final @NonNull Looper channelJoiner;
-    private final @NonNull ChatMessageDispatcher messageDispatcher;
+    private final @NonNull Bus bus;
 
 
     public DefaultTwitchChat(@NonNull Identity bot,
                              @NonNull OAuthData oAuthData,
                              @NonNull JoinedChannelProviderForUser channelProvider,
                              @NonNull Instants instants,
-                             @NonNull ChatMessageDispatcher messageDispatcher) {
+                             @NonNull Bus bus) {
         this.bot = bot;
         this.twitchChatStateListener = new TwitchChatStateListener(oAuthData);
         this.twitchChatStateManager = new TwitchChatStateManager(oAuthData.getLogin(), twitchChatStateListener, instants);
         this.channelJoiner = Looper.scheduled(new ChannelJoiner(channelProvider, twitchChatStateManager), Duration.ofSeconds(1), Duration.ofSeconds(10));
         this.twitchChatStateListener.addChatListener(this);
-        this.messageDispatcher = messageDispatcher;
+        this.bus = bus;
     }
 
     @Override
@@ -116,6 +116,6 @@ public class DefaultTwitchChat implements TwitchChat, TwitchChatListener {
     public void onReceivedMessage(@NonNull Instant receptionInstant, @NonNull MessageFromTwitch message) {
         final var payload = MessageData.fromFpc(message.getIrcParsing());
         final var chatMessage = new ChatMessage(bot,payload);
-        messageDispatcher.sendMessage(chatMessage);
+        bus.publishEvent(chatMessage);
     }
 }

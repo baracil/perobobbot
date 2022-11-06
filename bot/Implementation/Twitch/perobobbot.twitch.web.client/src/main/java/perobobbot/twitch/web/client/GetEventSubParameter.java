@@ -1,14 +1,14 @@
 package perobobbot.twitch.web.client;
 
+import io.micronaut.core.annotation.Introspected;
 import io.micronaut.http.annotation.QueryValue;
-import io.micronaut.serde.annotation.Serdeable;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
 @Value
 @Builder
-@Serdeable
+@Introspected
 @RequiredArgsConstructor
 public class GetEventSubParameter {
     @QueryValue("status")

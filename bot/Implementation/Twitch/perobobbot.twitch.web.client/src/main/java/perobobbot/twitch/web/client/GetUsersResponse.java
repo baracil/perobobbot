@@ -1,15 +1,15 @@
 package perobobbot.twitch.web.client;
 
-import io.micronaut.serde.annotation.Serdeable;
+import io.micronaut.core.annotation.Introspected;
 import lombok.Value;
 
-@Serdeable
+@Introspected
 @Value
 public class GetUsersResponse {
     UserDTO[] data;
 
     @Value
-    @Serdeable
+    @Introspected
     public static class UserDTO {
         String broadcaster_type;
         String description;

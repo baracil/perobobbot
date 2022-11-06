@@ -3,7 +3,6 @@ package perobobbot.twitch.eventsub.callback;
 import fpc.tools.lang.Instants;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
-import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.eventsub.SeenEventSubId;
@@ -17,7 +16,7 @@ import java.time.Instant;
  * Pass nofitication not seen
  */
 @RequiredArgsConstructor
-@Singleton
+//@Singleton
 public class DuplicateFilterHandler implements EventSubHandler {
 
     public static final Duration DELAY_FOR_INVALIDITY = Duration.ofMinutes(10);
@@ -32,7 +31,7 @@ public class DuplicateFilterHandler implements EventSubHandler {
     }
 
     @Override
-    public @NonNull HttpResponse<?> handleCall(@NonNull HttpRequest<?> request, @NonNull CallContext context) {
+    public @NonNull HttpResponse<?> handleCall(@NonNull HttpRequest<?> request, @NonNull String body, @NonNull CallContext context) {
         final var timeStamp = TwitchEventSubConstant.TWITCH_EVENTSUB_MESSAGE_TIMESTAMP.getHeader(request)
                                                                                       .map(this::parseUTC)
                                                                                       .orElse(null);
@@ -48,7 +47,7 @@ public class DuplicateFilterHandler implements EventSubHandler {
         }
 
         if (seenIds.notAlreadySeen(id)) {
-            final var response = context.proceed(request);
+            final var response = context.proceed(request, body);
             seenIds.setSeen(id);
             return response;
         }
