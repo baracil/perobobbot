@@ -23,9 +23,19 @@ jpa:
     properties:
       hibernate:
         hbm2ddl:
-          auto: update
+          auto: none
+
 perobobbot:
   oauth:
     defaultIds:
       TWITCH: "Perococco"
-      DISCORD: "toto"
+  data:
+    user: Perobobbot
+    dbPassPhrase: dbPassPhrase
+  plugin:
+    folder: /home/perobobbot/Perobobbot/plugins
+  eventsub:
+    secret: secret
+    backupMessages: true
+    callbackURL: https://callback.net/twitch
+
