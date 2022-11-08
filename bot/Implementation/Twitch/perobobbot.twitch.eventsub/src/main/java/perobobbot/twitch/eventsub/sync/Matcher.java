@@ -35,7 +35,7 @@ public class Matcher {
     private Map<Key, List<TwitchSubscription>> onPlatformPerKey;
     private Map<Key, SubscriptionView> onBotPerKey;
 
-    private Match.MatchBuilder builder = Match.builder();
+    private final Match.MatchBuilder builder = Match.builder();
 
 
     private @NonNull Match match() {
@@ -84,21 +84,25 @@ public class Matcher {
         }
 
         if (onPlatform.isEmpty()) {
-            if (onBot.hasPlatformId()) {
-                builder.toRefreshSub(onBot);
-            } else {
-                builder.toCreate(onBot);
+            if (onBot.isEnabled()) {
+                if (onBot.hasPlatformId()) {
+                    builder.toRefreshSub(onBot);
+                } else {
+                    builder.toCreate(onBot);
+                }
             }
             return;
         }
 
-        if (onBot == null) {
+
+        if (onBot == null || !onBot.isEnabled()) {
             onPlatform.stream()
                       .filter(this::isRevokable)
                       .map(TwitchSubscription::getSubscriptionId)
                       .forEach(builder::toRevokeSub);
             return;
         }
+
 
         final Predicate<TwitchSubscription> sameIdPredicate = s -> s.getSubscriptionId().equals(onBot.getSubscriptionId());
 

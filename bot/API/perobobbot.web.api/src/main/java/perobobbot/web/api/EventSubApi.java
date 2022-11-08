@@ -7,6 +7,8 @@ import lombok.NonNull;
 import perobobbot.api.SubscriptionView;
 import perobobbot.api.data.Platform;
 import perobobbot.service.api.CreateSubscriptionParameters;
+import perobobbot.service.api.PatchSubscriptionParameters;
+import perobobbot.service.api.SynchronizationParameters;
 
 public interface EventSubApi extends WebService {
 
@@ -25,8 +27,15 @@ public interface EventSubApi extends WebService {
     @Delete("/{id}")
     void deleteEventSubs(@PathVariable long id);
 
+
+    @Patch("/{id}")
+    @NonNull SubscriptionView updateEventSubs(@PathVariable long id, @NonNull @Body PatchSubscriptionParameters parameters);
+
     @Post
     @NonNull SubscriptionView createSubscription(@NonNull @Body CreateSubscriptionParameters parameters);
+
+    @Put
+    void synchronizeSubscriptions(@NonNull @Body SynchronizationParameters parameters);
 
 
 }

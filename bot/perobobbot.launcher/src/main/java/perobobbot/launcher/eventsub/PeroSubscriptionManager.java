@@ -43,4 +43,9 @@ public class PeroSubscriptionManager implements SubscriptionManager {
         bus.publishEvent(PlatformSync.forPlatform(platform));
     }
 
+    @Override
+    public void requestSynchronizationForAllPlatforms() {
+        bus.publishEvent(PlatformSync.forAllPlatforms());
+    }
+
 }

@@ -27,19 +27,24 @@ public class SubscriptionEntity extends BaseEntity {
 
     private @NonNull String callback;
 
+    @Setter
+    private boolean enabled;
+
     public SubscriptionEntity(@NonNull Platform platform,
                               @NonNull String type,
                               @NonNull String data,
-                              @NonNull String callback) {
+                              @NonNull String callback,
+                              boolean enabled) {
         this.platform = platform;
         this.type = type;
         this.subscriptionId = "";
         this.data = data;
         this.callback = callback;
+        this.enabled = enabled;
     }
 
     public @NonNull SubscriptionView toView(@NonNull SerDeHelper serDeHelper) {
-        return new SubscriptionView(getId(), platform, type, serDeHelper.deserializeMap(data), subscriptionId, callback);
+        return new SubscriptionView(getId(), platform, type, serDeHelper.deserializeMap(data), subscriptionId, enabled, callback);
     }
 
     public void update(@NonNull String subscriptionId, @NonNull String callback) {

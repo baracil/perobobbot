@@ -10,7 +10,7 @@ public final class PlatformSync implements Event {
         return new PlatformSync(platform);
     }
 
-    public static @NonNull PlatformSync forAllPlatform() {
+    public static @NonNull PlatformSync forAllPlatforms() {
         return new PlatformSync(null);
     }
 

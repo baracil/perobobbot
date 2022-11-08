@@ -13,5 +13,6 @@ public class CreateSubscriptionParameters {
     @NonNull Platform platform;
     @NonNull String subscriptionType;
     @NonNull ImmutableMap<String,String> conditions;
+    boolean enabled;
 
 }

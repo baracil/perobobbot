@@ -17,6 +17,8 @@ public class SubscriptionView {
      * Id of the subscription on the platform
      */
     @NonNull String subscriptionId;
+
+    boolean enabled;
     /**
      * The url used for this subscription
      */

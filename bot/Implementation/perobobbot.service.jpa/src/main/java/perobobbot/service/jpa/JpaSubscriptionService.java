@@ -14,6 +14,7 @@ import perobobbot.api.data.Platform;
 import perobobbot.domain.jpa.entity.SubscriptionEntity;
 import perobobbot.domain.jpa.repository.SubscriptionRepository;
 import perobobbot.service.api.CreateSubscriptionParameters;
+import perobobbot.service.api.PatchSubscriptionParameters;
 import perobobbot.service.api.SubscriptionService;
 import perobobbot.service.api.UpdateSubscriptionParameters;
 
@@ -57,10 +58,17 @@ public class JpaSubscriptionService implements SubscriptionService {
 
     @Override
     public @NonNull SubscriptionView updateSubscription(long id, @NonNull UpdateSubscriptionParameters parameters) {
-        LOG.info("Update subscription id='{}' with '{}'",id,parameters);
+        LOG.info("Update subscription id='{}' with '{}'", id, parameters);
         final var subscription = subscriptionRepository.getById(id);
-        subscription.update(parameters.getSubscriptionId(),parameters.getCallbackUrl());
+        subscription.update(parameters.getSubscriptionId(), parameters.getCallbackUrl());
         return subscriptionRepository.update(subscription).toView(serDeHelper);
+    }
+
+    @Override
+    public @NonNull SubscriptionView patchSubscription(long id, @NonNull PatchSubscriptionParameters parameters) {
+        final var subscription = subscriptionRepository.getById(id);
+        parameters.getEnabled().ifPresent(subscription::setEnabled);
+        return subscriptionRepository.save(subscription).toView(serDeHelper);
     }
 
     @Override
@@ -69,7 +77,8 @@ public class JpaSubscriptionService implements SubscriptionService {
                 parameters.getPlatform(),
                 parameters.getSubscriptionType(),
                 serDeHelper.serializeMap(parameters.getConditions()),
-                subscriptionManager.getCallbackUrl(parameters.getPlatform())
+                subscriptionManager.getCallbackUrl(parameters.getPlatform()),
+                parameters.isEnabled()
         );
         return subscriptionRepository.save(subscription).toView(serDeHelper);
     }

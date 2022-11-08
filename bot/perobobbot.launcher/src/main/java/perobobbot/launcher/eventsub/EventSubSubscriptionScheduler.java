@@ -15,6 +15,6 @@ public class EventSubSubscriptionScheduler {
 
     @Scheduled(initialDelay = "10s",fixedDelay = "600s")
     public void requestEventSubSync() {
-        bus.publishEvent(PlatformSync.forAllPlatform());
+        bus.publishEvent(PlatformSync.forAllPlatforms());
     }
 }

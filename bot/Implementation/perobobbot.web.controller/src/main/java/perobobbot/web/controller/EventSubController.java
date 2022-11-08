@@ -14,7 +14,9 @@ import perobobbot.api.SubscriptionManager;
 import perobobbot.api.SubscriptionView;
 import perobobbot.api.data.Platform;
 import perobobbot.service.api.CreateSubscriptionParameters;
+import perobobbot.service.api.PatchSubscriptionParameters;
 import perobobbot.service.api.SubscriptionService;
+import perobobbot.service.api.SynchronizationParameters;
 import perobobbot.web.api.EventSubApi;
 
 @Controller(EventSubApi.PATH)
@@ -30,9 +32,9 @@ public class EventSubController implements EventSubApi {
                                                                   @QueryValue(value = "page", defaultValue = "0") int page,
                                                                   @QueryValue(value = "size", defaultValue = "-1") int size) {
         if (platform == null) {
-            return subscriptionService.listSubscriptions(page,size);
+            return subscriptionService.listSubscriptions(page, size);
         }
-        return subscriptionService.listSubscriptionsOnPlatform(platform,page,size);
+        return subscriptionService.listSubscriptionsOnPlatform(platform, page, size);
     }
 
     @Override
@@ -41,15 +43,22 @@ public class EventSubController implements EventSubApi {
     }
 
     @Override
+    public void synchronizeSubscriptions(@Body @NonNull SynchronizationParameters parameters) {
+        parameters.getPlatform().ifPresentOrElse(subscriptionManager::requestSynchronization, subscriptionManager::requestSynchronizationForAllPlatforms);
+    }
+
+    @Override
     public void deleteEventSubs(@PathVariable long id) {
-        subscriptionService.deleteSubscription(id)
-                           .ifPresent(view -> subscriptionManager.requestSynchronization(view.getPlatform()));
+        subscriptionService.deleteSubscription(id);
+    }
+
+    @Override
+    public @NonNull SubscriptionView updateEventSubs(@PathVariable long id, @Body @NonNull PatchSubscriptionParameters parameters) {
+        return subscriptionService.patchSubscription(id, parameters);
     }
 
     @Override
     public @NonNull SubscriptionView createSubscription(@Body @NonNull CreateSubscriptionParameters parameters) {
-        final var subscription = subscriptionService.createSubscription(parameters);
-        subscriptionManager.requestSynchronization(subscription.getPlatform());
-        return subscription;
+        return subscriptionService.createSubscription(parameters);
     }
 }

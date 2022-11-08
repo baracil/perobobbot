@@ -6,6 +6,8 @@ module perobobbot.service.api {
     requires transitive perobobbot.api;
     requires transitive fpc.tools.cipher;
 
+    requires com.fasterxml.jackson.annotation;
+
     requires io.micronaut.serde.serde_api;
     requires io.micronaut.core;
 

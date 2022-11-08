@@ -21,6 +21,8 @@ public interface SubscriptionService {
 
     @NonNull SubscriptionView getSubscription(long id);
 
+    @NonNull SubscriptionView patchSubscription(long id, @NonNull PatchSubscriptionParameters parameters);
+
     default @NonNull ImmutableList<SubscriptionView> listSubscriptionsOnPlatform(@NonNull Platform platform) {
         return this.listSubscriptionsOnPlatform(platform, 0, -1);
     }
@@ -28,5 +30,4 @@ public interface SubscriptionService {
     default @NonNull ImmutableList<SubscriptionView> listSubscriptions() {
         return this.listSubscriptions(0,-1);
     }
-
 }

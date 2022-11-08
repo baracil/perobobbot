@@ -9,4 +9,5 @@ public interface SubscriptionManager {
 
     void requestSynchronization(@NonNull Platform platform);
 
+    void requestSynchronizationForAllPlatforms();
 }
