@@ -46,22 +46,6 @@
 
     <modules>
         <module>bot</module>
-
-<!--        <module>Main/perobobbot.command</module>-->
-<!--        <module>Main/perobobbot.oauth</module>-->
-
-<!--        <module>Main/perobobbot.chat.impl</module>-->
-<!--        <module>Main/perobobbot.callback.impl</module>-->
-<!--        <module>Main/perobobbot.web.client</module>-->
-<!--        <module>Main/perobobbot.web.controller</module>-->
-
-
-<!--        <module>Main/perobobbot.service.jpa</module>-->
-
-
-
-<!--        <module>Twitch</module>-->
-
         <module>bom/bom-generator</module>
         <module>bom/bom</module>
 
