@@ -62,7 +62,4 @@ public class MessageData {
         );
     }
 
-    public Optional<String> getPrivateMessage() {
-        return null;
-    }
 }

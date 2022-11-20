@@ -1,12 +1,12 @@
 package perobobbot.command.impl;
 
-import fpc.tools.fp.Consumer1;
 import fpc.tools.lang.ThrowableTool;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import perobobbot.command.api.CommandAction;
 import perobobbot.command.api.CommandBinding;
 
 import java.util.concurrent.ExecutorService;
@@ -25,7 +25,7 @@ public class CommandData implements Comparable<CommandData> {
     @Getter
     private final long id = ID.incrementAndGet();
     private final @NonNull Command command;
-    private final @NonNull Consumer1<? super CommandBinding> execution;
+    private final @NonNull CommandAction action;
 
     @Override
     public int compareTo(CommandData o) {
@@ -55,7 +55,7 @@ public class CommandData implements Comparable<CommandData> {
 
     public boolean handle(String message) {
         final var bind = command.bind(message);
-        bind.map(b -> new Executor(b, this.execution))
+        bind.map(b -> new Executor(b, this.action))
             .ifPresent(COMMAND_EXECUTOR::submit);
         return bind.isPresent();
     }
@@ -63,12 +63,12 @@ public class CommandData implements Comparable<CommandData> {
     @RequiredArgsConstructor
     private static class Executor implements Runnable {
         private final @NonNull CommandBinding commandBinding;
-        private final @NonNull Consumer1<? super CommandBinding> execution;
+        private final @NonNull CommandAction action;
 
         @Override
         public void run() {
             try {
-                execution.accept(commandBinding);
+                action.execute(commandBinding);
             } catch (Throwable t) {
                 ThrowableTool.interruptIfCausedByInterruption(t);
                 LOG.warn("Error while execution action.", t);

@@ -18,6 +18,7 @@ import perobobbot.oauth.api.OAuthData;
 import perobobbot.twitch.chat.TwitchChat;
 import perobobbot.twitch.chat.TwitchChatListener;
 import perobobbot.twitch.chat.message.from.MessageFromTwitch;
+import perobobbot.twitch.chat.message.from.PrivMsgFromTwitch;
 import perobobbot.twitch.chat.message.to.CommandToTwitch;
 import perobobbot.twitch.chat.message.to.MessageToTwitch;
 import perobobbot.twitch.chat.message.to.RequestToTwitch;
@@ -44,7 +45,7 @@ public class DefaultTwitchChat implements TwitchChat, TwitchChatListener {
         this.bot = bot.identity();
         this.twitchChatStateListener = new TwitchChatStateListener(oAuthData);
         this.twitchChatStateManager = new TwitchChatStateManager(oAuthData.getLogin(), twitchChatStateListener, instants);
-        this.channelJoiner = Looper.scheduled(new ChannelJoiner(bot.name(),channelProvider, twitchChatStateManager), Duration.ofSeconds(1), Duration.ofSeconds(10));
+        this.channelJoiner = Looper.scheduled(new ChannelJoiner(bot.name(), channelProvider, twitchChatStateManager), Duration.ofSeconds(1), Duration.ofSeconds(10));
         this.twitchChatStateListener.addChatListener(this);
         this.bus = bus;
     }
@@ -116,7 +117,13 @@ public class DefaultTwitchChat implements TwitchChat, TwitchChatListener {
     @Override
     public void onReceivedMessage(@NonNull Instant receptionInstant, @NonNull MessageFromTwitch message) {
         final var payload = MessageData.fromFpc(message.getIrcParsing());
-        final var chatMessage = new ChatMessage(bot,payload);
+        final String privateMessage;
+        if (message instanceof PrivMsgFromTwitch privMsgFromTwitch) {
+            privateMessage = privMsgFromTwitch.getPayload();
+        } else {
+            privateMessage = null;
+        }
+        final var chatMessage = new ChatMessage(bot, payload, message, privateMessage);
         bus.publishEvent(chatMessage);
     }
 }

@@ -26,9 +26,12 @@ public enum RegexpCommandParser implements CommandParser {
         return new Execution(commandDefinition.trim()).parse();
     }
 
-    public static final String ARGUMENT_SINGLE_QUOTE = "'(?:[^ '\\\\]|\\\\.)+'";
-    public static final String ARGUMENT_DOUBLE_QUOTE = "\"(?:[^ \"\\\\]|\\\\.)+\"";
+//    public static final String ARGUMENT_SINGLE_QUOTE = "'(?:[^ '\\\\]|\\\\.)+'";
+//    public static final String ARGUMENT_DOUBLE_QUOTE = "\"(?:[^ \"\\\\]|\\\\.)+\"";
+    public static final String ARGUMENT_SINGLE_QUOTE = "'[^'\\\\]*(?:\\\\.[^'\\\\]*)*'";
+    public static final String ARGUMENT_DOUBLE_QUOTE = "\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\"";
     public static final String ARGUMENT_NO_QUOTE = "[^ \"']+";
+
 
     public static final String ARGUMENT_PATTERN = "(" + ARGUMENT_SINGLE_QUOTE + "|" + ARGUMENT_DOUBLE_QUOTE + "|" + ARGUMENT_NO_QUOTE + ")";
 

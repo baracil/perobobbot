@@ -26,7 +26,7 @@ public class SimpleCommandBinding implements CommandBinding {
     }
 
     @Override
-    public @NonNull Optional<String> findParameter(@NonNull String name) {
+    public @NonNull Optional<String> findParameterValue(@NonNull String name) {
         return Optional.ofNullable(parameters.get(name));
     }
 }

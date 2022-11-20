@@ -26,8 +26,8 @@ public class DataDeserTest {
     public static @NonNull Stream<Arguments> samples() {
         return Stream.of(
                              EventSubNotification.class, TwitchSubscriptionData.class,
-                             TwitchToken.class,
-                             EventSubVerification.class)
+                             TwitchToken.class, EventSubVerification.class
+                     )
                      .flatMap(DataDeserTest::getResources);
     }
 

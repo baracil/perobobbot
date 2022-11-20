@@ -3,12 +3,15 @@ package perobobbot.command.impl;
 import com.google.common.collect.ImmutableSet;
 import fpc.tools.fp.Tuple2;
 import fpc.tools.lang.MapTool;
+import io.micronaut.core.annotation.Nullable;
 import lombok.NonNull;
 import lombok.Value;
 import perobobbot.command.api.CommandBinding;
 import perobobbot.command.api.Parameter;
 
+import java.util.Objects;
 import java.util.Optional;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Value
@@ -62,10 +65,27 @@ public class Command {
         final var parameters = getParameters()
                 .stream()
                 .map(Parameter::name)
-                .map(n -> Optional.ofNullable(matcher.group(n)).map(v -> new Tuple2<>(n, v)))
-                .flatMap(Optional::stream)
+                .map(n -> extractParameterValue(matcher, n))
+                .filter(Objects::nonNull)
                 .collect(MapTool.tuple2Collector());
         return Optional.of(new SimpleCommandBinding(definition, fullParameters, parameters));
 
+    }
+
+    private @Nullable Tuple2<String, String> extractParameterValue(@NonNull Matcher matcher, @NonNull String parameterName) {
+        final var match = matcher.group(parameterName);
+        if (match == null) {
+            return null;
+        }
+
+        final var unquoted = unquote(unquote(match, "'"), "\"");
+        return new Tuple2<>(parameterName, unquoted);
+    }
+
+    private @NonNull String unquote(@NonNull String value, @NonNull String quoteType) {
+        if (value.startsWith(quoteType) && value.endsWith(quoteType)) {
+            return value.substring(1, value.length() - 1);
+        }
+        return value;
     }
 }

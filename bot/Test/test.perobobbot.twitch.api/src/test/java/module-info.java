@@ -5,6 +5,10 @@ open module test.perobobbot.twitch.api {
 
     requires io.micronaut.core;
     requires io.micronaut.serde.serde_api;
+    requires io.micronaut.serde.serde_jackson;
+
+    requires com.fasterxml.jackson.core;
+
     requires io.micronaut.test.test_core;
     requires io.micronaut.test.test_junit5;
 

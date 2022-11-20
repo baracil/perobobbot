@@ -11,5 +11,7 @@ module perobobbot.command {
     requires transitive perobobbot.api;
     requires transitive perobobbot.command.api;
 
+    requires io.micronaut.core;
+
     exports perobobbot.command.impl;
 }

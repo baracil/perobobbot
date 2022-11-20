@@ -14,11 +14,15 @@ import java.util.stream.Stream;
 
 public class CommandBindingDefinitionParserTest {
 
+//    public static Pattern P = Pattern.compile("^play( +(?<title>('(?:[^ '\\\\]|\\\\.)+'|\"(?:[^ \"\\\\]|\\\\.)+\"|[^ \"']+))( +(?<volume>('(?:[^ '\\\\]|\\\\.)+'|\"(?:[^ \"\\\\]|\\\\.)+\"|[^ \"']+)))?)$");
+
 
     private static Stream<Arguments> testNumberOfParameters() {
         return Stream.of(
                 Arguments.of("decho*", "decho twitch Hello World","twitch Hello World",Map.of()),
                 Arguments.of("play {title} [volume]", "play chut", "chut", Map.of("title","chut")),
+                Arguments.of("play {title} [volume]", "play \"chut chut\"", "\"chut chut\"", Map.of("title","chut chut")),
+                Arguments.of("play {title} [volume]", "play 'super chut'", "'super chut'", Map.of("title","super chut")),
                 Arguments.of("play {title} [volume]","play chut 10", "chut 10", Map.of("title","chut","volume","10")),
                 Arguments.of("list {arg1} {title} {volume}","list oups chut 10", "oups chut 10", Map.of("arg1","oups","title","chut","volume","10")),
                 Arguments.of("play [arg1] {arg2} [arg3]","play chut","chut", Map.of("arg2","chut")),
@@ -38,24 +42,24 @@ public class CommandBindingDefinitionParserTest {
 
     @ParameterizedTest
     @MethodSource("testNumberOfParameters")
-    public void shouldHaveRightNumberOfParameter(@NonNull String commandDefinition, @NonNull String command, @NonNull String fullParameters, Map<String,String> expectedParameters) {
-        final var parsing = commandParser.parse(commandDefinition).bind(command).orElse(null);
+    public void shouldHaveRightNumberOfParameter(@NonNull String commandDefinition, @NonNull String message, @NonNull String fullParameters, Map<String,String> expectedParameters) {
+        final var command = commandParser.parse(commandDefinition);
+        final var parsing = command.bind(message).orElse(null);
         Assertions.assertNotNull(parsing);
         Assertions.assertEquals(expectedParameters.size(), parsing.getNumberOfParameters());
-
     }
     @ParameterizedTest
     @MethodSource("testNumberOfParameters")
-    public void shouldHaveRightParameterNames(@NonNull String commandDefinition, @NonNull String command, @NonNull String fullParameters, Map<String,String> expectedParameters) {
-        final var parsing = commandParser.parse(commandDefinition).bind(command).orElse(null);
+    public void shouldHaveRightParameterNames(@NonNull String commandDefinition, @NonNull String message, @NonNull String fullParameters, Map<String,String> expectedParameters) {
+        final var parsing = commandParser.parse(commandDefinition).bind(message).orElse(null);
         Assertions.assertNotNull(parsing);
         Assertions.assertEquals(ImmutableSet.copyOf(expectedParameters.keySet()), parsing.getParameterNames());
 
     }
     @ParameterizedTest
     @MethodSource("testNumberOfParameters")
-    public void shouldHaveRightParameterValues(@NonNull String commandDefinition, @NonNull String command, @NonNull String fullParameters, Map<String,String> expectedParameters) {
-        final var parsing = commandParser.parse(commandDefinition).bind(command).orElse(null);
+    public void shouldHaveRightParameterValues(@NonNull String commandDefinition, @NonNull String message, @NonNull String fullParameters, Map<String,String> expectedParameters) {
+        final var parsing = commandParser.parse(commandDefinition).bind(message).orElse(null);
         Assertions.assertNotNull(parsing);
         Assertions.assertEquals(ImmutableSet.copyOf(expectedParameters.keySet()), parsing.getParameterNames());
 
