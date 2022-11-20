@@ -86,6 +86,7 @@ public class DefaultChatManager implements ChatManager {
             final var botIdentity = bots.get(newBot);
             try {
                 if (botIdentity != null) {
+                    LOG.info("Connect {} to {} chat", botIdentity.name(),botIdentity.platform().name());
                     final var chat = chatFactory.create(botIdentity);
                     chats.put(newBot, chat);
                 }

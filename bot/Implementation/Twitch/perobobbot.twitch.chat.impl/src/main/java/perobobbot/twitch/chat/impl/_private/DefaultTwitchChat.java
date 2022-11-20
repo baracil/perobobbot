@@ -11,6 +11,7 @@ import lombok.Synchronized;
 import perobobbot.api.Identity;
 import perobobbot.api.JoinedChannelProviderForUser;
 import perobobbot.api.bus.Bus;
+import perobobbot.api.data.UserIdentity;
 import perobobbot.chat.api.ChatMessage;
 import perobobbot.chat.api.irc.MessageData;
 import perobobbot.oauth.api.OAuthData;
@@ -35,15 +36,15 @@ public class DefaultTwitchChat implements TwitchChat, TwitchChatListener {
     private final @NonNull Bus bus;
 
 
-    public DefaultTwitchChat(@NonNull Identity bot,
+    public DefaultTwitchChat(@NonNull UserIdentity bot,
                              @NonNull OAuthData oAuthData,
                              @NonNull JoinedChannelProviderForUser channelProvider,
                              @NonNull Instants instants,
                              @NonNull Bus bus) {
-        this.bot = bot;
+        this.bot = bot.identity();
         this.twitchChatStateListener = new TwitchChatStateListener(oAuthData);
         this.twitchChatStateManager = new TwitchChatStateManager(oAuthData.getLogin(), twitchChatStateListener, instants);
-        this.channelJoiner = Looper.scheduled(new ChannelJoiner(channelProvider, twitchChatStateManager), Duration.ofSeconds(1), Duration.ofSeconds(10));
+        this.channelJoiner = Looper.scheduled(new ChannelJoiner(bot.name(),channelProvider, twitchChatStateManager), Duration.ofSeconds(1), Duration.ofSeconds(10));
         this.twitchChatStateListener.addChatListener(this);
         this.bus = bus;
     }

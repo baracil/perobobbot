@@ -88,7 +88,7 @@ public class DefaultOAuthManager implements OAuthManager {
 
     @Override
     public void handleCallback(@NonNull Platform platform, @NonNull ImmutableMap<String, String> queryValues) {
-        LOG.info("Receive callback from '" + platform + "'  error='" + queryValues.getOrDefault("error", "none") + "'");
+        LOG.info("Receive callback from '" + platform.name() + "'  error='" + queryValues.getOrDefault("error", "none") + "'");
 
         final var info = CallbackInfo.parse(queryValues).orElse(null);
         final var platformOAuth = platforms.find(platform).orElse(null);

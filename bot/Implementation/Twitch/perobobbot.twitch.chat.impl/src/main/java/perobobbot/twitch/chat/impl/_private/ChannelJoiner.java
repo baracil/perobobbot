@@ -13,11 +13,16 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
+/**
+ * Loop action that check with DB channel that has been joined and parted
+ * and update connection accordingly
+ */
 @RequiredArgsConstructor
 public class ChannelJoiner implements LoopAction {
 
-    private final JoinedChannelProviderForUser channelProvider;
-    private final AdvancedIO io;
+    private final @NonNull String userId;
+    private final @NonNull JoinedChannelProviderForUser channelProvider;
+    private final @NonNull AdvancedIO io;
 
     private final Set<JoinedChannel> joined = Collections.synchronizedSet(new HashSet<>());
 
@@ -34,8 +39,8 @@ public class ChannelJoiner implements LoopAction {
         final var toJoin = Sets.difference(fromDb, joined);
 
         final var action = Stream.concat(
-                toPart.stream().map(c -> new PartAction(joined, c)),
-                toJoin.stream().map(c -> new JoinAction(joined, c))
+                toPart.stream().map(c -> new PartAction(userId,joined, c)),
+                toJoin.stream().map(c -> new JoinAction(userId, joined, c))
         ).reduce(ChatAction::accumulate).orElse(ChatAction.NOP);
 
         action.execute(io).toCompletableFuture().get();
