@@ -1,5 +1,6 @@
 package perobobbot.twitch.oauth.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.NonNull;
@@ -18,11 +19,13 @@ public class UserDTO {
     @JsonProperty("display_name")
     @NonNull String displayName;
 
+    @JsonIgnore
     public @NonNull Identity getIdentification() {
-        return new Identity(Twitch.PLATFORM, id);
+        return new Identity(Twitch.PLATFORM, id,login);
     }
 
-    public @NonNull UserInfo toUserInfo() {
+    @JsonIgnore
+public @NonNull UserInfo toUserInfo() {
         return new UserInfo(getIdentification(), login, displayName);
     }
 }

@@ -43,6 +43,6 @@ public class TwitchValidation {
     }
 
     public @NonNull UserInfo toUserInfo() {
-        return new UserInfo(new Identity(Twitch.PLATFORM, userId), login, login);
+        return new UserInfo(new Identity(Twitch.PLATFORM, userId, login==null?"":login), login, login);
     }
 }

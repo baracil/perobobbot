@@ -71,7 +71,7 @@ public class UserIdentityEntity extends BaseEntity {
     }
 
     public @NonNull Identity createIdentification() {
-        return new Identity(platform, userId);
+        return new Identity(platform, userId,login);
     }
 
     public @NonNull UserIdentityEntity updateToken(@NonNull UserToken.Encrypted userToken) {
