@@ -10,10 +10,14 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <jdk.version>17</jdk.version>
+        <release.version>17</release.version>
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <perobobbot.version>1.0.0-SNAPSHOT</perobobbot.version>
+       	<lombok.version>1.18.24</lombok.version>
+
     </properties>
 
 
