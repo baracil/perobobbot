@@ -95,6 +95,11 @@
        <version>3.4.23</version>
    </dependency>
 
+   <dependency>
+       <groupId>org.openjfx</groupId>
+       <artifactId>javafx-graphics</artifactId>
+       <version>17.0.2</version>
+   </dependency>
 
    <dependency>
        <groupId>perobobbot</groupId>
@@ -172,6 +177,12 @@
        <groupId>org.hibernate.common</groupId>
        <artifactId>hibernate-commons-annotations</artifactId>
        <version>5.1.2.Final</version>
+   </dependency>
+
+   <dependency>
+       <groupId>perobobbot</groupId>
+       <artifactId>perobobbot-bridge</artifactId>
+       <version>0.0.1-SNAPSHOT</version>
    </dependency>
 
    <dependency>
@@ -455,7 +466,13 @@
        <artifactId>micronaut-serde-support</artifactId>
        <version>1.3.2</version>
    </dependency>
-            
+
+   <dependency>
+       <groupId>org.openjfx</groupId>
+       <artifactId>javafx-base</artifactId>
+       <version>17.0.2</version>
+   </dependency>
+
    <dependency>
        <groupId>com.google.guava</groupId>
        <artifactId>guava</artifactId>

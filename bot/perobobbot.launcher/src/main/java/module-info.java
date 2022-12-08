@@ -20,8 +20,10 @@ open module perobobbot.launcher {
     requires perobobbot.api;
     requires perobobbot.oauth;
     requires perobobbot.service.api;
+    requires perobobbot.command.api;
     requires perobobbot.twitch.chat;
     requires perobobbot.chat.api;
+
 //    requires perobobbot.twitch.chat.impl;
 
     requires jplugman.base;

@@ -1,10 +1,10 @@
 package perobobbot.oauth.api;
 
 import lombok.NonNull;
-import perobobbot.api.data.UserIdentity;
+import perobobbot.api.UserInfo;
 
 public interface OAuthDataFactory {
 
-    @NonNull OAuthData create(@NonNull UserIdentity userIdentity);
+    @NonNull OAuthData create(@NonNull UserInfo userInfo);
 
 }

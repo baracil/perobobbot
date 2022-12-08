@@ -21,8 +21,6 @@ public class ClientEventSubService implements EventSubService {
     private final @NonNull TwitchEventSubConfiguration configuration;
     private final @NonNull AuthHolder authHolder;
 
-    private final @NonNull ObjectMapper objectMapper;
-
     @Override
     public @NonNull TwitchSubscription createSubscription(@NonNull Subscription subscription) {
         final var request = subscription.completeRequest(TwitchSubscriptionRequest.builder())
@@ -53,4 +51,5 @@ public class ClientEventSubService implements EventSubService {
                                .secret(configuration.getSecret().value())
                                .build();
     }
+
 }

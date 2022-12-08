@@ -9,10 +9,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.Id;
 import perobobbot.api.Identity;
-import perobobbot.api.data.JoinedChannel;
-import perobobbot.api.data.Platform;
-import perobobbot.api.data.UserIdentity;
-import perobobbot.api.data.UserType;
+import perobobbot.api.UserInfo;
+import perobobbot.api.data.*;
+import perobobbot.api.plugin.PerobobbotService;
 import perobobbot.domain.jpa.entity.JoinedChannelEntity;
 import perobobbot.domain.jpa.entity.UserIdentityEntity;
 import perobobbot.domain.jpa.repository.JoinedChannelRepository;
@@ -26,16 +25,35 @@ import java.util.Optional;
 @Singleton
 @RequiredArgsConstructor
 @Transactional
+@PerobobbotService(serviceType = UserIdentityService.class, apiVersion = UserIdentityService.VERSION)
 public class JpaUserIdentityService implements UserIdentityService {
 
     private final @NonNull UserIdentityRepository userIdentityRepository;
     private final @NonNull JoinedChannelRepository joinedChannelRepository;
+    private final @NonNull UserTypeProvider userTypeProvider;
 
     @Override
     public @NonNull UserIdentity getUserIdentity(long userIdentityId) {
         return userIdentityRepository.getById(userIdentityId).toView();
     }
 
+    @Override
+    public @NonNull Optional<UserInfo> findUserInfo(@NonNull Identity identity) {
+        return userIdentityRepository.findByIdentification(identity)
+                                     .map(UserIdentityEntity::toUserInfo);
+    }
+
+    @Override
+    public @NonNull UserIdentity saveUserInfo(@NonNull UserInfo userInfo) {
+        final var identity = new Identity(userInfo.platform(), userInfo.userId());
+        final var existing = userIdentityRepository.findByIdentification(identity).orElse(null);
+        if (existing != null) {
+            existing.update(userInfo.login(), userInfo.name());
+            return userIdentityRepository.update(existing).toView();
+        } else {
+            return userIdentityRepository.save(UserIdentityEntity.createWith(userInfo, userTypeProvider.getUserType(userInfo))).toView();
+        }
+    }
 
     @Override
     public @NonNull Optional<UserIdentity> findUserIdentity(@NonNull Id id) {
@@ -58,7 +76,7 @@ public class JpaUserIdentityService implements UserIdentityService {
     @Override
     public @NonNull UserIdentity getBotForPlatform(@NonNull Platform platform) {
         return userIdentityRepository.findByPlatformAndUserType(platform, UserType.BOT)
-                .orElseThrow(() -> new NoBotDefined(platform)).toView();
+                                     .orElseThrow(() -> new NoBotDefined(platform)).toView();
     }
 
     @Override
@@ -102,7 +120,7 @@ public class JpaUserIdentityService implements UserIdentityService {
     }
 
     @Override
-    public @NonNull ImmutableMap<Identity,UserIdentity> findBots() {
+    public @NonNull ImmutableMap<Identity, UserIdentity> findBots() {
         return userIdentityRepository.findByUserType(UserType.BOT)
                                      .map(UserIdentityEntity::toView)
                                      .collect(ImmutableMap.toImmutableMap(UserIdentity::identity, u -> u));

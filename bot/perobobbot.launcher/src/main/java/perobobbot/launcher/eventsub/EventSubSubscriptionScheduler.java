@@ -4,6 +4,7 @@ import io.micronaut.scheduling.annotation.Scheduled;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perobobbot.api.SubscriptionManager;
 import perobobbot.api.bus.Bus;
 import perobobbot.api.bus.PlatformSync;
 
@@ -15,6 +16,6 @@ public class EventSubSubscriptionScheduler {
 
     @Scheduled(initialDelay = "10s",fixedDelay = "600s")
     public void requestEventSubSync() {
-        bus.publishEvent(PlatformSync.forAllPlatforms());
+        bus.publishEvent(SubscriptionManager.SYSTEM_SUBSCRIPTION_TOPIC, PlatformSync.forAllPlatforms());
     }
 }

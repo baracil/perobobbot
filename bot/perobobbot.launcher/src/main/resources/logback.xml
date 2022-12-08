@@ -11,7 +11,7 @@
     <logger name="perobobbot" level="INFO"/>
     <logger name="net.femtoparsec" level="INFO"/>
 
-    <root level="WARN">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

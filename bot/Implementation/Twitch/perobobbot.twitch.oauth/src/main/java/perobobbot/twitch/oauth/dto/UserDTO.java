@@ -21,7 +21,7 @@ public class UserDTO {
 
     @JsonIgnore
     public @NonNull Identity getIdentification() {
-        return new Identity(Twitch.PLATFORM, id,login);
+        return new Identity(Twitch.PLATFORM, id);
     }
 
     @JsonIgnore

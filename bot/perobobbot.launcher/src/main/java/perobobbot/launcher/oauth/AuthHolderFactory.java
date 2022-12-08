@@ -44,7 +44,7 @@ public class AuthHolderFactory {
                 continue;
             }
 
-            final var oauthData = oAuthDataFactory.create(identity);
+            final var oauthData = oAuthDataFactory.create(identity.toUserInfo());
             builder.put(oauthData.getPlatform(), oauthData);
         }
         return builder.build();

@@ -37,7 +37,7 @@ public class JoinAction implements ChatAction {
     }
 
     private CompletionStage<AdvancedIO> sendHelloMessage(@NonNull AdvancedIO io) {
-        if (channelToJoin.readOnly()) {
+        if (true || channelToJoin.readOnly()) {
             return CompletableFuture.completedFuture(io);
         }
         return io.sendCommand(MessageToTwitch.privateMsg(channelToJoin.channelName(), "Hello"))

@@ -27,6 +27,10 @@
             <groupId>perobobbot</groupId>
             <artifactId>perobobbot-chat-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-command-api</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>net.femtoparsec.tools</groupId>
@@ -44,6 +48,12 @@
         <dependency>
             <groupId>perobobbot</groupId>
             <artifactId>perobobbot-oauth</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-bridge</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>

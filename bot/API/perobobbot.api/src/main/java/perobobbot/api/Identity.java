@@ -5,7 +5,7 @@ import lombok.NonNull;
 import perobobbot.api.data.Platform;
 
 @Serdeable
-public record Identity(@NonNull Platform platform, @NonNull String userId, @NonNull String userLogin) implements Id {
+public record Identity(@NonNull Platform platform, @NonNull String userId) implements Id {
 
 
     @Override

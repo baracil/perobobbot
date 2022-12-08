@@ -27,9 +27,13 @@
         <module>API/Twitch/perobobbot.twitch.api</module>
         <module>API/Twitch/perobobbot.twitch.service.api</module>
 
+        <module>API/Discord/perobobbot.discord.api</module>
+
+
         <module>Core/perobobbot.oauth</module>
         <module>Core/perobobbot.twitch.chat</module>
         <module>Core/perobobbot.tools</module>
+        <module>Core/perobobbot.bridge</module>
 
         <module>Implementation/perobobbot.web.client</module>
         <module>Implementation/perobobbot.web.controller</module>
@@ -44,6 +48,8 @@
         <module>Implementation/Twitch/perobobbot.twitch.web.client</module>
         <module>Implementation/Twitch/perobobbot.twitch.service.client</module>
         <module>Implementation/Twitch/perobobbot.twitch.eventsub</module>
+
+        <module>Implementation/Discord/perobobbot.discord.oauth</module>
 
         <module>perobobbot.launcher</module>
 
@@ -121,6 +127,12 @@
 
             <dependency>
                 <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-bridge</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-command</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -190,6 +202,17 @@
             <dependency>
                 <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-twitch-eventsub</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-discord-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-discord-oauth</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

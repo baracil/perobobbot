@@ -46,11 +46,25 @@
         </dependency>
 
         <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>jplugman</groupId>
             <artifactId>jplugman-annotation</artifactId>
         </dependency>
+        <dependency>
+            <groupId>jplugman</groupId>
+            <artifactId>jplugman-api</artifactId>
+        </dependency>
 
 
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 

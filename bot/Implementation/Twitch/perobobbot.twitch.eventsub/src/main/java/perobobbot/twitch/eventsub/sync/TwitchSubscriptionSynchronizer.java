@@ -7,7 +7,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.SubscriptionView;
-import perobobbot.api.bus.BusEventListener;
 import perobobbot.api.bus.PlatformSync;
 import perobobbot.service.api.SubscriptionService;
 import perobobbot.service.api.UpdateSubscriptionParameters;
@@ -29,7 +28,6 @@ public class TwitchSubscriptionSynchronizer {
     private final @NonNull EventSubService eventSubService;
     private final @NonNull SubscriptionService subscriptionService;
 
-    @BusEventListener
     @Async
     public void platformSynListener(@NonNull PlatformSync platformSync) {
         if (platformSync.appliesTo(Twitch.PLATFORM)) {

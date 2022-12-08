@@ -7,9 +7,13 @@ module perobobbot.command {
     requires org.slf4j;
 
     requires jakarta.inject;
+    requires jakarta.annotation;
 
     requires transitive perobobbot.api;
+    requires transitive perobobbot.chat.api;
+    requires transitive perobobbot.twitch.chat;
     requires transitive perobobbot.command.api;
+
 
     requires io.micronaut.core;
 

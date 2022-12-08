@@ -11,7 +11,7 @@ import lombok.NonNull;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.Identity;
-import perobobbot.api.data.UserIdentity;
+import perobobbot.api.plugin.PerobobbotService;
 import perobobbot.chat.api.*;
 import perobobbot.service.api.UserIdentityService;
 
@@ -26,6 +26,7 @@ import java.util.concurrent.ExecutionException;
 @Singleton
 @Slf4j
 @EagerInit
+@PerobobbotService(serviceType = ChatManager.class, apiVersion = ChatManager.VERSION)
 public class DefaultChatManager implements ChatManager {
 
     private final @NonNull UserIdentityService userIdentityService;
@@ -43,8 +44,8 @@ public class DefaultChatManager implements ChatManager {
 
     @Override
     @Synchronized
-    public @NonNull Optional<ChatIO> findChat(@NonNull UserIdentity userIdentity) {
-        return Optional.ofNullable(chats.get(userIdentity.identity()));
+    public @NonNull Optional<ChatIO> findChat(@NonNull Identity identity) {
+        return Optional.ofNullable(chats.get(identity));
     }
 
 

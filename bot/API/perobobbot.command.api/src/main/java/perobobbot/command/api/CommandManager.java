@@ -1,16 +1,12 @@
 package perobobbot.command.api;
 
-import fpc.tools.lang.Subscription;
 import lombok.NonNull;
-import perobobbot.api.data.UserIdentity;
 
-public interface CommandManager {
+public interface CommandManager extends CommandRegistry {
+
+    String TRIGGER_COMMAND_TOPIC = "perobobbot:command/triggered";
 
     int VERSION = 1;
 
-
-    @NonNull Subscription addCommand(@NonNull String command,
-                                     @NonNull CommandAction action);
-
-    void handleMessage(@NonNull UserIdentity sender, @NonNull String channelName, @NonNull String message);
+    void handleMessage(@NonNull CommandContext context, @NonNull String message);
 }

@@ -27,12 +27,25 @@
 
         <dependency>
             <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-chat-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
             <artifactId>perobobbot-command-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-twitch-chat</artifactId>
         </dependency>
         <dependency>
             <groupId>io.micronaut</groupId>
             <artifactId>micronaut-inject</artifactId>
         </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>

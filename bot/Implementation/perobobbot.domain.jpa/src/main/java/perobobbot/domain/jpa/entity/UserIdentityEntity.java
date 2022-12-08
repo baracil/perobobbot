@@ -15,7 +15,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "USER_IDENTITY", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"PLATFORM", "USER_ID"},name = "uk_platform__user_id"),
+        @UniqueConstraint(columnNames = {"PLATFORM", "USER_ID"}, name = "uk_platform__user_id"),
 })
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PACKAGE)
@@ -44,7 +44,7 @@ public class UserIdentityEntity extends BaseEntity {
     @OneToOne(mappedBy = "userIdentity", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserTokenEntity tokenEntity;
 
-    @OneToMany(mappedBy = "userIdentity", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "userIdentity", cascade = CascadeType.ALL, orphanRemoval = true)
     private @NonNull List<JoinedChannelEntity> joinedChannels = new ArrayList<>();
 
 
@@ -71,7 +71,7 @@ public class UserIdentityEntity extends BaseEntity {
     }
 
     public @NonNull Identity createIdentification() {
-        return new Identity(platform, userId,login);
+        return new Identity(platform, userId);
     }
 
     public @NonNull UserIdentityEntity updateToken(@NonNull UserToken.Encrypted userToken) {
@@ -86,12 +86,21 @@ public class UserIdentityEntity extends BaseEntity {
     }
 
     public @NonNull JoinedChannelEntity joinedChannel(@NonNull String channelName, boolean readOnly) {
-        final var result = new JoinedChannelEntity(this,channelName,readOnly);
+        final var result = new JoinedChannelEntity(this, channelName, readOnly);
         this.joinedChannels.add(result);
         return result;
     }
 
     public boolean partChannel(@NonNull String channelName) {
         return this.joinedChannels.removeIf(jc -> jc.getName().equals(channelName));
+    }
+
+    public @NonNull UserInfo toUserInfo() {
+        return new UserInfo(createIdentification(), login, name);
+    }
+
+    public void update(@NonNull String login, @NonNull String name) {
+        this.login = login;
+        this.name = name;
     }
 }

@@ -1,6 +1,5 @@
 package perobobbot.api.plugin;
 
-import com.google.common.collect.ImmutableList;
 import jplugman.annotation.ExtensionPoint;
 import lombok.NonNull;
 
@@ -9,6 +8,8 @@ public interface PerobobbotPlugin {
 
     @NonNull String getName();
 
-    @NonNull ImmutableList<PerobobbotPluginData> getPluginData();
+    void onPluginStarted();
+
+    void onPluginStopped();
 
 }

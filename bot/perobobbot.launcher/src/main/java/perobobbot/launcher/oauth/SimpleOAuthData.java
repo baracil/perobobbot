@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Synchronized;
 import perobobbot.api.Identity;
+import perobobbot.api.UserInfo;
 import perobobbot.api.data.*;
 import perobobbot.oauth.api.OAuthAccessMode;
 import perobobbot.oauth.api.OAuthData;
@@ -24,9 +25,9 @@ public class SimpleOAuthData implements OAuthData {
     private final @NonNull OAuthManager oAuthManager;
     private final @NonNull Instants instants;
 
-    public SimpleOAuthData(@NonNull UserIdentity userIdentity, @NonNull UserTokenService userTokenService, @NonNull ApplicationService applicationService, @NonNull OAuthManager oAuthManager, @NonNull Instants instants) {
-        this.identity = userIdentity.identity();
-        this.login = userIdentity.login();
+    public SimpleOAuthData(@NonNull UserInfo userInfo, @NonNull UserTokenService userTokenService, @NonNull ApplicationService applicationService, @NonNull OAuthManager oAuthManager, @NonNull Instants instants) {
+        this.identity = userInfo.identity();
+        this.login = userInfo.login();
         this.userTokenService = userTokenService;
         this.applicationService = applicationService;
         this.oAuthManager = oAuthManager;

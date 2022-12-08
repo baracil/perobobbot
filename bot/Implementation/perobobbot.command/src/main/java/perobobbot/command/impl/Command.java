@@ -68,7 +68,7 @@ public class Command {
                 .map(n -> extractParameterValue(matcher, n))
                 .filter(Objects::nonNull)
                 .collect(MapTool.tuple2Collector());
-        return Optional.of(new SimpleCommandBinding(definition, fullParameters, parameters));
+        return Optional.of(new CommandBinding(definition, fullParameters, parameters));
 
     }
 

@@ -4,7 +4,7 @@ import fpc.tools.lang.Instants;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perobobbot.api.data.UserIdentity;
+import perobobbot.api.UserInfo;
 import perobobbot.oauth.api.OAuthData;
 import perobobbot.oauth.api.OAuthDataFactory;
 import perobobbot.oauth.api.OAuthManager;
@@ -21,7 +21,7 @@ public class SimpleOAuthDataFactory implements OAuthDataFactory {
     private final @NonNull Instants instants;
 
     @Override
-    public @NonNull OAuthData create(@NonNull UserIdentity userIdentity) {
-        return new SimpleOAuthData(userIdentity, userTokenService, applicationService, oAuthManager, instants);
+    public @NonNull OAuthData create(@NonNull UserInfo userInfo) {
+        return new SimpleOAuthData(userInfo, userTokenService, applicationService, oAuthManager, instants);
     }
 }

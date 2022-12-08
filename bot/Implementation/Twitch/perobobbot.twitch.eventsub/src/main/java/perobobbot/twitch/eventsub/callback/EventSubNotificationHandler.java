@@ -7,6 +7,7 @@ import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import perobobbot.api.SubscriptionManager;
 import perobobbot.api.bus.Bus;
 import perobobbot.tools.MessageSaver;
 import perobobbot.twitch.api.eventsub.EventSubNotification;
@@ -83,7 +84,7 @@ public class EventSubNotificationHandler implements EventSubHandler {
 
         private void dispatchEventSubRequest() {
             if (eventSubRequest instanceof EventSubNotification notification) {
-                notification.getEvents().forEach(bus::publishEvent);
+                notification.getEvents().forEach(event -> bus.publishEvent(SubscriptionManager.SUBSCRIPTION_EVENT_TOPIC,event));
             }
         }
 

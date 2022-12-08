@@ -19,6 +19,7 @@ import java.util.function.Function;
 @Fallback
 public class PeroSubscriptionManager implements SubscriptionManager {
 
+
     private final @NonNull Bus bus;
     private final @NonNull ImmutableMap<Platform, PlatformSubscriptionManager> managers;
 
@@ -40,12 +41,12 @@ public class PeroSubscriptionManager implements SubscriptionManager {
 
     @Override
     public void requestSynchronization(@NonNull Platform platform) {
-        bus.publishEvent(PlatformSync.forPlatform(platform));
+        bus.publishEvent(SYSTEM_SUBSCRIPTION_TOPIC,PlatformSync.forPlatform(platform));
     }
 
     @Override
     public void requestSynchronizationForAllPlatforms() {
-        bus.publishEvent(PlatformSync.forAllPlatforms());
+        bus.publishEvent(SYSTEM_SUBSCRIPTION_TOPIC, PlatformSync.forAllPlatforms());
     }
 
 }

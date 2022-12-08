@@ -5,34 +5,29 @@ import com.google.common.collect.ImmutableMap;
 import fpc.tools.lang.ListTool;
 import fpc.tools.lang.Subscription;
 import fpc.tools.lang.ThrowableTool;
-import io.micronaut.scheduling.annotation.Async;
-import jakarta.inject.Singleton;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
-import perobobbot.api.bus.BusEventListener;
 import perobobbot.api.bus.BusListener;
 import perobobbot.api.bus.Event;
-import perobobbot.api.bus.EventDispatcher;
-import perobobbot.api.plugin.PerobobbotService;
+import perobobbot.api.bus.Topic;
 
 import java.util.Map;
 
-@Singleton
-@PerobobbotService(serviceType = EventDispatcher.class, apiVersion = EventDispatcher.VERSION)
 @Slf4j
-public class FallbackEventDispatcher implements EventDispatcher {
+@RequiredArgsConstructor
+public class EventDispatcherForOneTopic {
 
+    @Getter
+    private final @NonNull Topic topic;
     private ImmutableMap<Class<?>, TypedListeners<?>> listenersPerType = ImmutableMap.of();
 
-    @BusEventListener
-    @Async
     public void onBusEvent(@NonNull Event event) {
         listenersPerType.values().forEach(t -> t.dispatchEvent(event));
     }
 
-    @Override
     @Synchronized
     public <T> Subscription addListener(@NonNull Class<T> eventType, BusListener<? super T> listener) {
         final var builder = ImmutableMap.<Class<?>, TypedListeners<?>>builder();
@@ -53,6 +48,10 @@ public class FallbackEventDispatcher implements EventDispatcher {
         listenersPerType = builder.build();
         return () -> removeListener(eventType, listener);
 
+    }
+
+    public boolean isEmpty() {
+        return listenersPerType.isEmpty();
     }
 
     @Synchronized

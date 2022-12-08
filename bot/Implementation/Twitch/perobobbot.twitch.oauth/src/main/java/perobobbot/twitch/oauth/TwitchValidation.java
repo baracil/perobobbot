@@ -6,9 +6,6 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Value;
-import perobobbot.api.Identity;
-import perobobbot.api.UserInfo;
-import perobobbot.twitch.api.Twitch;
 
 import java.util.Optional;
 
@@ -42,7 +39,7 @@ public class TwitchValidation {
         return scopes == null ? new String[0] : scopes;
     }
 
-    public @NonNull UserInfo toUserInfo() {
-        return new UserInfo(new Identity(Twitch.PLATFORM, userId, login==null?"":login), login, login);
-    }
+//    public @NonNull UserInfo toUserInfo() {
+//        return new UserInfo(new Identity(Twitch.PLATFORM, userId), login, login);
+//    }
 }

@@ -1,0 +1,120 @@
+package perobobbot.api.bus.fallback;
+
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import fpc.tools.lang.ListTool;
+import fpc.tools.lang.Subscription;
+import fpc.tools.lang.ThrowableTool;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Synchronized;
+import lombok.extern.slf4j.Slf4j;
+import perobobbot.api.bus.BusListener;
+import perobobbot.api.bus.Event;
+import perobobbot.api.bus.Topic;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.function.UnaryOperator;
+
+@Slf4j
+public class Listeners {
+
+    private ImmutableMap<String, ImmutableList<Listener<?>>> listeners = ImmutableMap.of();
+
+    public void dispatch(@NonNull Topic.Regular topic, @NonNull Event event) {
+        System.out.println(">>> [" + topic.topicAsString() + "] " + event);
+
+        listeners.values()
+                 .stream()
+                 .flatMap(Collection::stream)
+                 .filter(listener -> listener.isConcerned(topic))
+                 .forEach(listener -> listener.dispatch(event));
+
+    }
+
+
+    @Synchronized
+    public <T> Subscription addListener(Topic topic, Class<T> eventType, BusListener<? super T> listener) {
+        final var data = new Listener<>(topic, eventType, listener);
+        System.out.println(">>> ADD    "+topic.topicAsString()+" "+data.id);
+        this.listeners = update(
+                topic.topicAsString(),
+                list -> ListTool.addFirst(data, list),
+                () -> Optional.of(ImmutableList.of(data)));
+
+        return () -> remove(topic.topicAsString(), data.getId());
+    }
+
+    @Synchronized
+    private void remove(@NonNull String topicAsString, long id) {
+        System.out.println(">>> REMOVE "+topicAsString+" "+id);
+        final Predicate<Listener<?>> dataMatcher = d -> d.getId() == id;
+        this.listeners = update(topicAsString, list -> ListTool.removeOnceFrom(list).apply(dataMatcher), Optional::empty);
+    }
+
+
+    private ImmutableMap<String, ImmutableList<Listener<?>>> update(@NonNull String topicAsString,
+                                                                    @NonNull UnaryOperator<ImmutableList<Listener<?>>> updater,
+                                                                    @NonNull Supplier<Optional<ImmutableList<Listener<?>>>> ifAbsent) {
+
+
+        final var builder = ImmutableMap.<String, ImmutableList<Listener<?>>>builder();
+        var updated = false;
+        for (Map.Entry<String, ImmutableList<Listener<?>>> entry : listeners.entrySet()) {
+            final ImmutableList<Listener<?>> list;
+
+            if (entry.getKey().equals(topicAsString)) {
+                list = updater.apply(entry.getValue());
+                updated = true;
+            } else {
+                list = entry.getValue();
+            }
+
+            if (!list.isEmpty()) {
+                builder.put(entry.getKey(), list);
+            }
+        }
+
+        if (!updated) {
+            ifAbsent.get().ifPresent(list -> builder.put(topicAsString,list));
+        }
+
+
+        return builder.build();
+
+    }
+
+
+    @RequiredArgsConstructor
+    private static class Listener<T> {
+        private static final AtomicLong ID_GENERATOR = new AtomicLong(0);
+        @Getter
+        long id = ID_GENERATOR.incrementAndGet();
+        private final @NonNull Topic topic;
+        private final @NonNull Class<T> eventType;
+        private final @NonNull BusListener<? super T> listener;
+
+        public boolean isConcerned(@NonNull Topic.Regular topic) {
+            return this.topic.matches(topic.topicAsString());
+        }
+
+        public void dispatch(@NonNull Event event) {
+            if (eventType.isInstance(event)) {
+                try {
+                    listener.onBusEvent(eventType.cast(event));
+                } catch (Exception e) {
+                    ThrowableTool.interruptIfCausedByInterruption(e);
+                    LOG.warn("Fail to warn listener {} on topic {}", this.listener, topic);
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+}

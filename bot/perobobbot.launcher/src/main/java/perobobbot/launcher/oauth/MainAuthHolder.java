@@ -56,7 +56,7 @@ public class MainAuthHolder implements AuthHolder {
     @Override
     public void setId(@NonNull Id id) {
         final var userIdentity = userIdentityService.getUserIdentity(id);
-        final var oAuthData = oAuthDataFactory.create(userIdentity);
+        final var oAuthData = oAuthDataFactory.create(userIdentity.toUserInfo());
         THREAD_LOCAL.get().put(id.platform(),oAuthData);
     }
 

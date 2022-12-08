@@ -7,6 +7,7 @@ import lombok.NonNull;
 import perobobbot.api.Id;
 import perobobbot.api.Identity;
 import perobobbot.api.JoinedChannelProvider;
+import perobobbot.api.UserInfo;
 import perobobbot.api.data.JoinedChannel;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.UnknownUserId;
@@ -16,12 +17,16 @@ import java.util.Optional;
 
 public interface UserIdentityService extends JoinedChannelProvider {
 
+    int VERSION = 1;
+
     /**
      * @param userIdentityId the id of the user identity
      * @return the {@link UserIdentity} associated with the provided id
      * @throws perobobbot.api.data.UnknownUserIdentityId if no userIdentity exists for the provided id
      */
     @NonNull UserIdentity getUserIdentity(long userIdentityId);
+
+    @NonNull Optional<UserInfo> findUserInfo(@NonNull Identity identity);
 
     default @NonNull UserIdentity getUserIdentity(@NonNull Id id) {
         return findUserIdentity(id).orElseThrow(() -> new UnknownUserId(id));
@@ -53,4 +58,6 @@ public interface UserIdentityService extends JoinedChannelProvider {
     @NonNull Optional<UserIdentity> findBotForPlatform(@NonNull Platform platform);
 
     @NonNull ImmutableMap<Identity, UserIdentity> findBots();
+
+    @NonNull UserIdentity saveUserInfo(@NonNull UserInfo userInfo);
 }

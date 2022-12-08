@@ -1,16 +1,15 @@
 package perobobbot.command.impl;
 
-import fpc.tools.lang.ThrowableTool;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import perobobbot.command.api.CommandAction;
-import perobobbot.command.api.CommandBinding;
+import perobobbot.api.bus.Event;
+import perobobbot.command.api.CommandContext;
+import perobobbot.command.api.CommandEvent;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RequiredArgsConstructor
@@ -18,14 +17,11 @@ import java.util.concurrent.atomic.AtomicLong;
 @Slf4j
 public class CommandData implements Comparable<CommandData> {
 
-    private static final ExecutorService COMMAND_EXECUTOR = Executors.newSingleThreadExecutor();
-
     private static final AtomicLong ID = new AtomicLong(0);
 
     @Getter
     private final long id = ID.incrementAndGet();
     private final @NonNull Command command;
-    private final @NonNull CommandAction action;
 
     @Override
     public int compareTo(CommandData o) {
@@ -47,32 +43,14 @@ public class CommandData implements Comparable<CommandData> {
         return diff;
     }
 
-    ;
-
     public String getCommandName() {
         return command.getName();
     }
 
-    public boolean handle(String message) {
+    public @NonNull Optional<? extends Event> handle(@NonNull CommandContext context, @NonNull String message) {
         final var bind = command.bind(message);
-        bind.map(b -> new Executor(b, this.action))
-            .ifPresent(COMMAND_EXECUTOR::submit);
-        return bind.isPresent();
+
+        return bind.map(binding -> new CommandEvent(context, binding));
     }
 
-    @RequiredArgsConstructor
-    private static class Executor implements Runnable {
-        private final @NonNull CommandBinding commandBinding;
-        private final @NonNull CommandAction action;
-
-        @Override
-        public void run() {
-            try {
-                action.execute(commandBinding);
-            } catch (Throwable t) {
-                ThrowableTool.interruptIfCausedByInterruption(t);
-                LOG.warn("Error while execution action.", t);
-            }
-        }
-    }
 }

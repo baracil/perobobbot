@@ -8,10 +8,12 @@ public interface EventDispatcher {
 
     /**
      * Add a listener ot the bus
+     *
+     * @param topic topic
      * @param eventType the type of event the listener listen to
-     * @param listener the listener
+     * @param listener  the listener
+     * @param <T>       the type of the event
      * @return a subscription that can be used to remove the listener
-     * @param <T> the type of the event
      */
-    <T> Subscription addListener(@NonNull Class<T> eventType, @NonNull BusListener<? super T> listener);
+    <T> Subscription addListener(@NonNull String topic, @NonNull Class<T> eventType, @NonNull BusListener<? super T> listener);
 }
