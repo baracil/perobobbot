@@ -7,9 +7,9 @@ import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.PlatformSubscriptionManager;
 import perobobbot.api.SubscriptionManager;
-import perobobbot.api.bus.Bus;
-import perobobbot.api.bus.PlatformSync;
 import perobobbot.api.data.Platform;
+import perobobbot.api.event.PlatformSync;
+import perobobbot.bus.api.Bus;
 
 import java.util.List;
 import java.util.function.Function;
@@ -41,7 +41,7 @@ public class PeroSubscriptionManager implements SubscriptionManager {
 
     @Override
     public void requestSynchronization(@NonNull Platform platform) {
-        bus.publishEvent(SYSTEM_SUBSCRIPTION_TOPIC,PlatformSync.forPlatform(platform));
+        bus.publishEvent(SYSTEM_SUBSCRIPTION_TOPIC, PlatformSync.forPlatform(platform));
     }
 
     @Override

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import perobobbot.api.bus.Event;
+import perobobbot.api.Event;
 import perobobbot.command.api.CommandContext;
 import perobobbot.command.api.CommandEvent;
 

@@ -5,8 +5,8 @@ import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.SubscriptionManager;
-import perobobbot.api.bus.Bus;
-import perobobbot.api.bus.PlatformSync;
+import perobobbot.api.event.PlatformSync;
+import perobobbot.bus.api.Bus;
 
 @Singleton
 @RequiredArgsConstructor

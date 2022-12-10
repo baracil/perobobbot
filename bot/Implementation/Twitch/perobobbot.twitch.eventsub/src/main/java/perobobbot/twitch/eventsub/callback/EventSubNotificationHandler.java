@@ -8,7 +8,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.SubscriptionManager;
-import perobobbot.api.bus.Bus;
+import perobobbot.bus.api.Bus;
 import perobobbot.tools.MessageSaver;
 import perobobbot.twitch.api.eventsub.EventSubNotification;
 import perobobbot.twitch.api.eventsub.EventSubRequest;

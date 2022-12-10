@@ -11,6 +11,7 @@ module perobobbot.command {
 
     requires transitive perobobbot.api;
     requires transitive perobobbot.chat.api;
+    requires transitive perobobbot.bus.api;
     requires transitive perobobbot.twitch.chat;
     requires transitive perobobbot.command.api;
 

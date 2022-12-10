@@ -31,6 +31,10 @@
         </dependency>
         <dependency>
             <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-bus-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
             <artifactId>perobobbot-command-api</artifactId>
         </dependency>
         <dependency>

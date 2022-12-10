@@ -8,6 +8,7 @@ module perobobbot.bridge {
     requires io.micronaut.runtime;
 
     requires perobobbot.api;
+    requires perobobbot.bus.api;
     requires perobobbot.service.api;
     requires perobobbot.chat.api;
     requires perobobbot.command.api;

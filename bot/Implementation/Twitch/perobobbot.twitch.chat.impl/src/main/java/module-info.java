@@ -12,6 +12,7 @@ module perobobbot.twitch.chat.impl {
 
     requires perobobbot.api;
     requires perobobbot.chat.api;
+    requires perobobbot.bus.api;
 
     requires perobobbot.twitch.oauth;
     requires perobobbot.twitch.api;

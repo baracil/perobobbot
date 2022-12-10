@@ -26,6 +26,5 @@ open module perobobbot.api {
     exports perobobbot.api.data;
     exports perobobbot.api.plugin;
     exports perobobbot.api;
-    exports perobobbot.api.bus;
-    exports perobobbot.api.bus.fallback;
+    exports perobobbot.api.event;
 }

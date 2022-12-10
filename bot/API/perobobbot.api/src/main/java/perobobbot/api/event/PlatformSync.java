@@ -1,6 +1,7 @@
-package perobobbot.api.bus;
+package perobobbot.api.event;
 
 import lombok.NonNull;
+import perobobbot.api.Event;
 import perobobbot.api.data.Platform;
 
 

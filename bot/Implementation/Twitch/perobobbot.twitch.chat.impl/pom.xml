@@ -21,6 +21,10 @@
         </dependency>
         <dependency>
             <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-bus-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
             <artifactId>perobobbot-chat-api</artifactId>
         </dependency>
 

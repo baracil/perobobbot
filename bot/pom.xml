@@ -17,6 +17,7 @@
 
     <modules>
         <module>API/perobobbot.api</module>
+        <module>API/perobobbot.bus.api</module>
         <module>API/perobobbot.chat.api</module>
         <module>API/perobobbot.callback.api</module>
         <module>API/perobobbot.command.api</module>
@@ -39,6 +40,7 @@
         <module>Implementation/perobobbot.web.controller</module>
         <module>Implementation/perobobbot.callback.impl</module>
         <module>Implementation/perobobbot.chat.impl</module>
+        <module>Implementation/perobobbot.bus.impl</module>
         <module>Implementation/perobobbot.command</module>
         <module>Implementation/perobobbot.domain.jpa</module>
         <module>Implementation/perobobbot.service.jpa</module>
@@ -47,6 +49,7 @@
         <module>Implementation/Twitch/perobobbot.twitch.oauth</module>
         <module>Implementation/Twitch/perobobbot.twitch.web.client</module>
         <module>Implementation/Twitch/perobobbot.twitch.service.client</module>
+        <module>Implementation/Twitch/perobobbot.twitch.eventsub</module>
         <module>Implementation/Twitch/perobobbot.twitch.eventsub</module>
 
         <module>Implementation/Discord/perobobbot.discord.oauth</module>
@@ -68,6 +71,17 @@
                 <artifactId>perobobbot-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-bus-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-bus-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-chat-api</artifactId>

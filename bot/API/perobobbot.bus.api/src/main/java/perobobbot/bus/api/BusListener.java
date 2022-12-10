@@ -1,4 +1,4 @@
-package perobobbot.api.bus;
+package perobobbot.bus.api;
 
 import lombok.NonNull;
 

@@ -17,6 +17,10 @@
     <dependencies>
         <dependency>
             <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-bus-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
             <artifactId>perobobbot-twitch-api</artifactId>
         </dependency>
         <dependency>

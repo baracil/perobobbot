@@ -1,4 +1,4 @@
-package perobobbot.api.bus.fallback;
+package perobobbot.bus.impl;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -10,9 +10,10 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
-import perobobbot.api.bus.BusListener;
-import perobobbot.api.bus.Event;
-import perobobbot.api.bus.Topic;
+import perobobbot.api.Event;
+import perobobbot.bus.api.BusListener;
+import perobobbot.bus.api.RegularTopic;
+import perobobbot.bus.api.Topic;
 
 import java.util.Collection;
 import java.util.Map;
@@ -27,9 +28,7 @@ public class Listeners {
 
     private ImmutableMap<String, ImmutableList<Listener<?>>> listeners = ImmutableMap.of();
 
-    public void dispatch(@NonNull Topic.Regular topic, @NonNull Event event) {
-        System.out.println(">>> [" + topic.topicAsString() + "] " + event);
-
+    public void dispatch(@NonNull RegularTopic topic, @NonNull Event event) {
         listeners.values()
                  .stream()
                  .flatMap(Collection::stream)
@@ -42,7 +41,6 @@ public class Listeners {
     @Synchronized
     public <T> Subscription addListener(Topic topic, Class<T> eventType, BusListener<? super T> listener) {
         final var data = new Listener<>(topic, eventType, listener);
-        System.out.println(">>> ADD    "+topic.topicAsString()+" "+data.id);
         this.listeners = update(
                 topic.topicAsString(),
                 list -> ListTool.addFirst(data, list),
@@ -53,7 +51,6 @@ public class Listeners {
 
     @Synchronized
     private void remove(@NonNull String topicAsString, long id) {
-        System.out.println(">>> REMOVE "+topicAsString+" "+id);
         final Predicate<Listener<?>> dataMatcher = d -> d.getId() == id;
         this.listeners = update(topicAsString, list -> ListTool.removeOnceFrom(list).apply(dataMatcher), Optional::empty);
     }
@@ -100,7 +97,7 @@ public class Listeners {
         private final @NonNull Class<T> eventType;
         private final @NonNull BusListener<? super T> listener;
 
-        public boolean isConcerned(@NonNull Topic.Regular topic) {
+        public boolean isConcerned(@NonNull RegularTopic topic) {
             return this.topic.matches(topic.topicAsString());
         }
 

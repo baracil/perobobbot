@@ -25,6 +25,10 @@
 
         <dependency>
             <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-bus-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
             <artifactId>perobobbot-chat-api</artifactId>
         </dependency>
         <dependency>
@@ -69,6 +73,11 @@
         <dependency>
             <groupId>perobobbot</groupId>
             <artifactId>perobobbot-callback-impl</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-bus-impl</artifactId>
             <scope>runtime</scope>
         </dependency>
         <dependency>

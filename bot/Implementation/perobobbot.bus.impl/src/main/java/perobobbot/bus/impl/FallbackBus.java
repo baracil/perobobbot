@@ -1,4 +1,4 @@
-package perobobbot.api.bus.fallback;
+package perobobbot.bus.impl;
 
 import fpc.tools.fp.Tuple2;
 import fpc.tools.lang.Subscription;
@@ -6,10 +6,11 @@ import io.micronaut.retry.annotation.Fallback;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import perobobbot.api.Event;
 import perobobbot.api.PerobobbotExecutors;
-import perobobbot.api.bus.*;
 import perobobbot.api.plugin.PerobobbotService;
 import perobobbot.api.plugin.PerobobbotServices;
+import perobobbot.bus.api.*;
 
 import java.time.Duration;
 import java.util.Map;
@@ -23,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @Singleton
 @PerobobbotServices({
         @PerobobbotService(serviceType = Bus.class, apiVersion = Bus.VERSION),
-        @PerobobbotService(serviceType = EventDispatcher.class, apiVersion = Bus.VERSION)
+        @PerobobbotService(serviceType = EventDispatcher.class, apiVersion = EventDispatcher.VERSION)
 })
 public class FallbackBus implements Bus {
 
@@ -61,7 +62,7 @@ public class FallbackBus implements Bus {
     private class EventDispatcher implements Runnable {
 
         private final @NonNull String dispatcherKey;
-        private final BlockingDeque<Tuple2<Topic.Regular, Event>> pendingData = new LinkedBlockingDeque<>();
+        private final BlockingDeque<Tuple2<RegularTopic, Event>> pendingData = new LinkedBlockingDeque<>();
 
         @Override
         public void run() {
@@ -83,7 +84,7 @@ public class FallbackBus implements Bus {
             dispatcher.remove(dispatcherKey);
         }
 
-        public void onBusEvent(@NonNull Topic.Regular topic, @NonNull Event event) {
+        public void onBusEvent(@NonNull RegularTopic topic, @NonNull Event event) {
             this.pendingData.push(new Tuple2<>(topic, event));
         }
     }

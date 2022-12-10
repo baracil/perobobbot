@@ -7,7 +7,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.SubscriptionView;
-import perobobbot.api.bus.PlatformSync;
+import perobobbot.api.event.PlatformSync;
 import perobobbot.service.api.SubscriptionService;
 import perobobbot.service.api.UpdateSubscriptionParameters;
 import perobobbot.twitch.api.Conditions;

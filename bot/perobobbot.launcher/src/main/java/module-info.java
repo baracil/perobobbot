@@ -21,6 +21,7 @@ open module perobobbot.launcher {
     requires perobobbot.oauth;
     requires perobobbot.service.api;
     requires perobobbot.command.api;
+    requires perobobbot.bus.api;
     requires perobobbot.twitch.chat;
     requires perobobbot.chat.api;
 

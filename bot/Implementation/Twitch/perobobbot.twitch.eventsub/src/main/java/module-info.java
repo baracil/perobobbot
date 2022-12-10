@@ -18,6 +18,7 @@ module perobobbot.twitch.eventsub {
     requires perobobbot.tools;
     requires perobobbot.api;
     requires perobobbot.twitch.api;
+    requires perobobbot.bus.api;
     requires perobobbot.callback.api;
     requires perobobbot.service.api;
     requires perobobbot.twitch.service.api;

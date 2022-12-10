@@ -6,7 +6,7 @@ import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import perobobbot.api.bus.Bus;
+import perobobbot.bus.api.Bus;
 import perobobbot.chat.api.ChatEvent;
 import perobobbot.chat.api.PrivateChatMessage;
 import perobobbot.command.api.CommandContext;

@@ -2,7 +2,7 @@ package perobobbot.command.api;
 
 import lombok.NonNull;
 import lombok.Value;
-import perobobbot.api.bus.Event;
+import perobobbot.api.Event;
 
 @Value
 public class CommandEvent implements Event {

@@ -1,4 +1,4 @@
-package perobobbot.api.bus;
+package perobobbot.bus.api;
 
 import fpc.tools.lang.Subscription;
 import lombok.NonNull;

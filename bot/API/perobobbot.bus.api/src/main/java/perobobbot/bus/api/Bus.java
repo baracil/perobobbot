@@ -1,11 +1,11 @@
-package perobobbot.api.bus;
+package perobobbot.bus.api;
 
-import io.micronaut.core.annotation.NonNull;
+import lombok.NonNull;
+import perobobbot.api.Event;
 
 public interface Bus extends EventDispatcher {
 
     int VERSION = 1;
 
-    @NonNull
     void publishEvent(@NonNull String topic, @NonNull Event event);
 }
