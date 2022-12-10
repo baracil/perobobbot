@@ -1,10 +1,7 @@
 package perobobbot.command.impl;
 
 import fpc.tools.lang.Subscription;
-import fpc.tools.lang.SubscriptionHolder;
 import fpc.tools.micronaut.EagerInit;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +9,6 @@ import lombok.Synchronized;
 import perobobbot.api.bus.Bus;
 import perobobbot.api.data.Platform;
 import perobobbot.api.plugin.PerobobbotService;
-import perobobbot.chat.api.ChatEvent;
-import perobobbot.chat.api.PrivateChatMessage;
 import perobobbot.command.api.CommandContext;
 import perobobbot.command.api.CommandManager;
 import perobobbot.command.api.CommandRegistry;
@@ -29,18 +24,6 @@ public class PeroCommandManager implements CommandManager {
     private final @NonNull Bus bus;
     private final @NonNull CommandParser parser = CommandParser.chain(CommandParser.fullMatch(), CommandParser.regexp());
     private final Map<String, Set<CommandData>> commands = new HashMap<>();
-    private final SubscriptionHolder subscriptionHolder = new SubscriptionHolder();
-
-
-    @PostConstruct
-    public void registerToBus() {
-        subscriptionHolder.replace(() -> bus.addListener("chat:\\w+/[^$].+",ChatEvent.class, this::onBusEvent));
-    }
-
-    @PreDestroy
-    public void unregisterFromBus() {
-        subscriptionHolder.unsubscribe();
-    }
 
     @Override
     @Synchronized
@@ -67,13 +50,6 @@ public class PeroCommandManager implements CommandManager {
         }
     }
 
-    //TODO move this to a specific class that makes the bridge between chat->commandManager
-    public void onBusEvent(ChatEvent e) {
-        if (e instanceof PrivateChatMessage message) {
-            final var context = new CommandContext(message.getReceptionInstant(), message.getBotId(), message.getOwner(), message.getChannelName());
-            handleMessage(context, message.getPrivateMessage());
-        }
-    }
 
     @Override
     public void handleMessage(@NonNull CommandContext context, @NonNull String message) {

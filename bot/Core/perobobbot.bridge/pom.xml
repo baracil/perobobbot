@@ -23,6 +23,14 @@
             <groupId>perobobbot</groupId>
             <artifactId>perobobbot-service-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-chat-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>perobobbot</groupId>
+            <artifactId>perobobbot-command-api</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>io.micronaut</groupId>
