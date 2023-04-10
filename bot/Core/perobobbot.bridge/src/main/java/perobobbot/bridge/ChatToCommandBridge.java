@@ -5,7 +5,6 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import perobobbot.bus.api.Bus;
 import perobobbot.chat.api.ChatEvent;
 import perobobbot.chat.api.PrivateChatMessage;
@@ -13,17 +12,21 @@ import perobobbot.command.api.CommandContext;
 import perobobbot.command.api.CommandManager;
 
 @Singleton
-@RequiredArgsConstructor
 public class ChatToCommandBridge {
 
     private final @NonNull CommandManager commandManager;
-    private final @NonNull Bus bus;
+//    private final @NonNull Producer producer;
 
     private final SubscriptionHolder subscriptionHolder = new SubscriptionHolder();
 
+    public ChatToCommandBridge(@NonNull CommandManager commandManager, @NonNull Bus bus) {
+        this.commandManager = commandManager;
+//        this.producer = bus.createConsumer("chat:\\w+/[^$].+", ChatEvent.class);
+    }
+
     @PostConstruct
     public void connectChatToCommandManager() {
-        subscriptionHolder.replace(() -> bus.addListener("chat:\\w+/[^$].+", ChatEvent.class, this::onBusEvent));
+//        subscriptionHolder.replace(() -> bus.addListener("chat:\\w+/[^$].+", ChatEvent.class, this::onBusEvent));
     }
 
     @PreDestroy

@@ -10,8 +10,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
-import perobobbot.api.Event;
-import perobobbot.bus.api.BusListener;
+import perobobbot.bus.api.Message;
 import perobobbot.bus.api.RegularTopic;
 import perobobbot.bus.api.Topic;
 
@@ -28,18 +27,18 @@ public class Listeners {
 
     private ImmutableMap<String, ImmutableList<Listener<?>>> listeners = ImmutableMap.of();
 
-    public void dispatch(@NonNull RegularTopic topic, @NonNull Event event) {
+    public void dispatch(@NonNull RegularTopic topic, @NonNull Message<?> message) {
         listeners.values()
                  .stream()
                  .flatMap(Collection::stream)
                  .filter(listener -> listener.isConcerned(topic))
-                 .forEach(listener -> listener.dispatch(event));
+                 .forEach(listener -> listener.dispatch(message));
 
     }
 
 
     @Synchronized
-    public <T> Subscription addListener(Topic topic, Class<T> eventType, BusListener<? super T> listener) {
+    public <T> Subscription addListener(Topic topic, Class<T> eventType, BusListener<T> listener) {
         final var data = new Listener<>(topic, eventType, listener);
         this.listeners = update(
                 topic.topicAsString(),
@@ -95,22 +94,22 @@ public class Listeners {
         long id = ID_GENERATOR.incrementAndGet();
         private final @NonNull Topic topic;
         private final @NonNull Class<T> eventType;
-        private final @NonNull BusListener<? super T> listener;
+        private final @NonNull BusListener<T> listener;
 
         public boolean isConcerned(@NonNull RegularTopic topic) {
             return this.topic.matches(topic.topicAsString());
         }
 
-        public void dispatch(@NonNull Event event) {
-            if (eventType.isInstance(event)) {
+        public void dispatch(@NonNull Message<?> message) {
+            message.cast(eventType).ifPresent(msg -> {
                 try {
-                    listener.onBusEvent(eventType.cast(event));
+                    listener.onBusEvent(msg);
                 } catch (Exception e) {
                     ThrowableTool.interruptIfCausedByInterruption(e);
                     LOG.warn("Fail to warn listener {} on topic {}", this.listener, topic);
                     throw new RuntimeException(e);
                 }
-            }
+            });
         }
     }
 

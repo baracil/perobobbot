@@ -137,7 +137,6 @@ public class DefaultTwitchChat implements TwitchChat, TwitchChatListener {
             channelName = "$irc";
         }
 
-        bus.publishEvent("chat:twitch/"+channelName,chatMessage);
-
+        bus.send("chat:twitch/"+channelName,chatMessage);
     }
 }

@@ -11,7 +11,7 @@
     <parent>
         <groupId>io.micronaut</groupId>
         <artifactId>micronaut-parent</artifactId>
-        <version>3.7.1</version>
+        <version>3.8.8</version>
     </parent>
 
     <properties>
@@ -27,9 +27,9 @@
         <jdk.version>17</jdk.version>
         <release.version>17</release.version>
 
-        <micronaut.version>3.7.3</micronaut.version>
+        <micronaut.version>3.8.8</micronaut.version>
+        <micronaut.data.version>3.9.7</micronaut.data.version>
         <micronaut.runtime>netty</micronaut.runtime>
-        <micronaut.data.version>3.8.1</micronaut.data.version>
 
         <asciidoctor.maven.plugin.version>2.2.2</asciidoctor.maven.plugin.version>
         <asciidoctorj.version>2.5.5</asciidoctorj.version>
@@ -46,9 +46,6 @@
 
     <modules>
         <module>bot</module>
-        <module>bom/bom-generator</module>
-        <module>bom/bom</module>
-
 
     </modules>
 
@@ -68,16 +65,69 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-chat-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-bus-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-oauth-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-web-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-service-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-twitch-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-twitch-service-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-command-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-discord-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>perobobbot</groupId>
+                <artifactId>perobobbot-callback-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
+            <dependency>
                 <groupId>org.jetbrains</groupId>
                 <artifactId>annotations</artifactId>
                 <version>23.0.0</version>
             </dependency>
 
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-launcher</artifactId>
-                <version>${project.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>io.micronaut</groupId>

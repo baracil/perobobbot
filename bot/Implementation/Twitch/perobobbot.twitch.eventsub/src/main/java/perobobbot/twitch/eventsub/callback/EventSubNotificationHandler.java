@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.SubscriptionManager;
 import perobobbot.bus.api.Bus;
+import perobobbot.bus.api.Producer;
 import perobobbot.tools.MessageSaver;
 import perobobbot.twitch.api.eventsub.EventSubNotification;
 import perobobbot.twitch.api.eventsub.EventSubRequest;
@@ -38,6 +39,8 @@ public class EventSubNotificationHandler implements EventSubHandler {
         return new Executor(request,body).execute();
     }
 
+
+
     @RequiredArgsConstructor
     private class Executor {
         private final @NonNull HttpRequest<?> request;
@@ -47,6 +50,12 @@ public class EventSubNotificationHandler implements EventSubHandler {
         private HttpResponse<?> response;
 
         public @NonNull HttpResponse<?> execute() {
+            try (var producer = bus.createProducer(SubscriptionManager.SUBSCRIPTION_EVENT_TOPIC)) {
+                return execute(producer);
+            }
+        }
+
+        private @NonNull HttpResponse<?> execute(@NonNull Producer producer) {
             LOG.debug("[EventSub] Receive request");
             this.validateRequest();
             if (requestIsNotValid()) {
@@ -56,7 +65,7 @@ public class EventSubNotificationHandler implements EventSubHandler {
             this.saveBodyContent();
             this.deserializeRequestBody();
             LOG.debug("[EventSub] deserialized : " + eventSubRequest);
-            this.dispatchEventSubRequest();
+            this.dispatchEventSubRequest(producer);
             this.prepareResponse();
             return response;
         }
@@ -82,9 +91,9 @@ public class EventSubNotificationHandler implements EventSubHandler {
         }
 
 
-        private void dispatchEventSubRequest() {
+        private void dispatchEventSubRequest(@NonNull Producer producer) {
             if (eventSubRequest instanceof EventSubNotification notification) {
-                notification.getEvents().forEach(event -> bus.publishEvent(SubscriptionManager.SUBSCRIPTION_EVENT_TOPIC,event));
+                notification.getEvents().forEach(producer::send);
             }
         }
 

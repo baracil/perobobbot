@@ -1,6 +1,7 @@
-package perobobbot.bus.api;
+package perobobbot.bus.impl;
 
 import lombok.NonNull;
+import perobobbot.bus.api.Message;
 
 public interface BusListener<T> {
 
@@ -10,5 +11,5 @@ public interface BusListener<T> {
         return DEFAULT_PRIORITY;
     }
 
-    void onBusEvent(@NonNull T event) throws Exception;
+    void onBusEvent(@NonNull Message<T> message) throws Exception;
 }

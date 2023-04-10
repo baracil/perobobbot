@@ -50,7 +50,6 @@
         <module>Implementation/Twitch/perobobbot.twitch.web.client</module>
         <module>Implementation/Twitch/perobobbot.twitch.service.client</module>
         <module>Implementation/Twitch/perobobbot.twitch.eventsub</module>
-        <module>Implementation/Twitch/perobobbot.twitch.eventsub</module>
 
         <module>Implementation/Discord/perobobbot.discord.oauth</module>
 
@@ -66,16 +65,7 @@
                 <artifactId>netty-codec-socks</artifactId>
                 <version>${netty.version}</version>
             </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-bus-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-bus-impl</artifactId>
@@ -84,28 +74,13 @@
 
             <dependency>
                 <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-chat-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-chat-impl</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
                 <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-callback-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-callback-impl</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-command-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -115,17 +90,7 @@
             </dependency>
             <dependency>
                 <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-oauth-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-oauth-impl</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-web-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -163,11 +128,6 @@
             </dependency>
             <dependency>
                 <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-service-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-domain-jpa</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -180,11 +140,6 @@
 
             <dependency>
                 <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-twitch-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-twitch-oauth</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -193,11 +148,7 @@
                 <artifactId>perobobbot-twitch-web-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-twitch-service-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+
             <dependency>
                 <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-twitch-service-client</artifactId>
@@ -219,11 +170,6 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>perobobbot</groupId>
-                <artifactId>perobobbot-discord-api</artifactId>
-                <version>${project.version}</version>
-            </dependency>
             <dependency>
                 <groupId>perobobbot</groupId>
                 <artifactId>perobobbot-discord-oauth</artifactId>
