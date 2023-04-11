@@ -1,11 +1,11 @@
 package perobobbot.command.impl.parser;
 
-import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import perobobbot.command.api.CommandDefinitionParsingFailure;
 import perobobbot.command.impl.Command;
 import perobobbot.command.impl.CommandParser;
 
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public enum FullMatchCommandParser implements CommandParser {
@@ -27,6 +27,6 @@ public enum FullMatchCommandParser implements CommandParser {
 
         final var command = match.group("command");
         final var regex =  "^%s( .*)?$".formatted(command);
-        return new Command(commandDefinition, regex, command, command, ImmutableSet.of());
+        return new Command(commandDefinition, regex, command, command, Set.of());
     }
 }

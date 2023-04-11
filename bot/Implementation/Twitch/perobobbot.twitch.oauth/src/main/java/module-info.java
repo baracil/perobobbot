@@ -15,7 +15,6 @@ module perobobbot.twitch.oauth {
     requires jakarta.annotation;
 
     requires com.fasterxml.jackson.annotation;
-    requires com.google.common;
 
     requires transitive perobobbot.api;
     requires transitive perobobbot.twitch.api;

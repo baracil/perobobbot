@@ -1,6 +1,5 @@
 package perobobbot.twitch.eventsub;
 
-import com.google.common.collect.ImmutableMap;
 import io.micronaut.serde.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -14,6 +13,7 @@ import perobobbot.twitch.api.eventsub.Markers;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -32,7 +32,7 @@ public class TwitchRequestDeserializer {
         return new TwitchRequestDeserializer(objectMapper, type, content.getBytes(StandardCharsets.UTF_8)).deserialize();
     }
 
-    private static final ImmutableMap<String, Class<? extends EventSubRequest>> CLASS_PER_TYPE = ImmutableMap.of(
+    private static final Map<String, Class<? extends EventSubRequest>> CLASS_PER_TYPE = Map.of(
             "notification", EventSubNotification.class,
             "webhook_callback_verification", EventSubVerification.class,
             "revocation", EventSubVerification.class
@@ -49,7 +49,7 @@ public class TwitchRequestDeserializer {
             return Optional.empty();
         }
         try {
-            return Optional.of(objectMapper.readValue(content, clazz));
+            return Optional.ofNullable(objectMapper.readValue(content, clazz));
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

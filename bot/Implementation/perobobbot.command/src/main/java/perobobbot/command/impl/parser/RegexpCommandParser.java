@@ -1,6 +1,5 @@
 package perobobbot.command.impl.parser;
 
-import com.google.common.collect.ImmutableSet;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -67,7 +66,7 @@ public enum RegexpCommandParser implements CommandParser {
                     regexpBuilder.toString(),
                     firstCommand,
                     fullCommand,
-                    ImmutableSet.copyOf(parameterDefinitions));
+                    Set.copyOf(parameterDefinitions));
         }
 
 
@@ -114,7 +113,7 @@ public enum RegexpCommandParser implements CommandParser {
                         if (inFullCommand) {
                             fullCommandBuilder.append("|");
                         }
-                        regexpBuilder.append("\s+");
+                        regexpBuilder.append(" +");
                     }
                     if (inFullCommand) {
                         fullCommandBuilder.append(c);
@@ -169,7 +168,7 @@ public enum RegexpCommandParser implements CommandParser {
             final var base = "(?<" + name + ">" + RegexpCommandParser.ARGUMENT_PATTERN + ")";
             if (spacePending) {
                 spacePending = false;
-                return "\s+" + base;
+                return " +" + base;
             } else {
                 return base;
             }
@@ -179,7 +178,7 @@ public enum RegexpCommandParser implements CommandParser {
             final var base = "(?<" + name + ">" + RegexpCommandParser.ARGUMENT_PATTERN + ")";
             if (spacePending) {
                 spacePending = false;
-                return "(\s+" + base + ")?";
+                return "( +" + base + ")?";
             } else {
                 return base + "?";
             }

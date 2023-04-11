@@ -1,6 +1,5 @@
 package perobobbot.web.controller;
 
-import com.google.common.collect.ImmutableMap;
 import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Controller;
@@ -77,7 +76,7 @@ public class AuthenticationController implements AuthenticationApi {
     @Get("/callback/{platform}{?values*}")
     public void getCallback(@NonNull @PathVariable Platform platform,
                             @NonNull @QueryValue("values") Map<String, String> values) {
-        oAuthManager.handleCallback(platform, ImmutableMap.copyOf(values));
+        oAuthManager.handleCallback(platform, values);
     }
 
 

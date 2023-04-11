@@ -1,6 +1,5 @@
 package perobobbot.twitch.chat.message.from;
 
-import com.google.common.collect.ImmutableSet;
 import fpc.tools.fp.Function1;
 import fpc.tools.irc.IRCParsing;
 import fpc.tools.irc.Prefix;
@@ -13,7 +12,9 @@ import perobobbot.twitch.chat.message.IRCCommand;
 import perobobbot.twitch.chat.message.TagKey;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author Bastien Aracil
@@ -31,11 +32,11 @@ public class AnswerBuilderHelper {
     }
 
     @NonNull
-    public ImmutableSet<Capability> capabilities() {
+    public Set<Capability> capabilities() {
         return ircParsing.splitLastParameter(" ")
                          .map(Capability::find)
                          .flatMap(Optional::stream)
-                         .collect(ImmutableSet.toImmutableSet());
+                         .collect(Collectors.toSet());
     }
 
     @NonNull

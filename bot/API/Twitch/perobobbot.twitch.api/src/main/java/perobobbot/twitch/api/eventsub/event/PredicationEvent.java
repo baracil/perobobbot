@@ -1,16 +1,16 @@
 package perobobbot.twitch.api.eventsub.event;
 
-import com.google.common.collect.ImmutableList;
 import lombok.NonNull;
 import perobobbot.twitch.api.TwitchApiPayload;
 import perobobbot.twitch.api.UserInfo;
 
 import java.time.Instant;
+import java.util.List;
 
 public interface PredicationEvent extends BroadcasterProvider, EventSubEvent, TwitchApiPayload {
     @NonNull String getId();
     @NonNull UserInfo getBroadcaster();
     @NonNull String getTitle();
-    @NonNull ImmutableList<Outcome> getOutcomes();
+    @NonNull List<Outcome> getOutcomes();
     @NonNull Instant getStartedAt();
 }

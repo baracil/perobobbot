@@ -1,7 +1,5 @@
 package perobobbot.bus.impl;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import fpc.tools.fp.Tuple2;
 import fpc.tools.lang.Subscription;
 import io.micronaut.retry.annotation.Fallback;
@@ -14,10 +12,12 @@ import perobobbot.bus.api.*;
 
 import java.time.Duration;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Fallback
@@ -36,29 +36,29 @@ public class SimpleBus implements Bus {
     @Override
     public @NonNull Producer createProducer(@NonNull String topic) {
         final var regularTopic = Topic.parseRegular(topic);
-        return new SimpleProducer(this, ImmutableSet.of(regularTopic));
+        return new SimpleProducer(this, Set.of(regularTopic));
     }
 
     @Override
-    public @NonNull Producer createProducer(@NonNull ImmutableSet<String> topics) {
-        final var regularTopics = topics.stream().map(Topic::parseRegular).distinct().collect(ImmutableSet.toImmutableSet());
+    public @NonNull Producer createProducer(@NonNull Set<String> topics) {
+        final var regularTopics = topics.stream().map(Topic::parseRegular).distinct().collect(Collectors.toSet());
         return new SimpleProducer(this, regularTopics);
     }
 
     @Override
     public @NonNull <T> Message<T> createSimpleMessage(T payload) {
-        return new SimpleMessage<>(ImmutableMap.of(),payload);
+        return new SimpleMessage<>(Map.of(),payload);
     }
 
     @Override
     public @NonNull <T> Consumer<T> createConsumer(@NonNull String topic, @NonNull Class<T> eventType) {
-        final var topics = ImmutableSet.of(Topic.parse(topic));
+        final var topics = Set.of(Topic.parse(topic));
         return new SimpleConsumer<>(this,executors,topics,eventType);
     }
 
     @Override
-    public @NonNull <T> Consumer<T> createConsumer(@NonNull ImmutableSet<String> topics, @NonNull Class<T> eventType) {
-        final var regularTopics = topics.stream().map(Topic::parse).distinct().collect(ImmutableSet.toImmutableSet());
+    public @NonNull <T> Consumer<T> createConsumer(@NonNull Set<String> topics, @NonNull Class<T> eventType) {
+        final var regularTopics = topics.stream().map(Topic::parse).distinct().collect(Collectors.toSet());
         return new SimpleConsumer<>(this,executors,regularTopics,eventType);
     }
 

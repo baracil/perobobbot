@@ -1,6 +1,5 @@
 package perobobbot.twitch.api.eventsub.event;
 
-import com.google.common.collect.ImmutableList;
 import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.serde.config.naming.SnakeCaseStrategy;
 import lombok.NonNull;
@@ -10,6 +9,7 @@ import perobobbot.twitch.api.UserInfo;
 import perobobbot.twitch.api.serde.ISOInstantSerde;
 
 import java.time.Instant;
+import java.util.List;
 
 @Value
 @Serdeable(naming = SnakeCaseStrategy.class)
@@ -22,7 +22,7 @@ public class HypeTrainProgressEvent implements HypeTrainEvent, TwitchApiPayload 
     int level;
     int progress;
     int goal;
-    @NonNull ImmutableList<Contribution> topContributions;
+    @NonNull List<Contribution> topContributions;
     @NonNull Contribution lastContribution;
 
     @Serdeable.Serializable(using = ISOInstantSerde.class)

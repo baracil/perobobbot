@@ -1,10 +1,11 @@
 package perobobbot.twitch.api;
 
-import com.google.common.collect.ImmutableSet;
 import fpc.tools.lang.IdentifiedEnumWithAlternateIdentifications;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Set;
 
 @RequiredArgsConstructor
 public enum GoalType implements IdentifiedEnumWithAlternateIdentifications {
@@ -18,10 +19,10 @@ public enum GoalType implements IdentifiedEnumWithAlternateIdentifications {
     @Getter
     private final @NonNull String identification;
     @Getter
-    private final @NonNull ImmutableSet<String> alternateIdentifications;
+    private final @NonNull Set<String> alternateIdentifications;
 
     GoalType(@NonNull String identification, String... alternateIdentifications) {
         this.identification = identification;
-        this.alternateIdentifications = alternateIdentifications == null?ImmutableSet.of():ImmutableSet.copyOf(alternateIdentifications);
+        this.alternateIdentifications = alternateIdentifications == null?Set.of():Set.of(alternateIdentifications);
     }
 }

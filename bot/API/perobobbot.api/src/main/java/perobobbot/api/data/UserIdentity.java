@@ -1,18 +1,19 @@
 package perobobbot.api.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.collect.ImmutableList;
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.NonNull;
 import perobobbot.api.Identity;
 import perobobbot.api.UserInfo;
+
+import java.util.List;
 
 @Serdeable
 public record UserIdentity(long id,
                            @NonNull Identity identity,
                            @NonNull UserType userType,
                            @NonNull String login, @NonNull String name,
-                           @NonNull ImmutableList<JoinedChannel> joinedChannels) {
+                           @NonNull List<JoinedChannel> joinedChannels) {
 
     @JsonIgnore
     public @NonNull Platform platform() {

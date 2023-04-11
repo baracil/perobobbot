@@ -1,18 +1,19 @@
 package perobobbot.bus.impl;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.bus.api.Message;
 import perobobbot.bus.api.Producer;
 import perobobbot.bus.api.RegularTopic;
 
+import java.util.Map;
+import java.util.Set;
+
 @RequiredArgsConstructor
 public class SimpleProducer implements Producer {
 
     private final @NonNull SimpleBus bus;
-    private final @NonNull ImmutableSet<RegularTopic> topics;
+    private final @NonNull Set<RegularTopic> topics;
 
     @Override
     public void sendMessage(@NonNull Message<?> value) {
@@ -21,11 +22,11 @@ public class SimpleProducer implements Producer {
 
     @Override
     public void send(@NonNull Object payload) {
-        send(ImmutableMap.of(),payload);
+        send(Map.of(),payload);
     }
 
     @Override
-    public void send(@NonNull ImmutableMap<String, String> headers, @NonNull Object payload) {
+    public void send(@NonNull Map<String, String> headers, @NonNull Object payload) {
         sendMessage(new SimpleMessage<>(headers,payload));
     }
 

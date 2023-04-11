@@ -1,6 +1,6 @@
 package perobobbot.bridge;
 
-import com.google.common.collect.ImmutableMap;
+import fpc.tools.lang.MapTool;
 import io.micronaut.retry.annotation.Fallback;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
@@ -13,20 +13,20 @@ import perobobbot.api.data.UserIdentityProvider;
 import perobobbot.service.api.UserIdentityService;
 
 import java.util.List;
-import java.util.function.Function;
+import java.util.Map;
 
 @Singleton
 @Fallback
 public class BridgeUserIdentityProvider implements UserIdentityProvider {
 
     private final @NonNull UserIdentityService userIdentityService;
-    private final @NonNull ImmutableMap<Platform, PlatformUserInfoProvider> providerPerPlatforms;
+    private final @NonNull Map<Platform, PlatformUserInfoProvider> providerPerPlatforms;
 
     public BridgeUserIdentityProvider(
             @NonNull UserIdentityService userIdentityService,
             @NonNull List<PlatformUserInfoProvider> platformUserInfoProvider) {
         this.userIdentityService = userIdentityService;
-        this.providerPerPlatforms = platformUserInfoProvider.stream().collect(ImmutableMap.toImmutableMap(PlatformUserInfoProvider::getPlatform, Function.identity()));
+        this.providerPerPlatforms = platformUserInfoProvider.stream().collect(MapTool.collector(PlatformUserInfoProvider::getPlatform));
     }
 
     @Override

@@ -1,6 +1,6 @@
 package perobobbot.api;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import fpc.tools.lang.ThreadFactoryBuilder;
 import io.micronaut.retry.annotation.Fallback;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;

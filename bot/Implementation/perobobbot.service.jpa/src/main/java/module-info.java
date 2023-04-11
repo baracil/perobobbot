@@ -5,7 +5,6 @@ module perobobbot.service.jpa {
     requires java.persistence;
     requires jakarta.inject;
     requires java.transaction;
-    requires com.google.common;
 
     requires jplugman.annotation;
 

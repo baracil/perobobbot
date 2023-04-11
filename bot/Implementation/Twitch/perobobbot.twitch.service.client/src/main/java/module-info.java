@@ -2,7 +2,6 @@ module perobobbot.twitch.service.client {
     requires static lombok;
     requires java.desktop;
 
-    requires com.google.common;
     requires jakarta.inject;
 
     requires io.micronaut.inject;

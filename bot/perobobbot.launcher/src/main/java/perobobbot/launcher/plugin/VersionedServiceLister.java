@@ -1,6 +1,5 @@
 package perobobbot.launcher.plugin;
 
-import com.google.common.collect.ImmutableSet;
 import io.micronaut.context.ApplicationContext;
 import io.micronaut.core.annotation.AnnotationValue;
 import io.micronaut.core.annotation.Nullable;
@@ -16,26 +15,27 @@ import perobobbot.api.plugin.PerobobbotServices;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class VersionedServiceLister {
 
-    public static @NonNull ImmutableSet<VersionedService> list(@NonNull ApplicationContext applicationContext) {
+    public static @NonNull Set<VersionedService> list(@NonNull ApplicationContext applicationContext) {
         return new VersionedServiceLister(applicationContext).list();
     }
 
     private final @NonNull ApplicationContext applicationContext;
 
-    public @NonNull ImmutableSet<VersionedService> list() {
+    public @NonNull Set<VersionedService> list() {
         final var bean1 = applicationContext.getBeanDefinitions(Qualifiers.byStereotype(PerobobbotService.class));
         final var bean2 = applicationContext.getBeanDefinitions(Qualifiers.byStereotype(PerobobbotServices.class));
         return Stream.concat(
                              bean1.stream(),
                              bean2.stream()
                      ).flatMap(this::extractVersionServices)
-                     .distinct()
-                     .collect(ImmutableSet.toImmutableSet());
+                     .collect(Collectors.toSet());
     }
 
     private @NonNull Stream<VersionedService> extractVersionServices(@NonNull BeanDefinition<?> beanDefinition) {

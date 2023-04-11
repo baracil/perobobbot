@@ -1,6 +1,5 @@
 package perobobbot.twitch.api.eventsub.event;
 
-import com.google.common.collect.ImmutableList;
 import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.serde.config.naming.SnakeCaseStrategy;
 import lombok.NonNull;
@@ -9,6 +8,7 @@ import perobobbot.twitch.api.UserInfo;
 import perobobbot.twitch.api.serde.ISOInstantSerde;
 
 import java.time.Instant;
+import java.util.List;
 
 @Value
 @Serdeable(naming = SnakeCaseStrategy.class)
@@ -16,7 +16,7 @@ public class PredictionProgressEvent implements PredicationEvent {
     @NonNull String id;
     @NonNull UserInfo broadcaster;
     @NonNull String title;
-    @NonNull ImmutableList<Outcome> outcomes;
+    @NonNull List<Outcome> outcomes;
 
     @Serdeable.Serializable(using = ISOInstantSerde.class)
     @Serdeable.Deserializable(using = ISOInstantSerde.class)

@@ -1,6 +1,5 @@
 package perobobobbot.command;
 
-import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,7 +52,7 @@ public class CommandBindingDefinitionParserTest {
     public void shouldHaveRightParameterNames(@NonNull String commandDefinition, @NonNull String message, @NonNull String fullParameters, Map<String,String> expectedParameters) {
         final var parsing = commandParser.parse(commandDefinition).bind(message).orElse(null);
         Assertions.assertNotNull(parsing);
-        Assertions.assertEquals(ImmutableSet.copyOf(expectedParameters.keySet()), parsing.getParameterNames());
+        Assertions.assertEquals(expectedParameters.keySet(), parsing.getParameterNames());
 
     }
     @ParameterizedTest
@@ -61,7 +60,7 @@ public class CommandBindingDefinitionParserTest {
     public void shouldHaveRightParameterValues(@NonNull String commandDefinition, @NonNull String message, @NonNull String fullParameters, Map<String,String> expectedParameters) {
         final var parsing = commandParser.parse(commandDefinition).bind(message).orElse(null);
         Assertions.assertNotNull(parsing);
-        Assertions.assertEquals(ImmutableSet.copyOf(expectedParameters.keySet()), parsing.getParameterNames());
+        Assertions.assertEquals(expectedParameters.keySet(), parsing.getParameterNames());
 
     }
 

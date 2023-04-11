@@ -1,9 +1,10 @@
 package perobobbot.discord.api;
 
-import com.google.common.collect.ImmutableCollection;
-import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 @RequiredArgsConstructor
 public enum Permission {
@@ -58,10 +59,10 @@ public enum Permission {
     final String channelType;
 
     public static @NonNull String computeQueryParam(Permission... permissions) {
-        return computeQueryParam(ImmutableSet.copyOf(permissions));
+        return computeQueryParam(Arrays.asList(permissions));
     }
 
-    public static @NonNull String computeQueryParam(ImmutableCollection<Permission> permissions) {
+    public static @NonNull String computeQueryParam(Collection<Permission> permissions) {
         return String.valueOf(permissions.stream()
                                          .mapToLong(p -> p.mask)
                                          .reduce(0, (m1, m2) -> m1 | m2));

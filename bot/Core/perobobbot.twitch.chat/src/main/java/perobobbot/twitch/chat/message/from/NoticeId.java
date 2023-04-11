@@ -1,11 +1,11 @@
 package perobobbot.twitch.chat.message.from;
 
-import com.google.common.collect.ImmutableMap;
 import fpc.tools.lang.MapTool;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Map;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
@@ -172,7 +172,7 @@ public enum NoticeId {
 
     private static class Holder {
 
-        private static final ImmutableMap<String, NoticeId> NOTICE_ID_MAP;
+        private static final Map<String, NoticeId> NOTICE_ID_MAP;
 
         static {
             NOTICE_ID_MAP = Stream.of(values())

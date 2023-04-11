@@ -1,6 +1,6 @@
 package perobobbot.oauth.impl;
 
-import com.google.common.collect.*;
+import fpc.tools.lang.BiMap;
 import fpc.tools.lang.Subscription;
 import lombok.NonNull;
 import lombok.Synchronized;
@@ -8,32 +8,30 @@ import perobobbot.api.data.Platform;
 import perobobbot.api.data.UnmanagedPlatform;
 import perobobbot.oauth.api.PlatformOAuth;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PlatformOAuths {
 
-    private final @NonNull ImmutableMap<Platform, PlatformOAuth> defaultPlatforms;
+    private final @NonNull Map<Platform, PlatformOAuth> defaultPlatforms;
 
-    private final @NonNull BiMap<UUID, Platform> identifier = HashBiMap.create();
+    private final @NonNull BiMap<UUID, Platform> identifier = BiMap.createHashBiMap();
     private final @NonNull Map<UUID, PlatformOAuth> platformOAuths = new HashMap<>();
 
 
-    public PlatformOAuths(@NonNull ImmutableList<PlatformOAuth> platformOAuths) {
-        this.defaultPlatforms = platformOAuths.stream().collect(ImmutableMap.toImmutableMap(PlatformOAuth::platform, p -> p));
+    public PlatformOAuths(@NonNull List<PlatformOAuth> platformOAuths) {
+        this.defaultPlatforms = platformOAuths.stream().collect(Collectors.toMap(PlatformOAuth::platform, Function.identity()));
     }
 
     @Synchronized
-    public @NonNull ImmutableSet<Platform> getPlatforms() {
+    public @NonNull Set<Platform> getPlatforms() {
         return Stream.concat(
                              defaultPlatforms.keySet().stream(),
                              identifier.values().stream()
                      )
-                     .distinct()
-                     .collect(ImmutableSet.toImmutableSet());
+                     .collect(Collectors.toSet());
     }
 
     @Synchronized

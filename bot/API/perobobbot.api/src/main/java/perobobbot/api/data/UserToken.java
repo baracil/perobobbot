@@ -1,6 +1,5 @@
 package perobobbot.api.data;
 
-import com.google.common.collect.ImmutableSet;
 import fpc.tools.cipher.Decryptable;
 import fpc.tools.cipher.Encryptable;
 import fpc.tools.cipher.TextDecryptor;
@@ -12,6 +11,7 @@ import perobobbot.api.Identity;
 import perobobbot.api.Scope;
 
 import java.time.Instant;
+import java.util.Set;
 
 public sealed interface UserToken<T>
         extends Decryptable<UserToken.Decrypted>, Encryptable<UserToken.Encrypted>, Identity.Provider
@@ -25,7 +25,7 @@ public sealed interface UserToken<T>
 
     @NonNull Instant expirationInstant();
 
-    @NonNull ImmutableSet<Scope> scopes();
+    @NonNull Set<Scope> scopes();
 
     @NonNull String tokenType();
 
@@ -39,7 +39,7 @@ public sealed interface UserToken<T>
     record Decrypted(@NonNull Identity identity,
                      @NonNull Secret accessToken,
                      @NonNull Secret refreshToken, @NonNull Instant expirationInstant,
-                     @NonNull ImmutableSet<Scope> scopes,
+                     @NonNull Set<Scope> scopes,
                      @NonNull String tokenType) implements UserToken<Secret>, AccessTokenProvider {
 
         @Override
@@ -73,7 +73,7 @@ public sealed interface UserToken<T>
     record Encrypted(@NonNull Identity identity,
                      @NonNull String accessToken,
                      @NonNull String refreshToken, @NonNull Instant expirationInstant,
-                     @NonNull ImmutableSet<Scope> scopes, @NonNull String tokenType) implements UserToken<String> {
+                     @NonNull Set<Scope> scopes, @NonNull String tokenType) implements UserToken<String> {
         @Override
         public @NonNull UserTokenBuilder<String> toBuilder() {
             return UserTokenBuilder.forEncrypted(this);

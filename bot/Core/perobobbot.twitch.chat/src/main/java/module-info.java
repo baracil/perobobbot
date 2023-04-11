@@ -2,7 +2,6 @@ module perobobbot.twitch.chat {
     requires static lombok;
     requires java.desktop;
 
-    requires com.google.common;
 
     requires transitive fpc.tools.advanced.chat;
     requires fpc.tools.lang;

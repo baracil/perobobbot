@@ -1,13 +1,14 @@
 package perobobbot.oauth.api;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import fpc.tools.lang.Secret;
 import lombok.NonNull;
 import perobobbot.api.data.ApplicationToken;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.TokenWithIdentity;
 import perobobbot.api.data.UserToken;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Manager authorization flow
@@ -35,7 +36,7 @@ public interface OAuthManager {
      * @param platform    the platform that called
      * @param queryValues the query values associated with the callback
      */
-    void handleCallback(@NonNull Platform platform, @NonNull ImmutableMap<String, String> queryValues);
+    void handleCallback(@NonNull Platform platform, @NonNull Map<String, String> queryValues);
 
     /**
      * Call to fail the flow (for instance because the authorization code flow could not be started like an invalid provided URI)
@@ -45,7 +46,7 @@ public interface OAuthManager {
      */
     void failFlow(@NonNull String state, @NonNull Failure failure);
 
-    @NonNull ImmutableSet<Platform> getManagedPlatforms();
+    @NonNull Set<Platform> getManagedPlatforms();
 
     void revokeToken(@NonNull UserToken<Secret> userToken);
 

@@ -1,6 +1,6 @@
 package perobobbot.launcher.eventsub;
 
-import com.google.common.collect.ImmutableMap;
+import fpc.tools.lang.MapTool;
 import io.micronaut.retry.annotation.Fallback;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
@@ -14,14 +14,14 @@ import perobobbot.bus.api.Producer;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.function.Function;
+import java.util.Map;
 
 @Slf4j
 @Singleton
 @Fallback
 public class PeroSubscriptionManager implements SubscriptionManager {
 
-    private final @NonNull ImmutableMap<Platform, PlatformSubscriptionManager> managers;
+    private final @NonNull Map<Platform, PlatformSubscriptionManager> managers;
 
     private final Producer producer;
 
@@ -29,7 +29,7 @@ public class PeroSubscriptionManager implements SubscriptionManager {
                                    @NonNull List<PlatformSubscriptionManager> managers) {
         this.producer = bus.createProducer(SYSTEM_SUBSCRIPTION_TOPIC);
         this.managers = managers.stream()
-                                .collect(ImmutableMap.toImmutableMap(PlatformSubscriptionManager::getPlatform, Function.identity()));
+                                .collect(MapTool.collector(PlatformSubscriptionManager::getPlatform));
     }
 
     @PostConstruct

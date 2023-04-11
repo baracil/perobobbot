@@ -1,6 +1,5 @@
 package perobobbot.web.controller;
 
-import com.google.common.collect.ImmutableList;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
@@ -19,6 +18,8 @@ import perobobbot.service.api.SubscriptionService;
 import perobobbot.service.api.SynchronizationParameters;
 import perobobbot.web.api.EventSubApi;
 
+import java.util.List;
+
 @Controller(EventSubApi.PATH)
 @RequiredArgsConstructor
 @ExecuteOn(TaskExecutors.IO)
@@ -28,9 +29,9 @@ public class EventSubController implements EventSubApi {
     private final @NonNull SubscriptionManager subscriptionManager;
 
     @Override
-    public @NonNull ImmutableList<SubscriptionView> listEventSubs(@QueryValue(value = "platform") @Nullable Platform platform,
-                                                                  @QueryValue(value = "page", defaultValue = "0") int page,
-                                                                  @QueryValue(value = "size", defaultValue = "-1") int size) {
+    public @NonNull List<SubscriptionView> listEventSubs(@QueryValue(value = "platform") @Nullable Platform platform,
+                                                         @QueryValue(value = "page", defaultValue = "0") int page,
+                                                         @QueryValue(value = "size", defaultValue = "-1") int size) {
         if (platform == null) {
             return subscriptionService.listSubscriptions(page, size);
         }

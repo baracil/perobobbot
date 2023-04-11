@@ -1,7 +1,6 @@
 package perobobbot.twitch.oauth.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.collect.ImmutableSet;
 import fpc.tools.lang.Secret;
 import fpc.tools.lang.Todo;
 import io.micronaut.core.annotation.Nullable;
@@ -20,6 +19,8 @@ import perobobbot.twitch.api.TwitchScope;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Serdeable
 @Value
@@ -64,15 +65,15 @@ public class TwitchToken {
     }
 
 
-    private @NonNull ImmutableSet<Scope> prepareScopes() {
+    private @NonNull Set<Scope> prepareScopes() {
         if (scope == null) {
-            return ImmutableSet.of();
+            return Set.of();
         }
 
         return Arrays.stream(scope)
                      .map(TwitchScope::findScopeByName)
                      .flatMap(Optional::stream)
-                     .collect(ImmutableSet.toImmutableSet());
+                     .collect(Collectors.toSet());
 
     }
 }

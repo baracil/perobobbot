@@ -116,12 +116,12 @@ public class TwitchServiceInterceptor implements MethodInterceptor<Object, Objec
             final var clientId = oauthData.getClientId();
             final var accessToken = oauthData.getAccessToken(oAuthAccessMode);
 
-            final var headerBuilder = headerHolder.withPrevious();
+            final var newHeader = headerHolder.withPrevious()
+                                              .header("Client-Id", clientId)
+                                              .header("Authorization", "Bearer " + accessToken.value())
+                                              .build();
 
-            headerBuilder.put("Client-Id", clientId);
-            headerBuilder.put("Authorization", "Bearer " + accessToken.value());
-
-            return headerHolder.callWith(headerBuilder.build(), () -> proceed(context));
+            return headerHolder.callWith(newHeader, () -> proceed(context));
         }
 
     }

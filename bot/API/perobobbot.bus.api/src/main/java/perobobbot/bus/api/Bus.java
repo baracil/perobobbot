@@ -1,7 +1,8 @@
 package perobobbot.bus.api;
 
-import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
+
+import java.util.Set;
 
 public interface Bus {
 
@@ -9,11 +10,11 @@ public interface Bus {
 
     @NonNull Producer createProducer(@NonNull String topic);
 
-    @NonNull Producer createProducer(@NonNull ImmutableSet<String> topics);
+    @NonNull Producer createProducer(@NonNull Set<String> topics);
 
     @NonNull <T> Consumer<T> createConsumer(@NonNull String topic, @NonNull Class<T> eventType);
 
-    @NonNull <T> Consumer<T> createConsumer(@NonNull ImmutableSet<String> topics, @NonNull Class<T> eventType);
+    @NonNull <T> Consumer<T> createConsumer(@NonNull Set<String> topics, @NonNull Class<T> eventType);
 
     @NonNull <T> Message<T> createSimpleMessage(T payload);
 

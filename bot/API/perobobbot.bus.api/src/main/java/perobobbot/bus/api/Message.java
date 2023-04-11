@@ -1,13 +1,13 @@
 package perobobbot.bus.api;
 
-import com.google.common.collect.ImmutableMap;
 import lombok.NonNull;
 
+import java.util.Map;
 import java.util.Optional;
 
 public interface Message<T> {
 
-    @NonNull ImmutableMap<String,String> getHeaders();
+    @NonNull Map<String,String> getHeaders();
 
     @NonNull Optional<String> getHeader(@NonNull String key);
 

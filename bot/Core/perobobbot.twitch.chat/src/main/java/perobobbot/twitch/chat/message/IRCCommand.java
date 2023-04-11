@@ -1,12 +1,12 @@
 package perobobbot.twitch.chat.message;
 
-import com.google.common.collect.ImmutableMap;
 import fpc.tools.fp.Tuple2;
 import fpc.tools.lang.MapTool;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.chat.message.from.*;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -80,7 +80,7 @@ public enum IRCCommand {
 
     private static class Holder {
 
-        private static final ImmutableMap<String,IRCCommand> VALUES_BY_NAME;
+        private static final Map<String,IRCCommand> VALUES_BY_NAME;
 
         static {
             VALUES_BY_NAME = Stream.of(values())

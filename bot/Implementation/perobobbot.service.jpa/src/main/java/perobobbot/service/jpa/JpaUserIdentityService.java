@@ -1,8 +1,5 @@
 package perobobbot.service.jpa;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import io.micronaut.data.model.Pageable;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
@@ -20,7 +17,12 @@ import perobobbot.service.api.NoBotDefined;
 import perobobbot.service.api.UserIdentityService;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Singleton
 @RequiredArgsConstructor
@@ -61,11 +63,10 @@ public class JpaUserIdentityService implements UserIdentityService {
     }
 
     @Override
-    public @NonNull ImmutableSet<JoinedChannel> listJoinedChannels(long userIdentityId) {
+    public @NonNull Set<JoinedChannel> listJoinedChannels(long userIdentityId) {
         return joinedChannelRepository.getByUserIdentityId(userIdentityId)
                                       .map(JoinedChannelEntity::toView)
-                                      .distinct()
-                                      .collect(ImmutableSet.toImmutableSet());
+                                      .collect(Collectors.toSet());
     }
 
     @Override
@@ -86,21 +87,21 @@ public class JpaUserIdentityService implements UserIdentityService {
     }
 
     @Override
-    public @NonNull ImmutableList<UserIdentity> listUserIdentities(int page, int size) {
+    public @NonNull List<UserIdentity> listUserIdentities(int page, int size) {
         return userIdentityRepository.findAll(Pageable.from(page, size))
                                      .getContent()
                                      .stream()
                                      .map(UserIdentityEntity::toView)
-                                     .collect(ImmutableList.toImmutableList());
+                                     .toList();
     }
 
     @Override
-    public @NonNull ImmutableList<UserIdentity> listUserIdentities(@NonNull Platform platform, int page, int size) {
+    public @NonNull List<UserIdentity> listUserIdentities(@NonNull Platform platform, int page, int size) {
         return userIdentityRepository.findByPlatform(platform, Pageable.from(page, size))
                                      .getContent()
                                      .stream()
                                      .map(UserIdentityEntity::toView)
-                                     .collect(ImmutableList.toImmutableList());
+                                     .toList();
     }
 
     @Override
@@ -120,9 +121,9 @@ public class JpaUserIdentityService implements UserIdentityService {
     }
 
     @Override
-    public @NonNull ImmutableMap<Identity, UserIdentity> findBots() {
+    public @NonNull Map<Identity, UserIdentity> findBots() {
         return userIdentityRepository.findByUserType(UserType.BOT)
                                      .map(UserIdentityEntity::toView)
-                                     .collect(ImmutableMap.toImmutableMap(UserIdentity::identity, u -> u));
+                                     .collect(Collectors.toMap(UserIdentity::identity, Function.identity()));
     }
 }

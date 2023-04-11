@@ -1,11 +1,11 @@
 package perobobbot.twitch.api.eventsub;
 
-import com.google.common.collect.ImmutableMap;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.api.CriteriaType;
 
 import java.util.Comparator;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -13,7 +13,7 @@ public class ConditionId implements CharSequence {
 
     private final String id;
 
-    public ConditionId(@NonNull ImmutableMap<CriteriaType, String> conditions) {
+    public ConditionId(@NonNull Map<CriteriaType, String> conditions) {
         this.id = conditions.entrySet()
                             .stream()
                             .sorted(Comparator.comparing(e -> e.getKey().getIdentification()))

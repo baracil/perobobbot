@@ -1,11 +1,11 @@
 package perobobbot.twitch.chat.message;
 
-import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author Bastien Aracil
@@ -31,12 +31,12 @@ public enum Capability {
     }
 
     @NonNull
-    public static ImmutableSet<Capability> AllCapabilities() {
+    public static Set<Capability> AllCapabilities() {
         return Holder.VALUES;
     }
 
     private static class Holder {
 
-        private static final ImmutableSet<Capability> VALUES = ImmutableSet.copyOf(values());
+        private static final Set<Capability> VALUES = Set.of(values());
     }
 }

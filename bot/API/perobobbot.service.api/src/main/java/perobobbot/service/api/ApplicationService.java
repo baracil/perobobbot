@@ -1,10 +1,10 @@
 package perobobbot.service.api;
 
-import com.google.common.collect.ImmutableList;
 import fpc.tools.lang.Secret;
 import lombok.NonNull;
 import perobobbot.api.data.*;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ApplicationService {
@@ -60,5 +60,5 @@ public interface ApplicationService {
 
 
     @NonNull
-    ImmutableList<Platform> getAllPlatforms();
+    List<Platform> getAllPlatforms();
 }

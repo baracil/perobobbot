@@ -2,8 +2,6 @@ open module perobobbot.twitch.api {
     requires static lombok;
     requires java.desktop;
 
-    requires com.google.common;
-
     requires org.slf4j;
 
     requires jakarta.inject;

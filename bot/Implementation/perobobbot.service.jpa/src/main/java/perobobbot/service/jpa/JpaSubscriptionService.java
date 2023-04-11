@@ -1,6 +1,5 @@
 package perobobbot.service.jpa;
 
-import com.google.common.collect.ImmutableList;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import jakarta.inject.Singleton;
@@ -19,6 +18,7 @@ import perobobbot.service.api.SubscriptionService;
 import perobobbot.service.api.UpdateSubscriptionParameters;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -32,21 +32,21 @@ public class JpaSubscriptionService implements SubscriptionService {
     private final @NonNull SerDeHelper serDeHelper;
 
     @Override
-    public @NonNull ImmutableList<SubscriptionView> listSubscriptionsOnPlatform(@NonNull Platform platform, int page, int size) {
+    public @NonNull List<SubscriptionView> listSubscriptionsOnPlatform(@NonNull Platform platform, int page, int size) {
         final var p = subscriptionRepository.findByPlatform(platform, Pageable.from(page, size));
         return toView(p);
     }
 
     @Override
-    public @NonNull ImmutableList<SubscriptionView> listSubscriptions(int page, int size) {
+    public @NonNull List<SubscriptionView> listSubscriptions(int page, int size) {
         final var p = subscriptionRepository.findAll(Pageable.from(page, size));
         return toView(p);
     }
 
-    private @NonNull ImmutableList<SubscriptionView> toView(@NonNull Page<SubscriptionEntity> page) {
+    private @NonNull List<SubscriptionView> toView(@NonNull Page<SubscriptionEntity> page) {
         return page.getContent().stream()
                    .map(s -> s.toView(serDeHelper))
-                   .collect(ImmutableList.toImmutableList());
+                   .toList();
     }
 
     @Override

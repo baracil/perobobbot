@@ -1,16 +1,16 @@
 package perobobbot.oauth.impl;
 
-import com.google.common.collect.ImmutableMap;
 import lombok.NonNull;
 import org.slf4j.LoggerFactory;
 
+import java.util.Map;
 import java.util.Optional;
 
 public sealed interface CallbackInfo {
 
     @NonNull String state();
 
-    static Optional<CallbackInfo> parse(@NonNull ImmutableMap<String, String> queryValues) {
+    static Optional<CallbackInfo> parse(@NonNull Map<String, String> queryValues) {
         final var log = LoggerFactory.getLogger(CallbackInfo.class);
         final var state = queryValues.get("state");
         final var error = queryValues.get("error");

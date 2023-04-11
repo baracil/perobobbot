@@ -17,7 +17,6 @@ open module perobobbot.api {
     requires transitive fpc.tools.lang;
     requires transitive fpc.tools.cipher;
     requires transitive fpc.tools.micronaut;
-    requires com.google.common;
 
     requires jplugman.annotation;
     requires jplugman.api;

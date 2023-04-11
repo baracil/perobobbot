@@ -1,6 +1,5 @@
 package perobobbot.twitch.eventsub.callback;
 
-import com.google.common.collect.ImmutableList;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import lombok.NonNull;
@@ -11,12 +10,12 @@ import java.util.List;
 
 public class EventSubCallback implements Callback {
 
-    private final @NonNull ImmutableList<EventSubHandler> handlers;
+    private final @NonNull List<EventSubHandler> handlers;
 
     public EventSubCallback(@NonNull List<EventSubHandler> handlers) {
         this.handlers = handlers.stream()
                                 .sorted(Comparator.comparingInt(EventSubHandler::priority))
-                                .collect(ImmutableList.toImmutableList());
+                                .toList();
     }
 
     @Override

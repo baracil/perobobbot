@@ -10,7 +10,6 @@ module perobobbot.domain.jpa {
     requires fpc.tools.hibernate;
 
     requires org.hibernate.orm.core;
-    requires com.google.common;
 
     requires perobobbot.api;
     requires perobobbot.twitch.api;

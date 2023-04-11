@@ -1,7 +1,5 @@
 package perobobbot.chat.impl;
 
-import com.google.common.base.Equivalence;
-import com.google.common.collect.ImmutableMap;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
@@ -13,20 +11,27 @@ import perobobbot.chat.api.NoChatFactoryForPlatform;
 import perobobbot.chat.api.PlatformChatFactory;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class DefaultChatFactory implements ChatFactory {
 
+    private static final Collector<PlatformChatFactory, ?, Map<Platform,PlatformChatFactory>> BY_PLATFORM_COLLECTOR =
+            Collectors.toMap(
+                    PlatformChatFactory::getPlatform,
+                    Function.identity(),
+                    (p1,p2) -> p1
+            );
+
     public static @NonNull ChatFactory create(@NonNull Collection<PlatformChatFactory> factories) {
-        final var factoryPerPlatform = factories.stream().map(CHAT_FACTORY_EQUIVALENCE::wrap)
-                .distinct()
-                .map(Equivalence.Wrapper::get)
-                .collect(ImmutableMap.toImmutableMap(PlatformChatFactory::getPlatform, Function.identity()));
+        final var factoryPerPlatform = factories.stream().collect(BY_PLATFORM_COLLECTOR);
         return new DefaultChatFactory(factoryPerPlatform);
     }
 
-    private final @NonNull ImmutableMap<Platform, PlatformChatFactory> factories;
+    private final @NonNull Map<Platform, PlatformChatFactory> factories;
 
     @Override
     @Synchronized
@@ -45,6 +50,4 @@ public class DefaultChatFactory implements ChatFactory {
         return factory;
     }
 
-
-    private static final Equivalence<PlatformChatFactory> CHAT_FACTORY_EQUIVALENCE = Equivalence.equals().onResultOf(PlatformChatFactory::getPlatform);
 }

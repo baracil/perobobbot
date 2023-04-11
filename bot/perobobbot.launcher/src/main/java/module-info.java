@@ -14,7 +14,6 @@ open module perobobbot.launcher {
     requires java.annotation;
     requires java.sql;
     requires org.bouncycastle.provider;
-    requires com.google.common;
 
 
     requires perobobbot.api;
@@ -24,8 +23,6 @@ open module perobobbot.launcher {
     requires perobobbot.bus.api;
     requires perobobbot.twitch.chat;
     requires perobobbot.chat.api;
-
-//    requires perobobbot.twitch.chat.impl;
 
     requires jplugman.base;
 

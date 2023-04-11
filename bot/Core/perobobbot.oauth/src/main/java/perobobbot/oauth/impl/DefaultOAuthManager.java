@@ -1,8 +1,5 @@
 package perobobbot.oauth.impl;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import fpc.tools.lang.Futures;
 import fpc.tools.lang.Secret;
 import fpc.tools.lang.StringTool;
@@ -16,6 +13,10 @@ import perobobbot.api.data.UserToken;
 import perobobbot.oauth.api.*;
 import perobobbot.service.api.ApplicationService;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 @RequiredArgsConstructor
 @Slf4j
 public class DefaultOAuthManager implements OAuthManager {
@@ -25,7 +26,7 @@ public class DefaultOAuthManager implements OAuthManager {
     private final @NonNull PlatformOAuths platforms;
     private final @NonNull RendezvousMaker rendezVousMaker = new RendezvousMaker();
 
-    public DefaultOAuthManager(@NonNull ApplicationService applicationService, @NonNull ImmutableList<PlatformOAuth> platformOAuths) {
+    public DefaultOAuthManager(@NonNull ApplicationService applicationService, @NonNull List<PlatformOAuth> platformOAuths) {
         this.applicationService = applicationService;
         this.platforms = new PlatformOAuths(platformOAuths);
     }
@@ -68,7 +69,7 @@ public class DefaultOAuthManager implements OAuthManager {
     }
 
     @Override
-    public @NonNull ImmutableSet<Platform> getManagedPlatforms() {
+    public @NonNull Set<Platform> getManagedPlatforms() {
         return platforms.getPlatforms();
     }
 
@@ -87,7 +88,7 @@ public class DefaultOAuthManager implements OAuthManager {
     }
 
     @Override
-    public void handleCallback(@NonNull Platform platform, @NonNull ImmutableMap<String, String> queryValues) {
+    public void handleCallback(@NonNull Platform platform, @NonNull Map<String, String> queryValues) {
         LOG.info("Receive callback from '" + platform.name() + "'  error='" + queryValues.getOrDefault("error", "none") + "'");
 
         final var info = CallbackInfo.parse(queryValues).orElse(null);

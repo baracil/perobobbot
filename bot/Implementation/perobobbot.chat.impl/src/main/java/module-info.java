@@ -2,7 +2,6 @@ module perobobbot.chat.impl {
     requires static lombok;
     requires java.desktop;
 
-    requires com.google.common;
 
     requires perobobbot.chat.api;
     requires perobobbot.service.api;

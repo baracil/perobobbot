@@ -1,9 +1,10 @@
 package perobobbot.api;
 
-import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import perobobbot.api.data.JoinedChannel;
 import perobobbot.api.data.UserIdentity;
+
+import java.util.Set;
 
 /**
  * Provides the channels a user (see {@link UserIdentity})
@@ -11,5 +12,5 @@ import perobobbot.api.data.UserIdentity;
  */
 public interface JoinedChannelProviderForUser {
 
-    @NonNull ImmutableSet<JoinedChannel> getChannels();
+    @NonNull Set<JoinedChannel> getChannels();
 }

@@ -1,12 +1,13 @@
 package perobobbot.twitch.chat;
 
-import com.google.common.collect.ImmutableList;
 import fpc.tools.chat.BandwidthLimits;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.ConfigurationBuilder;
 import io.github.bucket4j.local.LocalBucketBuilder;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public enum TwitchBandwidth implements BandwidthLimits {
@@ -17,10 +18,10 @@ public enum TwitchBandwidth implements BandwidthLimits {
     ;
 
     @NonNull
-    private final ImmutableList<Bandwidth> bandwidth;
+    private final List<Bandwidth> bandwidth;
 
     TwitchBandwidth(@NonNull Bandwidth... bandwidth) {
-        this.bandwidth = ImmutableList.copyOf(bandwidth);
+        this.bandwidth = List.of(bandwidth);
     }
 
     @Override

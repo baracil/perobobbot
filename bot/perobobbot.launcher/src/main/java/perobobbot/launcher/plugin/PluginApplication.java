@@ -1,6 +1,5 @@
 package perobobbot.launcher.plugin;
 
-import com.google.common.collect.ImmutableSet;
 import jplugman.api.VersionedService;
 import jplugman.base.ApplicationBase;
 import jplugman.tools.Subscription;
@@ -9,16 +8,15 @@ import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.plugin.PerobobbotPlugin;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Slf4j
 public class PluginApplication extends ApplicationBase<PerobobbotPlugin> {
 
 
-    public PluginApplication(@NonNull ImmutableSet<VersionedService> versionedServices) {
+    public PluginApplication(@NonNull Set<VersionedService> versionedServices) {
         super(versionedServices, PerobobbotPlugin.class);
-        versionedServices.forEach(s -> {
-            LOG.info("Perobobbot service : {} v{}",s.getServiceType().getSimpleName(), s.getMajorVersion());
-        });
+        versionedServices.forEach(s -> LOG.info("Perobobbot service : {} v{}",s.getServiceType().getSimpleName(), s.getMajorVersion()));
     }
 
     @Override

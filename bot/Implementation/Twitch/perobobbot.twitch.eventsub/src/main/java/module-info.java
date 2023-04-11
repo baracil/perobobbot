@@ -10,7 +10,6 @@ module perobobbot.twitch.eventsub {
 
     requires jakarta.inject;
     requires jakarta.annotation;
-    requires com.google.common;
     requires org.slf4j;
 
     requires io.micronaut.serde.serde_api;

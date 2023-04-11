@@ -1,6 +1,5 @@
 package perobobbot.twitch.api;
 
-import com.google.common.collect.ImmutableSet;
 import fpc.tools.lang.IdentifiedEnum;
 import lombok.Getter;
 import lombok.NonNull;
@@ -9,6 +8,8 @@ import perobobbot.twitch.api.eventsub.event.*;
 import perobobbot.twitch.api.eventsub.subscription.*;
 
 import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * set temp1 to tbody in page <a href="https://dev.twitch.tv/docs/eventsub/eventsub-subscription-types">SubscriptionTypes</a>
@@ -81,18 +82,18 @@ public enum SubscriptionType implements IdentifiedEnum {
     }
 
 
-    public static @NonNull ImmutableSet<String> getIdentifications() {
+    public static @NonNull Set<String> getIdentifications() {
         return Holder.VALUE_IDENTIFICATIONS;
     }
 
     private static class Holder {
 
-        private static final @NonNull ImmutableSet<String> VALUE_IDENTIFICATIONS;
+        private static final @NonNull Set<String> VALUE_IDENTIFICATIONS;
 
         static {
             VALUE_IDENTIFICATIONS = Arrays.stream(values())
                                           .map(SubscriptionType::getIdentification)
-                                          .collect(ImmutableSet.toImmutableSet());
+                                          .collect(Collectors.toSet());
         }
     }
 

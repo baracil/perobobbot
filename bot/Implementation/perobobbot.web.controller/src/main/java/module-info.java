@@ -2,7 +2,6 @@ module perobobbot.web.controller {
     requires static lombok;
     requires java.desktop;
 
-    requires com.google.common;
     requires io.swagger.v3.oas.annotations;
     requires jakarta.inject;
     requires reactor.core;

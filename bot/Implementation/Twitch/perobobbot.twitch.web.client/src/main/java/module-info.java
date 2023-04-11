@@ -12,7 +12,6 @@ module perobobbot.twitch.web.client {
     requires perobobbot.twitch.api;
     requires perobobbot.api;
 
-    requires com.google.common;
 
     requires jakarta.inject;
     requires perobobbot.oauth.api;

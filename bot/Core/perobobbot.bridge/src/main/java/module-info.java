@@ -4,7 +4,6 @@ module perobobbot.bridge {
 
     requires jakarta.inject;
     requires jakarta.annotation;
-    requires com.google.common;
     requires io.micronaut.runtime;
 
     requires perobobbot.api;

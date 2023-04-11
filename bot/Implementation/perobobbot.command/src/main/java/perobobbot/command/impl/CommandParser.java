@@ -1,9 +1,10 @@
 package perobobbot.command.impl;
 
-import com.google.common.collect.ImmutableList;
 import lombok.NonNull;
 import perobobbot.command.impl.parser.FullMatchCommandParser;
 import perobobbot.command.impl.parser.RegexpCommandParser;
+
+import java.util.List;
 
 public interface CommandParser {
 
@@ -15,7 +16,7 @@ public interface CommandParser {
 
 
     static @NonNull CommandParser chain(@NonNull CommandParser... parsers) {
-        return new ChainedCommandParser(ImmutableList.copyOf(parsers));
+        return new ChainedCommandParser(List.of(parsers));
     }
 
     static @NonNull CommandParser regexp() {

@@ -1,6 +1,6 @@
 package perobobbot.launcher.oauth;
 
-import com.google.common.collect.ImmutableMap;
+import fpc.tools.lang.MapTool;
 import fpc.tools.micronaut.EagerInit;
 import io.micronaut.context.annotation.Factory;
 import jakarta.inject.Singleton;
@@ -14,6 +14,9 @@ import perobobbot.oauth.api.AuthHolder;
 import perobobbot.oauth.api.OAuthData;
 import perobobbot.oauth.api.OAuthDataFactory;
 import perobobbot.service.api.UserIdentityService;
+
+import java.util.Collections;
+import java.util.Map;
 
 @Factory
 @Slf4j
@@ -31,8 +34,8 @@ public class AuthHolderFactory {
         return new MainAuthHolder(userIdentityService, oAuthDataFactory, defaultOAuth);
     }
 
-    private @NonNull ImmutableMap<Platform, OAuthData> getDefaultOAuthData() {
-        final var builder = ImmutableMap.<Platform, OAuthData>builder();
+    private @NonNull Map<Platform, OAuthData> getDefaultOAuthData() {
+        final var result = MapTool.<Platform,OAuthData>hashMap();
         final var defaultIds = configuration.getOauth().getDefaultIds();
         for (@NonNull Platform platform : defaultIds.keySet()) {
             final var login = defaultIds.get(platform);
@@ -45,9 +48,9 @@ public class AuthHolderFactory {
             }
 
             final var oauthData = oAuthDataFactory.create(identity.toUserInfo());
-            builder.put(oauthData.getPlatform(), oauthData);
+            result.put(oauthData.getPlatform(), oauthData);
         }
-        return builder.build();
+        return Collections.unmodifiableMap(result);
     }
 
 }

@@ -1,15 +1,16 @@
 package perobobbot.command.impl;
 
-import com.google.common.collect.ImmutableList;
 import fpc.tools.lang.ListTool;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.command.api.CommandDefinitionParsingFailure;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 public class ChainedCommandParser implements CommandParser {
 
-    private final @NonNull ImmutableList<CommandParser> parsers;
+    private final @NonNull List<CommandParser> parsers;
 
     @Override
     public @NonNull Command parse(@NonNull String commandDefinition) {

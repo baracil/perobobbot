@@ -1,7 +1,6 @@
 module perobobbot.bus.impl {
     requires static lombok;
 
-    requires com.google.common;
 
     requires java.desktop;
     requires jakarta.inject;

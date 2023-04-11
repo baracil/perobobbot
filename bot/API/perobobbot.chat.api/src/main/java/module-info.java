@@ -2,8 +2,6 @@ module perobobbot.chat.api {
     requires static lombok;
     requires java.desktop;
 
-    requires com.google.common;
-
     requires fpc.tools.irc;
 
     requires io.micronaut.serde.serde_api;

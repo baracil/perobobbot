@@ -9,5 +9,5 @@ import lombok.RequiredArgsConstructor;
 public class Bom {
 
     @Getter
-    private final @NonNull ImmutableSet<Dependency> dependencies;
+    private final @NonNull Set<Dependency> dependencies;
 }

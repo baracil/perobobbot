@@ -1,6 +1,5 @@
 package perobobbot.service.jpa;
 
-import com.google.common.collect.ImmutableList;
 import fpc.tools.cipher.TextCipher;
 import fpc.tools.lang.Secret;
 import jakarta.inject.Inject;
@@ -20,12 +19,13 @@ import perobobbot.domain.jpa.repository.ApplicationTokenRepository;
 import perobobbot.service.api.ApplicationService;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Singleton
 @RequiredArgsConstructor
 @Transactional
-@PerobobbotService(apiVersion = 1,serviceType = ApplicationService.class)
+@PerobobbotService(apiVersion = ApplicationService.VERSION,serviceType = ApplicationService.class)
 public class JpaApplicationService implements ApplicationService {
 
     private final @NonNull
@@ -74,8 +74,8 @@ public class JpaApplicationService implements ApplicationService {
     }
 
     @Override
-    public @NonNull ImmutableList<Platform> getAllPlatforms() {
-        return applicationRepository.findPlatform().collect(ImmutableList.toImmutableList());
+    public @NonNull List<Platform> getAllPlatforms() {
+        return applicationRepository.findPlatform().toList();
     }
 
     @Override

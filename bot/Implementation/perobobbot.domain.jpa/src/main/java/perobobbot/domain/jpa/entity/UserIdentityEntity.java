@@ -1,6 +1,5 @@
 package perobobbot.domain.jpa.entity;
 
-import com.google.common.collect.ImmutableList;
 import lombok.*;
 import perobobbot.api.Identity;
 import perobobbot.api.UserInfo;
@@ -66,7 +65,7 @@ public class UserIdentityEntity extends BaseEntity {
                 userType,
                 login,
                 name,
-                joinedChannels.stream().map(JoinedChannelEntity::toView).collect(ImmutableList.toImmutableList())
+                joinedChannels.stream().map(JoinedChannelEntity::toView).toList()
         );
     }
 

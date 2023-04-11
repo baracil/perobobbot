@@ -1,9 +1,9 @@
 package perobobbot.twitch.api.serde;
 
-import org.jetbrains.annotations.Contract;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.Contract;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -1,7 +1,5 @@
 package perobobbot.twitch.service.client;
 
-import com.google.common.collect.ImmutableList;
-import io.micronaut.serde.ObjectMapper;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +10,8 @@ import perobobbot.twitch.api.eventsub.subscription.Subscription;
 import perobobbot.twitch.service.api.EventSubService;
 import perobobbot.twitch.web.client.EventSubClient;
 import perobobbot.twitch.web.client.GetEventSubParameter;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Singleton
@@ -32,10 +32,10 @@ public class ClientEventSubService implements EventSubService {
     }
 
     @Override
-    public @NonNull ImmutableList<TwitchSubscription> getSubscriptions() {
+    public @NonNull List<TwitchSubscription> getSubscriptions() {
         final var oAuthData = authHolder.get(Twitch.PLATFORM);
         final var parameter = GetEventSubParameter.builder().user_id(oAuthData.getUserId()).build();
-        return ImmutableList.copyOf(eventSubClient.getEventSubs(parameter).getData());
+        return List.of(eventSubClient.getEventSubs(parameter).getData());
     }
 
     @Override

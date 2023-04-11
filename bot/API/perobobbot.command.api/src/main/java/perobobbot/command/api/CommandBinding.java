@@ -1,14 +1,14 @@
 package perobobbot.command.api;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import fpc.tools.fp.TryResult;
 import fpc.tools.lang.Parser;
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.NonNull;
 import lombok.Value;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @Serdeable
 @Value
@@ -22,14 +22,14 @@ public class CommandBinding {
      * @return the part of the command will all parameters
      */
     @NonNull String fullParameters;
-    @NonNull ImmutableMap<String,String> parameters;
+    @NonNull Map<String,String> parameters;
 
 
     public int getNumberOfParameters() {
         return parameters.size();
     }
 
-    public @NonNull ImmutableSet<String> getParameterNames() {
+    public @NonNull Set<String> getParameterNames() {
         return parameters.keySet();
     }
 

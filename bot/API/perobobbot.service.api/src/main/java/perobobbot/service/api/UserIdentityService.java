@@ -1,8 +1,5 @@
 package perobobbot.service.api;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import lombok.NonNull;
 import perobobbot.api.Id;
 import perobobbot.api.Identity;
@@ -13,7 +10,10 @@ import perobobbot.api.data.Platform;
 import perobobbot.api.data.UnknownUserId;
 import perobobbot.api.data.UserIdentity;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public interface UserIdentityService extends JoinedChannelProvider {
 
@@ -41,15 +41,15 @@ public interface UserIdentityService extends JoinedChannelProvider {
      * @param size the size of the page (-1 for no size)
      * @return a list of the {@link UserIdentity} for the provided page information
      */
-    @NonNull ImmutableList<UserIdentity> listUserIdentities(int page, int size);
+    @NonNull List<UserIdentity> listUserIdentities(int page, int size);
 
-    @NonNull ImmutableList<UserIdentity> listUserIdentities(@NonNull Platform platform, int page, int size);
+    @NonNull List<UserIdentity> listUserIdentities(@NonNull Platform platform, int page, int size);
 
     @NonNull JoinedChannel joinChannel(long userIdentityId, @NonNull String channelName, boolean readOnly);
 
     void partChannel(long userIdentityId, @NonNull String channelName);
 
-    @NonNull ImmutableSet<JoinedChannel> listJoinedChannels(long userIdentityId);
+    @NonNull Set<JoinedChannel> listJoinedChannels(long userIdentityId);
 
     @NonNull JoinedChannel getJoinedChannel(long userIdentityId, @NonNull String channelName);
 
@@ -57,7 +57,7 @@ public interface UserIdentityService extends JoinedChannelProvider {
 
     @NonNull Optional<UserIdentity> findBotForPlatform(@NonNull Platform platform);
 
-    @NonNull ImmutableMap<Identity, UserIdentity> findBots();
+    @NonNull Map<Identity, UserIdentity> findBots();
 
     @NonNull UserIdentity saveUserInfo(@NonNull UserInfo userInfo);
 }

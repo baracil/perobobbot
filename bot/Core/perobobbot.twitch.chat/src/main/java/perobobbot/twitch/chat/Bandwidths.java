@@ -1,16 +1,16 @@
 package perobobbot.twitch.chat;
 
-import com.google.common.collect.ImmutableList;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Refill;
 import lombok.NonNull;
 
 import java.time.Duration;
+import java.util.List;
 
 public class Bandwidths {
 
-    private static ImmutableList<Bandwidth> create(int capacity, @NonNull Duration duration) {
-        return ImmutableList.of(
+    private static List<Bandwidth> create(int capacity, @NonNull Duration duration) {
+        return List.of(
                 createDirect(capacity,duration),
                 createSplitToMilli(capacity,duration)
         );
@@ -29,10 +29,10 @@ public class Bandwidths {
 
     private static final Duration _30_SECONDS = Duration.ofSeconds(30);
 
-    public static final ImmutableList<Bandwidth> _20_per_30_seconds = create(20, _30_SECONDS);
-    public static final ImmutableList<Bandwidth> _100_per_30_seconds = create(100, _30_SECONDS);
-    public static final ImmutableList<Bandwidth> _50_per_30_seconds = create(50, _30_SECONDS);
-    public static final ImmutableList<Bandwidth> _7500_per_30_seconds = create(7500, _30_SECONDS);
+    public static final List<Bandwidth> _20_per_30_seconds = create(20, _30_SECONDS);
+    public static final List<Bandwidth> _100_per_30_seconds = create(100, _30_SECONDS);
+    public static final List<Bandwidth> _50_per_30_seconds = create(50, _30_SECONDS);
+    public static final List<Bandwidth> _7500_per_30_seconds = create(7500, _30_SECONDS);
 
 
 

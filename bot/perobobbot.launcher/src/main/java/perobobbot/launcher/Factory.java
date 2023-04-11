@@ -1,6 +1,5 @@
 package perobobbot.launcher;
 
-import com.google.common.collect.ImmutableList;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 import perobobbot.api.plugin.PerobobbotService;
@@ -22,6 +21,6 @@ public class Factory {
                             .stream()
                             .findFirst()
                             .orElseThrow(() -> new IllegalArgumentException("Could not find any '" + OAuthManagerFactory.class + "'"))
-                            .get().createManager(applicationService, ImmutableList.copyOf(platformOAuths));
+                            .get().createManager(applicationService, platformOAuths);
     }
 }

@@ -1,6 +1,5 @@
 package perobobbot.launcher.oauth;
 
-import com.google.common.collect.ImmutableMap;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.Id;
@@ -21,7 +20,7 @@ public class MainAuthHolder implements AuthHolder {
 
     private @NonNull UserIdentityService userIdentityService;
     private @NonNull OAuthDataFactory oAuthDataFactory;
-    private @NonNull ImmutableMap<Platform,OAuthData> defaultOAuthData;
+    private @NonNull Map<Platform,OAuthData> defaultOAuthData;
 
     @Override
     public @NonNull OAuthData get(@NonNull Platform platform) {

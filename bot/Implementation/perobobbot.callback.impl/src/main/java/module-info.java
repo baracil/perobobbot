@@ -4,7 +4,6 @@ module perobobbot.callback.impl {
 
     requires io.micronaut.http;
     requires jakarta.inject;
-    requires com.google.common;
 
     requires io.micronaut.core;
     requires transitive perobobbot.callback.api;

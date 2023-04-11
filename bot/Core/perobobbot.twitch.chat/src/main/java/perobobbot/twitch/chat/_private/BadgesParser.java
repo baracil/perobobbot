@@ -1,6 +1,5 @@
 package perobobbot.twitch.chat._private;
 
-import com.google.common.collect.ImmutableMap;
 import fpc.tools.lang.MapTool;
 import lombok.AccessLevel;
 import lombok.NonNull;
@@ -8,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.chat.message.Badge;
 
 import java.util.Arrays;
+import java.util.Map;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class BadgesParser {
@@ -24,12 +24,12 @@ public class BadgesParser {
     @NonNull
     private MapBasedBadges parse() {
         if (badgeListFromTag.isEmpty()) {
-            return new MapBasedBadges(ImmutableMap.of());
+            return new MapBasedBadges(Map.of());
         }
 
-        final ImmutableMap<String, Badge> badgesByName = Arrays.stream(badgeListFromTag.split(","))
-                                                               .map(this::parseSingleBadge)
-                                                               .collect(MapTool.collector(Badge::getName));
+        final Map<String, Badge> badgesByName = Arrays.stream(badgeListFromTag.split(","))
+                                                      .map(this::parseSingleBadge)
+                                                      .collect(MapTool.collector(Badge::getName));
         return new MapBasedBadges(badgesByName);
     }
 

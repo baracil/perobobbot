@@ -1,12 +1,12 @@
 package perobobbot.chat.api.irc;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.collect.ImmutableMap;
 import fpc.tools.irc.IRCParsing;
 import fpc.tools.lang.MapTool;
 import lombok.NonNull;
 import lombok.Value;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 public class MessageData {
 
     @NonNull String rawMessage;
-    @NonNull ImmutableMap<String,Tag> tags;
+    @NonNull Map<String,Tag> tags;
     Prefix prefix;
     @NonNull String command;
     @NonNull Params params;

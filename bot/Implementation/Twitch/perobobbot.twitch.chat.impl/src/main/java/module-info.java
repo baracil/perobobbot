@@ -1,7 +1,6 @@
 module perobobbot.twitch.chat.impl {
     requires static lombok;
     requires java.desktop;
-    requires com.google.common;
 
     requires jakarta.inject;
 

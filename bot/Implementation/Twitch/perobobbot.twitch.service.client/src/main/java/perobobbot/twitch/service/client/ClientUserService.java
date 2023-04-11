@@ -1,6 +1,5 @@
 package perobobbot.twitch.service.client;
 
-import com.google.common.collect.ImmutableSet;
 import jakarta.inject.Singleton;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +18,9 @@ public class ClientUserService implements UsersService {
     private final UserClient userClient;
 
     @Override
-    public @NonNull ImmutableSet<User> getUsers(@NonNull Set<String> ids) {
+    public @NonNull Set<User> getUsers(@NonNull Set<String> ids) {
         final var users = doGetUsers(ids);
-        return ImmutableSet.copyOf(users);
+        return Set.copyOf(users);
     }
 
     @Override

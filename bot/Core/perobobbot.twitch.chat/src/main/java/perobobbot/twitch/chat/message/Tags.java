@@ -1,10 +1,10 @@
 package perobobbot.twitch.chat.message;
 
-import com.google.common.collect.ImmutableMap;
 import fpc.tools.fp.Function1;
 import fpc.tools.irc.Tag;
 import lombok.NonNull;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -56,7 +56,7 @@ public interface Tags {
 
 
     @NonNull
-    static Tags mapBased(@NonNull ImmutableMap<String, Tag> tags) {
+    static Tags mapBased(@NonNull Map<String, Tag> tags) {
         return tagName -> {
             final Tag tag = tags.get(tagName);
             return tag == null ? Optional.empty() : Optional.of(tag.getValue());

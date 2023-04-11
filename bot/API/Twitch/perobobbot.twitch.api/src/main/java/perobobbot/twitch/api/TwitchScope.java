@@ -1,14 +1,16 @@
 package perobobbot.twitch.api;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.Scope;
 
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
@@ -76,15 +78,15 @@ public enum TwitchScope implements Scope {
         return Optional.ofNullable(LazyHolder.VALUES_BY_NAME.get(twitchScopeName.toLowerCase()));
     }
 
-    public static @NonNull ImmutableSet<TwitchScope> valuesAsSet() {
+    public static @NonNull Set<TwitchScope> valuesAsSet() {
         return LazyHolder.VALUES;
     }
 
 
     private static class LazyHolder {
-        private static final ImmutableMap<String, TwitchScope> VALUES_BY_NAME = Arrays.stream(values())
-                                                                                      .collect(ImmutableMap.toImmutableMap(s -> s.getName().toLowerCase(), s -> s));
-        private static final ImmutableSet<TwitchScope> VALUES = Arrays.stream(values()).collect(ImmutableSet.toImmutableSet());
+        private static final Map<String, TwitchScope> VALUES_BY_NAME = Arrays.stream(values())
+                                                                             .collect(Collectors.toMap(s -> s.getName().toLowerCase(), Function.identity()));
+        private static final Set<TwitchScope> VALUES = Arrays.stream(values()).collect(Collectors.toSet());
     }
 
 

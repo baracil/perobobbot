@@ -1,6 +1,5 @@
 package perobobbot.twitch.eventsub.sync;
 
-import com.google.common.collect.ImmutableList;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +21,14 @@ import static java.util.function.Predicate.not;
 public class Matcher {
 
     public static @NonNull Match match(
-            @NonNull ImmutableList<TwitchSubscription> onPlatform,
-            @NonNull ImmutableList<SubscriptionView> persisted
+            @NonNull List<TwitchSubscription> onPlatform,
+            @NonNull List<SubscriptionView> persisted
     ) {
         return new Matcher(onPlatform, persisted).match();
     }
 
-    private final @NonNull ImmutableList<TwitchSubscription> onPlatform;
-    private final @NonNull ImmutableList<SubscriptionView> onBot;
+    private final @NonNull List<TwitchSubscription> onPlatform;
+    private final @NonNull List<SubscriptionView> onBot;
 
 
     private Map<Key, List<TwitchSubscription>> onPlatformPerKey;

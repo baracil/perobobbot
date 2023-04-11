@@ -1,6 +1,5 @@
 package perobobbot.bus.impl;
 
-import com.google.common.collect.ImmutableSet;
 import fpc.tools.lang.Subscription;
 import fpc.tools.lang.SubscriptionHolder;
 import lombok.NonNull;
@@ -10,7 +9,7 @@ import perobobbot.bus.api.Consumer;
 import perobobbot.bus.api.Message;
 import perobobbot.bus.api.Topic;
 
-import java.io.IOException;
+import java.util.Set;
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -26,7 +25,7 @@ public class SimpleConsumer<T> implements Consumer<T> {
 
     public SimpleConsumer(@NonNull SimpleBus bus,
                           @NonNull PerobobbotExecutors executors,
-                          @NonNull ImmutableSet<Topic> topics,
+                          @NonNull Set<Topic> topics,
                           @NonNull Class<T> payloadType) {
         this.executors = executors;
         this.subscription.replace(() ->

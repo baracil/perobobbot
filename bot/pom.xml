@@ -178,18 +178,6 @@
 
 
             <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>31.0.1-jre</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>com.google.code.findbugs</groupId>
-                        <artifactId>jsr305</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
-
-            <dependency>
                 <groupId>net.femtoparsec.tools</groupId>
                 <artifactId>fpc-tools-bom</artifactId>
                 <version>${fpc-tools.version}</version>

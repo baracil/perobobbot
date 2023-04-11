@@ -1,8 +1,8 @@
 package perobobbot.twitch.chat.impl._private;
 
-import com.google.common.collect.Sets;
 import fpc.tools.advanced.chat.AdvancedIO;
 import fpc.tools.lang.LoopAction;
+import fpc.tools.lang.SetTool;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.JoinedChannelProviderForUser;
@@ -35,8 +35,8 @@ public class ChannelJoiner implements LoopAction {
     @Override
     public @NonNull NextState performOneIteration() throws Throwable {
         final var fromDb = channelProvider.getChannels();
-        final var toPart = Sets.difference(joined, fromDb);
-        final var toJoin = Sets.difference(fromDb, joined);
+        final var toPart = SetTool.difference(joined, fromDb);
+        final var toJoin = SetTool.difference(fromDb, joined);
 
         final var action = Stream.concat(
                 toPart.stream().map(c -> new PartAction(userId,joined, c)),

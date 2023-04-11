@@ -1,7 +1,6 @@
 package perobobbot.twitch.api.eventsub.event;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.collect.ImmutableList;
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.NonNull;
 import lombok.Value;
@@ -11,6 +10,7 @@ import perobobbot.twitch.api.serde.ISOInstantSerde;
 import perobobbot.twitch.api.serde.MySerdeable;
 
 import java.time.Instant;
+import java.util.List;
 
 @Value
 @Serdeable
@@ -23,7 +23,7 @@ public class HypeTrainBeginEvent implements HypeTrainEvent, TwitchApiPayload {
     int progress;
     int goal;
     @JsonProperty("top_contributions")
-    @NonNull ImmutableList<Contribution> topContributions;
+    @NonNull List<Contribution> topContributions;
     @JsonProperty("last_contribution")
     @NonNull Contribution lastContribution;
 

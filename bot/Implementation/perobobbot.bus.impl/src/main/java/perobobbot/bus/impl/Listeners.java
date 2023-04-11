@@ -1,8 +1,7 @@
 package perobobbot.bus.impl;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import fpc.tools.lang.ListTool;
+import fpc.tools.lang.MapTool;
 import fpc.tools.lang.Subscription;
 import fpc.tools.lang.ThrowableTool;
 import lombok.Getter;
@@ -15,6 +14,7 @@ import perobobbot.bus.api.RegularTopic;
 import perobobbot.bus.api.Topic;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
@@ -25,7 +25,7 @@ import java.util.function.UnaryOperator;
 @Slf4j
 public class Listeners {
 
-    private ImmutableMap<String, ImmutableList<Listener<?>>> listeners = ImmutableMap.of();
+    private Map<String, List<Listener<?>>> listeners = Map.of();
 
     public void dispatch(@NonNull RegularTopic topic, @NonNull Message<?> message) {
         listeners.values()
@@ -43,7 +43,7 @@ public class Listeners {
         this.listeners = update(
                 topic.topicAsString(),
                 list -> ListTool.addFirst(data, list),
-                () -> Optional.of(ImmutableList.of(data)));
+                () -> Optional.of(List.of(data)));
 
         return () -> remove(topic.topicAsString(), data.getId());
     }
@@ -55,15 +55,15 @@ public class Listeners {
     }
 
 
-    private ImmutableMap<String, ImmutableList<Listener<?>>> update(@NonNull String topicAsString,
-                                                                    @NonNull UnaryOperator<ImmutableList<Listener<?>>> updater,
-                                                                    @NonNull Supplier<Optional<ImmutableList<Listener<?>>>> ifAbsent) {
+    private Map<String, List<Listener<?>>> update(@NonNull String topicAsString,
+                                                                    @NonNull UnaryOperator<List<Listener<?>>> updater,
+                                                                    @NonNull Supplier<Optional<List<Listener<?>>>> ifAbsent) {
 
 
-        final var builder = ImmutableMap.<String, ImmutableList<Listener<?>>>builder();
+        final var builder = MapTool.<String,List<Listener<?>>>hashMap();
         var updated = false;
-        for (Map.Entry<String, ImmutableList<Listener<?>>> entry : listeners.entrySet()) {
-            final ImmutableList<Listener<?>> list;
+        for (Map.Entry<String, List<Listener<?>>> entry : listeners.entrySet()) {
+            final List<Listener<?>> list;
 
             if (entry.getKey().equals(topicAsString)) {
                 list = updater.apply(entry.getValue());
@@ -82,7 +82,7 @@ public class Listeners {
         }
 
 
-        return builder.build();
+        return builder;
 
     }
 

@@ -1,6 +1,5 @@
 package perobobbot.twitch.api.eventsub.event;
 
-import com.google.common.collect.ImmutableList;
 import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.serde.config.naming.SnakeCaseStrategy;
 import lombok.EqualsAndHashCode;
@@ -12,6 +11,7 @@ import perobobbot.twitch.api.eventsub.PollStatus;
 import perobobbot.twitch.api.serde.ISOInstantSerde;
 
 import java.time.Instant;
+import java.util.List;
 
 @Value
 @EqualsAndHashCode(callSuper = true)
@@ -26,7 +26,7 @@ public class PollEndEvent extends PollEvent {
     public PollEndEvent(@NonNull String id,
                         @NonNull UserInfo broadcaster,
                         @NonNull String title,
-                        @NonNull ImmutableList<PollChoices> choices,
+                        @NonNull List<PollChoices> choices,
                         @NonNull Voting bitsVoting,
                         @NonNull Voting channelPointsVoting,
                         @NonNull @Serdeable.Serializable(using = ISOInstantSerde.class) @Serdeable.Deserializable(using = ISOInstantSerde.class) Instant startedAt,

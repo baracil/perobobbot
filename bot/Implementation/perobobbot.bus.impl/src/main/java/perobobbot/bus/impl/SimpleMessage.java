@@ -1,18 +1,18 @@
 package perobobbot.bus.impl;
 
-import com.google.common.collect.ImmutableMap;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.bus.api.Message;
 
+import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Getter
 public class SimpleMessage<T> implements Message<T> {
 
-    private final @NonNull ImmutableMap<String,String> headers;
+    private final @NonNull Map<String,String> headers;
     private final @NonNull T payload;
 
     @Override

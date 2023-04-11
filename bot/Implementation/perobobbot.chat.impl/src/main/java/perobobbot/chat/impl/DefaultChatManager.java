@@ -1,7 +1,7 @@
 package perobobbot.chat.impl;
 
-import com.google.common.collect.Sets;
 import fpc.tools.fp.Nil;
+import fpc.tools.lang.SetTool;
 import fpc.tools.lang.ThrowableTool;
 import fpc.tools.micronaut.EagerInit;
 import io.micronaut.scheduling.annotation.Scheduled;
@@ -72,8 +72,8 @@ public class DefaultChatManager implements ChatManager {
     @Synchronized
     private void manageChanges() {
         final var bots = userIdentityService.findBots();
-        final var newBots = Sets.difference(bots.keySet(), chats.keySet());
-        final var oldBots = Sets.difference(chats.keySet(), bots.keySet());
+        final var newBots = SetTool.difference(bots.keySet(), chats.keySet());
+        final var oldBots = SetTool.difference(chats.keySet(), bots.keySet());
 
         for (Identity oldBot : oldBots) {
             final var chat = chats.remove(oldBot);

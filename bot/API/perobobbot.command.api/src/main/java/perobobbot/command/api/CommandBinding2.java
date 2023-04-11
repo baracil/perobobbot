@@ -1,11 +1,11 @@
 package perobobbot.command.api;
 
-import com.google.common.collect.ImmutableSet;
 import fpc.tools.fp.TryResult;
 import fpc.tools.lang.Parser;
 import lombok.NonNull;
 
 import java.util.Optional;
+import java.util.Set;
 
 public interface CommandBinding2 {
 
@@ -19,7 +19,7 @@ public interface CommandBinding2 {
      */
     @NonNull String getFullParameters();
 
-    @NonNull ImmutableSet<String> getParameterNames();
+    @NonNull Set<String> getParameterNames();
 
     @NonNull Optional<String> findParameterValue(@NonNull String name);
 

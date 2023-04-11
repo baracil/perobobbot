@@ -1,6 +1,5 @@
 package perobobbot.command.impl;
 
-import com.google.common.collect.ImmutableSet;
 import fpc.tools.fp.Tuple2;
 import fpc.tools.lang.MapTool;
 import io.micronaut.core.annotation.Nullable;
@@ -11,6 +10,7 @@ import perobobbot.command.api.Parameter;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,14 +25,14 @@ public class Command {
     int minNumberOfParameters;
     int maxNumberOfParameters;
 
-    @NonNull ImmutableSet<Parameter> parameters;
+    @NonNull Set<Parameter> parameters;
 
     public Command(
             @NonNull String definition,
             @NonNull String regexp,
             @NonNull String name,
             @NonNull String fullCommand,
-            @NonNull ImmutableSet<Parameter> parameters) {
+            @NonNull Set<Parameter> parameters) {
         this.definition = definition;
         this.regexp = Pattern.compile(regexp);
         this.name = name;

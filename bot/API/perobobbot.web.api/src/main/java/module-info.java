@@ -2,7 +2,6 @@ module perobobbot.web.api {
     requires static lombok;
     requires java.desktop;
 
-    requires com.google.common;
     requires jakarta.inject;
 
     requires io.micronaut.http;

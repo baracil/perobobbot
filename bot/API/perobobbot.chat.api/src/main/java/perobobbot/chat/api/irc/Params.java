@@ -1,14 +1,15 @@
 package perobobbot.chat.api.irc;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.collect.ImmutableList;
 import lombok.NonNull;
 import lombok.Value;
+
+import java.util.List;
 
 @Value
 public class Params {
 
-    @NonNull ImmutableList<String> parameters;
+    @NonNull List<String> parameters;
 
     @JsonIgnore
     public boolean isEmpty() {

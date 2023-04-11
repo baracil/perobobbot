@@ -1,6 +1,5 @@
 package perobobbot.twitch.api.serde;
 
-import com.google.common.collect.ImmutableList;
 import io.micronaut.core.type.Argument;
 import io.micronaut.serde.Decoder;
 import io.micronaut.serde.ObjectMapper;
@@ -16,6 +15,7 @@ import perobobbot.twitch.api.eventsub.event.EventSubEvent;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @Singleton
@@ -34,16 +34,16 @@ public class NotificationDeserializer implements NullableDeserializer<EventSubNo
 
         final var eventType = subscription.getEventType();
 
-        final ImmutableList<EventSubEvent> events;
+        final List<EventSubEvent> events;
 
         final var eventNode = object.get("event");
         final var eventsNode = object.get("events");
         if (eventNode != null) {
-            events = ImmutableList.of(extractSingleEvent(eventNode, eventType));
+            events = List.of(extractSingleEvent(eventNode, eventType));
         } else if (eventsNode != null) {
-            events = ((Collection<?>) eventsNode).stream().map(e -> extractSingleEvent(e, eventType)).collect(ImmutableList.toImmutableList());
+            events = ((Collection<?>) eventsNode).stream().map(e -> extractSingleEvent(e, eventType)).toList();
         } else {
-            events = ImmutableList.of();
+            events = List.of();
         }
         
         return new EventSubNotification(subscription, events);

@@ -1,6 +1,5 @@
 package perobobbot.api.data;
 
-import com.google.common.collect.ImmutableSet;
 import fpc.tools.lang.Secret;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +7,7 @@ import perobobbot.api.Identity;
 import perobobbot.api.Scope;
 
 import java.time.Instant;
+import java.util.Set;
 import java.util.function.Function;
 
 @RequiredArgsConstructor
@@ -39,7 +39,7 @@ public class UserTokenBuilder<T> {
     private T accessToken;
     private T refreshToken;
     private Instant expirationInstant;
-    private ImmutableSet<Scope> scopes;
+    private Set<Scope> scopes;
     private String tokenType;
 
 
@@ -73,7 +73,7 @@ public class UserTokenBuilder<T> {
         return this;
     }
 
-    public UserTokenBuilder<T> scopes(ImmutableSet<Scope> scopes) {
+    public UserTokenBuilder<T> scopes(Set<Scope> scopes) {
         this.scopes = scopes;
         return this;
     }

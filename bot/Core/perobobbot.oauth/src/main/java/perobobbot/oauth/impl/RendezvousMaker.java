@@ -1,6 +1,6 @@
 package perobobbot.oauth.impl;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import fpc.tools.lang.ThreadFactoryBuilder;
 import lombok.NonNull;
 import lombok.Synchronized;
 import lombok.experimental.Delegate;
