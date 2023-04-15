@@ -64,6 +64,7 @@ public class DefaultOAuthManager implements OAuthManager {
         return platformOAuth.refreshUserToken(application, refreshToken);
     }
 
+    @Override
     public void failFlow(@NonNull String state, @NonNull Failure failure) {
         rendezVousMaker.extractFlow(state).ifPresent(future -> future.completeExceptionally(new FlowFailure(failure)));
     }
@@ -110,7 +111,6 @@ public class DefaultOAuthManager implements OAuthManager {
         try {
             if (info instanceof CallbackInfo.Success success) {
                 final var application = applicationService.getApplication(platform);
-                System.out.println(">>> " + application);
                 Futures.join(platformOAuth.finalizeAuthorizationCodeGrantFlow(application, success.code()), future);
             } else if (info instanceof CallbackInfo.Error error) {
                 future.completeExceptionally(new FlowFailure(new Failure.Error(error.description())));
