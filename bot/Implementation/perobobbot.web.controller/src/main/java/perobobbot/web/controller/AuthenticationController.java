@@ -10,6 +10,7 @@ import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.views.View;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.TokenWithIdentity;
 import perobobbot.oauth.api.Failure;
@@ -25,16 +26,11 @@ import java.util.Set;
 
 @Controller(AuthenticationApi.PATH)
 @ExecuteOn(TaskExecutors.IO)
+@RequiredArgsConstructor
 public class AuthenticationController implements AuthenticationApi {
 
     private final @NonNull OAuthManager oAuthManager;
     private final @NonNull UserTokenService userTokenService;
-
-    public AuthenticationController(@NonNull OAuthManager oAuthManager, @NonNull UserTokenService userTokenService) {
-        this.oAuthManager = oAuthManager;
-        this.userTokenService = userTokenService;
-    }
-
 
     @Override
     public @NonNull Set<Platform> listManagedPlatforms() {
@@ -44,21 +40,18 @@ public class AuthenticationController implements AuthenticationApi {
 
     @Override
     public @NonNull URI startAuthorizationCodeGrantFlow(@NonNull @PathVariable Platform platform) {
-        final var flow =  oAuthManager.startAuthorizationCodeGrantFlow(platform);
-        flow.whenComplete(this::onUserToken, this::onFailure);
-
+        final var flow =  oAuthManager.startAuthorizationCodeGrantFlow(platform,this::onUserToken,this::onFailure);
         return flow.getUri();
     }
 
     @Override
     public void launchAuthorizationCodeGrantFlow(@NonNull @PathVariable Platform platform) throws IOException {
-        final var flow = oAuthManager.startAuthorizationCodeGrantFlow(platform);
-        flow.whenComplete(this::onUserToken, this::onFailure);
+        final var flow = oAuthManager.startAuthorizationCodeGrantFlow(platform,this::onUserToken,this::onFailure);
 
         try {
             Desktop.getDesktop().browse(flow.getUri());
         } catch (IOException e) {
-            flow.setFailed(new Failure.Error(e.getMessage()));
+            oAuthManager.failFlow(flow.getState(), new Failure.Error(e.getMessage()));
             throw e;
         }
     }
@@ -66,8 +59,7 @@ public class AuthenticationController implements AuthenticationApi {
     @View("authentication")
     @Override
     public @NonNull HttpResponse<?> authenticate(@NonNull @PathVariable  Platform platform) {
-        final var flow = oAuthManager.startAuthorizationCodeGrantFlow(platform);
-        flow.whenComplete(this::onUserToken, this::onFailure);
+        final var flow = oAuthManager.startAuthorizationCodeGrantFlow(platform, this::onUserToken, this::onFailure);
 
         return HttpResponse.ok(CollectionUtils.mapOf("callbackUrl", flow.getUri().toString()));
     }

@@ -1,6 +1,5 @@
 package perobobbot.oauth.impl;
 
-import fpc.tools.lang.Futures;
 import fpc.tools.lang.Secret;
 import fpc.tools.lang.StringTool;
 import lombok.NonNull;
@@ -10,12 +9,17 @@ import perobobbot.api.data.ApplicationToken;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.TokenWithIdentity;
 import perobobbot.api.data.UserToken;
-import perobobbot.oauth.api.*;
+import perobobbot.oauth.api.AuthorizationCodeGranFlow;
+import perobobbot.oauth.api.Failure;
+import perobobbot.oauth.api.OAuthManager;
+import perobobbot.oauth.api.PlatformOAuth;
 import perobobbot.service.api.ApplicationService;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletionStage;
+import java.util.function.Consumer;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -32,13 +36,13 @@ public class DefaultOAuthManager implements OAuthManager {
     }
 
     @Override
-    public @NonNull AuthorizationCodeGranFlow startAuthorizationCodeGrantFlow(@NonNull Platform platform) {
+    public @NonNull AuthorizationCodeGranFlow startAuthorizationCodeGrantFlow(@NonNull Platform platform, @NonNull Consumer<TokenWithIdentity> onResult, @NonNull Consumer<Throwable> onError) {
         final var platformOAuth = platforms.get(platform);
         final var clientId = applicationService.getApplicationClientId(platform);
         final var state = StringTool.random(64);
         final var uri = platformOAuth.getAuthorizationCodeGrantFlowURI(clientId, state, true);
-        final var flow = new DefaultAuthorizationCodeGranFlow(uri, state, this);
-        rendezVousMaker.addFlow(state, flow);
+        final var flow = new DefaultAuthorizationCodeGranFlow(uri, state, onResult, onError);
+        rendezVousMaker.addFlow(flow);
         return flow;
     }
 
@@ -53,7 +57,7 @@ public class DefaultOAuthManager implements OAuthManager {
     public ApplicationToken.Decrypted getAppToken(@NonNull Platform platform) {
         final var application = applicationService.getApplication(platform);
         final var platformOAuth = platforms.get(platform);
-        final var token =  platformOAuth.getAppToken(application);
+        final var token = platformOAuth.getAppToken(application);
         return applicationService.saveApplicationToken(token);
     }
 
@@ -65,11 +69,6 @@ public class DefaultOAuthManager implements OAuthManager {
     }
 
     @Override
-    public void failFlow(@NonNull String state, @NonNull Failure failure) {
-        rendezVousMaker.extractFlow(state).ifPresent(future -> future.completeExceptionally(new FlowFailure(failure)));
-    }
-
-    @Override
     public @NonNull Set<Platform> getManagedPlatforms() {
         return platforms.getPlatforms();
     }
@@ -78,14 +77,19 @@ public class DefaultOAuthManager implements OAuthManager {
     public void revokeToken(@NonNull UserToken<Secret> userToken) {
         final var application = applicationService.getApplication(userToken.platform());
         platforms.get(userToken.platform())
-                .revoke(application.clientId(),userToken.accessToken());
+                 .revoke(application.clientId(), userToken.accessToken());
     }
 
     @Override
     public void revokeToken(@NonNull ApplicationToken<Secret> appToken) {
         final var application = applicationService.getApplication(appToken.platform());
         platforms.get(appToken.platform())
-                 .revoke(application.clientId(),appToken.accessToken());
+                 .revoke(application.clientId(), appToken.accessToken());
+    }
+
+    @Override
+    public void failFlow(@NonNull String state, @NonNull Failure failure) {
+        rendezVousMaker.extractFlow(state).ifPresent(flow -> flow.completeWithError(failure));
     }
 
     @Override
@@ -102,8 +106,8 @@ public class DefaultOAuthManager implements OAuthManager {
         if (info == null) {
             return;
         }
-        final var future = rendezVousMaker.extractFlow(info.state()).orElse(null);
-        if (future == null) {
+        final var flow = rendezVousMaker.extractFlow(info.state()).orElse(null);
+        if (flow == null) {
             LOG.warn("No flow associated with the state '" + info.state() + "'");
             return;
         }
@@ -111,15 +115,25 @@ public class DefaultOAuthManager implements OAuthManager {
         try {
             if (info instanceof CallbackInfo.Success success) {
                 final var application = applicationService.getApplication(platform);
-                Futures.join(platformOAuth.finalizeAuthorizationCodeGrantFlow(application, success.code()), future);
+                join(platformOAuth.finalizeAuthorizationCodeGrantFlow(application, success.code()), flow);
             } else if (info instanceof CallbackInfo.Error error) {
-                future.completeExceptionally(new FlowFailure(new Failure.Error(error.description())));
+                flow.completeWithError(new Failure.Error(error.description()));
             }
         } catch (Throwable t) {
-            t.printStackTrace();
-            future.completeExceptionally(t);
+            LOG.warn("Error while handling callback", t);
+            flow.completeWithError(new Failure.Error(t.getMessage()));
         }
 
+    }
+
+    private void join(@NonNull CompletionStage<TokenWithIdentity> future, @NonNull AuthorizationCodeGranFlow flow) {
+        future.whenComplete((token, error) -> {
+            if (error != null) {
+                flow.completeWithError(new Failure.Error(error.getMessage()));
+            } else {
+                flow.completWithSuccess(token);
+            }
+        });
     }
 
 }

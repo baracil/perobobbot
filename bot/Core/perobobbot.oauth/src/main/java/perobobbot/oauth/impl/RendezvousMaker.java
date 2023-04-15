@@ -4,7 +4,6 @@ import fpc.tools.lang.ThreadFactoryBuilder;
 import lombok.NonNull;
 import lombok.Synchronized;
 import lombok.experimental.Delegate;
-import perobobbot.api.data.TokenWithIdentity;
 import perobobbot.oauth.api.AuthorizationCodeGranFlow;
 import perobobbot.oauth.api.Failure;
 
@@ -12,7 +11,6 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -28,14 +26,14 @@ public class RendezvousMaker {
     }
 
     @Synchronized
-    public void addFlow(@NonNull String state, @NonNull DefaultAuthorizationCodeGranFlow flow) {
-        Optional.ofNullable(rdvs.put(state, new Rendezvous(flow)))
-                .ifPresent(f -> f.setFailed(new Failure.TimedOut()));
+    public void addFlow(@NonNull DefaultAuthorizationCodeGranFlow flow) {
+        Optional.ofNullable(rdvs.put(flow.getState(), new Rendezvous(flow)))
+                .ifPresent(f -> f.completeWithError(new Failure.TimedOut()));
     }
 
     @Synchronized
-    public @NonNull Optional<CompletableFuture<TokenWithIdentity>> extractFlow(@NonNull String state) {
-        return Optional.ofNullable(rdvs.remove(state)).map(Rendezvous::flow).map(DefaultAuthorizationCodeGranFlow::getFuture);
+    public @NonNull Optional<AuthorizationCodeGranFlow> extractFlow(@NonNull String state) {
+        return Optional.ofNullable(rdvs.remove(state)).map(Rendezvous::flow);
     }
 
     @Synchronized
@@ -46,7 +44,7 @@ public class RendezvousMaker {
             final var rdv = iterator.next();
             if ((rdv.timeOfArrivalOfTheRabbit - now) < 0) {
                 iterator.remove();
-                rdv.setFailed(new Failure.TimedOut());
+                rdv.completeWithError(new Failure.TimedOut());
             }
         }
     }

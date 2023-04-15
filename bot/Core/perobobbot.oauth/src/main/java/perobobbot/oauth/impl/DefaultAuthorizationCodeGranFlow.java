@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import perobobbot.api.data.TokenWithIdentity;
 import perobobbot.oauth.api.AuthorizationCodeGranFlow;
 import perobobbot.oauth.api.Failure;
+import perobobbot.oauth.api.FlowFailure;
 
 import java.net.URI;
 import java.util.concurrent.CompletableFuture;
@@ -16,26 +17,36 @@ public class DefaultAuthorizationCodeGranFlow implements AuthorizationCodeGranFl
 
     @Getter
     private final @NonNull URI uri;
+    @Getter
     private final @NonNull String state;
-    private final @NonNull DefaultOAuthManager defaultOAuthManager;
+    private final @NonNull Consumer<TokenWithIdentity> onResult;
+    private final @NonNull Consumer<Throwable> onError;
     @Getter
     private final @NonNull CompletableFuture<TokenWithIdentity> future = new CompletableFuture<>();
 
-    @Override
-    public void whenComplete(Consumer<TokenWithIdentity> onResult, @NonNull Consumer<Throwable> onError) {
-        future.whenComplete((r,t) -> {
-            if (t != null) {
-                onError.accept(t);
-            } else {
-                onResult.accept(r);
-            }
-        });
+    {
+        future.whenComplete(this::handleFutureCompletion);
+    }
+
+
+    private void handleFutureCompletion(TokenWithIdentity token, Throwable throwable) {
+        if (throwable != null) {
+            onError.accept(throwable);
+        } else {
+            onResult.accept(token);
+        }
     }
 
     @Override
-    public void setFailed(@NonNull Failure failure) {
-        defaultOAuthManager.failFlow(state,failure);
+    public void completeWithError(@NonNull Failure failure) {
+        this.future.completeExceptionally(new FlowFailure(failure));
     }
+
+    @Override
+    public void completWithSuccess(@NonNull TokenWithIdentity token) {
+        this.future.complete(token);
+    }
+
 
 
 }

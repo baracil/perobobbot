@@ -9,6 +9,7 @@ import perobobbot.api.data.UserToken;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Manager authorization flow
@@ -23,7 +24,7 @@ public interface OAuthManager {
      * @param platform the platform on which the authorization must be done
      * @return the flow to perform the authorization
      */
-    @NonNull AuthorizationCodeGranFlow startAuthorizationCodeGrantFlow(@NonNull Platform platform);
+    @NonNull AuthorizationCodeGranFlow startAuthorizationCodeGrantFlow(@NonNull Platform platform, @NonNull Consumer<TokenWithIdentity> onResult, @NonNull Consumer<Throwable> onError);
 
 
     @NonNull TokenWithIdentity refreshUserToken(@NonNull Platform platform, @NonNull Secret refreshToken);
