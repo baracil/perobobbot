@@ -1,6 +1,7 @@
 package perobobbot.twitch.api;
 
 import fpc.tools.lang.IdentifiedEnumWithAlternateIdentifications;
+import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +21,7 @@ public enum GoalType implements IdentifiedEnumWithAlternateIdentifications {
     @Getter
     private final Set<String> alternateIdentifications;
 
-    GoalType(String identification, String... alternateIdentifications) {
+    GoalType(String identification, @Nullable String... alternateIdentifications) {
         this.identification = identification;
         this.alternateIdentifications = alternateIdentifications == null?Set.of():Set.of(alternateIdentifications);
     }

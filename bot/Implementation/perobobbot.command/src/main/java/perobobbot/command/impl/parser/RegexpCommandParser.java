@@ -130,7 +130,7 @@ public enum RegexpCommandParser implements CommandParser {
         private String escapeChar(char c) {
             return switch (c) {
                 case '.', '*', '?', '-' -> "\\" + c;
-                default -> "" + c;
+                default -> String.valueOf(c);
             };
         }
 

@@ -20,11 +20,11 @@ public class CommandBindingDefinitionRegexpParserTest {
 
     private static String requiredParameter(String name,boolean noSpace) {
         final var base ="(?<"+name+">"+ RegexpCommandParser.ARGUMENT_PATTERN+")";
-        return noSpace?base:"\s+"+base;
+        return noSpace?base: " +" +base;
     }
     private static String optionalParameter(String name) {
         final var base ="(?<"+name+">"+ RegexpCommandParser.ARGUMENT_PATTERN+")";
-        return "("+("\s+"+base)+")?";
+        return "("+(" +" +base)+")?";
     }
 
     public static Stream<Arguments> validSamples() {
@@ -32,12 +32,12 @@ public class CommandBindingDefinitionRegexpParserTest {
                 Arguments.of("play?", "play?",0, "^play\\?$"),
                 Arguments.of("decho*", "decho",0, "^decho( .*)?$"),
                 Arguments.of("repeat*", "repeat",0, "^repeat( .*)?$"),
-                Arguments.of("play stop", "play|stop",0, "^play\s+stop$"),
+                Arguments.of("play stop", "play|stop",0, "^play +stop$"),
                 Arguments.of("play {title}", "play", 1,"^play("+requiredParameter("title")+")$"),
                 Arguments.of("play {title} [volume]","play",2,"^play("+requiredParameter("title")+optionalParameter("volume")+")$"),
-                Arguments.of("em list","em|list",0,"^em\s+list$"),
-                Arguments.of("em enable {extension}","em|enable",1,"^em\s+enable("+requiredParameter("extension")+")$"),
-                Arguments.of("em.new enable {extension}","em.new|enable",1,"^em\\.new\s+enable("+requiredParameter("extension")+")$"),
+                Arguments.of("em list","em|list",0, "^em +list$"),
+                Arguments.of("em enable {extension}","em|enable",1, "^em +enable(" +requiredParameter("extension")+")$"),
+                Arguments.of("em.new enable {extension}","em.new|enable",1, "^em\\.new +enable(" +requiredParameter("extension")+")$"),
                 Arguments.of("play {x},{y} [arg3]","play",3,"^play("+requiredParameter("x")+","+requiredParameter("y",true)+optionalParameter("arg3")+")$")
         );
     }

@@ -2,6 +2,7 @@ package perobobbot.twitch.eventsub.sync;
 
 import fpc.tools.fp.Nil;
 import io.micronaut.scheduling.annotation.Async;
+import jakarta.annotation.Nullable;
 import jakarta.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,7 +61,7 @@ public class TwitchSubscriptionSynchronizer {
     }
 
 
-    private void handleActionResult(Nil r, Throwable t) {
+    private void handleActionResult(Nil r, @Nullable Throwable t) {
         if (t != null) {
             LOG.warn("Synchronization failed", t);
         }

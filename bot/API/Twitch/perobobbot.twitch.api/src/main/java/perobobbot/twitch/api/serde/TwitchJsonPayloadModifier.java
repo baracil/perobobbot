@@ -37,7 +37,7 @@ public class TwitchJsonPayloadModifier {
     }
 
     private final Map<String, Object> input;
-    private Set<String> candidates;
+    private Set<String> candidates = Set.of();
 
     public Map<String, Object> modify() {
         findCandidates();

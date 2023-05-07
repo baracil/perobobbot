@@ -3,6 +3,7 @@ package perobobbot.twitch.chat.impl._private;
 import fpc.tools.advanced.chat.AdvancedChat;
 import fpc.tools.chat.ChatNotConnected;
 import fpc.tools.lang.SmartLock;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.chat.message.from.MessageFromTwitch;
 
@@ -83,8 +84,8 @@ public class ConnectionResult {
 
     @RequiredArgsConstructor
     private static class Data {
-        final AdvancedChat<MessageFromTwitch> chat;
-        final RuntimeException error;
+        final @Nullable AdvancedChat<MessageFromTwitch> chat;
+        final @Nullable RuntimeException error;
 
         public boolean isRunning() {
             return chat != null && chat.isRunning();

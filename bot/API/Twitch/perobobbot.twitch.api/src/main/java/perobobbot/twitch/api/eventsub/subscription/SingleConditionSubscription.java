@@ -9,7 +9,7 @@ import perobobbot.twitch.api.Conditions;
 import perobobbot.twitch.api.CriteriaType;
 import perobobbot.twitch.api.SubscriptionType;
 
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @ToString
 @RequiredArgsConstructor
 public abstract class SingleConditionSubscription extends SubscriptionBase {

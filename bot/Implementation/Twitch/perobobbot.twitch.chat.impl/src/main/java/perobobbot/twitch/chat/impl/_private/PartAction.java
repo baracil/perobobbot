@@ -2,6 +2,7 @@ package perobobbot.twitch.chat.impl._private;
 
 import fpc.tools.advanced.chat.AdvancedIO;
 import fpc.tools.advanced.chat.ReceiptSlip;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.data.JoinedChannel;
@@ -29,7 +30,7 @@ public class PartAction implements ChatAction {
                 .thenApply(r -> io);
     }
 
-    private void handleResult(ReceiptSlip<Part> part, Throwable throwable) {
+    private void handleResult(@Nullable ReceiptSlip<Part> part, @Nullable Throwable throwable) {
         if (part != null) {
             joinedChannels.remove(channelToPart);
         }

@@ -1,5 +1,6 @@
 package perobobbot.oauth.impl;
 
+import jakarta.annotation.Nullable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.data.TokenWithIdentity;
@@ -28,7 +29,7 @@ public class DefaultAuthorizationCodeGranFlow implements AuthorizationCodeGranFl
     }
 
 
-    private void handleFutureCompletion(TokenWithIdentity token, Throwable throwable) {
+    private void handleFutureCompletion(TokenWithIdentity token, @Nullable Throwable throwable) {
         if (throwable != null) {
             onError.accept(throwable);
         } else {

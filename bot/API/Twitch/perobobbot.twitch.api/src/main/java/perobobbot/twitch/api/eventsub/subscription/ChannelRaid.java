@@ -1,6 +1,7 @@
 package perobobbot.twitch.api.eventsub.subscription;
 
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import perobobbot.twitch.api.Conditions;
@@ -8,6 +9,7 @@ import perobobbot.twitch.api.CriteriaType;
 import perobobbot.twitch.api.SubscriptionType;
 
 @Value
+@EqualsAndHashCode(callSuper = false)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ChannelRaid extends SubscriptionBase {
 

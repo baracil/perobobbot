@@ -1,6 +1,7 @@
 package perobobbot.api.data;
 
 import fpc.tools.lang.Secret;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.Identity;
 import perobobbot.api.Scope;
@@ -13,12 +14,12 @@ import java.util.function.Function;
 public class UserTokenBuilder<T> {
 
     public static UserTokenBuilder<String> forEncrypted(UserToken<String> reference) {
-        final var builder = new UserTokenBuilder<String>(b -> new UserToken.Encrypted(b.identity, b.accessToken, b.refreshToken, b.expirationInstant, b.scopes, b.tokenType));
+        final var builder = new UserTokenBuilder<String>(b -> b.createEncrypted(b.accessToken, b.refreshToken));
         return initialize(builder, reference);
     }
 
     public static UserTokenBuilder<Secret> forDecrypted(UserToken<Secret> reference) {
-        final var builder = new UserTokenBuilder<Secret>(b -> new UserToken.Decrypted(b.identity, b.accessToken, b.refreshToken, b.expirationInstant, b.scopes, b.tokenType));
+        final var builder = new UserTokenBuilder<Secret>(b -> b.createDecrypted(b.accessToken, b.refreshToken));
         return initialize(builder, reference);
     }
 
@@ -33,13 +34,13 @@ public class UserTokenBuilder<T> {
 
     private final Function<UserTokenBuilder<T>, UserToken<T>> factory;
 
-    private Identity identity;
-    private Platform platform;
-    private T accessToken;
-    private T refreshToken;
-    private Instant expirationInstant;
-    private Set<Scope> scopes;
-    private String tokenType;
+    private @Nullable Identity identity;
+    private @Nullable Platform platform;
+    private @Nullable T accessToken;
+    private @Nullable T refreshToken;
+    private @Nullable Instant expirationInstant;
+    private @Nullable Set<Scope> scopes;
+    private @Nullable String tokenType;
 
 
     public UserToken<T> build() {
@@ -80,5 +81,25 @@ public class UserTokenBuilder<T> {
     public UserTokenBuilder<T> tokenType(String tokenType) {
         this.tokenType = tokenType;
         return this;
+    }
+
+    private UserToken.Encrypted createEncrypted(@Nullable String access, @Nullable String refresh) {
+        assert this.identity != null;
+        assert access != null;
+        assert refresh != null;
+        assert this.expirationInstant != null;
+        assert this.scopes != null;
+        assert this.tokenType != null;
+        return new UserToken.Encrypted(this.identity, access, refresh, this.expirationInstant, this.scopes, this.tokenType);
+    }
+
+    private UserToken.Decrypted createDecrypted(@Nullable Secret access, @Nullable Secret refresh) {
+        assert this.identity != null;
+        assert access != null;
+        assert refresh != null;
+        assert this.expirationInstant != null;
+        assert this.scopes != null;
+        assert this.tokenType != null;
+        return new UserToken.Decrypted(this.identity, access, refresh, this.expirationInstant, this.scopes, this.tokenType);
     }
 }

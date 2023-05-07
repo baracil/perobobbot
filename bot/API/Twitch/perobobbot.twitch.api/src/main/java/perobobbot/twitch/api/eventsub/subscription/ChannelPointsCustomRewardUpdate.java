@@ -1,12 +1,14 @@
 package perobobbot.twitch.api.eventsub.subscription;
 
 import jakarta.annotation.Nullable;
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 import perobobbot.twitch.api.Conditions;
 import perobobbot.twitch.api.CriteriaType;
 import perobobbot.twitch.api.SubscriptionType;
 
 @Value
+@EqualsAndHashCode(callSuper = false)
 public class ChannelPointsCustomRewardUpdate extends SubscriptionBase {
 
     public static final SubscriptionFactory FACTORY = condition -> {

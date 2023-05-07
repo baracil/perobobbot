@@ -30,8 +30,8 @@ public class Matcher {
     private final List<SubscriptionView> onBot;
 
 
-    private Map<Key, List<TwitchSubscription>> onPlatformPerKey;
-    private Map<Key, SubscriptionView> onBotPerKey;
+    private Map<Key, List<TwitchSubscription>> onPlatformPerKey = Map.of();
+    private Map<Key, SubscriptionView> onBotPerKey = Map.of();
 
     private final Match.MatchBuilder builder = Match.builder();
 

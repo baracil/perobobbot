@@ -1,5 +1,6 @@
 package perobobbot.twitch.api.eventsub;
 
+import lombok.EqualsAndHashCode;
 import lombok.Value;
 import perobobbot.twitch.api.CriteriaType;
 import perobobbot.twitch.api.SubscriptionType;
@@ -7,6 +8,7 @@ import perobobbot.twitch.api.eventsub.subscription.SingleConditionSubscription;
 import perobobbot.twitch.api.eventsub.subscription.SubscriptionFactory;
 
 @Value
+@EqualsAndHashCode(callSuper = false)
 public class ChannelGoalBegin extends SingleConditionSubscription {
 
     public static final SubscriptionFactory FACTORY = forSingleCondition(CriteriaType.BROADCASTER_USER_ID,ChannelGoalBegin::new);

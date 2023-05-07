@@ -12,11 +12,11 @@ public interface Scope {
     String getName();
 
     static String joinScopeNames(Collection<? extends Scope> scopes, char delimiter) {
-        return scopes.stream().map(Scope::getName).collect(Collectors.joining("" + delimiter));
+        return scopes.stream().map(Scope::getName).collect(Collectors.joining(String.valueOf(delimiter)));
     }
 
     static Set<Scope> splitScopes(String scopeNames, char delimiter) {
-        return Arrays.stream(scopeNames.split("" + delimiter))
+        return Arrays.stream(scopeNames.split(String.valueOf(delimiter)))
                      .map(SimpleScope::new)
                      .collect(Collectors.toSet());
     }

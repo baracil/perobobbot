@@ -61,6 +61,7 @@ public class TwitchRequestValidator {
         }
         assert type != null;
         assert messageId != null;
+        assert timeStamp != null;
         return Optional.of(new TwitchRequestContent<>(type, messageId, Instant.parse(timeStamp), body));
     }
 
