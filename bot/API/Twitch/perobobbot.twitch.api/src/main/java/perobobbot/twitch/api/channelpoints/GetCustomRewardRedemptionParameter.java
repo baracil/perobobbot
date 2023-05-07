@@ -1,6 +1,10 @@
 package perobobbot.twitch.api.channelpoints;
 
-import lombok.*;
+import jakarta.annotation.Nullable;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Value;
 import perobobbot.twitch.api.Pagination;
 import perobobbot.twitch.api.RewardRedemptionStatus;
 
@@ -12,36 +16,36 @@ import java.util.Optional;
 public class GetCustomRewardRedemptionParameter {
 
     @Getter
-    @NonNull String rewardId;
+    String rewardId;
 
-    String id;
-    RewardRedemptionStatus status;
-    SortOrder sort;
-    String after;
-    Integer first;
+    @Nullable String id;
+    @Nullable RewardRedemptionStatus status;
+    @Nullable SortOrder sort;
+    @Nullable String after;
+    @Nullable Integer first;
 
-    public @NonNull  Optional<String> getId() {
+    public  Optional<String> getId() {
         return Optional.ofNullable(id);
     }
 
-    public @NonNull  Optional<RewardRedemptionStatus> getStatus() {
+    public  Optional<RewardRedemptionStatus> getStatus() {
         return Optional.ofNullable(status);
     }
 
-    public @NonNull  Optional<SortOrder> getSort() {
+    public  Optional<SortOrder> getSort() {
         return Optional.ofNullable(sort);
     }
 
-    public @NonNull  Optional<String> getAfter() {
+    public  Optional<String> getAfter() {
         return Optional.ofNullable(after);
     }
 
-    public @NonNull  Optional<Integer> getFirst() {
+    public  Optional<Integer> getFirst() {
         return Optional.ofNullable(first);
     }
 
 
-    public GetCustomRewardRedemptionParameter createNextPage(@NonNull Pagination pagination) {
+    public GetCustomRewardRedemptionParameter createNextPage(Pagination pagination) {
         return toBuilder().after(pagination.getCursor()).build();
     }
 }

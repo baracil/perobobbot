@@ -5,7 +5,6 @@ import fpc.tools.lang.Secret;
 import io.micronaut.core.annotation.Introspected;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Value;
 import perobobbot.api.data.UserToken;
 
@@ -13,19 +12,19 @@ import perobobbot.api.data.UserToken;
 @Value
 public class TwitchRefreshedToken {
 
-    @JsonAlias("access_token") @NonNull String accessToken;
-    @JsonAlias("refresh_token") @NonNull String refreshToken;
+    @JsonAlias("access_token") String accessToken;
+    @JsonAlias("refresh_token") String refreshToken;
     @Getter(AccessLevel.NONE)
     @JsonAlias("scope") String[] scopes;
 
-    public @NonNull UserToken<Secret> update(@NonNull UserToken<Secret> expiredUserToken) {
+    public UserToken<Secret> update(UserToken<Secret> expiredUserToken) {
         return expiredUserToken.toBuilder()
                                .accessToken(Secret.of(this.accessToken))
                                .refreshToken(Secret.of(this.refreshToken))
                                .build();
     }
 
-//    public @NonNull RefreshedToken toRefreshedToken() {
+//    public RefreshedToken toRefreshedToken() {
 //        return new RefreshedToken(Secret.with(accessToken),Secret.with(refreshToken));
 //    }
 

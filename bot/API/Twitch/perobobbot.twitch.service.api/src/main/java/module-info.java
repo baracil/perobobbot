@@ -11,6 +11,7 @@ module perobobbot.twitch.service.api {
 
     requires perobobbot.twitch.api;
     requires perobobbot.api;
+    requires fpc.tools.annotation;
 
     exports perobobbot.twitch.service.api;
 }

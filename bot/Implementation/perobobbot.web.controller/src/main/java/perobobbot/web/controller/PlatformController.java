@@ -5,7 +5,6 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.data.CreateApplicationParameter;
 import perobobbot.api.data.Platform;
@@ -20,20 +19,20 @@ import java.util.List;
 @ExecuteOn(TaskExecutors.IO)
 public class PlatformController implements PlatformApi {
 
-    private final @NonNull ApplicationService applicationService;
+    private final ApplicationService applicationService;
 
     @Override
-    public @NonNull List<Platform> getAllPlatforms() {
+    public List<Platform> getAllPlatforms() {
         return applicationService.getAllPlatforms();
     }
 
     @Override
-    public @NonNull SafeApplication getApplication(@PathVariable @NonNull Platform platform) {
+    public SafeApplication getApplication(@PathVariable Platform platform) {
         return applicationService.getApplication(platform).toSafe();
     }
 
     @Override
-    public void createApplication(@NonNull @PathVariable Platform platform, @NonNull @Body CreateApplicationParameter parameter) {
+    public void createApplication(@PathVariable Platform platform, @Body CreateApplicationParameter parameter) {
         applicationService.saveApplication(platform, parameter);
     }
 

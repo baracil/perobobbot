@@ -3,7 +3,6 @@ package perobobbot.twitch.eventsub.sync;
 import fpc.tools.fp.Nil;
 import io.micronaut.scheduling.annotation.Async;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.SubscriptionView;
@@ -25,11 +24,11 @@ import java.util.stream.Stream;
 @Slf4j
 public class TwitchSubscriptionSynchronizer {
 
-    private final @NonNull EventSubService eventSubService;
-    private final @NonNull SubscriptionService subscriptionService;
+    private final EventSubService eventSubService;
+    private final SubscriptionService subscriptionService;
 
     @Async
-    public void platformSynListener(@NonNull PlatformSync platformSync) {
+    public void platformSynListener(PlatformSync platformSync) {
         if (platformSync.appliesTo(Twitch.PLATFORM)) {
             synchronize();
         }
@@ -67,11 +66,11 @@ public class TwitchSubscriptionSynchronizer {
         }
     }
 
-    private @NonNull Runnable subscriptionCreator(SubscriptionView subscriptionView) {
+    private Runnable subscriptionCreator(SubscriptionView subscriptionView) {
         return this.subscriptionRefresher(subscriptionView);
     }
 
-    private @NonNull Runnable subscriptionRefresher(@NonNull SubscriptionView subscriptionView) {
+    private Runnable subscriptionRefresher(SubscriptionView subscriptionView) {
         final var subscriptionType = subscriptionView.getSubscriptionType();
         final var conditions = subscriptionView.getConditions();
         final var subscriptionDbId = subscriptionView.getId();
@@ -83,25 +82,25 @@ public class TwitchSubscriptionSynchronizer {
     }
 
 
-    private @NonNull Runnable subscriptionUpdater(@NonNull Map.Entry<Long, TwitchSubscription> updateInfo) {
+    private Runnable subscriptionUpdater(Map.Entry<Long, TwitchSubscription> updateInfo) {
         final var subscriptionId = updateInfo.getKey();
         final var parameter = createUpdateParameters(updateInfo.getValue());
         return () -> subscriptionService.updateSubscription(subscriptionId, parameter);
     }
 
-    private @NonNull Runnable subscriptionRevoker(@NonNull String subscriptionId) {
+    private Runnable subscriptionRevoker(String subscriptionId) {
         return () -> eventSubService.deleteSubscription(subscriptionId);
     }
 
 
-    private @NonNull CompletableFuture<Nil> toCompletableFuture(@NonNull Runnable runnable) {
+    private CompletableFuture<Nil> toCompletableFuture(Runnable runnable) {
         return CompletableFuture.supplyAsync(() -> {
             runnable.run();
             return Nil.NULL;
         });
     }
 
-    private @NonNull UpdateSubscriptionParameters createUpdateParameters(@NonNull TwitchSubscription twitchSubscription) {
+    private UpdateSubscriptionParameters createUpdateParameters(TwitchSubscription twitchSubscription) {
         return new UpdateSubscriptionParameters(twitchSubscription.getSubscriptionId(), twitchSubscription.getCallbackUrl());
     }
 

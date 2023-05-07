@@ -2,14 +2,13 @@ package perobobbot.twitch.api.eventsub.event;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.micronaut.serde.annotation.Serdeable;
-import lombok.NonNull;
 import lombok.Value;
 import perobobbot.twitch.api.UserInfo;
 
 @Value
 @Serdeable
 public class TopPredictor  {
-    @NonNull UserInfo user;
+    UserInfo user;
     @JsonProperty("channel_points_won")
     int channelPointsWon;
     @JsonProperty("channel_points_used")

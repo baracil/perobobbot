@@ -19,21 +19,21 @@ public class ApplicationTokenEntity extends BaseEntity {
     @JoinColumn(name = "APPLICATION_ID",
             foreignKey = @ForeignKey(name = "FK_APPLICATION_TOKEN__APPLICATION"))
     @OneToOne(orphanRemoval = true)
-    private @NonNull ApplicationEntity application;
+    private ApplicationEntity application;
 
     /**
      * The encrypted access token
      */
     @Column(name = "ACCESS_TOKEN",nullable = false)
-    private @NonNull String accessToken;
+    private String accessToken;
 
     /**
      * The expiration date of the token
      */
     @Column(name = "EXPIRATION_INSTANT",nullable = false)
-    private @NonNull Instant expirationInstant;
+    private Instant expirationInstant;
 
-    public @NonNull ApplicationToken.Encrypted toView() {
+    public ApplicationToken.Encrypted toView() {
         return new ApplicationToken.Encrypted(application.getPlatform(), accessToken, expirationInstant);
     }
 

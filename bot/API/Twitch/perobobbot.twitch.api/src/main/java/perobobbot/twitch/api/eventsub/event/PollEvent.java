@@ -1,6 +1,5 @@
 package perobobbot.twitch.api.eventsub.event;
 
-import lombok.NonNull;
 import lombok.Value;
 import lombok.experimental.NonFinal;
 import perobobbot.twitch.api.TwitchApiPayload;
@@ -13,12 +12,12 @@ import java.util.List;
 @NonFinal
 public abstract class PollEvent implements BroadcasterProvider, EventSubEvent, TwitchApiPayload {
 
-    @NonNull String id;
-    @NonNull UserInfo broadcaster;
-    @NonNull String title;
-    @NonNull List<PollChoices> choices;
-    @NonNull Voting bitsVoting;
-    @NonNull Voting channelPointsVoting;
-    @NonNull Instant startedAt;
+    String id;
+    UserInfo broadcaster;
+    String title;
+    List<PollChoices> choices;
+    Voting bitsVoting;
+    Voting channelPointsVoting;
+    Instant startedAt;
 
 }

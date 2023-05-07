@@ -11,7 +11,6 @@ open module perobobbot.launcher {
 
     requires org.slf4j;
     requires jakarta.inject;
-    requires java.annotation;
     requires java.sql;
     requires org.bouncycastle.provider;
 
@@ -34,6 +33,7 @@ open module perobobbot.launcher {
     requires perobobbot.twitch.api;
 
     requires fpc.tools.advanced.chat;
+    requires fpc.tools.annotation;
 
 
     exports perobobbot.launcher;

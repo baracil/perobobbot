@@ -1,17 +1,16 @@
 package perobobbot.oauth.api;
 
-import lombok.NonNull;
 import perobobbot.api.Id;
 import perobobbot.api.data.Platform;
 
 public interface AuthHolder {
 
-    @NonNull OAuthData get(@NonNull Platform platform);
+    OAuthData get(Platform platform);
 
-    void executeWith(@NonNull Id id, @NonNull Runnable action);
+    void executeWith(Id id, Runnable action);
 
-    void setId(@NonNull Id id);
+    void setId(Id id);
 
-    void clearId(@NonNull Platform platform);
+    void clearId(Platform platform);
 
 }

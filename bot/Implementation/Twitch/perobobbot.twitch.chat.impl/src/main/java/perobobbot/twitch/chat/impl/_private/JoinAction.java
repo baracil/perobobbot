@@ -2,7 +2,6 @@ package perobobbot.twitch.chat.impl._private;
 
 import fpc.tools.advanced.chat.AdvancedIO;
 import fpc.tools.advanced.chat.ReceiptSlip;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.data.JoinedChannel;
@@ -17,13 +16,13 @@ import java.util.concurrent.CompletionStage;
 @Slf4j
 public class JoinAction implements ChatAction {
 
-    private final @NonNull String userId;
-    private final @NonNull Set<JoinedChannel> joinedChannels;
-    private final @NonNull JoinedChannel channelToJoin;
+    private final String userId;
+    private final Set<JoinedChannel> joinedChannels;
+    private final JoinedChannel channelToJoin;
 
 
     @Override
-    public @NonNull CompletionStage<AdvancedIO> execute(@NonNull AdvancedIO io) {
+    public CompletionStage<AdvancedIO> execute(AdvancedIO io) {
         LOG.info("{} : join channel {}", userId, channelToJoin.channelName());
         return io.sendRequest(MessageToTwitch.join(channelToJoin.channelName()))
                  .whenComplete(this::handleResult)
@@ -36,7 +35,7 @@ public class JoinAction implements ChatAction {
         }
     }
 
-    private CompletionStage<AdvancedIO> sendHelloMessage(@NonNull AdvancedIO io) {
+    private CompletionStage<AdvancedIO> sendHelloMessage(AdvancedIO io) {
         if (true || channelToJoin.readOnly()) {
             return CompletableFuture.completedFuture(io);
         }

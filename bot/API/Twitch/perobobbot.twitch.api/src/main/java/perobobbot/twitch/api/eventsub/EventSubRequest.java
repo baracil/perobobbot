@@ -1,16 +1,14 @@
 package perobobbot.twitch.api.eventsub;
 
-import lombok.NonNull;
-
 public interface EventSubRequest {
 
-    <T> @NonNull T accept(@NonNull Visitor<T> visitor);
+    <T> T accept(Visitor<T> visitor);
 
     interface Visitor<T> {
 
-        @NonNull T visit(@NonNull EventSubNotification notification);
-        @NonNull T visit(@NonNull EventSubRevocation revocation);
-        @NonNull T visit(@NonNull EventSubVerification verification);
+        T visit(EventSubNotification notification);
+        T visit(EventSubRevocation revocation);
+        T visit(EventSubVerification verification);
 
     }
 

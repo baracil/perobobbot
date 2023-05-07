@@ -3,7 +3,6 @@ package perobobbot.twitch.chat.impl._private;
 import fpc.tools.advanced.chat.AdvancedIO;
 import fpc.tools.lang.LoopAction;
 import fpc.tools.lang.SetTool;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.JoinedChannelProviderForUser;
 import perobobbot.api.data.JoinedChannel;
@@ -20,20 +19,20 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class ChannelJoiner implements LoopAction {
 
-    private final @NonNull String userId;
-    private final @NonNull JoinedChannelProviderForUser channelProvider;
-    private final @NonNull AdvancedIO io;
+    private final String userId;
+    private final JoinedChannelProviderForUser channelProvider;
+    private final AdvancedIO io;
 
     private final Set<JoinedChannel> joined = Collections.synchronizedSet(new HashSet<>());
 
     @Override
-    public @NonNull NextState beforeLooping() {
+    public NextState beforeLooping() {
         joined.clear();
         return NextState.CONTINUE;
     }
 
     @Override
-    public @NonNull NextState performOneIteration() throws Throwable {
+    public NextState performOneIteration() throws Throwable {
         final var fromDb = channelProvider.getChannels();
         final var toPart = SetTool.difference(joined, fromDb);
         final var toJoin = SetTool.difference(fromDb, joined);
@@ -49,7 +48,7 @@ public class ChannelJoiner implements LoopAction {
     }
 
     @Override
-    public boolean shouldStopOnError(@NonNull Throwable error) {
+    public boolean shouldStopOnError(Throwable error) {
         return false;
     }
 }

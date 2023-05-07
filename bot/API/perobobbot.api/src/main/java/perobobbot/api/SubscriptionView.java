@@ -1,7 +1,6 @@
 package perobobbot.api;
 
 import io.micronaut.serde.annotation.Serdeable;
-import lombok.NonNull;
 import lombok.Value;
 import perobobbot.api.data.Platform;
 
@@ -11,19 +10,19 @@ import java.util.Map;
 @Serdeable
 public class SubscriptionView {
     long id;
-    @NonNull Platform platform;
-    @NonNull String subscriptionType;
-    @NonNull Map<String,String> conditions;
+    Platform platform;
+    String subscriptionType;
+    Map<String,String> conditions;
     /**
      * Id of the subscription on the platform
      */
-    @NonNull String subscriptionId;
+    String subscriptionId;
 
     boolean enabled;
     /**
      * The url used for this subscription
      */
-    @NonNull String callbackUrl;
+    String callbackUrl;
 
     public boolean hasPlatformId() {
         return !subscriptionId.isEmpty();

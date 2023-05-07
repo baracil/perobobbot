@@ -1,7 +1,6 @@
 package perobobbot.twitch.service.client;
 
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.oauth.api.AuthHolder;
 import perobobbot.twitch.api.Twitch;
@@ -17,12 +16,12 @@ import java.util.List;
 @Singleton
 public class ClientEventSubService implements EventSubService {
 
-    private final @NonNull EventSubClient eventSubClient;
-    private final @NonNull TwitchEventSubConfiguration configuration;
-    private final @NonNull AuthHolder authHolder;
+    private final EventSubClient eventSubClient;
+    private final TwitchEventSubConfiguration configuration;
+    private final AuthHolder authHolder;
 
     @Override
-    public @NonNull TwitchSubscription createSubscription(@NonNull Subscription subscription) {
+    public TwitchSubscription createSubscription(Subscription subscription) {
         final var request = subscription.completeRequest(TwitchSubscriptionRequest.builder())
                                         .transport(createTransport())
                                         .build();
@@ -32,19 +31,19 @@ public class ClientEventSubService implements EventSubService {
     }
 
     @Override
-    public @NonNull List<TwitchSubscription> getSubscriptions() {
+    public List<TwitchSubscription> getSubscriptions() {
         final var oAuthData = authHolder.get(Twitch.PLATFORM);
         final var parameter = GetEventSubParameter.builder().user_id(oAuthData.getUserId()).build();
         return List.of(eventSubClient.getEventSubs(parameter).getData());
     }
 
     @Override
-    public void deleteSubscription(@NonNull String subscriptionId) {
+    public void deleteSubscription(String subscriptionId) {
         eventSubClient.delete(subscriptionId);
     }
 
 
-    private @NonNull TransportRequest createTransport() {
+    private TransportRequest createTransport() {
         return TransportRequest.builder()
                                .method(TransportMethod.WEBHOOK)
                                .callback(configuration.getCallbackUrl())

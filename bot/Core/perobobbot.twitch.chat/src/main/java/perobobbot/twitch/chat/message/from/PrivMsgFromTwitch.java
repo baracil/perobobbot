@@ -3,7 +3,6 @@ package perobobbot.twitch.chat.message.from;
 import fpc.tools.irc.IRCParsing;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.ToString;
 import perobobbot.twitch.chat.ChannelSpecific;
 import perobobbot.twitch.chat.TwitchChannel;
@@ -20,17 +19,14 @@ public class PrivMsgFromTwitch extends KnownMessageFromTwitch implements Channel
     //TODO use user-id in message tag instead of user in message prefix to identify permanently the user on Twitch as
     //the user can change its pseudo
 
-    @NonNull
     private final String user;
 
-    @NonNull
     private final TwitchChannel channel;
 
-    @NonNull
     private final String payload;
 
     @Builder
-    public PrivMsgFromTwitch(@NonNull IRCParsing ircParsing, @NonNull String user, @NonNull TwitchChannel channel, @NonNull String payload) {
+    public PrivMsgFromTwitch(IRCParsing ircParsing, String user, TwitchChannel channel, String payload) {
         super(ircParsing);
         this.user = user;
         this.channel = channel;
@@ -38,21 +34,20 @@ public class PrivMsgFromTwitch extends KnownMessageFromTwitch implements Channel
     }
 
     @Override
-    public @NonNull IRCCommand getCommand() {
+    public IRCCommand getCommand() {
         return IRCCommand.PRIVMSG;
     }
 
-    public @NonNull String getChannelName() {
+    public String getChannelName() {
         return channel.getName();
     }
 
     @Override
-    public <T> T accept(@NonNull MessageFromTwitchVisitor<T> visitor) {
+    public <T> T accept(MessageFromTwitchVisitor<T> visitor) {
         return visitor.visit(this);
     }
 
-    @NonNull
-    public static PrivMsgFromTwitch build(@NonNull AnswerBuilderHelper helper) {
+    public static PrivMsgFromTwitch build(AnswerBuilderHelper helper) {
         return PrivMsgFromTwitch.builder()
                                 .ircParsing(helper.getIrcParsing())
                                 .user(helper.tagValue(TagKey.USER_ID))

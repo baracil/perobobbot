@@ -13,6 +13,7 @@ module perobobbot.web.api {
 
     requires transitive fpc.tools.cipher;
     requires jakarta.annotation;
+    requires fpc.tools.annotation;
 
     exports perobobbot.web.api;
 }

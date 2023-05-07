@@ -2,7 +2,6 @@ package perobobbot.twitch.api.eventsub;
 
 import fpc.tools.lang.IdentifiedEnum;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -13,5 +12,5 @@ public enum PollStatus implements IdentifiedEnum {
     ;
 
     @Getter
-    private final @NonNull String identification;
+    private final String identification;
 }

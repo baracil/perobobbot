@@ -10,6 +10,7 @@ module perobobbot.twitch.chat {
     requires transitive perobobbot.api;
     requires transitive perobobbot.twitch.api;
     requires io.github.bucket4j.core;
+    requires fpc.tools.annotation;
 
     exports perobobbot.twitch.chat;
     exports perobobbot.twitch.chat.message;

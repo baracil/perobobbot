@@ -1,7 +1,6 @@
 package perobobbot.web.controller;
 
 import io.micronaut.core.annotation.Introspected;
-import io.micronaut.core.annotation.NonNull;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Produces;
@@ -23,5 +22,5 @@ public class EntityNotFoundHandler implements ExceptionHandler<EntityNotFound, H
 
 
     @Introspected
-    public record Body(@NonNull String message, @NonNull List<EntityNotFound.Criteria> searchedCriteria) {}
+    public record Body(String message, List<EntityNotFound.Criteria> searchedCriteria) {}
 }

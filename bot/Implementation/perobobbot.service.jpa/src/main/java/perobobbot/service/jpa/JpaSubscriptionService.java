@@ -3,7 +3,6 @@ package perobobbot.service.jpa;
 import io.micronaut.data.model.Page;
 import io.micronaut.data.model.Pageable;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.SerDeHelper;
@@ -27,37 +26,37 @@ import java.util.Optional;
 @Slf4j
 public class JpaSubscriptionService implements SubscriptionService {
 
-    private final @NonNull SubscriptionManager subscriptionManager;
-    private final @NonNull SubscriptionRepository subscriptionRepository;
-    private final @NonNull SerDeHelper serDeHelper;
+    private final SubscriptionManager subscriptionManager;
+    private final SubscriptionRepository subscriptionRepository;
+    private final SerDeHelper serDeHelper;
 
     @Override
-    public @NonNull List<SubscriptionView> listSubscriptionsOnPlatform(@NonNull Platform platform, int page, int size) {
+    public List<SubscriptionView> listSubscriptionsOnPlatform(Platform platform, int page, int size) {
         final var p = subscriptionRepository.findByPlatform(platform, Pageable.from(page, size));
         return toView(p);
     }
 
     @Override
-    public @NonNull List<SubscriptionView> listSubscriptions(int page, int size) {
+    public List<SubscriptionView> listSubscriptions(int page, int size) {
         final var p = subscriptionRepository.findAll(Pageable.from(page, size));
         return toView(p);
     }
 
-    private @NonNull List<SubscriptionView> toView(@NonNull Page<SubscriptionEntity> page) {
+    private List<SubscriptionView> toView(Page<SubscriptionEntity> page) {
         return page.getContent().stream()
                    .map(s -> s.toView(serDeHelper))
                    .toList();
     }
 
     @Override
-    public @NonNull Optional<SubscriptionView> deleteSubscription(long id) {
+    public Optional<SubscriptionView> deleteSubscription(long id) {
         final var sub = subscriptionRepository.findById(id);
         sub.ifPresent(subscriptionRepository::delete);
         return sub.map(s -> s.toView(serDeHelper));
     }
 
     @Override
-    public @NonNull SubscriptionView updateSubscription(long id, @NonNull UpdateSubscriptionParameters parameters) {
+    public SubscriptionView updateSubscription(long id, UpdateSubscriptionParameters parameters) {
         LOG.info("Update subscription id='{}' with '{}'", id, parameters);
         final var subscription = subscriptionRepository.getById(id);
         subscription.update(parameters.getSubscriptionId(), parameters.getCallbackUrl());
@@ -65,14 +64,14 @@ public class JpaSubscriptionService implements SubscriptionService {
     }
 
     @Override
-    public @NonNull SubscriptionView patchSubscription(long id, @NonNull PatchSubscriptionParameters parameters) {
+    public SubscriptionView patchSubscription(long id, PatchSubscriptionParameters parameters) {
         final var subscription = subscriptionRepository.getById(id);
         parameters.getEnabled().ifPresent(subscription::setEnabled);
         return subscriptionRepository.save(subscription).toView(serDeHelper);
     }
 
     @Override
-    public @NonNull SubscriptionView createSubscription(@NonNull CreateSubscriptionParameters parameters) {
+    public SubscriptionView createSubscription(CreateSubscriptionParameters parameters) {
         final var subscription = new SubscriptionEntity(
                 parameters.getPlatform(),
                 parameters.getSubscriptionType(),
@@ -84,7 +83,7 @@ public class JpaSubscriptionService implements SubscriptionService {
     }
 
     @Override
-    public @NonNull SubscriptionView getSubscription(long id) {
+    public SubscriptionView getSubscription(long id) {
         return subscriptionRepository.getById(id).toView(serDeHelper);
     }
 }

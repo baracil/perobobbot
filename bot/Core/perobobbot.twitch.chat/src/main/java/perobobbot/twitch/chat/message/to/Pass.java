@@ -1,7 +1,6 @@
 package perobobbot.twitch.chat.message.to;
 
 import fpc.tools.lang.Secret;
-import lombok.NonNull;
 import perobobbot.twitch.chat.message.IRCCommand;
 
 import java.time.Instant;
@@ -11,16 +10,15 @@ import java.time.Instant;
  **/
 public class Pass extends CommandToTwitch {
 
-    @NonNull
     private final Secret oauthValue;
 
-    public Pass(@NonNull Secret oauthValue) {
+    public Pass(Secret oauthValue) {
         super(IRCCommand.PASS);
         this.oauthValue = oauthValue;
     }
 
     @Override
-    public @NonNull String payload(@NonNull Instant dispatchInstant) {
+    public String payload(Instant dispatchInstant) {
         return "PASS oauth:" + oauthValue.value();
     }
 

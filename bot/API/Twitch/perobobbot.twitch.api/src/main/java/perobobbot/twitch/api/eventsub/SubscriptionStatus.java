@@ -2,7 +2,6 @@ package perobobbot.twitch.api.eventsub;
 
 import fpc.tools.lang.IdentifiedEnum;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -16,7 +15,7 @@ public enum SubscriptionStatus implements IdentifiedEnum {
     ;
 
     @Getter
-    private final @NonNull String identification;
+    private final String identification;
 
     @Getter
     private final boolean failure;

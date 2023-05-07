@@ -2,7 +2,6 @@ package perobobbot.api.data;
 
 import io.micronaut.retry.annotation.Fallback;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import perobobbot.api.UserInfo;
 
 @Singleton
@@ -12,7 +11,7 @@ public class DefaultUserTypeProvider implements UserTypeProvider {
     public static final Platform TWITCH = new Platform("TWITCH");
 
     @Override
-    public @NonNull UserType getUserType(@NonNull UserInfo userInfo) {
+    public UserType getUserType(UserInfo userInfo) {
         if (userInfo.platform().equals(TWITCH)) {
             return getTwitchUserType(userInfo);
         }

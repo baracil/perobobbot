@@ -2,7 +2,6 @@ package perobobbot.twitch.chat._private;
 
 import fpc.tools.lang.MapTool;
 import lombok.AccessLevel;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.chat.message.Badge;
 
@@ -12,16 +11,13 @@ import java.util.Map;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class BadgesParser {
 
-    @NonNull
-    public static MapBasedBadges parse(@NonNull String badgeListFromTag) {
+    public static MapBasedBadges parse(String badgeListFromTag) {
         return new BadgesParser(badgeListFromTag.trim()).parse();
     }
 
 
-    @NonNull
     private final String badgeListFromTag;
 
-    @NonNull
     private MapBasedBadges parse() {
         if (badgeListFromTag.isEmpty()) {
             return new MapBasedBadges(Map.of());
@@ -33,7 +29,6 @@ public class BadgesParser {
         return new MapBasedBadges(badgesByName);
     }
 
-    @NonNull
     private Badge parseSingleBadge(String singleBadgeFromTag) {
         final String[] tokens = singleBadgeFromTag.split("/");
         return Badge.with(tokens[0], tokens[1]);

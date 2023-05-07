@@ -4,7 +4,6 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.data.Platform;
 import perobobbot.service.api.ApplicationService;
@@ -15,10 +14,10 @@ import perobobbot.web.api.ClientApi;
 @ExecuteOn(TaskExecutors.IO)
 public class ClientController implements ClientApi {
 
-    private final @NonNull ApplicationService applicationService;
+    private final ApplicationService applicationService;
 
     @Override
-    public @NonNull String getApplicationClientId(@PathVariable @NonNull Platform platform) {
+    public String getApplicationClientId(@PathVariable Platform platform) {
         return applicationService.getApplicationClientId(platform);
     }
 }

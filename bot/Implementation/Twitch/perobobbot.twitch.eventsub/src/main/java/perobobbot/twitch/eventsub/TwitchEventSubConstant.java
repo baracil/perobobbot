@@ -1,7 +1,6 @@
 package perobobbot.twitch.eventsub;
 
 import io.micronaut.http.HttpRequest;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -17,9 +16,9 @@ public enum TwitchEventSubConstant {
     TWITCH_EVENTSUB_SUBSCRIPTION_VERSION("Twitch-Eventsub-Subscription-Version"),
     ;
 
-    private final @NonNull String headerKey;
+    private final String headerKey;
 
-    public @NonNull Optional<String> getHeader(@NonNull HttpRequest<?> request) {
+    public Optional<String> getHeader(HttpRequest<?> request) {
         return request.getHeaders().getFirst(this.headerKey,String.class);
     }
 

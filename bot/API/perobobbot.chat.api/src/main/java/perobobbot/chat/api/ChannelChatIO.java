@@ -1,17 +1,15 @@
 package perobobbot.chat.api;
 
-import lombok.NonNull;
 import perobobbot.api.data.Platform;
 
 import java.util.concurrent.CompletionStage;
 
 public interface ChannelChatIO {
 
-    @NonNull Platform getPlatform();
+    Platform getPlatform();
 
-    @NonNull String getChannelName();
+    String getChannelName();
 
-    @NonNull
-    CompletionStage<DispatchSlip> sendMessage(@NonNull String message);
+    CompletionStage<DispatchSlip> sendMessage(String message);
 
 }

@@ -2,25 +2,24 @@ package perobobbot.twitch.chat;
 
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Refill;
-import lombok.NonNull;
 
 import java.time.Duration;
 import java.util.List;
 
 public class Bandwidths {
 
-    private static List<Bandwidth> create(int capacity, @NonNull Duration duration) {
+    private static List<Bandwidth> create(int capacity, Duration duration) {
         return List.of(
                 createDirect(capacity,duration),
                 createSplitToMilli(capacity,duration)
         );
     }
 
-    private static Bandwidth createDirect(int capacity,@NonNull Duration duration) {
+    private static Bandwidth createDirect(int capacity,Duration duration) {
         return Bandwidth.classic(capacity,Refill.intervally(capacity,duration));
     }
 
-    private static Bandwidth createSplitToMilli(int capacity,@NonNull Duration duration) {
+    private static Bandwidth createSplitToMilli(int capacity,Duration duration) {
         final double perMillisecond = capacity/(double)duration.toMillis();
         return createDirect((int)Math.ceil(perMillisecond), Duration.ofMillis(1));
     }

@@ -1,6 +1,5 @@
 package perobobbot.service.jpa;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.BotId;
 import perobobbot.api.Id;
@@ -15,20 +14,20 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserIdentityFinder implements Id.Visitor<Optional<UserIdentityEntity>> {
 
-    private final @NonNull UserIdentityRepository userIdentityRepository;
+    private final UserIdentityRepository userIdentityRepository;
 
     @Override
-    public @NonNull Optional<UserIdentityEntity> visit(@NonNull Identity identity) {
+    public Optional<UserIdentityEntity> visit(Identity identity) {
         return userIdentityRepository.findByPlatformAndUserId(identity.platform(),identity.userId());
     }
 
     @Override
-    public @NonNull Optional<UserIdentityEntity> visit(@NonNull BotId botId) {
+    public Optional<UserIdentityEntity> visit(BotId botId) {
         return userIdentityRepository.findByPlatformAndUserType(botId.platform(), UserType.BOT);
     }
 
     @Override
-    public @NonNull Optional<UserIdentityEntity> visit(@NonNull IdentityByLogin identityByLogin) {
+    public Optional<UserIdentityEntity> visit(IdentityByLogin identityByLogin) {
         return userIdentityRepository.findByPlatformAndLoginIgnoreCase(identityByLogin.platform(),identityByLogin.login());
     }
 }

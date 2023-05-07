@@ -6,11 +6,11 @@ import lombok.Value;
 @Value
 public class Dependency {
 
-    @NonNull String groupId;
-    @NonNull String artifactId;
-    @NonNull String version;
+    String groupId;
+    String artifactId;
+    String version;
 
-    public @NonNull Dependency withVersion(@NonNull String newVersion) {
+    public Dependency withVersion(String newVersion) {
         if (newVersion.equals(version)) {
             return this;
         }

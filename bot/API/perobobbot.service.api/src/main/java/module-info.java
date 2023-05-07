@@ -9,6 +9,7 @@ module perobobbot.service.api {
 
     requires io.micronaut.serde.serde_api;
     requires io.micronaut.core;
+    requires fpc.tools.annotation;
 
     exports perobobbot.service.api;
 }

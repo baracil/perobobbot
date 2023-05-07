@@ -4,7 +4,6 @@ import fpc.tools.lang.MapTool;
 import fpc.tools.micronaut.EagerInit;
 import io.micronaut.context.annotation.Factory;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.IdentityByLogin;
@@ -23,21 +22,21 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthHolderFactory {
 
-    private final @NonNull UserIdentityService userIdentityService;
-    private final @NonNull OAuthDataFactory oAuthDataFactory;
-    private final @NonNull PerobobbotConfiguration configuration;
+    private final UserIdentityService userIdentityService;
+    private final OAuthDataFactory oAuthDataFactory;
+    private final PerobobbotConfiguration configuration;
 
     @Singleton
     @EagerInit
-    public @NonNull AuthHolder authHolder() {
+    public AuthHolder authHolder() {
         final var defaultOAuth = getDefaultOAuthData();
         return new MainAuthHolder(userIdentityService, oAuthDataFactory, defaultOAuth);
     }
 
-    private @NonNull Map<Platform, OAuthData> getDefaultOAuthData() {
+    private Map<Platform, OAuthData> getDefaultOAuthData() {
         final var result = MapTool.<Platform,OAuthData>hashMap();
         final var defaultIds = configuration.getOauth().getDefaultIds();
-        for (@NonNull Platform platform : defaultIds.keySet()) {
+        for (Platform platform : defaultIds.keySet()) {
             final var login = defaultIds.get(platform);
             final var id = new IdentityByLogin(platform, login);
 

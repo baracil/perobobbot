@@ -5,7 +5,6 @@ import fpc.tools.lang.Instants;
 import fpc.tools.state.chat.ChatInfo;
 import fpc.tools.state.chat.ChatStateListener;
 import fpc.tools.state.chat.ChatStateManager;
-import lombok.NonNull;
 import perobobbot.twitch.chat.TwitchBandwidth;
 import perobobbot.twitch.chat.TwitchConstants;
 import perobobbot.twitch.chat.message.from.MessageFromTwitch;
@@ -15,9 +14,9 @@ import java.time.Duration;
 public class TwitchChatStateManager extends ChatStateManager<MessageFromTwitch> {
 
     public TwitchChatStateManager(
-            @NonNull String nick,
-            @NonNull ChatStateListener<MessageFromTwitch> chatListener,
-            @NonNull Instants instants) {
+            String nick,
+            ChatStateListener<MessageFromTwitch> chatListener,
+            Instants instants) {
         super(new ChatInfo<>(
                 TwitchConstants.TWITCH_CHAT_URI,
                 new TwitchMatcher(nick),

@@ -7,7 +7,6 @@ import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.QueryValue;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.SubscriptionManager;
 import perobobbot.api.SubscriptionView;
@@ -25,11 +24,11 @@ import java.util.List;
 @ExecuteOn(TaskExecutors.IO)
 public class EventSubController implements EventSubApi {
 
-    private final @NonNull SubscriptionService subscriptionService;
-    private final @NonNull SubscriptionManager subscriptionManager;
+    private final SubscriptionService subscriptionService;
+    private final SubscriptionManager subscriptionManager;
 
     @Override
-    public @NonNull List<SubscriptionView> listEventSubs(@QueryValue(value = "platform") @Nullable Platform platform,
+    public List<SubscriptionView> listEventSubs(@QueryValue(value = "platform") @Nullable Platform platform,
                                                          @QueryValue(value = "page", defaultValue = "0") int page,
                                                          @QueryValue(value = "size", defaultValue = "-1") int size) {
         if (platform == null) {
@@ -39,12 +38,12 @@ public class EventSubController implements EventSubApi {
     }
 
     @Override
-    public @NonNull SubscriptionView getEventSubs(@PathVariable long id) {
+    public SubscriptionView getEventSubs(@PathVariable long id) {
         return subscriptionService.getSubscription(id);
     }
 
     @Override
-    public void synchronizeSubscriptions(@Body @NonNull SynchronizationParameters parameters) {
+    public void synchronizeSubscriptions(@Body SynchronizationParameters parameters) {
         parameters.getPlatform().ifPresentOrElse(subscriptionManager::requestSynchronization, subscriptionManager::requestSynchronizationForAllPlatforms);
     }
 
@@ -54,12 +53,12 @@ public class EventSubController implements EventSubApi {
     }
 
     @Override
-    public @NonNull SubscriptionView updateEventSubs(@PathVariable long id, @Body @NonNull PatchSubscriptionParameters parameters) {
+    public SubscriptionView updateEventSubs(@PathVariable long id, @Body PatchSubscriptionParameters parameters) {
         return subscriptionService.patchSubscription(id, parameters);
     }
 
     @Override
-    public @NonNull SubscriptionView createSubscription(@Body @NonNull CreateSubscriptionParameters parameters) {
+    public SubscriptionView createSubscription(@Body CreateSubscriptionParameters parameters) {
         return subscriptionService.createSubscription(parameters);
     }
 }

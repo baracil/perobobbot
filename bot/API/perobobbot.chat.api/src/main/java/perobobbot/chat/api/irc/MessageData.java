@@ -3,7 +3,7 @@ package perobobbot.chat.api.irc;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import fpc.tools.irc.IRCParsing;
 import fpc.tools.lang.MapTool;
-import lombok.NonNull;
+import jakarta.annotation.Nullable;
 import lombok.Value;
 
 import java.util.Map;
@@ -13,13 +13,12 @@ import java.util.stream.Stream;
 @Value
 public class MessageData {
 
-    @NonNull String rawMessage;
-    @NonNull Map<String,Tag> tags;
-    Prefix prefix;
-    @NonNull String command;
-    @NonNull Params params;
+    String rawMessage;
+    Map<String,Tag> tags;
+    @Nullable Prefix prefix;
+    String command;
+    Params params;
 
-    @NonNull
     public Optional<Prefix> getPrefix() {
         return Optional.ofNullable(prefix);
     }
@@ -28,7 +27,6 @@ public class MessageData {
      * @return the last parameter of the IRC message.
      * @throws IndexOutOfBoundsException if there is no such parameter
      */
-    @NonNull
     @JsonIgnore
     public String getLastParameter() {
         return params.getLastParameter();
@@ -39,20 +37,18 @@ public class MessageData {
      * @param sep
      * @return
      */
-    @NonNull
     @JsonIgnore
-    public Stream<String> splitLastParameter(@NonNull String sep) {
+    public Stream<String> splitLastParameter(String sep) {
         return Stream.of(getLastParameter().split(sep));
     }
 
-    @NonNull
     @JsonIgnore
-    public Optional<String> tagValue(@NonNull String tagName) {
+    public Optional<String> tagValue(String tagName) {
         return Optional.ofNullable(tags.get(tagName)).map(Tag::getValue);
     }
 
 
-    public static @NonNull MessageData fromFpc(@NonNull IRCParsing ircParsing) {
+    public static MessageData fromFpc(IRCParsing ircParsing) {
         return new MessageData(
                 ircParsing.getRawMessage(),
                 MapTool.mapValue(ircParsing.getTags(), Tag::fromFpc),

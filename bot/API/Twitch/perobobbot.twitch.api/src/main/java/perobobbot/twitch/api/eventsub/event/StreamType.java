@@ -2,7 +2,6 @@ package perobobbot.twitch.api.eventsub.event;
 
 import fpc.tools.lang.IdentifiedEnum;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -13,5 +12,5 @@ public enum StreamType implements IdentifiedEnum {
     PREMIERE("premiere"),
     RERUN("rerun")
     ;
-    @Getter private final @NonNull String identification;
+    @Getter private final String identification;
 }

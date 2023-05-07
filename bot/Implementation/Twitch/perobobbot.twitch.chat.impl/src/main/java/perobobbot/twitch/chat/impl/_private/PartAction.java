@@ -2,7 +2,6 @@ package perobobbot.twitch.chat.impl._private;
 
 import fpc.tools.advanced.chat.AdvancedIO;
 import fpc.tools.advanced.chat.ReceiptSlip;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.data.JoinedChannel;
@@ -16,12 +15,12 @@ import java.util.concurrent.CompletionStage;
 @Slf4j
 public class PartAction implements ChatAction {
 
-    private final @NonNull String userId;
-    private final @NonNull Set<JoinedChannel> joinedChannels;
-    private final @NonNull JoinedChannel channelToPart;
+    private final String userId;
+    private final Set<JoinedChannel> joinedChannels;
+    private final JoinedChannel channelToPart;
 
     @Override
-    public @NonNull CompletionStage<AdvancedIO> execute(@NonNull AdvancedIO io) {
+    public CompletionStage<AdvancedIO> execute(AdvancedIO io) {
         LOG.info("{} : part channel {}",userId,channelToPart.channelName());
 
         return io.sendCommand(MessageToTwitch.privateMsg(channelToPart.channelName(), "C'est l'heure de vous quitter"))

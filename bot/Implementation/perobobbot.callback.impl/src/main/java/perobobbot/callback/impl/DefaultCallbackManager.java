@@ -3,7 +3,6 @@ package perobobbot.callback.impl;
 import fpc.tools.lang.MapTool;
 import fpc.tools.lang.Subscription;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.Synchronized;
 import perobobbot.callback.api.Callback;
 import perobobbot.callback.api.CallbackIdIsAlreadyUsed;
@@ -20,13 +19,13 @@ public class DefaultCallbackManager implements CallbackManager {
     private Map<String, Callback> callbacks = Map.of();
 
     @Override
-    public @NonNull Optional<Callback> findCallback(@NonNull String id) {
+    public Optional<Callback> findCallback(String id) {
         return Optional.ofNullable(callbacks.get(id));
     }
 
     @Override
     @Synchronized
-    public @NonNull Subscription addCallback(@NonNull String id, @NonNull Callback callback) {
+    public Subscription addCallback(String id, Callback callback) {
         if (callbacks.containsKey(id)) {
             throw new CallbackIdIsAlreadyUsed(id);
         }

@@ -3,7 +3,6 @@ package perobobbot.twitch.chat.message.from;
 import fpc.tools.irc.IRCParsing;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.ToString;
 import perobobbot.twitch.chat.message.IRCCommand;
 
@@ -12,25 +11,25 @@ import perobobbot.twitch.chat.message.IRCCommand;
 public class GlobalUserState extends KnownMessageFromTwitch {
 
     @Builder
-    public GlobalUserState(@NonNull IRCParsing ircParsing) {
+    public GlobalUserState(IRCParsing ircParsing) {
         super(ircParsing);
     }
 
-    public @NonNull String getRawMessage() {
+    public String getRawMessage() {
         return getIrcParsing().getRawMessage();
     }
 
     @Override
-    public @NonNull IRCCommand getCommand() {
+    public IRCCommand getCommand() {
         return IRCCommand.GLOBALUSERSTATE;
     }
 
     @Override
-    public <T> T accept(@NonNull MessageFromTwitchVisitor<T> visitor) {
+    public <T> T accept(MessageFromTwitchVisitor<T> visitor) {
         return visitor.visit(this);
     }
 
-    public static GlobalUserState build(@NonNull AnswerBuilderHelper helper) {
+    public static GlobalUserState build(AnswerBuilderHelper helper) {
         return GlobalUserState.builder()
                               .ircParsing(helper.getIrcParsing())
                               .build();

@@ -1,7 +1,6 @@
 package perobobbot.twitch.api;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.Scope;
 
@@ -68,17 +67,17 @@ public enum TwitchScope implements Scope {
     WHISPERS_EDIT("whispers:edit"),
 ;
     @Getter
-    private final @NonNull String name;
+    private final String name;
 
-    public static @NonNull Stream<TwitchScope> streamValues() {
+    public static Stream<TwitchScope> streamValues() {
         return LazyHolder.VALUES.stream();
     }
 
-    public static @NonNull Optional<TwitchScope> findScopeByName(@NonNull String twitchScopeName) {
+    public static Optional<TwitchScope> findScopeByName(String twitchScopeName) {
         return Optional.ofNullable(LazyHolder.VALUES_BY_NAME.get(twitchScopeName.toLowerCase()));
     }
 
-    public static @NonNull Set<TwitchScope> valuesAsSet() {
+    public static Set<TwitchScope> valuesAsSet() {
         return LazyHolder.VALUES;
     }
 

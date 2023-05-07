@@ -3,7 +3,6 @@ package perobobbot.twitch.eventsub.callback;
 import fpc.tools.lang.Instants;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.eventsub.SeenEventSubId;
 import perobobbot.twitch.eventsub.TwitchEventSubConstant;
@@ -21,7 +20,7 @@ public class DuplicateFilterHandler implements EventSubHandler {
 
     public static final Duration DELAY_FOR_INVALIDITY = Duration.ofMinutes(10);
 
-    private final @NonNull Instants clock;
+    private final Instants clock;
 
     private final SeenEventSubId seenIds;
 
@@ -31,7 +30,7 @@ public class DuplicateFilterHandler implements EventSubHandler {
     }
 
     @Override
-    public @NonNull HttpResponse<?> handleCall(@NonNull HttpRequest<?> request, @NonNull String body, @NonNull CallContext context) {
+    public HttpResponse<?> handleCall(HttpRequest<?> request, String body, CallContext context) {
         final var timeStamp = TwitchEventSubConstant.TWITCH_EVENTSUB_MESSAGE_TIMESTAMP.getHeader(request)
                                                                                       .map(this::parseUTC)
                                                                                       .orElse(null);
@@ -55,7 +54,7 @@ public class DuplicateFilterHandler implements EventSubHandler {
     }
 
 
-    private @NonNull Instant parseUTC(@NonNull String utcTimeStamp) {
+    private Instant parseUTC(String utcTimeStamp) {
         return Instant.parse(utcTimeStamp);
     }
 }

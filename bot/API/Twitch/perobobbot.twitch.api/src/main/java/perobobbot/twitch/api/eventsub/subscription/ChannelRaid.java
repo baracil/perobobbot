@@ -1,7 +1,6 @@
 package perobobbot.twitch.api.eventsub.subscription;
 
 import lombok.AccessLevel;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import perobobbot.twitch.api.Conditions;
@@ -29,11 +28,11 @@ public class ChannelRaid extends SubscriptionBase {
 
 
 
-    public static @NonNull ChannelRaid from(@NonNull String broadcasterId) {
+    public static ChannelRaid from(String broadcasterId) {
         return new ChannelRaid(broadcasterId,null);
     }
 
-    public static @NonNull ChannelRaid to(@NonNull String broadcasterId) {
+    public static ChannelRaid to(String broadcasterId) {
         return new ChannelRaid(null,broadcasterId);
     }
 
@@ -41,12 +40,12 @@ public class ChannelRaid extends SubscriptionBase {
     String toBroadcasterId;
 
     @Override
-    public @NonNull SubscriptionType getType() {
+    public SubscriptionType getType() {
         return SubscriptionType.CHANNEL_RAID;
     }
 
     @Override
-    public @NonNull Conditions getCondition() {
+    public Conditions getCondition() {
         return Conditions.builder()
                          .put(CriteriaType.FROM_BROADCASTER_USER_ID,fromBroadcasterId)
                          .put(CriteriaType.TO_BROADCASTER_USER_ID,toBroadcasterId)

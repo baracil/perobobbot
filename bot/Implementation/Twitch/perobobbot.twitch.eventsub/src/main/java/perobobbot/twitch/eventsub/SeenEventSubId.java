@@ -2,7 +2,6 @@ package perobobbot.twitch.eventsub;
 
 import fpc.tools.lang.Instants;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
@@ -13,9 +12,9 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class SeenEventSubId {
 
-    private final @NonNull Instants instants;
+    private final Instants instants;
 
-    private final @NonNull Map<String,Instant> seenIds = new ConcurrentHashMap<>();
+    private final Map<String,Instant> seenIds = new ConcurrentHashMap<>();
 
     public boolean notAlreadySeen(String id) {
         return !seenIds.containsKey(id);
@@ -25,7 +24,7 @@ public class SeenEventSubId {
         seenIds.put(id,instants.now());
     }
 
-    public void cleanSeenIds(@NonNull Instant oldThreshold) {
+    public void cleanSeenIds(Instant oldThreshold) {
         seenIds.values().removeIf(oldThreshold::isAfter);
     }
 

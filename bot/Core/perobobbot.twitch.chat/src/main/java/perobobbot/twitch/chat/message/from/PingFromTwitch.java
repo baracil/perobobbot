@@ -1,7 +1,6 @@
 package perobobbot.twitch.chat.message.from;
 
 import fpc.tools.irc.IRCParsing;
-import lombok.NonNull;
 import perobobbot.twitch.chat.message.IRCCommand;
 
 /**
@@ -10,21 +9,21 @@ import perobobbot.twitch.chat.message.IRCCommand;
 public class PingFromTwitch extends KnownMessageFromTwitch {
 
 
-    public PingFromTwitch(@NonNull IRCParsing ircParsing) {
+    public PingFromTwitch(IRCParsing ircParsing) {
         super(ircParsing);
     }
 
     @Override
-    public @NonNull IRCCommand getCommand() {
+    public IRCCommand getCommand() {
         return IRCCommand.PING;
     }
 
     @Override
-    public <T> T accept(@NonNull MessageFromTwitchVisitor<T> visitor) {
+    public <T> T accept(MessageFromTwitchVisitor<T> visitor) {
         return visitor.visit(this);
     }
 
-    public static  @NonNull MessageFromTwitch build(@NonNull AnswerBuilderHelper helper) {
+    public static  MessageFromTwitch build(AnswerBuilderHelper helper) {
         return new PingFromTwitch(helper.getIrcParsing());
     }
 }

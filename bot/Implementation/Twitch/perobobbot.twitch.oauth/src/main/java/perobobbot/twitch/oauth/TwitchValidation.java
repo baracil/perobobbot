@@ -2,9 +2,9 @@ package perobobbot.twitch.oauth;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 import io.micronaut.core.annotation.Introspected;
+import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Value;
 
 import java.util.Optional;
@@ -14,32 +14,32 @@ import java.util.Optional;
 public class TwitchValidation {
 
     @JsonAlias("client_id")
-    @NonNull String clientId;
+    String clientId;
     @Getter(AccessLevel.NONE)
     @JsonAlias("login")
-    String login;
+    @Nullable String login;
     @Getter(AccessLevel.NONE)
     @JsonAlias("scopes")
-    String[] scopes;
+    @Nullable String [] scopes;
     @Getter(AccessLevel.NONE)
     @JsonAlias("user_id")
-    String userId;
+    @Nullable String userId;
     @JsonAlias("expires_in")
     int expiresIn;
 
-    public @NonNull Optional<String> getLogin() {
+    public Optional<String> getLogin() {
         return Optional.ofNullable(login);
     }
 
-    public @NonNull Optional<String> getUserId() {
+    public Optional<String> getUserId() {
         return Optional.ofNullable(userId);
     }
 
-    public @NonNull String[] getScopes() {
+    public String[] getScopes() {
         return scopes == null ? new String[0] : scopes;
     }
 
-//    public @NonNull UserInfo toUserInfo() {
+//    public UserInfo toUserInfo() {
 //        return new UserInfo(new Identity(Twitch.PLATFORM, userId), login, login);
 //    }
 }

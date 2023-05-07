@@ -1,6 +1,5 @@
 package perobobbot.command.impl.parser;
 
-import lombok.NonNull;
 import perobobbot.command.api.CommandDefinitionParsingFailure;
 import perobobbot.command.impl.Command;
 import perobobbot.command.impl.CommandParser;
@@ -12,14 +11,14 @@ public enum FullMatchCommandParser implements CommandParser {
     INSTANCE,
     ;
 
-    public static @NonNull FullMatchCommandParser create() {
+    public static FullMatchCommandParser create() {
         return INSTANCE;
     }
 
     public static final Pattern FULL_MATCH_COMMAND = Pattern.compile("^(?<command>[a-zA-Z0-9_]+)\\*$");
 
     @Override
-    public @NonNull Command parse(@NonNull String commandDefinition) {
+    public Command parse(String commandDefinition) {
         final var match = FULL_MATCH_COMMAND.matcher(commandDefinition);
         if (!match.matches()) {
             throw new CommandDefinitionParsingFailure("No a full match command",commandDefinition);

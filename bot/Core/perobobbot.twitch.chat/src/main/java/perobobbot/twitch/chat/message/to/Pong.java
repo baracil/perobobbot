@@ -1,6 +1,5 @@
 package perobobbot.twitch.chat.message.to;
 
-import lombok.NonNull;
 import perobobbot.twitch.chat.message.IRCCommand;
 
 import java.time.Instant;
@@ -21,7 +20,7 @@ public class Pong extends CommandToTwitch {
     }
 
     @Override
-    public @NonNull String payload(@NonNull Instant dispatchInstant) {
+    public String payload(Instant dispatchInstant) {
         return "PONG :tmi.twitch.tv";
     }
 

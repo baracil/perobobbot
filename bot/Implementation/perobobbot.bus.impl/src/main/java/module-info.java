@@ -9,5 +9,6 @@ module perobobbot.bus.impl {
 
     requires perobobbot.api;
     requires perobobbot.bus.api;
+    requires fpc.tools.annotation;
 
 }

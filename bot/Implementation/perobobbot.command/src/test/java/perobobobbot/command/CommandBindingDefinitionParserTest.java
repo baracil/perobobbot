@@ -1,6 +1,5 @@
 package perobobobbot.command;
 
-import lombok.NonNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -41,7 +40,7 @@ public class CommandBindingDefinitionParserTest {
 
     @ParameterizedTest
     @MethodSource("testNumberOfParameters")
-    public void shouldHaveRightNumberOfParameter(@NonNull String commandDefinition, @NonNull String message, @NonNull String fullParameters, Map<String,String> expectedParameters) {
+    public void shouldHaveRightNumberOfParameter(String commandDefinition, String message, String fullParameters, Map<String,String> expectedParameters) {
         final var command = commandParser.parse(commandDefinition);
         final var parsing = command.bind(message).orElse(null);
         Assertions.assertNotNull(parsing);
@@ -49,7 +48,7 @@ public class CommandBindingDefinitionParserTest {
     }
     @ParameterizedTest
     @MethodSource("testNumberOfParameters")
-    public void shouldHaveRightParameterNames(@NonNull String commandDefinition, @NonNull String message, @NonNull String fullParameters, Map<String,String> expectedParameters) {
+    public void shouldHaveRightParameterNames(String commandDefinition, String message, String fullParameters, Map<String,String> expectedParameters) {
         final var parsing = commandParser.parse(commandDefinition).bind(message).orElse(null);
         Assertions.assertNotNull(parsing);
         Assertions.assertEquals(expectedParameters.keySet(), parsing.getParameterNames());
@@ -57,7 +56,7 @@ public class CommandBindingDefinitionParserTest {
     }
     @ParameterizedTest
     @MethodSource("testNumberOfParameters")
-    public void shouldHaveRightParameterValues(@NonNull String commandDefinition, @NonNull String message, @NonNull String fullParameters, Map<String,String> expectedParameters) {
+    public void shouldHaveRightParameterValues(String commandDefinition, String message, String fullParameters, Map<String,String> expectedParameters) {
         final var parsing = commandParser.parse(commandDefinition).bind(message).orElse(null);
         Assertions.assertNotNull(parsing);
         Assertions.assertEquals(expectedParameters.keySet(), parsing.getParameterNames());
@@ -66,7 +65,7 @@ public class CommandBindingDefinitionParserTest {
 
     @ParameterizedTest
     @MethodSource("testNumberOfParameters")
-    public void shouldHaveRightFullParameters(@NonNull String commandDefinition, @NonNull String command, @NonNull String fullParameters, Map<String,String> expectedParameters) {
+    public void shouldHaveRightFullParameters(String commandDefinition, String command, String fullParameters, Map<String,String> expectedParameters) {
         final var parsing = commandParser.parse(commandDefinition).bind(command).orElse(null);
         Assertions.assertNotNull(parsing);
         Assertions.assertEquals(fullParameters, parsing.getFullParameters());

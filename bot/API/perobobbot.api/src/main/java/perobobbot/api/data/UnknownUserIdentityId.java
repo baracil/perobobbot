@@ -1,7 +1,6 @@
 package perobobbot.api.data;
 
 import lombok.Getter;
-import lombok.NonNull;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class UnknownUserIdentityId extends EntityNotFound {
     }
 
     @Override
-    public @NonNull List<Criteria> searchedCriteria() {
+    public List<Criteria> searchedCriteria() {
         return List.of(new Criteria("userIdentityId",userIdentityId));
     }
 }

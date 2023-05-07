@@ -1,7 +1,6 @@
 package perobobbot.twitch.api.eventsub.subscription;
 
 import lombok.EqualsAndHashCode;
-import lombok.NonNull;
 import lombok.Value;
 import perobobbot.twitch.api.CriteriaType;
 import perobobbot.twitch.api.SubscriptionType;
@@ -12,9 +11,9 @@ public class UserUpdate extends SingleConditionSubscription {
 
     public static final SubscriptionFactory FACTORY = forSingleCondition(CriteriaType.USER_ID, UserUpdate::new);
 
-    @NonNull String userId;
+    String userId;
 
-    public UserUpdate(@NonNull String userId) {
+    public UserUpdate(String userId) {
         super(SubscriptionType.USER_UPDATE,CriteriaType.USER_ID);
         this.userId = userId;
     }

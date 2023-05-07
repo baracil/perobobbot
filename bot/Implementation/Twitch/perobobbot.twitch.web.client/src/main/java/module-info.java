@@ -15,6 +15,7 @@ module perobobbot.twitch.web.client {
 
     requires jakarta.inject;
     requires perobobbot.oauth.api;
+    requires fpc.tools.annotation;
 
 
     exports perobobbot.twitch.web.client to perobobbot.twitch.service.client;

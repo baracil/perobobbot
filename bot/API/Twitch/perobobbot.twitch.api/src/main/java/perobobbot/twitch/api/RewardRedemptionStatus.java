@@ -2,7 +2,6 @@ package perobobbot.twitch.api;
 
 import fpc.tools.lang.IdentifiedEnumWithAlternateIdentifications;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Set;
@@ -15,12 +14,12 @@ public enum RewardRedemptionStatus implements IdentifiedEnumWithAlternateIdentif
     CANCELED("canceled","CANCELED")
     ;
     @Getter
-    private final @NonNull String identification;
+    private final String identification;
 
     @Getter
-    private final @NonNull Set<String> alternateIdentifications;
+    private final Set<String> alternateIdentifications;
 
-    RewardRedemptionStatus(@NonNull String identification, @NonNull String alternateIdentifications) {
+    RewardRedemptionStatus(String identification, String alternateIdentifications) {
         this.identification = identification;
         this.alternateIdentifications = Set.of(alternateIdentifications);
     }

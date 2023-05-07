@@ -4,6 +4,7 @@ module perobobbot.tools {
     requires fpc.tools.lang;
 
     requires org.slf4j;
+    requires fpc.tools.annotation;
 
     exports perobobbot.tools;
 }

@@ -20,28 +20,28 @@ public class UserTokenEntity extends BaseEntity {
 
     @JoinColumn(name = "USER_IDENTITY_ID",nullable = false, foreignKey = @ForeignKey(name = "FK_TOKEN__USER_IDENTITY"))
     @OneToOne
-    private @NonNull UserIdentityEntity userIdentity;
+    private UserIdentityEntity userIdentity;
 
     @Column(name = "PLATFORM", nullable = false)
     @Type(type = "perobobbot.domain.jpa.entity.PlatformType")
-    private @NonNull Platform platform;
+    private Platform platform;
 
     @Column(name = "ACCESS_TOKEN", columnDefinition = "VARCHAR", nullable = false)
-    private @NonNull String accessToken;
+    private String accessToken;
 
     @Column(name = "REFRESH_TOKEN", columnDefinition = "VARCHAR")
-    private @NonNull String refreshToken;
+    private String refreshToken;
 
     @Column(name = "EXPIRATION_INSTANT", nullable = false)
-    private @NonNull Instant expirationInstant;
+    private Instant expirationInstant;
 
     @Column(name = "SCOPES", columnDefinition = "VARCHAR", nullable = false)
-    private @NonNull String scopes;
+    private String scopes;
 
     @Column(name = "TOKEN_TYPE", columnDefinition = "VARCHAR", nullable = false)
-    private @NonNull String tokenType;
+    private String tokenType;
 
-    public static UserTokenEntity createWith(@NonNull UserIdentityEntity userIdentity,@NonNull UserToken.Encrypted userToken) {
+    public static UserTokenEntity createWith(UserIdentityEntity userIdentity,UserToken.Encrypted userToken) {
         return new UserTokenEntity(
                 userIdentity,
                 userToken.platform(),
@@ -53,7 +53,7 @@ public class UserTokenEntity extends BaseEntity {
         );
     }
 
-    public @NonNull UserToken.Encrypted toView() {
+    public UserToken.Encrypted toView() {
         return new UserToken.Encrypted(
                 userIdentity.createIdentification(),
                 accessToken,
@@ -64,7 +64,7 @@ public class UserTokenEntity extends BaseEntity {
         );
     }
 
-    public void updateWith(@NonNull UserToken<String> encryptedUserToken) {
+    public void updateWith(UserToken<String> encryptedUserToken) {
         this.accessToken = encryptedUserToken.accessToken();
         this.refreshToken = encryptedUserToken.refreshToken();
         this.expirationInstant = encryptedUserToken.expirationInstant();

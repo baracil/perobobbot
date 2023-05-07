@@ -2,7 +2,6 @@ package perobobbot.twitch.chat.message;
 
 import fpc.tools.fp.Tuple2;
 import fpc.tools.lang.MapTool;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.chat.message.from.*;
 
@@ -46,35 +45,31 @@ public enum IRCCommand {
     ERR_UNKNOWNCOMMAND("421",InvalidIRCCommand::build),
     ;
 
-    @NonNull
     private final String numericAlias;
 
-    @NonNull
     private final Function<? super AnswerBuilderHelper, ? extends MessageFromTwitch> builder;
 
     IRCCommand() {
         this("");
     }
 
-    IRCCommand(@NonNull String numericAlias) {
+    IRCCommand(String numericAlias) {
         this.numericAlias = numericAlias;
         this.builder = h -> new GenericKnownMessageFromTwitch(h.getIrcParsing(), this);
     }
 
-    IRCCommand(@NonNull Function<? super AnswerBuilderHelper, ? extends MessageFromTwitch> builder) {
+    IRCCommand(Function<? super AnswerBuilderHelper, ? extends MessageFromTwitch> builder) {
         this("",builder);
     }
 
-    @NonNull
-    public MessageFromTwitch buildTwitchAnswer(@NonNull AnswerBuilderHelper helper) {
+    public MessageFromTwitch buildTwitchAnswer(AnswerBuilderHelper helper) {
         return builder.apply(helper);
     }
 
 
 
 
-    @NonNull
-    public static Optional<IRCCommand> findFromString(@NonNull String commandAsString) {
+    public static Optional<IRCCommand> findFromString(String commandAsString) {
         return Optional.ofNullable(Holder.VALUES_BY_NAME.get(commandAsString.toLowerCase()));
     }
 

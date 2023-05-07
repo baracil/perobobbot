@@ -1,6 +1,5 @@
 package perobobbot.api.bus;
 
-import lombok.NonNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -18,7 +17,7 @@ public class RegularTopicParsingTest {
 
     @ParameterizedTest
     @MethodSource("topics")
-    public void shouldParseWithoutError(@NonNull String topicAsString) {
+    public void shouldParseWithoutError(String topicAsString) {
         Assertions.assertDoesNotThrow(() -> Topic.parseRegular(topicAsString));
     }
 

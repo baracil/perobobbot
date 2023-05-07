@@ -4,7 +4,6 @@ import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.*;
 import io.micronaut.http.context.ServerRequestContext;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.PerobobbotException;
@@ -16,29 +15,29 @@ import perobobbot.web.api.WebService;
 @Controller(WebService.ROOT_PATH + "/callback")
 public class CallbackController implements WebService {
 
-    private final @NonNull CallbackManager callbackManager;
+    private final CallbackManager callbackManager;
 
     @Get("/{+path}")
-    public HttpResponse<?> get(@NonNull String path, @Body String body) {
+    public HttpResponse<?> get(String path, @Body String body) {
         return handle(path,body);
     }
 
     @Post("/{+path}")
-    public HttpResponse<?> post(@NonNull String path, @Body String body) {
+    public HttpResponse<?> post(String path, @Body String body) {
         return handle(path,body);
     }
 
     @Patch("/{+path}")
-    public HttpResponse<?> patch(@NonNull String path, @Body String body) {
+    public HttpResponse<?> patch(String path, @Body String body) {
         return handle(path,body);
     }
 
     @Delete("/{+path}")
-    public HttpResponse<?> delete(@NonNull String path, @Body String body) {
+    public HttpResponse<?> delete(String path, @Body String body) {
         return handle(path,body);
     }
 
-    private HttpResponse<?> handle(@NonNull String path, @Body String body) {
+    private HttpResponse<?> handle(String path, @Body String body) {
         final var id = extractId(path);
         HttpRequest<?> request = ServerRequestContext.currentRequest().orElseThrow(()-> new PerobobbotException("No request found"));
         return callbackManager.findCallback(id).map(c -> c.handleCall(request,body)).orElseGet(HttpResponse::notFound);

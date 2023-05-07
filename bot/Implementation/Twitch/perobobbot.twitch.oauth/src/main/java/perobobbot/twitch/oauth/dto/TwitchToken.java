@@ -7,7 +7,6 @@ import io.micronaut.core.annotation.Nullable;
 import io.micronaut.serde.annotation.Serdeable;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Value;
 import perobobbot.api.Identity;
 import perobobbot.api.Scope;
@@ -27,7 +26,7 @@ import java.util.stream.Collectors;
 public class TwitchToken {
 
     @JsonProperty("access_token")
-    @NonNull String accessToken;
+    String accessToken;
     @JsonProperty("refresh_token")
     @Nullable
     String refreshToken;
@@ -39,13 +38,13 @@ public class TwitchToken {
     @Nullable
     String[] scope;
     @JsonProperty("token_type")
-    @NonNull String tokenType;
+    String tokenType;
 
-    public @NonNull ApplicationToken.Decrypted toAppToken(@NonNull Instant now) {
+    public ApplicationToken.Decrypted toAppToken(Instant now) {
         return new ApplicationToken.Decrypted(Twitch.PLATFORM, Secret.of(accessToken), now.plusSeconds((long) expiresIn));
     }
 
-    public @NonNull UserToken.Decrypted toUserToken(@NonNull Identity identity, @NonNull Instant now) {
+    public UserToken.Decrypted toUserToken(Identity identity, Instant now) {
 
         final var twitchScopes = prepareScopes();
         final long duration = (long) expiresIn;
@@ -65,7 +64,7 @@ public class TwitchToken {
     }
 
 
-    private @NonNull Set<Scope> prepareScopes() {
+    private Set<Scope> prepareScopes() {
         if (scope == null) {
             return Set.of();
         }

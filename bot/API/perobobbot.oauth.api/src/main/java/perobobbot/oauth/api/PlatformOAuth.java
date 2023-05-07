@@ -1,7 +1,6 @@
 package perobobbot.oauth.api;
 
 import fpc.tools.lang.Secret;
-import lombok.NonNull;
 import perobobbot.api.data.*;
 
 import java.net.URI;
@@ -15,27 +14,27 @@ public interface PlatformOAuth {
     /**
      * @return the platform the operations apply
      */
-    @NonNull Platform platform();
+    Platform platform();
 
     /**
      * @param state an opaque value used to identify the request and avoid CSRF
      * @param forceVerify if true the request for authorization will be asked even though the user is already identify on the browser
      * @return the URI than must be used to state the authorization code gran flow
      */
-    @NonNull URI getAuthorizationCodeGrantFlowURI(@NonNull String clientId, @NonNull String state, boolean forceVerify);
+    URI getAuthorizationCodeGrantFlowURI(String clientId, String state, boolean forceVerify);
 
     /**
      * Finalize an authorization code grant flow with the provided code
      * @param code the code to finalize the authorization code grant flow
      * @return a completion stage that completes with the requested {@link UserToken}
      */
-    @NonNull CompletionStage<TokenWithIdentity> finalizeAuthorizationCodeGrantFlow(@NonNull Application<Secret> application, @NonNull String code);
+    CompletionStage<TokenWithIdentity> finalizeAuthorizationCodeGrantFlow(Application<Secret> application, String code);
 
-    @NonNull TokenWithIdentity refreshUserToken(@NonNull Application<Secret> application, @NonNull Secret refreshToken);
+    TokenWithIdentity refreshUserToken(Application<Secret> application, Secret refreshToken);
 
-    @NonNull ApplicationToken.Decrypted getAppToken(@NonNull Application<Secret> application);
+    ApplicationToken.Decrypted getAppToken(Application<Secret> application);
 
-    void revoke(@NonNull String clientId, @NonNull Secret accessToken);
+    void revoke(String clientId, Secret accessToken);
 
-    void validate(@NonNull Secret accessToken);
+    void validate(Secret accessToken);
 }

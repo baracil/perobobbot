@@ -25,6 +25,7 @@ module perobobbot.service.jpa {
     requires perobobbot.service.api;
     requires perobobbot.domain.jpa;
     requires io.micronaut.core;
+    requires fpc.tools.annotation;
 
 
 }

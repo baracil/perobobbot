@@ -1,6 +1,5 @@
 package perobobbot.twitch.api.channelpoints;
 
-import lombok.NonNull;
 import lombok.Value;
 import perobobbot.twitch.api.Image;
 import perobobbot.twitch.api.TwitchApiPayload;
@@ -11,14 +10,14 @@ import java.time.Instant;
 @Value
 public class CustomReward implements TwitchApiPayload {
 
-    @NonNull UserInfo broadcaster;
-    @NonNull String id;
+    UserInfo broadcaster;
+    String id;
     Image image;
-    @NonNull String backgroundColor;
+    String backgroundColor;
     boolean enabled;
     int cost;
-    @NonNull String title;
-    @NonNull String prompt;
+    String title;
+    String prompt;
     boolean userInputRequired;
 
     MaxPerStreamSetting maxPerStreamSetting;
@@ -27,7 +26,7 @@ public class CustomReward implements TwitchApiPayload {
 
     boolean paused;
     boolean inStock;
-    @NonNull Image defaultImage;
+    Image defaultImage;
     boolean shouldRedemptionsSkipRequestQueue;
     Integer redemptionsRedeemedCurrentStream;
     Instant cooldownExpiresAt;

@@ -12,7 +12,6 @@ import fpc.tools.lang.Subscription;
 import fpc.tools.lang.SubscriptionHolder;
 import fpc.tools.state.chat.ChatStateListener;
 import fpc.tools.state.chat.OnConnectedResult;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.oauth.api.OAuthAccessMode;
@@ -28,13 +27,13 @@ import perobobbot.twitch.chat.message.to.*;
 @Slf4j
 public class TwitchChatStateListener implements ChatStateListener<MessageFromTwitch> {
 
-    private final @NonNull OAuthData oAuthData;
+    private final OAuthData oAuthData;
 
     private final SubscriptionHolder subscriptionHolder = new SubscriptionHolder();
     private final Listeners<TwitchChatListener> listeners = Listeners.create();
     private final ConnectionResult connectionResult = new ConnectionResult();
 
-    public @NonNull Subscription addChatListener(@NonNull TwitchChatListener listener) {
+    public Subscription addChatListener(TwitchChatListener listener) {
         return listeners.addListener(listener);
     }
 
@@ -59,7 +58,7 @@ public class TwitchChatStateListener implements ChatStateListener<MessageFromTwi
     }
 
     @Override
-    public void onConnectionFailed(@NonNull RuntimeException error) {
+    public void onConnectionFailed(RuntimeException error) {
         connectionResult.setOnConnectionFailed(error);
     }
 
@@ -68,7 +67,7 @@ public class TwitchChatStateListener implements ChatStateListener<MessageFromTwi
     }
 
     @Override
-    public @NonNull OnConnectedResult onConnected(@NonNull AdvancedChat<MessageFromTwitch> chat, int nbTries) {
+    public OnConnectedResult onConnected(AdvancedChat<MessageFromTwitch> chat, int nbTries) {
         try {
             final var cap = new Cap(Capability.AllCapabilities());
 
@@ -106,7 +105,7 @@ public class TwitchChatStateListener implements ChatStateListener<MessageFromTwi
     }
 
 
-    private boolean isCausedByAnInvalidToken(@NonNull Throwable e) {
+    private boolean isCausedByAnInvalidToken(Throwable e) {
         if (e instanceof CipherException) {
             return true;
         }
@@ -117,26 +116,26 @@ public class TwitchChatStateListener implements ChatStateListener<MessageFromTwi
     private class Listener implements AdvancedChatListener<MessageFromTwitch>, AdvancedChatEventVisitor<MessageFromTwitch, Nil> {
 
         @Override
-        public void onChatEvent(@NonNull AdvancedChatEvent<MessageFromTwitch> chatEvent) {
+        public void onChatEvent(AdvancedChatEvent<MessageFromTwitch> chatEvent) {
             chatEvent.accept(this);
         }
 
         @Override
-        public @NonNull Nil visit(@NonNull Connection<MessageFromTwitch> event) {
+        public Nil visit(Connection<MessageFromTwitch> event) {
             LOG.info("Connection event on Twitch Chat : {}", event);
             listeners.forEachListeners(TwitchChatListener::onConnected);
             return Nil.NULL;
         }
 
         @Override
-        public @NonNull Nil visit(@NonNull Disconnection<MessageFromTwitch> event) {
+        public Nil visit(Disconnection<MessageFromTwitch> event) {
             LOG.warn("Disconnection event on Twitch Chat : {}", event);
             listeners.forEachListeners(TwitchChatListener::onDisconnected);
             return Nil.NULL;
         }
 
         @Override
-        public @NonNull Nil visit(@NonNull PostedMessage<MessageFromTwitch> event) {
+        public Nil visit(PostedMessage<MessageFromTwitch> event) {
             if (event.getPostedMessage() instanceof MessageToTwitch messageToTwitch) {
                 listeners.forEachListeners(TwitchChatListener::onPostedMessage, event.dispatchingTime(), messageToTwitch);
             }
@@ -144,7 +143,7 @@ public class TwitchChatStateListener implements ChatStateListener<MessageFromTwi
         }
 
         @Override
-        public @NonNull Nil visit(@NonNull ReceivedMessage<MessageFromTwitch> event) {
+        public Nil visit(ReceivedMessage<MessageFromTwitch> event) {
             if (event.getMessage() instanceof PingFromTwitch) {
                 connectionResult.getChat().sendCommand(Pong.create());
             } else {
@@ -154,7 +153,7 @@ public class TwitchChatStateListener implements ChatStateListener<MessageFromTwi
         }
 
         @Override
-        public @NonNull Nil visit(@NonNull Error<MessageFromTwitch> event) {
+        public Nil visit(Error<MessageFromTwitch> event) {
             LOG.warn("Error for Twitch Chat : {}", event);
             return Nil.NULL;
         }

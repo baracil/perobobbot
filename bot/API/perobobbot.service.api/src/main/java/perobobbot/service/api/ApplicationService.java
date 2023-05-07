@@ -1,7 +1,6 @@
 package perobobbot.service.api;
 
 import fpc.tools.lang.Secret;
-import lombok.NonNull;
 import perobobbot.api.data.*;
 
 import java.util.List;
@@ -15,24 +14,24 @@ public interface ApplicationService {
      * @param platform the platform
      * @return an optional containing the application of the platform with the provided name, an empty optional if none exists
      */
-    @NonNull Optional<Application.Decrypted> findApplication(@NonNull Platform platform);
+    Optional<Application.Decrypted> findApplication(Platform platform);
 
     /**
      * @param platform the platform to look for
      * @return the application for the given platform
      * @throws ApplicationForPlatformMissing if no application exists for the given platform
      */
-    default @NonNull Application.Decrypted getApplication(@NonNull Platform platform) {
+    default Application.Decrypted getApplication(Platform platform) {
         return findApplication(platform).orElseThrow(() -> new ApplicationForPlatformMissing(platform));
     }
 
-    @NonNull String getApplicationClientId(@NonNull Platform platform);
+    String getApplicationClientId(Platform platform);
 
     /**
      * @param platform the platform
      * @return an optional containing the application token for the given platform if it exists, an empty optional otherwise
      */
-    @NonNull Optional<ApplicationToken.Decrypted> findApplicationToken(@NonNull Platform platform);
+    Optional<ApplicationToken.Decrypted> findApplicationToken(Platform platform);
 
     /**
      * @param platform the platform
@@ -40,7 +39,7 @@ public interface ApplicationService {
      * @throws ApplicationForPlatformMissing if no application exists for the given platform
      * @throws ApplicationTokenDoesNotExist if no token exists for the given platform
      */
-    default @NonNull ApplicationToken.Decrypted getApplicationToken(@NonNull Platform platform) {
+    default ApplicationToken.Decrypted getApplicationToken(Platform platform) {
         return findApplicationToken(platform).orElseThrow(() -> new ApplicationTokenDoesNotExist(platform));
     }
 
@@ -50,15 +49,14 @@ public interface ApplicationService {
      * @param parameter the parameter to create the application
      * @return the newly created application
      */
-    @NonNull Application.Decrypted saveApplication(@NonNull Platform platform, @NonNull CreateApplicationParameter parameter);
+    Application.Decrypted saveApplication(Platform platform, CreateApplicationParameter parameter);
 
     /**
      * @param applicationToken the platform
      * @return the newly created token
      */
-    @NonNull ApplicationToken.Decrypted saveApplicationToken(@NonNull ApplicationToken<Secret> applicationToken);
+    ApplicationToken.Decrypted saveApplicationToken(ApplicationToken<Secret> applicationToken);
 
 
-    @NonNull
     List<Platform> getAllPlatforms();
 }

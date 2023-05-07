@@ -1,6 +1,9 @@
 package perobobbot.domain.jpa.entity;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
 import perobobbot.api.SerDeHelper;
 import perobobbot.api.SubscriptionView;
@@ -17,23 +20,23 @@ import javax.persistence.Table;
 public class SubscriptionEntity extends BaseEntity {
 
     @Type(type = "perobobbot.domain.jpa.entity.PlatformType")
-    private @NonNull Platform platform;
+    private Platform platform;
 
-    private @NonNull String type;
+    private String type;
 
-    private @NonNull String subscriptionId;
+    private String subscriptionId;
 
-    private @NonNull String data;
+    private String data;
 
-    private @NonNull String callback;
+    private String callback;
 
     @Setter
     private boolean enabled;
 
-    public SubscriptionEntity(@NonNull Platform platform,
-                              @NonNull String type,
-                              @NonNull String data,
-                              @NonNull String callback,
+    public SubscriptionEntity(Platform platform,
+                              String type,
+                              String data,
+                              String callback,
                               boolean enabled) {
         this.platform = platform;
         this.type = type;
@@ -43,11 +46,11 @@ public class SubscriptionEntity extends BaseEntity {
         this.enabled = enabled;
     }
 
-    public @NonNull SubscriptionView toView(@NonNull SerDeHelper serDeHelper) {
+    public SubscriptionView toView(SerDeHelper serDeHelper) {
         return new SubscriptionView(getId(), platform, type, serDeHelper.deserializeMap(data), subscriptionId, enabled, callback);
     }
 
-    public void update(@NonNull String subscriptionId, @NonNull String callback) {
+    public void update(String subscriptionId, String callback) {
         this.subscriptionId = subscriptionId;
         this.callback = callback;
     }

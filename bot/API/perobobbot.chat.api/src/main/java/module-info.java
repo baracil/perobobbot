@@ -9,6 +9,7 @@ module perobobbot.chat.api {
     requires com.fasterxml.jackson.annotation;
 
     requires transitive perobobbot.api;
+    requires fpc.tools.annotation;
 
 
     exports perobobbot.chat.api;

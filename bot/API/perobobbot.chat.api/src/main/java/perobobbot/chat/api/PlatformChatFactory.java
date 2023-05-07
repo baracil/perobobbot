@@ -1,12 +1,11 @@
 package perobobbot.chat.api;
 
-import lombok.NonNull;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.UserIdentity;
 
 public interface PlatformChatFactory {
 
-    @NonNull Platform getPlatform();
+    Platform getPlatform();
 
-    @NonNull Chat create(@NonNull UserIdentity userIdentity);
+    Chat create(UserIdentity userIdentity);
 }

@@ -3,7 +3,6 @@ package perobobbot.twitch.chat.message.to;
 import fpc.tools.advanced.chat.Command;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.chat.message.IRCCommand;
 
@@ -13,7 +12,6 @@ import perobobbot.twitch.chat.message.IRCCommand;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 public abstract class CommandToTwitch extends MessageToTwitch implements Command {
 
-    @NonNull
     @Getter
     private final IRCCommand command;
 

@@ -1,6 +1,5 @@
 package perobobbot.twitch.chat.impl._private.wrapping;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.data.Platform;
 import perobobbot.chat.api.Chat;
@@ -17,10 +16,10 @@ import java.util.concurrent.CompletionStage;
 @RequiredArgsConstructor
 public class TwitchChatWrapper implements Chat {
 
-    private final @NonNull TwitchChat twitchChat;
+    private final TwitchChat twitchChat;
 
     @Override
-    public @NonNull CompletionStage<Chat> requestConnection() {
+    public CompletionStage<Chat> requestConnection() {
         return twitchChat.requestConnection().thenApply(TwitchChatWrapper::new);
     }
 
@@ -30,17 +29,17 @@ public class TwitchChatWrapper implements Chat {
     }
 
     @Override
-    public @NonNull CompletionStage<?> requestDisconnection() {
+    public CompletionStage<?> requestDisconnection() {
         return twitchChat.requestDisconnection();
     }
 
     @Override
-    public @NonNull Platform getPlatform() {
+    public Platform getPlatform() {
         return Twitch.PLATFORM;
     }
 
     @Override
-    public @NonNull CompletionStage<DispatchSlip> sendMessage(@NonNull String channel, @NonNull String message) {
+    public CompletionStage<DispatchSlip> sendMessage(String channel, String message) {
         return twitchChat.sendCommand(MessageToTwitch.privateMsg(channel,message))
                          .thenApply(DispatchSlipWrapper::new);
     }

@@ -1,7 +1,6 @@
 package perobobbot.launcher;
 
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import perobobbot.api.plugin.PerobobbotService;
 import perobobbot.oauth.api.OAuthManager;
 import perobobbot.oauth.api.OAuthManagerFactory;
@@ -16,7 +15,7 @@ public class Factory {
 
     @Singleton
     @PerobobbotService(serviceType = OAuthManager.class, apiVersion = OAuthManager.VERSION)
-    public @NonNull OAuthManager oAuthManager(@NonNull ApplicationService applicationService, @NonNull List<PlatformOAuth> platformOAuths) {
+    public OAuthManager oAuthManager(ApplicationService applicationService, List<PlatformOAuth> platformOAuths) {
         return ServiceLoader.load(OAuthManagerFactory.class)
                             .stream()
                             .findFirst()

@@ -13,6 +13,7 @@ module perobobbot.domain.jpa {
 
     requires perobobbot.api;
     requires perobobbot.twitch.api;
+    requires fpc.tools.annotation;
 
     exports perobobbot.domain.jpa.entity to perobobbot.service.jpa;
     exports perobobbot.domain.jpa.repository to perobobbot.service.jpa;

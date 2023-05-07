@@ -1,7 +1,5 @@
 package perobobbot.api;
 
-import lombok.NonNull;
-
 import java.util.Optional;
 
 /**
@@ -9,7 +7,7 @@ import java.util.Optional;
  */
 public interface Event {
 
-    default <T> @NonNull Optional<T> as(@NonNull Class<T> type) {
+    default <T> Optional<T> as(Class<T> type) {
         return Optional.ofNullable(type.isInstance(this) ? type.cast(this) : null);
     }
 }

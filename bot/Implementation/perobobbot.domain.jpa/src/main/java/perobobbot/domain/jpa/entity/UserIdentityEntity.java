@@ -25,29 +25,29 @@ public class UserIdentityEntity extends BaseEntity {
 
     @Column(name = "PLATFORM", nullable = false)
     @Convert(converter = PlatformConverter.class)
-    private @NonNull Platform platform;
+    private Platform platform;
 
     @Column(name = "USER_ID", nullable = false)
-    private @NonNull String userId;
+    private String userId;
 
     @Column(name = "LOGIN", nullable = false)
-    private @NonNull String login;
+    private String login;
 
     @Column(name = "NAME", nullable = false)
-    private @NonNull String name;
+    private String name;
 
     @Column(name = "USER_TYPE", nullable = false)
     @Enumerated(EnumType.STRING)
-    private @NonNull UserType userType;
+    private UserType userType;
 
     @OneToOne(mappedBy = "userIdentity", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserTokenEntity tokenEntity;
 
     @OneToMany(mappedBy = "userIdentity", cascade = CascadeType.ALL, orphanRemoval = true)
-    private @NonNull List<JoinedChannelEntity> joinedChannels = new ArrayList<>();
+    private List<JoinedChannelEntity> joinedChannels = new ArrayList<>();
 
 
-    public static @NonNull UserIdentityEntity createWith(@NonNull UserInfo userInfo, @NonNull UserType userType) {
+    public static UserIdentityEntity createWith(UserInfo userInfo, UserType userType) {
         return new UserIdentityEntity(
                 userInfo.platform(),
                 userInfo.userId(),
@@ -58,7 +58,7 @@ public class UserIdentityEntity extends BaseEntity {
                 new ArrayList<>());
     }
 
-    public @NonNull UserIdentity toView() {
+    public UserIdentity toView() {
         return new UserIdentity(
                 getId(),
                 createIdentification(),
@@ -69,36 +69,36 @@ public class UserIdentityEntity extends BaseEntity {
         );
     }
 
-    public @NonNull Identity createIdentification() {
+    public Identity createIdentification() {
         return new Identity(platform, userId);
     }
 
-    public @NonNull UserIdentityEntity updateToken(@NonNull UserToken.Encrypted userToken) {
+    public UserIdentityEntity updateToken(UserToken.Encrypted userToken) {
         createIdentification().checkSameIdentity(userToken.identity());
         this.tokenEntity = UserTokenEntity.createWith(this, userToken);
         return this;
     }
 
 
-    public boolean isSameIdentity(@NonNull Identity identity) {
+    public boolean isSameIdentity(Identity identity) {
         return identity.isSameIdentity(platform, userId);
     }
 
-    public @NonNull JoinedChannelEntity joinedChannel(@NonNull String channelName, boolean readOnly) {
+    public JoinedChannelEntity joinedChannel(String channelName, boolean readOnly) {
         final var result = new JoinedChannelEntity(this, channelName, readOnly);
         this.joinedChannels.add(result);
         return result;
     }
 
-    public boolean partChannel(@NonNull String channelName) {
+    public boolean partChannel(String channelName) {
         return this.joinedChannels.removeIf(jc -> jc.getName().equals(channelName));
     }
 
-    public @NonNull UserInfo toUserInfo() {
+    public UserInfo toUserInfo() {
         return new UserInfo(createIdentification(), login, name);
     }
 
-    public void update(@NonNull String login, @NonNull String name) {
+    public void update(String login, String name) {
         this.login = login;
         this.name = name;
     }

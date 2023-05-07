@@ -1,7 +1,6 @@
 package perobobbot.twitch.eventsub.sync;
 
 import lombok.AccessLevel;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 import perobobbot.api.SubscriptionData;
@@ -20,15 +19,15 @@ import static java.util.function.Predicate.not;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class Matcher {
 
-    public static @NonNull Match match(
-            @NonNull List<TwitchSubscription> onPlatform,
-            @NonNull List<SubscriptionView> persisted
+    public static Match match(
+            List<TwitchSubscription> onPlatform,
+            List<SubscriptionView> persisted
     ) {
         return new Matcher(onPlatform, persisted).match();
     }
 
-    private final @NonNull List<TwitchSubscription> onPlatform;
-    private final @NonNull List<SubscriptionView> onBot;
+    private final List<TwitchSubscription> onPlatform;
+    private final List<SubscriptionView> onBot;
 
 
     private Map<Key, List<TwitchSubscription>> onPlatformPerKey;
@@ -37,7 +36,7 @@ public class Matcher {
     private final Match.MatchBuilder builder = Match.builder();
 
 
-    private @NonNull Match match() {
+    private Match match() {
         this.dispatchPerKey();
         this.checkAllKeys();
         this.handleInvalids();
@@ -49,7 +48,7 @@ public class Matcher {
         this.onBotPerKey = onBot.stream().collect(Collectors.toMap(Key::from, s -> s));
     }
 
-    private boolean isValid(@NonNull TwitchSubscription twitchSubscription) {
+    private boolean isValid(TwitchSubscription twitchSubscription) {
         return twitchSubscription.getStatus() == SubscriptionStatus.ENABLED;
     }
 
@@ -74,7 +73,7 @@ public class Matcher {
     }
 
 
-    private void checkForOneKey(@NonNull Key key) {
+    private void checkForOneKey(Key key) {
         final var onPlatform = onPlatformPerKey.getOrDefault(key, List.of());
         final var onBot = onBotPerKey.get(key);
 
@@ -134,19 +133,19 @@ public class Matcher {
     @Value
     private static class Key {
 
-        public static @NonNull Key from(@NonNull TwitchSubscription twitchSubscription) {
+        public static Key from(TwitchSubscription twitchSubscription) {
             return new Key(createData(twitchSubscription), twitchSubscription.getCallbackUrl());
         }
 
-        public static @NonNull Key from(@NonNull SubscriptionView subscriptionView) {
+        public static Key from(SubscriptionView subscriptionView) {
             return new Key(createData(subscriptionView), subscriptionView.getCallbackUrl());
         }
 
-        @NonNull SubscriptionData subscriptionData;
-        @NonNull String callbackUrl;
+        SubscriptionData subscriptionData;
+        String callbackUrl;
     }
 
-    private static @NonNull SubscriptionData createData(@NonNull TwitchSubscription twitchSubscription) {
+    private static SubscriptionData createData(TwitchSubscription twitchSubscription) {
         return new SubscriptionData(
                 twitchSubscription.getPlatform(),
                 twitchSubscription.getSubscriptionType(),
@@ -154,7 +153,7 @@ public class Matcher {
         );
     }
 
-    private static @NonNull SubscriptionData createData(@NonNull SubscriptionView subscriptionView) {
+    private static SubscriptionData createData(SubscriptionView subscriptionView) {
         return new SubscriptionData(
                 subscriptionView.getPlatform(),
                 subscriptionView.getSubscriptionType(),

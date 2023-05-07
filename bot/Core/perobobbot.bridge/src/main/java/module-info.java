@@ -11,6 +11,7 @@ module perobobbot.bridge {
     requires perobobbot.service.api;
     requires perobobbot.chat.api;
     requires perobobbot.command.api;
+    requires fpc.tools.annotation;
 
     exports perobobbot.bridge;
 }

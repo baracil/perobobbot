@@ -1,7 +1,6 @@
 package perobobbot.discord.api;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.Scope;
 
@@ -41,17 +40,17 @@ public enum DiscordScope implements Scope {
     ;
 
     @Getter
-    private final @NonNull String name;
+    private final String name;
     @Getter
-    private final @NonNull String description;
+    private final String description;
     @Getter
     private final boolean discordApprovalRequired;
 
-    DiscordScope(@NonNull String name, @NonNull String description) {
+    DiscordScope(String name, String description) {
         this(name, description, false);
     }
 
-    public static @NonNull Optional<DiscordScope> findScopeByName(@NonNull String name) {
+    public static Optional<DiscordScope> findScopeByName(String name) {
         return Optional.ofNullable(Holder.SCOPE_BY_NAMES.get(name));
     }
 

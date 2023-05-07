@@ -4,7 +4,6 @@ import fpc.tools.advanced.chat.Request;
 import fpc.tools.advanced.chat.RequestAnswerMatcher;
 import fpc.tools.fp.TryResult;
 import fpc.tools.lang.ThrowableTool;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.twitch.api.TwitchMarkers;
@@ -24,11 +23,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TwitchMatcher implements RequestAnswerMatcher<MessageFromTwitch> {
 
-    @NonNull
     private final String nick;
 
     @Override
-    public @NonNull <A> Optional<TryResult<Throwable,A>> performMatch(@NonNull Request<A> request, @NonNull MessageFromTwitch answer) {
+    public <A> Optional<TryResult<Throwable,A>> performMatch(Request<A> request, MessageFromTwitch answer) {
         if (request instanceof RequestToTwitch<A> requestToTwitch) {
             try {
                 if (answer instanceof InvalidIRCCommand) {
@@ -43,7 +41,6 @@ public class TwitchMatcher implements RequestAnswerMatcher<MessageFromTwitch> {
         return Optional.empty();
     }
 
-    @NonNull
     private <A> Optional<TryResult<Throwable,A>> handleInvalidAnswerType(RequestToTwitch<A> request, InvalidIRCCommand answer) {
         final String unknownCommand = answer.getRequestedCommand();
         if (unknownCommand.equalsIgnoreCase(request.commandInPayload())) {
@@ -53,15 +50,14 @@ public class TwitchMatcher implements RequestAnswerMatcher<MessageFromTwitch> {
     }
 
     @Override
-    public boolean shouldPerformMatching(@NonNull MessageFromTwitch message) {
+    public boolean shouldPerformMatching(MessageFromTwitch message) {
         if (message instanceof final KnownMessageFromTwitch messageFromTwitch) {
             return messageFromTwitch.getCommand() != IRCCommand.PRIVMSG;
         }
         return false;
     }
 
-    @NonNull
-    private <A> Optional<TryResult<Throwable,A>> performMatch(@NonNull RequestToTwitch<A> request, @NonNull MessageFromTwitch answer) {
+    private <A> Optional<TryResult<Throwable,A>> performMatch(RequestToTwitch<A> request, MessageFromTwitch answer) {
         return request.isMyAnswer(answer, nick);
     }
 

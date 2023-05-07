@@ -1,7 +1,7 @@
 package perobobbot.twitch.api.eventsub.event;
 
 import io.micronaut.serde.annotation.Serdeable;
-import lombok.NonNull;
+import jakarta.annotation.Nullable;
 import lombok.Value;
 import perobobbot.twitch.api.UserInfo;
 
@@ -11,18 +11,18 @@ import java.util.Optional;
 @Serdeable
 public class RevokableUserInfo {
 
-    @NonNull String id;
-    String login;
-    String name;
+    String id;
+    @Nullable String login;
+    @Nullable String name;
 
-    public @NonNull Optional<String> getLogin() {
+    public Optional<String> getLogin() {
         return Optional.ofNullable(login);
     }
-    public @NonNull Optional<String> getName() {
+    public Optional<String> getName() {
         return Optional.ofNullable(name);
     }
 
-    public @NonNull Optional<UserInfo> asNotRevoked() {
+    public Optional<UserInfo> asNotRevoked() {
         if (login == null || name == null) {
             return Optional.empty();
         }

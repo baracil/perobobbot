@@ -1,17 +1,15 @@
 package perobobbot.twitch.chat.message;
 
-import lombok.NonNull;
 import lombok.Value;
 
 @Value
 public class Badge {
 
-    @NonNull
-    public static Badge with(@NonNull String name, @NonNull String version) {
+    public static Badge with(String name, String version) {
         return new Badge(name, version);
     }
 
-    @NonNull String name;
+    String name;
 
-    @NonNull String version;
+    String version;
 }

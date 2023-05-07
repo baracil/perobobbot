@@ -58,11 +58,11 @@ public enum Permission {
     private @NonNull
     final String channelType;
 
-    public static @NonNull String computeQueryParam(Permission... permissions) {
+    public static String computeQueryParam(Permission... permissions) {
         return computeQueryParam(Arrays.asList(permissions));
     }
 
-    public static @NonNull String computeQueryParam(Collection<Permission> permissions) {
+    public static String computeQueryParam(Collection<Permission> permissions) {
         return String.valueOf(permissions.stream()
                                          .mapToLong(p -> p.mask)
                                          .reduce(0, (m1, m2) -> m1 | m2));

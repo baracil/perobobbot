@@ -2,7 +2,6 @@ package perobobbot.twitch.api;
 
 import fpc.tools.lang.IdentifiedEnum;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.api.eventsub.event.*;
 import perobobbot.twitch.api.eventsub.subscription.*;
@@ -65,30 +64,30 @@ public enum SubscriptionType implements IdentifiedEnum {
     USER_UPDATE("user.update", "1", UserUpdateEvent.class, UserUpdate.FACTORY, "A user has updated their account."),
     ;
     @Getter
-    private final @NonNull String identification;
+    private final String identification;
     @Getter
-    private final @NonNull String version;
-
-    @Getter
-    private final @NonNull Class<? extends EventSubEvent> eventType;
-
-    private final @NonNull SubscriptionFactory subscriptionFactory;
+    private final String version;
 
     @Getter
-    private final @NonNull String description;
+    private final Class<? extends EventSubEvent> eventType;
 
-    public @NonNull Subscription create(@NonNull Conditions conditions) {
+    private final SubscriptionFactory subscriptionFactory;
+
+    @Getter
+    private final String description;
+
+    public Subscription create(Conditions conditions) {
         return subscriptionFactory.create(conditions);
     }
 
 
-    public static @NonNull Set<String> getIdentifications() {
+    public static Set<String> getIdentifications() {
         return Holder.VALUE_IDENTIFICATIONS;
     }
 
     private static class Holder {
 
-        private static final @NonNull Set<String> VALUE_IDENTIFICATIONS;
+        private static final Set<String> VALUE_IDENTIFICATIONS;
 
         static {
             VALUE_IDENTIFICATIONS = Arrays.stream(values())

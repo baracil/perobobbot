@@ -2,7 +2,6 @@ package perobobbot.twitch.chat.message.from;
 
 import fpc.tools.irc.IRCParsing;
 import lombok.Getter;
-import lombok.NonNull;
 
 /**
  * @author Bastien Aracil
@@ -10,12 +9,12 @@ import lombok.NonNull;
 @Getter
 public class UnknownMessageFromTwitch extends MessageFromTwitchBase implements MessageFromTwitch {
 
-    public UnknownMessageFromTwitch(@NonNull IRCParsing ircParsing) {
+    public UnknownMessageFromTwitch(IRCParsing ircParsing) {
         super(ircParsing);
     }
 
     @Override
-    public <T> T accept(@NonNull MessageFromTwitchVisitor<T> visitor) {
+    public <T> T accept(MessageFromTwitchVisitor<T> visitor) {
         return visitor.visit(this);
     }
 

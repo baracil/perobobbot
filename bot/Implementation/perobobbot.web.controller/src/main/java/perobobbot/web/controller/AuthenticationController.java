@@ -9,7 +9,6 @@ import io.micronaut.http.annotation.QueryValue;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.micronaut.views.View;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.data.Platform;
 import perobobbot.api.data.TokenWithIdentity;
@@ -29,23 +28,23 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class AuthenticationController implements AuthenticationApi {
 
-    private final @NonNull OAuthManager oAuthManager;
-    private final @NonNull UserTokenService userTokenService;
+    private final OAuthManager oAuthManager;
+    private final UserTokenService userTokenService;
 
     @Override
-    public @NonNull Set<Platform> listManagedPlatforms() {
+    public Set<Platform> listManagedPlatforms() {
         return oAuthManager.getManagedPlatforms();
     }
 
 
     @Override
-    public @NonNull URI startAuthorizationCodeGrantFlow(@NonNull @PathVariable Platform platform) {
+    public URI startAuthorizationCodeGrantFlow(@PathVariable Platform platform) {
         final var flow =  oAuthManager.startAuthorizationCodeGrantFlow(platform,this::onUserToken,this::onFailure);
         return flow.getUri();
     }
 
     @Override
-    public void launchAuthorizationCodeGrantFlow(@NonNull @PathVariable Platform platform) throws IOException {
+    public void launchAuthorizationCodeGrantFlow(@PathVariable Platform platform) throws IOException {
         final var flow = oAuthManager.startAuthorizationCodeGrantFlow(platform,this::onUserToken,this::onFailure);
 
         try {
@@ -58,7 +57,7 @@ public class AuthenticationController implements AuthenticationApi {
 
     @View("authentication")
     @Override
-    public @NonNull HttpResponse<?> authenticate(@NonNull @PathVariable  Platform platform) {
+    public HttpResponse<?> authenticate(@PathVariable  Platform platform) {
         final var flow = oAuthManager.startAuthorizationCodeGrantFlow(platform, this::onUserToken, this::onFailure);
 
         return HttpResponse.ok(CollectionUtils.mapOf("callbackUrl", flow.getUri().toString()));
@@ -66,13 +65,13 @@ public class AuthenticationController implements AuthenticationApi {
 
 
     @Get("/callback/{platform}{?values*}")
-    public void getCallback(@NonNull @PathVariable Platform platform,
-                            @NonNull @QueryValue("values") Map<String, String> values) {
+    public void getCallback(@PathVariable Platform platform,
+                            @QueryValue("values") Map<String, String> values) {
         oAuthManager.handleCallback(platform, values);
     }
 
 
-    private void onUserToken(@NonNull TokenWithIdentity tokenWithIdentity) {
+    private void onUserToken(TokenWithIdentity tokenWithIdentity) {
         try {
             userTokenService.setUserToken(tokenWithIdentity);
         } catch (Throwable t) {
@@ -80,7 +79,7 @@ public class AuthenticationController implements AuthenticationApi {
         }
     }
 
-    private void onFailure(@NonNull Throwable throwable) {
+    private void onFailure(Throwable throwable) {
         throwable.printStackTrace();
     }
 

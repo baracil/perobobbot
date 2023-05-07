@@ -3,7 +3,6 @@ package perobobbot.twitch.chat.impl._private;
 import fpc.tools.advanced.chat.AdvancedChat;
 import fpc.tools.chat.ChatNotConnected;
 import fpc.tools.lang.SmartLock;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.chat.message.from.MessageFromTwitch;
 
@@ -17,7 +16,7 @@ public class ConnectionResult {
 
     private final AtomicReference<Data> connectionResult = new AtomicReference<>(null);
 
-    public @NonNull AdvancedChat<MessageFromTwitch> getChat() {
+    public AdvancedChat<MessageFromTwitch> getChat() {
         final var data = connectionResult.get();
         if (data == null) {
             throw new ChatNotConnected();
@@ -37,11 +36,11 @@ public class ConnectionResult {
         }
     }
 
-    public void setOnConnection(@NonNull AdvancedChat<MessageFromTwitch> chat) {
+    public void setOnConnection(AdvancedChat<MessageFromTwitch> chat) {
         this.setConnectionResult(m -> new Data(chat,null));
     }
 
-    public void setOnConnectionFailed(@NonNull RuntimeException error) {
+    public void setOnConnectionFailed(RuntimeException error) {
         this.setConnectionResult(m -> new Data(null,error));
     }
 
@@ -91,7 +90,7 @@ public class ConnectionResult {
             return chat != null && chat.isRunning();
         }
 
-        public @NonNull AdvancedChat<MessageFromTwitch> getChat() {
+        public AdvancedChat<MessageFromTwitch> getChat() {
             if (error != null) {
                 throw error;
             }

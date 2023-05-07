@@ -3,7 +3,6 @@ package perobobbot.twitch.chat.message.from;
 import fpc.tools.irc.IRCParsing;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 import perobobbot.twitch.chat.ChannelSpecific;
 import perobobbot.twitch.chat.TwitchChannel;
 import perobobbot.twitch.chat.message.IRCCommand;
@@ -14,16 +13,14 @@ import perobobbot.twitch.chat.message.IRCCommand;
 @Getter
 public class Mode extends KnownMessageFromTwitch implements ChannelSpecific {
 
-    @NonNull
     private final TwitchChannel channel;
 
-    @NonNull
     private final String user;
 
     private final boolean gainedModeration;
 
     @Builder
-    public Mode(@NonNull IRCParsing ircParsing, @NonNull TwitchChannel channel, @NonNull String user, boolean gainedModeration) {
+    public Mode(IRCParsing ircParsing, TwitchChannel channel, String user, boolean gainedModeration) {
         super(ircParsing);
         this.channel = channel;
         this.user = user;
@@ -31,7 +28,7 @@ public class Mode extends KnownMessageFromTwitch implements ChannelSpecific {
     }
 
     @Override
-    public @NonNull IRCCommand getCommand() {
+    public IRCCommand getCommand() {
         return IRCCommand.MODE;
     }
 
@@ -40,11 +37,11 @@ public class Mode extends KnownMessageFromTwitch implements ChannelSpecific {
     }
 
     @Override
-    public <T> T accept(@NonNull MessageFromTwitchVisitor<T> visitor) {
+    public <T> T accept(MessageFromTwitchVisitor<T> visitor) {
         return visitor.visit(this);
     }
 
-    public static @NonNull Mode build(@NonNull AnswerBuilderHelper helper) {
+    public static Mode build(AnswerBuilderHelper helper) {
         return Mode.builder()
                    .ircParsing(helper.getIrcParsing())
                    .channel(helper.channelFromParameterAt(0))

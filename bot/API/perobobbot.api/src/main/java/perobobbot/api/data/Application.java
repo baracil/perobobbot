@@ -6,54 +6,53 @@ import fpc.tools.cipher.TextDecryptor;
 import fpc.tools.cipher.TextEncryptor;
 import fpc.tools.lang.Secret;
 import io.micronaut.core.annotation.Introspected;
-import lombok.NonNull;
 
 public sealed interface Application<T>
         extends Decryptable<Application.Decrypted>, Encryptable<Application.Encrypted>
         permits Application.Decrypted, Application.Encrypted {
 
-    @NonNull Platform platform();
+    Platform platform();
 
-    @NonNull String name();
+    String name();
 
-    @NonNull String clientId();
+    String clientId();
 
-    @NonNull T clientSecret();
+    T clientSecret();
 
-    default @NonNull SafeApplication toSafe() {
+    default SafeApplication toSafe() {
         return new SafeApplication(platform(),name(),clientId());
     }
 
     @Introspected
-    record Encrypted(@NonNull Platform platform,
-                     @NonNull String name,
-                     @NonNull String clientId,
-                     @NonNull String clientSecret) implements Application<String> {
+    record Encrypted(Platform platform,
+                     String name,
+                     String clientId,
+                     String clientSecret) implements Application<String> {
 
         @Override
-        public @NonNull Application.Decrypted decrypt(@NonNull TextDecryptor textDecryptor) {
+        public Application.Decrypted decrypt(TextDecryptor textDecryptor) {
             return new Decrypted(platform, name, clientId, textDecryptor.decrypt(clientSecret));
         }
 
         @Override
-        public @NonNull Application.Encrypted encrypt(@NonNull TextEncryptor textEncryptor) {
+        public Application.Encrypted encrypt(TextEncryptor textEncryptor) {
             return this;
         }
     }
 
     @Introspected
-    record Decrypted(@NonNull Platform platform,
-                     @NonNull String name,
-                     @NonNull String clientId,
-                     @NonNull Secret clientSecret) implements Application<Secret> {
+    record Decrypted(Platform platform,
+                     String name,
+                     String clientId,
+                     Secret clientSecret) implements Application<Secret> {
 
         @Override
-        public @NonNull Application.Encrypted encrypt(@NonNull TextEncryptor textEncryptor) {
+        public Application.Encrypted encrypt(TextEncryptor textEncryptor) {
             return new Encrypted(platform, name, clientId, textEncryptor.encrypt(clientSecret));
         }
 
         @Override
-        public @NonNull Application.Decrypted decrypt(@NonNull TextDecryptor textDecryptor) {
+        public Application.Decrypted decrypt(TextDecryptor textDecryptor) {
             return this;
         }
     }

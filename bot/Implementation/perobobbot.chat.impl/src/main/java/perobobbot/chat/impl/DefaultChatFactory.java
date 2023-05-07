@@ -1,6 +1,5 @@
 package perobobbot.chat.impl;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
 import perobobbot.api.data.Platform;
@@ -26,23 +25,23 @@ public class DefaultChatFactory implements ChatFactory {
                     (p1,p2) -> p1
             );
 
-    public static @NonNull ChatFactory create(@NonNull Collection<PlatformChatFactory> factories) {
+    public static ChatFactory create(Collection<PlatformChatFactory> factories) {
         final var factoryPerPlatform = factories.stream().collect(BY_PLATFORM_COLLECTOR);
         return new DefaultChatFactory(factoryPerPlatform);
     }
 
-    private final @NonNull Map<Platform, PlatformChatFactory> factories;
+    private final Map<Platform, PlatformChatFactory> factories;
 
     @Override
     @Synchronized
-    public @NonNull Chat create(@NonNull UserIdentity userIdentity) throws InterruptedException {
+    public Chat create(UserIdentity userIdentity) throws InterruptedException {
         final var factory = getFactory(userIdentity.platform());
         final var chat = factory.create(userIdentity);
         chat.connect();
         return chat;
     }
 
-    private @NonNull PlatformChatFactory getFactory(@NonNull Platform platform) {
+    private PlatformChatFactory getFactory(Platform platform) {
         final var factory = factories.get(platform);
         if (factory == null) {
             throw new NoChatFactoryForPlatform(platform);

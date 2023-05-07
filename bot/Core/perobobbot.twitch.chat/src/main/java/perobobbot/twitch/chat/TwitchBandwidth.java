@@ -4,7 +4,6 @@ import fpc.tools.chat.BandwidthLimits;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.ConfigurationBuilder;
 import io.github.bucket4j.local.LocalBucketBuilder;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -17,21 +16,19 @@ public enum TwitchBandwidth implements BandwidthLimits {
     VERIFIED_BOT(Bandwidths._7500_per_30_seconds),
     ;
 
-    @NonNull
     private final List<Bandwidth> bandwidth;
 
-    TwitchBandwidth(@NonNull Bandwidth... bandwidth) {
+    TwitchBandwidth(Bandwidth... bandwidth) {
         this.bandwidth = List.of(bandwidth);
     }
 
     @Override
-    public @NonNull LocalBucketBuilder addLimits(@NonNull LocalBucketBuilder builder) {
+    public LocalBucketBuilder addLimits(LocalBucketBuilder builder) {
         bandwidth.forEach(builder::addLimit);
         return builder;
     }
 
-    @NonNull
-    public ConfigurationBuilder addLimits(@NonNull ConfigurationBuilder builder) {
+    public ConfigurationBuilder addLimits(ConfigurationBuilder builder) {
         bandwidth.forEach(builder::addLimit);
         return builder;
     }

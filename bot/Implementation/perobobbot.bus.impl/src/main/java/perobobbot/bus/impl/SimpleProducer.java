@@ -1,6 +1,5 @@
 package perobobbot.bus.impl;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.bus.api.Message;
 import perobobbot.bus.api.Producer;
@@ -12,21 +11,21 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class SimpleProducer implements Producer {
 
-    private final @NonNull SimpleBus bus;
-    private final @NonNull Set<RegularTopic> topics;
+    private final SimpleBus bus;
+    private final Set<RegularTopic> topics;
 
     @Override
-    public void sendMessage(@NonNull Message<?> value) {
+    public void sendMessage(Message<?> value) {
         topics.forEach(t -> bus.publishEvent(t,value));
     }
 
     @Override
-    public void send(@NonNull Object payload) {
+    public void send(Object payload) {
         send(Map.of(),payload);
     }
 
     @Override
-    public void send(@NonNull Map<String, String> headers, @NonNull Object payload) {
+    public void send(Map<String, String> headers, Object payload) {
         sendMessage(new SimpleMessage<>(headers,payload));
     }
 

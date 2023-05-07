@@ -4,7 +4,6 @@ import fpc.tools.fp.Tuple2;
 import fpc.tools.lang.Subscription;
 import io.micronaut.retry.annotation.Fallback;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.PerobobbotExecutors;
 import perobobbot.api.plugin.PerobobbotService;
@@ -28,41 +27,41 @@ public class SimpleBus implements Bus {
     private static final Duration DURATION_WITHOUT_MESSAGE_BEFORE_STOPPING = Duration.ofMinutes(1);
 
 
-    private final @NonNull PerobobbotExecutors executors;
+    private final PerobobbotExecutors executors;
 
     private final Map<String, EventDispatcher> dispatcher = new ConcurrentHashMap<>();
     private final Listeners listeners = new Listeners();
 
     @Override
-    public @NonNull Producer createProducer(@NonNull String topic) {
+    public Producer createProducer(String topic) {
         final var regularTopic = Topic.parseRegular(topic);
         return new SimpleProducer(this, Set.of(regularTopic));
     }
 
     @Override
-    public @NonNull Producer createProducer(@NonNull Set<String> topics) {
-        final var regularTopics = topics.stream().map(Topic::parseRegular).distinct().collect(Collectors.toSet());
+    public Producer createProducer(Set<String> topics) {
+        final var regularTopics = topics.stream().map(Topic::parseRegular).collect(Collectors.toSet());
         return new SimpleProducer(this, regularTopics);
     }
 
     @Override
-    public @NonNull <T> Message<T> createSimpleMessage(T payload) {
+    public <T> Message<T> createSimpleMessage(T payload) {
         return new SimpleMessage<>(Map.of(),payload);
     }
 
     @Override
-    public @NonNull <T> Consumer<T> createConsumer(@NonNull String topic, @NonNull Class<T> eventType) {
+    public <T> Consumer<T> createConsumer(String topic, Class<T> payloadType) {
         final var topics = Set.of(Topic.parse(topic));
-        return new SimpleConsumer<>(this,executors,topics,eventType);
+        return new SimpleConsumer<>(this,executors,topics, payloadType);
     }
 
     @Override
-    public @NonNull <T> Consumer<T> createConsumer(@NonNull Set<String> topics, @NonNull Class<T> eventType) {
-        final var regularTopics = topics.stream().map(Topic::parse).distinct().collect(Collectors.toSet());
-        return new SimpleConsumer<>(this,executors,regularTopics,eventType);
+    public <T> Consumer<T> createConsumer(Set<String> topics, Class<T> payloadType) {
+        final var regularTopics = topics.stream().map(Topic::parse).collect(Collectors.toSet());
+        return new SimpleConsumer<>(this,executors,regularTopics, payloadType);
     }
 
-    void publishEvent(@NonNull RegularTopic topic, @NonNull Message<?> event) {
+    void publishEvent(RegularTopic topic, Message<?> event) {
         final var dispatcherKey = topic.getNamespaceAndTenant();
 
         this.dispatcher.computeIfAbsent(dispatcherKey, this::createEventDispatch)
@@ -76,7 +75,7 @@ public class SimpleBus implements Bus {
     }
 
 
-    public <T> Subscription addListener(@NonNull Topic topic, @NonNull Class<T> eventType, @NonNull BusListener<T> listener) {
+    public <T> Subscription addListener(Topic topic, Class<T> eventType, BusListener<T> listener) {
         return listeners.addListener(topic, eventType, listener);
     }
 
@@ -84,7 +83,7 @@ public class SimpleBus implements Bus {
     @RequiredArgsConstructor
     private class EventDispatcher implements Runnable {
 
-        private final @NonNull String dispatcherKey;
+        private final String dispatcherKey;
         private final BlockingDeque<Tuple2<RegularTopic, Message<?>>> pendingData = new LinkedBlockingDeque<>();
 
         @Override
@@ -107,7 +106,7 @@ public class SimpleBus implements Bus {
             dispatcher.remove(dispatcherKey);
         }
 
-        public void onBusEvent(@NonNull RegularTopic topic, @NonNull Message<?> message) {
+        public void onBusEvent(RegularTopic topic, Message<?> message) {
             this.pendingData.push(new Tuple2<>(topic, message));
         }
     }

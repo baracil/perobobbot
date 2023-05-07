@@ -1,7 +1,6 @@
 package perobobbot.api.data;
 
 import fpc.tools.lang.Secret;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.Identity;
 import perobobbot.api.Scope;
@@ -23,7 +22,7 @@ public class UserTokenBuilder<T> {
         return initialize(builder, reference);
     }
 
-    private static <T> UserTokenBuilder<T> initialize(@NonNull UserTokenBuilder<T> builder, @NonNull UserToken<T> userToken) {
+    private static <T> UserTokenBuilder<T> initialize(UserTokenBuilder<T> builder, UserToken<T> userToken) {
         return builder.identification(userToken.identity())
                       .accessToken(userToken.accessToken())
                       .refreshToken(userToken.refreshToken())
@@ -32,7 +31,7 @@ public class UserTokenBuilder<T> {
                       .tokenType(userToken.tokenType());
     }
 
-    private final @NonNull Function<UserTokenBuilder<T>, UserToken<T>> factory;
+    private final Function<UserTokenBuilder<T>, UserToken<T>> factory;
 
     private Identity identity;
     private Platform platform;
@@ -43,7 +42,7 @@ public class UserTokenBuilder<T> {
     private String tokenType;
 
 
-    public @NonNull UserToken<T> build() {
+    public UserToken<T> build() {
         return factory.apply(this);
     }
 

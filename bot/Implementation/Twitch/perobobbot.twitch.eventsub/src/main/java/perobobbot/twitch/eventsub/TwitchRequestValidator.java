@@ -2,8 +2,8 @@ package perobobbot.twitch.eventsub;
 
 import fpc.tools.lang.Secret;
 import io.micronaut.http.HttpRequest;
+import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.PerobobbotException;
@@ -26,26 +26,26 @@ public class TwitchRequestValidator {
     private static final String MAC_ALGORITHM = "HmacSHA256";
 
 
-    public static @NonNull Optional<TwitchRequestContent<String>> validate(@NonNull HttpRequest<?> twitchRequest,
-                                                                           @NonNull String body,
-                                                                           @NonNull Secret secret) {
+    public static Optional<TwitchRequestContent<String>> validate(HttpRequest<?> twitchRequest,
+                                                                  String body,
+                                                                  Secret secret) {
         return new TwitchRequestValidator(twitchRequest, body, secret).validate();
     }
 
-    private final @NonNull HttpRequest<?> request;
-    private final @NonNull String body;
-    private final @NonNull Secret secret;
-    private final @NonNull MessageSaver messageSaver = new MessageSaver("certi_", ".txt");
+    private final HttpRequest<?> request;
+    private final String body;
+    private final Secret secret;
+    private final MessageSaver messageSaver = new MessageSaver("certi_", ".txt");
 
-    private String messageId;
-    private String timeStamp;
-    private String type;
-    private String signature;
-    private byte[] signatureBytes;
-    private String computedSignature;
+    private @Nullable String messageId;
+    private @Nullable String timeStamp;
+    private @Nullable String type;
+    private @Nullable String signature;
+    private @Nullable byte[] signatureBytes;
+    private @Nullable String computedSignature;
 
 
-    private @NonNull Optional<TwitchRequestContent<String>> validate() {
+    private Optional<TwitchRequestContent<String>> validate() {
         if (true) {
             this.retrieveTwitchHeaders();
             if (!areAllHeadersDefined()) {
@@ -59,6 +59,8 @@ public class TwitchRequestValidator {
                 return Optional.empty();
             }
         }
+        assert type != null;
+        assert messageId != null;
         return Optional.of(new TwitchRequestContent<>(type, messageId, Instant.parse(timeStamp), body));
     }
 
@@ -89,6 +91,7 @@ public class TwitchRequestValidator {
     }
 
     private void computeMacSignatureBytes() {
+        assert messageId != null && timeStamp != null;
         try {
             final var mac = Mac.getInstance(MAC_ALGORITHM);
             mac.init(new SecretKeySpec(secret.getBytes(StandardCharsets.US_ASCII), MAC_ALGORITHM));
@@ -102,6 +105,7 @@ public class TwitchRequestValidator {
     }
 
     private void transformSignatureBytesToString() {
+        assert signatureBytes != null;
         computedSignature = IntStream.range(0, signatureBytes.length)
                                      .mapToObj(i -> String.format("%02x", signatureBytes[i]))
                                      .collect(Collectors.joining("", "sha256=", ""));
@@ -110,6 +114,7 @@ public class TwitchRequestValidator {
     }
 
     private boolean isRequestValid() {
+        assert signature != null;
         return signature.equals(computedSignature);
     }
 }

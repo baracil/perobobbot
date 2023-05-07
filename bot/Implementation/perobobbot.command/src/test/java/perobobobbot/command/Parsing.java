@@ -2,7 +2,6 @@ package perobobobbot.command;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -10,8 +9,8 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public class Parsing {
 
-    private final @NonNull String fullCommand;
-    private final @NonNull String regexp;
+    private final String fullCommand;
+    private final String regexp;
     private final int nbParameters;
 
 }

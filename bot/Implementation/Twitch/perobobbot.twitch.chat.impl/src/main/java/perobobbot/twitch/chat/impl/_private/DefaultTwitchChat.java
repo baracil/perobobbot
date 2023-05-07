@@ -6,7 +6,6 @@ import fpc.tools.lang.Instants;
 import fpc.tools.lang.Looper;
 import fpc.tools.lang.Subscription;
 import fpc.tools.lang.ThrowableTool;
-import lombok.NonNull;
 import lombok.Synchronized;
 import perobobbot.api.Identity;
 import perobobbot.api.JoinedChannelProviderForUser;
@@ -34,20 +33,20 @@ import java.util.concurrent.CompletionStage;
 
 public class DefaultTwitchChat implements TwitchChat, TwitchChatListener {
 
-    private final @NonNull UserIdentity bot;
-    private final @NonNull TwitchChatStateListener twitchChatStateListener;
-    private final @NonNull TwitchChatStateManager twitchChatStateManager;
-    private final @NonNull Looper channelJoiner;
-    private final @NonNull Bus bus;
-    private final @NonNull UserIdentityProvider userIdentityProvider;
+    private final UserIdentity bot;
+    private final TwitchChatStateListener twitchChatStateListener;
+    private final TwitchChatStateManager twitchChatStateManager;
+    private final Looper channelJoiner;
+    private final Bus bus;
+    private final UserIdentityProvider userIdentityProvider;
 
 
-    public DefaultTwitchChat(@NonNull UserIdentity bot,
-                             @NonNull OAuthData oAuthData,
-                             @NonNull JoinedChannelProviderForUser channelProvider,
-                             @NonNull Instants instants,
-                             @NonNull Bus bus,
-                             @NonNull UserIdentityProvider userIdentityProvider) {
+    public DefaultTwitchChat(UserIdentity bot,
+                             OAuthData oAuthData,
+                             JoinedChannelProviderForUser channelProvider,
+                             Instants instants,
+                             Bus bus,
+                             UserIdentityProvider userIdentityProvider) {
         this.bot = bot;
         this.twitchChatStateListener = new TwitchChatStateListener(oAuthData);
         this.twitchChatStateManager = new TwitchChatStateManager(oAuthData.getLogin(), twitchChatStateListener, instants);
@@ -59,7 +58,7 @@ public class DefaultTwitchChat implements TwitchChat, TwitchChatListener {
 
     @Override
     @Synchronized
-    public @NonNull CompletionStage<TwitchChat> requestConnection() {
+    public CompletionStage<TwitchChat> requestConnection() {
         twitchChatStateManager.connect();
         final var future = new CompletableFuture<TwitchChat>();
         new Thread(() -> {
@@ -82,23 +81,23 @@ public class DefaultTwitchChat implements TwitchChat, TwitchChatListener {
     }
 
     @Override
-    public @NonNull CompletionStage<?> requestDisconnection() {
+    public CompletionStage<?> requestDisconnection() {
         return twitchChatStateManager.disconnect();
     }
 
 
     @Override
-    public @NonNull CompletionStage<DispatchSlip> sendCommand(@NonNull CommandToTwitch command) {
+    public CompletionStage<DispatchSlip> sendCommand(CommandToTwitch command) {
         return twitchChatStateManager.sendCommand(command);
     }
 
     @Override
-    public @NonNull <A> CompletionStage<ReceiptSlip<A>> sendRequest(@NonNull RequestToTwitch<A> request) {
+    public <A> CompletionStage<ReceiptSlip<A>> sendRequest(RequestToTwitch<A> request) {
         return twitchChatStateManager.sendRequest(request);
     }
 
     @Override
-    public @NonNull Subscription addChatListener(@NonNull TwitchChatListener listener) {
+    public Subscription addChatListener(TwitchChatListener listener) {
         return twitchChatStateListener.addChatListener(listener);
     }
 
@@ -118,11 +117,11 @@ public class DefaultTwitchChat implements TwitchChat, TwitchChatListener {
     }
 
     @Override
-    public void onPostedMessage(@NonNull Instant postInstant, @NonNull MessageToTwitch message) {
+    public void onPostedMessage(Instant postInstant, MessageToTwitch message) {
     }
 
     @Override
-    public void onReceivedMessage(@NonNull Instant receptionInstant, @NonNull MessageFromTwitch message) {
+    public void onReceivedMessage(Instant receptionInstant, MessageFromTwitch message) {
         final var payload = MessageData.fromFpc(message.getIrcParsing());
         final ChatMessage chatMessage;
         final String channelName;

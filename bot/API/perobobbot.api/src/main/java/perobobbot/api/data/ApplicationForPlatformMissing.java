@@ -1,23 +1,22 @@
 package perobobbot.api.data;
 
 import lombok.Getter;
-import lombok.NonNull;
 
 import java.util.List;
 
 public class ApplicationForPlatformMissing extends EntityNotFound {
 
     @Getter
-    private final @NonNull Platform platform;
+    private final Platform platform;
 
-    public ApplicationForPlatformMissing(@NonNull Platform platform) {
+    public ApplicationForPlatformMissing(Platform platform) {
         super("No application for the platform '"+ platform.name() +"' exists.");
         this.platform = platform;
     }
 
 
     @Override
-    public @NonNull List<Criteria> searchedCriteria() {
+    public List<Criteria> searchedCriteria() {
         return List.of(new Criteria("platform",platform));
     }
 }

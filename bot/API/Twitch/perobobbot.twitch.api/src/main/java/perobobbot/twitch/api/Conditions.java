@@ -3,8 +3,8 @@ package perobobbot.twitch.api;
 import fpc.tools.lang.IdentifiedEnumTools;
 import fpc.tools.lang.MapTool;
 import io.micronaut.core.annotation.Introspected;
+import jakarta.annotation.Nullable;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Value;
 
 import java.util.*;
@@ -14,13 +14,13 @@ import java.util.*;
 @Introspected
 public class Conditions implements Iterable<Map.Entry<CriteriaType, String>> {
 
-    @NonNull Map<CriteriaType, String> values;
+    Map<CriteriaType, String> values;
 
-    public @NonNull Optional<String> findConditionValue(@NonNull CriteriaType criteriaType) {
+    public Optional<String> findConditionValue(CriteriaType criteriaType) {
         return Optional.ofNullable(values.get(criteriaType));
     }
 
-    public @NonNull Map<String, String> toMap() {
+    public Map<String, String> toMap() {
         return values.entrySet().stream().collect(MapTool.collector(e -> e.getKey().getIdentification(), Map.Entry::getValue));
     }
 
@@ -29,11 +29,11 @@ public class Conditions implements Iterable<Map.Entry<CriteriaType, String>> {
         return values.entrySet().iterator();
     }
 
-    public static @NonNull Conditions singleCondition(@NonNull CriteriaType criteriaType, @NonNull String value) {
+    public static Conditions singleCondition(CriteriaType criteriaType, String value) {
         return new Conditions(Map.of(criteriaType,value));
     }
 
-    public static @NonNull Conditions fromMap(@NonNull Map<String, String> conditions) {
+    public static Conditions fromMap(Map<String, String> conditions) {
         final var values = conditions.entrySet()
                                      .stream()
                                      .collect(MapTool.collector(e -> IdentifiedEnumTools.getEnum(e.getKey(), CriteriaType.class), Map.Entry::getValue));
@@ -41,7 +41,7 @@ public class Conditions implements Iterable<Map.Entry<CriteriaType, String>> {
     }
 
 
-    public static @NonNull Builder builder() {
+    public static Builder builder() {
         return new Builder();
     }
 
@@ -49,14 +49,14 @@ public class Conditions implements Iterable<Map.Entry<CriteriaType, String>> {
     public static class Builder {
         private final Map<CriteriaType,String> values = new HashMap<>();
 
-        public Builder put(@NonNull CriteriaType criteriaType, String value) {
+        public Builder put(CriteriaType criteriaType, @Nullable String value) {
             if (value != null) {
                 values.put(criteriaType,value);
             }
             return this;
         }
 
-        public @NonNull Conditions build() {
+        public Conditions build() {
             return new Conditions(Collections.unmodifiableMap(values));
         }
 

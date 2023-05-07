@@ -1,7 +1,6 @@
 package perobobbot.twitch.eventsub.sync;
 
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.PlatformSubscriptionManager;
@@ -14,15 +13,15 @@ import perobobbot.twitch.api.eventsub.TwitchEventSubConfiguration;
 @Slf4j
 public class TwitchSubscriptionManager implements PlatformSubscriptionManager {
 
-    private final @NonNull TwitchEventSubConfiguration configuration;
+    private final TwitchEventSubConfiguration configuration;
 
     @Override
-    public @NonNull String getCallbackUrl() {
+    public String getCallbackUrl() {
         return configuration.getCallbackUrl();
     }
 
     @Override
-    public @NonNull Platform getPlatform() {
+    public Platform getPlatform() {
         return Twitch.PLATFORM;
     }
 

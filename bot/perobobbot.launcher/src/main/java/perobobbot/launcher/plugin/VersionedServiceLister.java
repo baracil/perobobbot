@@ -7,7 +7,6 @@ import io.micronaut.inject.BeanDefinition;
 import io.micronaut.inject.qualifiers.Qualifiers;
 import jplugman.api.VersionedService;
 import lombok.AccessLevel;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.plugin.PerobobbotService;
 import perobobbot.api.plugin.PerobobbotServices;
@@ -22,13 +21,13 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class VersionedServiceLister {
 
-    public static @NonNull Set<VersionedService> list(@NonNull ApplicationContext applicationContext) {
+    public static Set<VersionedService> list(ApplicationContext applicationContext) {
         return new VersionedServiceLister(applicationContext).list();
     }
 
-    private final @NonNull ApplicationContext applicationContext;
+    private final ApplicationContext applicationContext;
 
-    public @NonNull Set<VersionedService> list() {
+    public Set<VersionedService> list() {
         final var bean1 = applicationContext.getBeanDefinitions(Qualifiers.byStereotype(PerobobbotService.class));
         final var bean2 = applicationContext.getBeanDefinitions(Qualifiers.byStereotype(PerobobbotServices.class));
         return Stream.concat(
@@ -38,14 +37,14 @@ public class VersionedServiceLister {
                      .collect(Collectors.toSet());
     }
 
-    private @NonNull Stream<VersionedService> extractVersionServices(@NonNull BeanDefinition<?> beanDefinition) {
+    private Stream<VersionedService> extractVersionServices(BeanDefinition<?> beanDefinition) {
         final var bean = applicationContext.getBean(beanDefinition);
         return extractAnnotations(beanDefinition)
                 .map(perobobbotService -> createVersionService(bean, perobobbotService))
                 .filter(Objects::nonNull);
     }
 
-    private @Nullable VersionedService createVersionService(@NonNull Object bean, @NonNull AnnotationValue<PerobobbotService> perobobbotService) {
+    private @Nullable VersionedService createVersionService(Object bean, AnnotationValue<PerobobbotService> perobobbotService) {
         final var apiVersion = perobobbotService.getRequiredValue(PerobobbotService.API_VERSION, Integer.class);
         final var serviceType = perobobbotService.getRequiredValue(PerobobbotService.SERVICE_TYPE, Class.class);
 
@@ -56,7 +55,7 @@ public class VersionedServiceLister {
 
     }
 
-    private @NonNull Stream<AnnotationValue<PerobobbotService>> extractAnnotations(@NonNull BeanDefinition<?> definition) {
+    private Stream<AnnotationValue<PerobobbotService>> extractAnnotations(BeanDefinition<?> definition) {
         final var service = definition.getAnnotation(PerobobbotService.class);
         final var services = definition.getAnnotation(PerobobbotServices.class);
 

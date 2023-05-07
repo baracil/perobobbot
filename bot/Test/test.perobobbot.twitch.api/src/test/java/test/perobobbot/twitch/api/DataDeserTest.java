@@ -3,7 +3,6 @@ package test.perobobbot.twitch.api;
 import io.micronaut.serde.ObjectMapper;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
-import lombok.NonNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,7 +22,7 @@ public class DataDeserTest {
 
     protected @Inject ObjectMapper objectMapper;
 
-    public static @NonNull Stream<Arguments> samples() {
+    public static Stream<Arguments> samples() {
         return Stream.of(
                              EventSubNotification.class, TwitchSubscriptionData.class,
                              TwitchToken.class, EventSubVerification.class
@@ -42,7 +41,7 @@ public class DataDeserTest {
 
     @ParameterizedTest
     @MethodSource("samples")
-    public void testDeserialization(@NonNull Class<?> type, @NonNull URL url) {
+    public void testDeserialization(Class<?> type, URL url) {
         Assertions.assertDoesNotThrow(() -> {
             try (var is = url.openStream()) {
                 final var value = objectMapper.readValue(is, type);

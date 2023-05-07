@@ -1,7 +1,6 @@
 package perobobbot.twitch.service.client;
 
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.PerobobbotException;
 import perobobbot.twitch.api.User;
@@ -18,19 +17,19 @@ public class ClientUserService implements UsersService {
     private final UserClient userClient;
 
     @Override
-    public @NonNull Set<User> getUsers(@NonNull Set<String> ids) {
+    public Set<User> getUsers(Set<String> ids) {
         final var users = doGetUsers(ids);
         return Set.copyOf(users);
     }
 
     @Override
-    public @NonNull User getUser(@NonNull String id) {
+    public User getUser(String id) {
         final var users = doGetUsers(Set.of(id));
         return users.stream().findFirst().orElseThrow(() -> new PerobobbotException("No Twitch user with id '" + id + "' could be found"));
     }
 
 
-    private @NonNull List<User> doGetUsers(@NonNull Set<String> ids) {
+    private List<User> doGetUsers(Set<String> ids) {
         final var users = userClient.getUsers(ids, null).getData();
 
         if (users == null) {

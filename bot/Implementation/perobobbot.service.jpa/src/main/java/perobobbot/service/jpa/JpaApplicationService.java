@@ -36,26 +36,26 @@ public class JpaApplicationService implements ApplicationService {
     @Named("Db") TextCipher textCipher;
 
     @Override
-    public @NonNull Optional<Application.Decrypted> findApplication(@NonNull Platform platform) {
+    public Optional<Application.Decrypted> findApplication(Platform platform) {
         return applicationRepository.findByPlatform(platform)
                                     .map(ApplicationEntity::toView)
                                     .map(textCipher::decrypt);
     }
 
     @Override
-    public @NonNull Optional<ApplicationToken.Decrypted> findApplicationToken(@NonNull Platform platform) {
+    public Optional<ApplicationToken.Decrypted> findApplicationToken(Platform platform) {
         return applicationTokenRepository.findByApplicationPlatform(platform)
                                          .map(ApplicationTokenEntity::toView)
                                          .map(textCipher::decrypt);
     }
 
     @Override
-    public @NonNull String getApplicationClientId(@NonNull Platform platform) {
+    public String getApplicationClientId(Platform platform) {
         return applicationRepository.getClientIdByPlatform(platform);
     }
 
     @Override
-    public @NonNull Application.Decrypted saveApplication(@NonNull Platform platform, @NonNull CreateApplicationParameter parameter) {
+    public Application.Decrypted saveApplication(Platform platform, CreateApplicationParameter parameter) {
         final var existing = applicationRepository.findByPlatform(platform).orElse(null);
         final var name = parameter.name();
         final var clientId = parameter.clientId();
@@ -74,12 +74,12 @@ public class JpaApplicationService implements ApplicationService {
     }
 
     @Override
-    public @NonNull List<Platform> getAllPlatforms() {
+    public List<Platform> getAllPlatforms() {
         return applicationRepository.findPlatform().toList();
     }
 
     @Override
-    public @NonNull ApplicationToken.Decrypted saveApplicationToken(@NonNull ApplicationToken<Secret> applicationToken) {
+    public ApplicationToken.Decrypted saveApplicationToken(ApplicationToken<Secret> applicationToken) {
         final var application = applicationRepository.getByPlatform(applicationToken.platform());
         final var token = application.setToken(textCipher.encrypt(applicationToken.accessToken()), applicationToken.expirationInstant());
 

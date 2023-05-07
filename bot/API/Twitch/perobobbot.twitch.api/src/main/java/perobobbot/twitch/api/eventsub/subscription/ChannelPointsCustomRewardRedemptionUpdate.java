@@ -1,6 +1,6 @@
 package perobobbot.twitch.api.eventsub.subscription;
 
-import lombok.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import lombok.Value;
 import perobobbot.twitch.api.Conditions;
 import perobobbot.twitch.api.CriteriaType;
@@ -19,26 +19,26 @@ public class ChannelPointsCustomRewardRedemptionUpdate extends SubscriptionBase 
 
 
 
-    @NonNull String broadcasterId;
-    String rewardId;
+    String broadcasterId;
+    @Nullable String rewardId;
 
-    public ChannelPointsCustomRewardRedemptionUpdate(@NonNull String broadcasterId) {
+    public ChannelPointsCustomRewardRedemptionUpdate(String broadcasterId) {
         this.broadcasterId = broadcasterId;
         this.rewardId = null;
     }
 
-    public ChannelPointsCustomRewardRedemptionUpdate(@NonNull String broadcasterId, @NonNull String rewardId) {
+    public ChannelPointsCustomRewardRedemptionUpdate(String broadcasterId, String rewardId) {
         this.broadcasterId = broadcasterId;
         this.rewardId = rewardId;
     }
 
     @Override
-    public @NonNull SubscriptionType getType() {
+    public SubscriptionType getType() {
         return SubscriptionType.CHANNEL_POINTS_CUSTOM_REWARD_REDEMPTION_UPDATE;
     }
 
     @Override
-    public @NonNull Conditions getCondition() {
+    public Conditions getCondition() {
         return Conditions.builder()
                 .put(CriteriaType.BROADCASTER_USER_ID,broadcasterId)
                 .put(CriteriaType.REWARD_ID,rewardId)

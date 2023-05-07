@@ -19,6 +19,7 @@ module perobobbot.twitch.oauth {
     requires transitive perobobbot.api;
     requires transitive perobobbot.twitch.api;
     requires transitive perobobbot.oauth.api;
+    requires fpc.tools.annotation;
 
 
     exports perobobbot.twitch.oauth;

@@ -2,7 +2,6 @@ package perobobbot.twitch.chat.message;
 
 import fpc.tools.fp.Function1;
 import fpc.tools.irc.Tag;
-import lombok.NonNull;
 
 import java.util.Map;
 import java.util.Optional;
@@ -13,50 +12,42 @@ import java.util.function.Function;
  **/
 public interface Tags {
 
-    @NonNull Optional<String> findTag(@NonNull String tagName);
+    Optional<String> findTag(String tagName);
 
-    @NonNull
-    default <T> Optional<T> flatFindTag(@NonNull String tagName, @NonNull Function1<? super String, ? extends Optional<? extends T>> caster) {
+    default <T> Optional<T> flatFindTag(String tagName, Function1<? super String, ? extends Optional<? extends T>> caster) {
         return findTag(tagName).flatMap(caster);
     }
 
-    @NonNull
-    default Optional<String> findTag(@NonNull TagKey tagKey) {
+    default Optional<String> findTag(TagKey tagKey) {
         return findTag(tagKey.getKeyName());
     }
 
-    @NonNull
-    default String getTag(@NonNull TagKey tagKey) {
+    default String getTag(TagKey tagKey) {
         return findTag(tagKey).orElseThrow(() -> new IllegalArgumentException("Could not find tag " + tagKey));
     }
 
-    @NonNull
-    default String getTag(@NonNull TagKey tagKey, @NonNull String defaultValue) {
+    default String getTag(TagKey tagKey, String defaultValue) {
         return findTag(tagKey).orElse(defaultValue);
     }
 
-    default int getIntTag(@NonNull TagKey tagKey) {
+    default int getIntTag(TagKey tagKey) {
         return Integer.parseInt(getTag(tagKey));
     }
 
-    @NonNull
-    default Optional<Integer> findIntTag(@NonNull TagKey tagKey) {
+    default Optional<Integer> findIntTag(TagKey tagKey) {
         return findTag(tagKey, Integer::parseInt);
     }
 
-    @NonNull
-    default <T> Optional<T> findTag(@NonNull TagKey tagKey, @NonNull Function<? super String, ? extends T> mapper) {
+    default <T> Optional<T> findTag(TagKey tagKey, Function<? super String, ? extends T> mapper) {
         return findTag(tagKey).map(mapper);
     }
 
-    @NonNull
-    default <T> Optional<T> flatFindTag(@NonNull TagKey tagKey, @NonNull Function<? super String, ? extends Optional<? extends T>> mapper) {
+    default <T> Optional<T> flatFindTag(TagKey tagKey, Function<? super String, ? extends Optional<? extends T>> mapper) {
         return findTag(tagKey).flatMap(mapper);
     }
 
 
-    @NonNull
-    static Tags mapBased(@NonNull Map<String, Tag> tags) {
+    static Tags mapBased(Map<String, Tag> tags) {
         return tagName -> {
             final Tag tag = tags.get(tagName);
             return tag == null ? Optional.empty() : Optional.of(tag.getValue());

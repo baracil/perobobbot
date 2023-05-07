@@ -1,6 +1,5 @@
 package perobobbot.chat.api;
 
-import lombok.NonNull;
 import perobobbot.api.Identity;
 import perobobbot.api.data.UserIdentity;
 
@@ -10,9 +9,9 @@ public interface ChatManager {
 
     int VERSION = 1;
 
-    @NonNull Optional<ChatIO> findChat(@NonNull Identity identity);
+    Optional<ChatIO> findChat(Identity identity);
 
-    default @NonNull Optional<ChatIO> findChat(@NonNull UserIdentity userIdentity) {
+    default Optional<ChatIO> findChat(UserIdentity userIdentity) {
         return findChat(userIdentity.identity());
     }
 }

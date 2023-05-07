@@ -1,19 +1,15 @@
 package perobobbot.twitch.chat.message;
 
-import lombok.NonNull;
-
 import java.util.Optional;
 
 public interface Badges {
 
-    @NonNull
-    Optional<Badge> findBadge(@NonNull String badgeName);
+    Optional<Badge> findBadge(String badgeName);
 
-    default boolean hasBadge(@NonNull String badgeName) {
+    default boolean hasBadge(String badgeName) {
         return findBadge(badgeName).isPresent();
     }
 
-    @NonNull
     Badges EMPTY = badgeName -> Optional.empty();
 
 }

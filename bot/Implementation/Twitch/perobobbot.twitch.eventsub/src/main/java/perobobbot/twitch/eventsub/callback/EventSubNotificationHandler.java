@@ -3,8 +3,8 @@ package perobobbot.twitch.eventsub.callback;
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.serde.ObjectMapper;
+import jakarta.annotation.Nullable;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.SubscriptionManager;
@@ -24,10 +24,10 @@ import perobobbot.twitch.eventsub.TwitchRequestValidator;
 @RequiredArgsConstructor
 public class EventSubNotificationHandler implements EventSubHandler {
 
-    private final @NonNull ObjectMapper objectMapper;
-    private final @NonNull TwitchEventSubConfiguration configuration;
-    private final @NonNull Bus bus;
-    private final @NonNull MessageSaver messageSaver = new MessageSaver("event_sub", ".json");
+    private final ObjectMapper objectMapper;
+    private final TwitchEventSubConfiguration configuration;
+    private final Bus bus;
+    private final MessageSaver messageSaver = new MessageSaver("event_sub", ".json");
 
     @Override
     public int priority() {
@@ -35,27 +35,25 @@ public class EventSubNotificationHandler implements EventSubHandler {
     }
 
     @Override
-    public @NonNull HttpResponse<?> handleCall(@NonNull HttpRequest<?> request, @NonNull String body, @NonNull CallContext context) {
-        return new Executor(request,body).execute();
+    public HttpResponse<?> handleCall(HttpRequest<?> request, String body, CallContext context) {
+        return new Executor(request, body).execute();
     }
-
 
 
     @RequiredArgsConstructor
     private class Executor {
-        private final @NonNull HttpRequest<?> request;
-        private final @NonNull String body;
-        private TwitchRequestContent<String> validatedRequest;
-        private EventSubRequest eventSubRequest;
-        private HttpResponse<?> response;
+        private final HttpRequest<?> request;
+        private final String body;
+        private @Nullable TwitchRequestContent<String> validatedRequest;
+        private @Nullable EventSubRequest eventSubRequest;
 
-        public @NonNull HttpResponse<?> execute() {
+        public HttpResponse<?> execute() {
             try (var producer = bus.createProducer(SubscriptionManager.SUBSCRIPTION_EVENT_TOPIC)) {
                 return execute(producer);
             }
         }
 
-        private @NonNull HttpResponse<?> execute(@NonNull Producer producer) {
+        private HttpResponse<?> execute(Producer producer) {
             LOG.debug("[EventSub] Receive request");
             this.validateRequest();
             if (requestIsNotValid()) {
@@ -66,13 +64,12 @@ public class EventSubNotificationHandler implements EventSubHandler {
             this.deserializeRequestBody();
             LOG.debug("[EventSub] deserialized : " + eventSubRequest);
             this.dispatchEventSubRequest(producer);
-            this.prepareResponse();
-            return response;
+            return this.prepareResponse();
         }
 
 
         private void validateRequest() {
-            validatedRequest = TwitchRequestValidator.validate(request, body,configuration.getSecret()).orElse(null);
+            validatedRequest = TwitchRequestValidator.validate(request, body, configuration.getSecret()).orElse(null);
         }
 
         private boolean requestIsNotValid() {
@@ -80,6 +77,7 @@ public class EventSubNotificationHandler implements EventSubHandler {
         }
 
         private void saveBodyContent() {
+            assert validatedRequest != null;
             if (configuration.isBackupMessages()) {
                 LOG.debug("[EventSub] Save body message");
                 messageSaver.saveMessage(validatedRequest.content());
@@ -87,22 +85,23 @@ public class EventSubNotificationHandler implements EventSubHandler {
         }
 
         private void deserializeRequestBody() {
+            assert validatedRequest != null;
             eventSubRequest = TwitchRequestDeserializer.deserialize(objectMapper, validatedRequest.type(), validatedRequest.content()).orElse(null);
         }
 
 
-        private void dispatchEventSubRequest(@NonNull Producer producer) {
+        private void dispatchEventSubRequest(Producer producer) {
             if (eventSubRequest instanceof EventSubNotification notification) {
                 notification.getEvents().forEach(producer::send);
             }
         }
 
-        private void prepareResponse() {
+        private HttpResponse<?> prepareResponse() {
             if (eventSubRequest instanceof EventSubVerification verification) {
                 LOG.info("Send challenge : {}", verification.getChallenge());
-                this.response = HttpResponse.ok(verification.getChallenge());
+                return HttpResponse.ok(verification.getChallenge());
             } else {
-                this.response = HttpResponse.ok();
+                return HttpResponse.ok();
             }
         }
 

@@ -2,7 +2,6 @@ package perobobbot.discord.oauth;
 
 import fpc.tools.lang.Secret;
 import fpc.tools.lang.Todo;
-import lombok.NonNull;
 import perobobbot.api.data.Application;
 import perobobbot.api.data.ApplicationToken;
 import perobobbot.api.data.Platform;
@@ -15,37 +14,37 @@ import java.util.concurrent.CompletionStage;
 public class DiscordOAuth implements PlatformOAuth {
 
     @Override
-    public @NonNull Platform platform() {
+    public Platform platform() {
         return Todo.TODO();
     }
 
     @Override
-    public @NonNull URI getAuthorizationCodeGrantFlowURI(@NonNull String clientId, @NonNull String state, boolean forceVerify) {
+    public URI getAuthorizationCodeGrantFlowURI(String clientId, String state, boolean forceVerify) {
         return Todo.TODO();
     }
 
     @Override
-    public @NonNull CompletionStage<TokenWithIdentity> finalizeAuthorizationCodeGrantFlow(@NonNull Application<Secret> application, @NonNull String code) {
+    public CompletionStage<TokenWithIdentity> finalizeAuthorizationCodeGrantFlow(Application<Secret> application, String code) {
         return Todo.TODO();
     }
 
     @Override
-    public @NonNull TokenWithIdentity refreshUserToken(@NonNull Application<Secret> application, @NonNull Secret refreshToken) {
+    public TokenWithIdentity refreshUserToken(Application<Secret> application, Secret refreshToken) {
         return Todo.TODO();
     }
 
     @Override
-    public @NonNull ApplicationToken.Decrypted getAppToken(@NonNull Application<Secret> application) {
+    public ApplicationToken.Decrypted getAppToken(Application<Secret> application) {
         return Todo.TODO();
     }
 
     @Override
-    public void revoke(@NonNull String clientId, @NonNull Secret accessToken) {
+    public void revoke(String clientId, Secret accessToken) {
         Todo.TODO();
     }
 
     @Override
-    public void validate(@NonNull Secret accessToken) {
+    public void validate(Secret accessToken) {
         Todo.TODO();
     }
 }

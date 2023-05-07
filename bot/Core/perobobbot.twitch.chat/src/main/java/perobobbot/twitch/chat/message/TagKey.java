@@ -1,7 +1,6 @@
 package perobobbot.twitch.chat.message;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -30,7 +29,6 @@ public enum TagKey {
     USER_ID("user-id"),
             ;
 
-    @NonNull
     @Getter
     private final String keyName;
 }

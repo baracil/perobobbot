@@ -1,7 +1,6 @@
 package perobobbot.command.impl.parser;
 
 import lombok.AccessLevel;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.command.api.CommandDefinitionParsingFailure;
@@ -17,11 +16,11 @@ public enum RegexpCommandParser implements CommandParser {
     INSTANCE,
     ;
 
-    public static @NonNull RegexpCommandParser create() {
+    public static RegexpCommandParser create() {
         return INSTANCE;
     }
 
-    public @NonNull Command parse(@NonNull String commandDefinition) {
+    public Command parse(String commandDefinition) {
         return new Execution(commandDefinition.trim()).parse();
     }
 
@@ -38,7 +37,7 @@ public enum RegexpCommandParser implements CommandParser {
     @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
     private static class Execution {
 
-        private final @NonNull String commandDefinition;
+        private final String commandDefinition;
 
         private final StringBuilder regexpBuilder = new StringBuilder();
 
@@ -52,7 +51,7 @@ public enum RegexpCommandParser implements CommandParser {
 
         private boolean spacePending = false;
 
-        private @NonNull Command parse() {
+        private Command parse() {
 
             this.startPattern();
             while (index < commandDefinition.length()) {
@@ -70,7 +69,7 @@ public enum RegexpCommandParser implements CommandParser {
         }
 
 
-        private @NonNull String extractFirstCommand(@NonNull String fullCommand) {
+        private String extractFirstCommand(String fullCommand) {
             final var idx = fullCommand.indexOf("|");
             if (idx < 0) {
                 return fullCommand;
@@ -143,7 +142,7 @@ public enum RegexpCommandParser implements CommandParser {
             spacePending = false;
         }
 
-        private @NonNull String extractParameterName(char closingChar) {
+        private String extractParameterName(char closingChar) {
             final int idx = commandDefinition.indexOf(closingChar, index);
             if (idx < 0) {
                 throw createError("No closing char for parameter");
@@ -156,7 +155,7 @@ public enum RegexpCommandParser implements CommandParser {
             return name;
         }
 
-        private boolean isValidParameterName(@NonNull String name) {
+        private boolean isValidParameterName(String name) {
             return (!name.isEmpty() && name.chars().allMatch(this::isValidChar));
         }
 
@@ -164,7 +163,7 @@ public enum RegexpCommandParser implements CommandParser {
             return c == '-' || c == '.' || c == '?' || (c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z');
         }
 
-        private @NonNull String requiredParameter(@NonNull String name) {
+        private String requiredParameter(String name) {
             final var base = "(?<" + name + ">" + RegexpCommandParser.ARGUMENT_PATTERN + ")";
             if (spacePending) {
                 spacePending = false;
@@ -174,7 +173,7 @@ public enum RegexpCommandParser implements CommandParser {
             }
         }
 
-        private @NonNull String optionalParameter(@NonNull String name) {
+        private String optionalParameter(String name) {
             final var base = "(?<" + name + ">" + RegexpCommandParser.ARGUMENT_PATTERN + ")";
             if (spacePending) {
                 spacePending = false;
@@ -185,7 +184,7 @@ public enum RegexpCommandParser implements CommandParser {
         }
 
 
-        private @NonNull CommandDefinitionParsingFailure createError(@NonNull String reason) {
+        private CommandDefinitionParsingFailure createError(String reason) {
             return new CommandDefinitionParsingFailure(reason, commandDefinition);
         }
     }

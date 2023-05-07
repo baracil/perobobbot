@@ -1,7 +1,6 @@
 package perobobbot.twitch.web.client;
 
 import io.micronaut.core.annotation.Introspected;
-import lombok.NonNull;
 import lombok.Value;
 import perobobbot.twitch.api.ChannelInformation;
 
@@ -9,6 +8,6 @@ import perobobbot.twitch.api.ChannelInformation;
 @Introspected
 public class GetChannelInformationResponse {
 
-    @NonNull ChannelInformation[] data;
+    ChannelInformation[] data;
 
 }

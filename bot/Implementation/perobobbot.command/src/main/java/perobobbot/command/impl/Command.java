@@ -3,7 +3,6 @@ package perobobbot.command.impl;
 import fpc.tools.fp.Tuple2;
 import fpc.tools.lang.MapTool;
 import io.micronaut.core.annotation.Nullable;
-import lombok.NonNull;
 import lombok.Value;
 import perobobbot.command.api.CommandBinding;
 import perobobbot.command.api.Parameter;
@@ -17,22 +16,22 @@ import java.util.regex.Pattern;
 @Value
 public class Command {
 
-    @NonNull String definition;
-    @NonNull Pattern regexp;
-    @NonNull String name;
-    @NonNull String fullCommand;
+    String definition;
+    Pattern regexp;
+    String name;
+    String fullCommand;
 
     int minNumberOfParameters;
     int maxNumberOfParameters;
 
-    @NonNull Set<Parameter> parameters;
+    Set<Parameter> parameters;
 
     public Command(
-            @NonNull String definition,
-            @NonNull String regexp,
-            @NonNull String name,
-            @NonNull String fullCommand,
-            @NonNull Set<Parameter> parameters) {
+            String definition,
+            String regexp,
+            String name,
+            String fullCommand,
+            Set<Parameter> parameters) {
         this.definition = definition;
         this.regexp = Pattern.compile(regexp);
         this.name = name;
@@ -43,7 +42,7 @@ public class Command {
     }
 
 
-    public @NonNull Optional<CommandBinding> bind(@NonNull String command) {
+    public Optional<CommandBinding> bind(String command) {
 
         if (!command.startsWith(name)) {
             return Optional.empty();
@@ -72,7 +71,7 @@ public class Command {
 
     }
 
-    private @Nullable Tuple2<String, String> extractParameterValue(@NonNull Matcher matcher, @NonNull String parameterName) {
+    private @Nullable Tuple2<String, String> extractParameterValue(Matcher matcher, String parameterName) {
         final var match = matcher.group(parameterName);
         if (match == null) {
             return null;
@@ -82,7 +81,7 @@ public class Command {
         return new Tuple2<>(parameterName, unquoted);
     }
 
-    private @NonNull String unquote(@NonNull String value, @NonNull String quoteType) {
+    private String unquote(String value, String quoteType) {
         if (value.startsWith(quoteType) && value.endsWith(quoteType)) {
             return value.substring(1, value.length() - 1);
         }

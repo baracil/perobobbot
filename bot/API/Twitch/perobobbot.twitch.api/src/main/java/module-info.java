@@ -18,6 +18,7 @@ open module perobobbot.twitch.api {
     requires perobobbot.api;
     requires io.micronaut.json_core;
     requires org.jetbrains.annotations;
+    requires fpc.tools.annotation;
 
     exports perobobbot.twitch.api;
     exports perobobbot.twitch.api.serde;

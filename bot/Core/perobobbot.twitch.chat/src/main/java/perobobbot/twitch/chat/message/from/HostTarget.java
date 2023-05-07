@@ -3,7 +3,6 @@ package perobobbot.twitch.chat.message.from;
 import fpc.tools.irc.IRCParsing;
 import fpc.tools.lang.CastTool;
 import lombok.Getter;
-import lombok.NonNull;
 import perobobbot.twitch.chat.TwitchChannel;
 import perobobbot.twitch.chat.message.IRCCommand;
 
@@ -16,13 +15,13 @@ public abstract class HostTarget extends KnownMessageFromTwitch {
 
     private final int numberOfViewers;
 
-    public HostTarget(@NonNull IRCParsing ircParsing, int numberOfViewers) {
+    public HostTarget(IRCParsing ircParsing, int numberOfViewers) {
         super(ircParsing);
         this.numberOfViewers = numberOfViewers;
     }
 
     @Override
-    public @NonNull IRCCommand getCommand() {
+    public IRCCommand getCommand() {
         return IRCCommand.HOSTTARGET;
     }
 
@@ -32,19 +31,18 @@ public abstract class HostTarget extends KnownMessageFromTwitch {
     @Getter
     public static class Start extends HostTarget {
 
-        @NonNull
         private final TwitchChannel hostingChannel;
 
         public Start(
-                @NonNull IRCParsing ircParsing,
+                IRCParsing ircParsing,
                 int numberOfViewers,
-                @NonNull TwitchChannel hostingChannel) {
+                TwitchChannel hostingChannel) {
             super(ircParsing, numberOfViewers);
             this.hostingChannel = hostingChannel;
         }
 
         @Override
-        public <T> T accept(@NonNull MessageFromTwitchVisitor<T> visitor) {
+        public <T> T accept(MessageFromTwitchVisitor<T> visitor) {
             return visitor.visit(this);
         }
 
@@ -56,18 +54,18 @@ public abstract class HostTarget extends KnownMessageFromTwitch {
     @Getter
     public static class Stop extends HostTarget {
 
-        public Stop(@NonNull IRCParsing ircParsing, int numberOfViewers) {
+        public Stop(IRCParsing ircParsing, int numberOfViewers) {
             super(ircParsing, numberOfViewers);
         }
 
         @Override
-        public <T> T accept(@NonNull MessageFromTwitchVisitor<T> visitor) {
+        public <T> T accept(MessageFromTwitchVisitor<T> visitor) {
             return visitor.visit(this);
         }
     }
 
 
-    public static @NonNull HostTarget build(@NonNull AnswerBuilderHelper helper) {
+    public static HostTarget build(AnswerBuilderHelper helper) {
         final String[] parameters = helper.lastParameter().split(" ");
         final int nbViewers = parameters.length<2? -1: CastTool.castToInt(parameters[1], -1);
         if (parameters[0].equals("-")) {

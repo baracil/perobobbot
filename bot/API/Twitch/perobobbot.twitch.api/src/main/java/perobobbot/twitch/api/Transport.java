@@ -1,7 +1,7 @@
 package perobobbot.twitch.api;
 
 import io.micronaut.core.annotation.Introspected;
-import lombok.NonNull;
+import jakarta.annotation.Nullable;
 import lombok.Value;
 
 import java.util.Optional;
@@ -9,11 +9,11 @@ import java.util.Optional;
 @Value
 @Introspected
 public class Transport {
-    @NonNull String method;
-    @NonNull String callback;
-    String secret;
+    String method;
+    String callback;
+    @Nullable String secret;
 
-    public @NonNull Optional<String> getSecret() {
+    public Optional<String> getSecret() {
         return Optional.ofNullable(secret);
     }
 }

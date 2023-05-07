@@ -8,6 +8,7 @@ module perobobbot.callback.impl {
     requires io.micronaut.core;
     requires transitive perobobbot.callback.api;
     requires perobobbot.web.api;
+    requires fpc.tools.annotation;
 
     exports perobobbot.callback.impl;
 }

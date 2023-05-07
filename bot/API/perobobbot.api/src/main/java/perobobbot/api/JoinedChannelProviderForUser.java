@@ -1,6 +1,5 @@
 package perobobbot.api;
 
-import lombok.NonNull;
 import perobobbot.api.data.JoinedChannel;
 import perobobbot.api.data.UserIdentity;
 
@@ -12,5 +11,5 @@ import java.util.Set;
  */
 public interface JoinedChannelProviderForUser {
 
-    @NonNull Set<JoinedChannel> getChannels();
+    Set<JoinedChannel> getChannels();
 }

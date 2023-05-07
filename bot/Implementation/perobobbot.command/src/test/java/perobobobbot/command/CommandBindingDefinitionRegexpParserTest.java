@@ -1,6 +1,5 @@
 package perobobobbot.command;
 
-import lombok.NonNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,15 +14,15 @@ import java.util.stream.Stream;
 
 public class CommandBindingDefinitionRegexpParserTest {
 
-    private static @NonNull String requiredParameter(@NonNull String name) {
+    private static String requiredParameter(String name) {
         return requiredParameter(name,false);
     }
 
-    private static @NonNull String requiredParameter(@NonNull String name,boolean noSpace) {
+    private static String requiredParameter(String name,boolean noSpace) {
         final var base ="(?<"+name+">"+ RegexpCommandParser.ARGUMENT_PATTERN+")";
         return noSpace?base:"\s+"+base;
     }
-    private static @NonNull String optionalParameter(@NonNull String name) {
+    private static String optionalParameter(String name) {
         final var base ="(?<"+name+">"+ RegexpCommandParser.ARGUMENT_PATTERN+")";
         return "("+("\s+"+base)+")?";
     }
@@ -60,27 +59,27 @@ public class CommandBindingDefinitionRegexpParserTest {
 
     @ParameterizedTest
     @MethodSource("invalidSamples")
-    public void shouldFail(@NonNull String definition) {
+    public void shouldFail(String definition) {
         Assertions.assertThrows(CommandDefinitionParsingFailure.class,() -> parser.parse(definition));
     }
 
     @ParameterizedTest
     @MethodSource("validSamples")
-    public void shouldHaveRightRegexp(@NonNull String definition, @NonNull @AggregateWith(ParsingAggregator.class) Parsing expected) {
+    public void shouldHaveRightRegexp(String definition, @AggregateWith(ParsingAggregator.class) Parsing expected) {
         final var actual = parser.parse(definition);
         Assertions.assertEquals(expected.getRegexp(),actual.getRegexp().pattern());
     }
 
     @ParameterizedTest
     @MethodSource("validSamples")
-    public void shouldHaveRightFullCommand(@NonNull String definition, @NonNull @AggregateWith(ParsingAggregator.class) Parsing expected) {
+    public void shouldHaveRightFullCommand(String definition, @AggregateWith(ParsingAggregator.class) Parsing expected) {
         final var actual = parser.parse(definition);
         Assertions.assertEquals(expected.getFullCommand(),actual.getFullCommand());
     }
 
     @ParameterizedTest
     @MethodSource("validSamples")
-    public void shouldHaveRightNbParameters(@NonNull String definition, @NonNull @AggregateWith(ParsingAggregator.class) Parsing expected) {
+    public void shouldHaveRightNbParameters(String definition, @AggregateWith(ParsingAggregator.class) Parsing expected) {
         final var actual = parser.parse(definition);
         Assertions.assertEquals(expected.getNbParameters(),actual.getParameters().size());
     }

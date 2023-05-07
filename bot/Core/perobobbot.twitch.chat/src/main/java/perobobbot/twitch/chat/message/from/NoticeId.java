@@ -2,7 +2,6 @@ package perobobbot.twitch.chat.message.from;
 
 import fpc.tools.lang.MapTool;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
@@ -157,12 +156,10 @@ public enum NoticeId {
     WHISPER_RESTRICTED_RECIPIENT("whisper_restricted_recipient"),
     ;
 
-    @NonNull
     @Getter
     private final String twitchId;
 
-    @NonNull
-    public static NoticeId getNoticeId(@NonNull String msgId) {
+    public static NoticeId getNoticeId(String msgId) {
         final NoticeId noticeId = Holder.NOTICE_ID_MAP.get(msgId.toLowerCase());
         if (noticeId == null) {
             throw new IllegalArgumentException("Unknown notice id : "+msgId);

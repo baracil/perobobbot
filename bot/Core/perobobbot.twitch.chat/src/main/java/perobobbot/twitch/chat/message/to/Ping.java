@@ -1,6 +1,5 @@
 package perobobbot.twitch.chat.message.to;
 
-import lombok.NonNull;
 import perobobbot.twitch.chat.message.IRCCommand;
 import perobobbot.twitch.chat.message.from.PongFromTwitch;
 
@@ -19,13 +18,13 @@ public class Ping extends SimpleRequestToTwitch<PongFromTwitch> {
     }
 
     @Override
-    public @NonNull String payload(@NonNull Instant dispatchInstant) {
+    public String payload(Instant dispatchInstant) {
         return "PING :tmi.twitch.tv";
     }
 
     @Override
-    protected @NonNull Optional<PongFromTwitch> doIsMyAnswer(@NonNull PongFromTwitch twitchAnswer,
-                                                             @NonNull String nick) {
+    protected Optional<PongFromTwitch> doIsMyAnswer(PongFromTwitch twitchAnswer,
+                                                             String nick) {
         return Optional.of(twitchAnswer);
     }
 }

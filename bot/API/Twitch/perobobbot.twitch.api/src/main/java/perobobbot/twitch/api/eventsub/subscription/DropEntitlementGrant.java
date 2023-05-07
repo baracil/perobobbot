@@ -1,6 +1,5 @@
 package perobobbot.twitch.api.eventsub.subscription;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.api.Conditions;
 import perobobbot.twitch.api.CriteriaType;
@@ -19,17 +18,17 @@ public class DropEntitlementGrant extends SubscriptionBase {
         );
     };
 
-    private final @NonNull String organizationId;
+    private final String organizationId;
     private final String categoryId;
     private final String campaignId;
 
     @Override
-    public @NonNull SubscriptionType getType() {
+    public SubscriptionType getType() {
         return SubscriptionType.DROP_ENTITLEMENT_GRANT;
     }
 
     @Override
-    public @NonNull Conditions getCondition() {
+    public Conditions getCondition() {
         return Conditions.builder()
                          .put(CriteriaType.ORGANIZATION_ID, organizationId)
                          .put(CriteriaType.CATEGORY_ID, categoryId)
@@ -38,7 +37,7 @@ public class DropEntitlementGrant extends SubscriptionBase {
     }
 
     @Override
-    public TwitchSubscriptionRequest.@NonNull Builder completeRequest(TwitchSubscriptionRequest.@NonNull Builder builder) {
+    public TwitchSubscriptionRequest.Builder completeRequest(TwitchSubscriptionRequest.Builder builder) {
         return super.completeRequest(builder).batchingEnabled(true);
     }
 }

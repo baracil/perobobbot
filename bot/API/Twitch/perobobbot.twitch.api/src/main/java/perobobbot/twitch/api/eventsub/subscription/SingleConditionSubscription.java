@@ -1,7 +1,10 @@
 package perobobbot.twitch.api.eventsub.subscription;
 
 import fpc.tools.fp.Function1;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import perobobbot.twitch.api.Conditions;
 import perobobbot.twitch.api.CriteriaType;
 import perobobbot.twitch.api.SubscriptionType;
@@ -11,17 +14,17 @@ import perobobbot.twitch.api.SubscriptionType;
 @RequiredArgsConstructor
 public abstract class SingleConditionSubscription extends SubscriptionBase {
 
-    public static SubscriptionFactory forSingleCondition(@NonNull CriteriaType criteriaType, @NonNull Function1<? super String, ? extends Subscription> constructor) {
+    public static SubscriptionFactory forSingleCondition(CriteriaType criteriaType, Function1<? super String, ? extends Subscription> constructor) {
         return condition -> constructor.apply(new ConditionHelper(condition).get(criteriaType));
     }
 
     @Getter
-    private final @NonNull SubscriptionType type;
+    private final SubscriptionType type;
 
-    private final @NonNull CriteriaType criteriaType;
+    private final CriteriaType criteriaType;
 
     @Override
-    public @NonNull Conditions getCondition() {
+    public Conditions getCondition() {
         return Conditions.singleCondition(criteriaType,getConditionValue());
     }
 

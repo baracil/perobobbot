@@ -1,6 +1,5 @@
 package perobobbot.chat.api;
 
-import lombok.NonNull;
 import perobobbot.api.data.UserIdentity;
 
 public interface ChatFactory {
@@ -15,6 +14,6 @@ public interface ChatFactory {
      * @param userIdentity the user identity to use to connect to the chat
      * @return the chat for the provided userIdentity
      */
-    @NonNull Chat create(@NonNull UserIdentity userIdentity) throws InterruptedException;
+    Chat create(UserIdentity userIdentity) throws InterruptedException;
 
 }

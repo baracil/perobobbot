@@ -2,7 +2,6 @@ package perobobbot.domain.jpa.repository;
 
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jpa.repository.JpaRepository;
-import lombok.NonNull;
 import perobobbot.api.data.ApplicationForPlatformMissing;
 import perobobbot.api.data.Platform;
 import perobobbot.domain.jpa.entity.ApplicationEntity;
@@ -13,19 +12,19 @@ import java.util.stream.Stream;
 @Repository
 public interface ApplicationRepository extends JpaRepository<ApplicationEntity,Long> {
 
-    @NonNull Optional<String> findClientIdByPlatform(@NonNull Platform platform);
+    Optional<String> findClientIdByPlatform(Platform platform);
 
-    @NonNull Optional<ApplicationEntity> findByPlatform(@NonNull Platform platform);
+    Optional<ApplicationEntity> findByPlatform(Platform platform);
 
-    default @NonNull ApplicationEntity getByPlatform(@NonNull Platform platform) {
+    default ApplicationEntity getByPlatform(Platform platform) {
         return findByPlatform(platform).orElseThrow(() -> new ApplicationForPlatformMissing(platform));
     }
 
-    default @NonNull String getClientIdByPlatform(@NonNull Platform platform) {
+    default String getClientIdByPlatform(Platform platform) {
         return findClientIdByPlatform(platform).orElseThrow(() -> new ApplicationForPlatformMissing(platform));
     }
 
-    @NonNull Stream<Platform> findPlatform();
+    Stream<Platform> findPlatform();
 
 
 }

@@ -1,7 +1,6 @@
 package perobobbot.oauth.impl;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.data.TokenWithIdentity;
 import perobobbot.oauth.api.AuthorizationCodeGranFlow;
@@ -16,13 +15,13 @@ import java.util.function.Consumer;
 public class DefaultAuthorizationCodeGranFlow implements AuthorizationCodeGranFlow {
 
     @Getter
-    private final @NonNull URI uri;
+    private final URI uri;
     @Getter
-    private final @NonNull String state;
-    private final @NonNull Consumer<TokenWithIdentity> onResult;
-    private final @NonNull Consumer<Throwable> onError;
+    private final String state;
+    private final Consumer<TokenWithIdentity> onResult;
+    private final Consumer<Throwable> onError;
     @Getter
-    private final @NonNull CompletableFuture<TokenWithIdentity> future = new CompletableFuture<>();
+    private final CompletableFuture<TokenWithIdentity> future = new CompletableFuture<>();
 
     {
         future.whenComplete(this::handleFutureCompletion);
@@ -38,12 +37,12 @@ public class DefaultAuthorizationCodeGranFlow implements AuthorizationCodeGranFl
     }
 
     @Override
-    public void completeWithError(@NonNull Failure failure) {
+    public void completeWithError(Failure failure) {
         this.future.completeExceptionally(new FlowFailure(failure));
     }
 
     @Override
-    public void completWithSuccess(@NonNull TokenWithIdentity token) {
+    public void completWithSuccess(TokenWithIdentity token) {
         this.future.complete(token);
     }
 

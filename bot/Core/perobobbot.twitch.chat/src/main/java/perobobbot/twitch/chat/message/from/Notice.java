@@ -3,7 +3,6 @@ package perobobbot.twitch.chat.message.from;
 import fpc.tools.irc.IRCParsing;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 import perobobbot.twitch.chat.ChannelSpecific;
 import perobobbot.twitch.chat.TwitchChannel;
 import perobobbot.twitch.chat.TwitchConstants;
@@ -18,17 +17,14 @@ import java.util.stream.Stream;
 @Getter
 public class Notice extends KnownMessageFromTwitch implements ChannelSpecific {
 
-    @NonNull
     private final TwitchChannel channel;
 
-    @NonNull
     private final NoticeId msgId;
 
-    @NonNull
     private final String message;
 
     @Builder
-    public Notice(@NonNull IRCParsing ircParsing, @NonNull TwitchChannel channel, @NonNull NoticeId msgId, @NonNull String message) {
+    public Notice(IRCParsing ircParsing, TwitchChannel channel, NoticeId msgId, String message) {
         super(ircParsing);
         this.channel = channel;
         this.msgId = msgId;
@@ -36,17 +32,17 @@ public class Notice extends KnownMessageFromTwitch implements ChannelSpecific {
     }
 
     @Override
-    public @NonNull IRCCommand getCommand() {
+    public IRCCommand getCommand() {
         return IRCCommand.NOTICE;
     }
 
     @Override
-    public <T> T accept(@NonNull MessageFromTwitchVisitor<T> visitor) {
+    public <T> T accept(MessageFromTwitchVisitor<T> visitor) {
         return visitor.visit(this);
     }
 
 
-    public static @NonNull Notice build(@NonNull AnswerBuilderHelper helper) {
+    public static Notice build(AnswerBuilderHelper helper) {
         final var lastParameter = helper.lastParameter();
         return Stream.of(TwitchConstants.CHAT_LOGIN_AUTHENTICATION_FAILED, TwitchConstants.CHAT_LOGIN_UNSUCCESSFUL)
                      .filter(lastParameter::equals)
@@ -56,7 +52,7 @@ public class Notice extends KnownMessageFromTwitch implements ChannelSpecific {
                      );
     }
 
-    private static @NonNull Notice createAuthenticationFailureNotice(@NonNull AnswerBuilderHelper helper, @NonNull String failureMessage) {
+    private static Notice createAuthenticationFailureNotice(AnswerBuilderHelper helper, String failureMessage) {
         return new Notice(
                 helper.getIrcParsing(),
                 TwitchChannel.create(""),
@@ -64,7 +60,7 @@ public class Notice extends KnownMessageFromTwitch implements ChannelSpecific {
                 failureMessage);
     }
 
-    private static @NonNull Notice createNoticeWithMsgId(@NonNull AnswerBuilderHelper helper) {
+    private static Notice createNoticeWithMsgId(AnswerBuilderHelper helper) {
         return Notice.builder()
                      .ircParsing(helper.getIrcParsing())
                      .channel(helper.channelFromParameterAt(0))

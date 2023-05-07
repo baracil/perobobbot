@@ -24,29 +24,29 @@ import java.util.Optional;
 @EagerInit
 public class JpaUserTokenService implements UserTokenService {
 
-    private final @NonNull UserTypeProvider userTypeProvider;
-    private final @NonNull UserIdentityRepository userIdentityRepository;
-    private final @NonNull UserTokenRepository userTokenRepository;
+    private final UserTypeProvider userTypeProvider;
+    private final UserIdentityRepository userIdentityRepository;
+    private final UserTokenRepository userTokenRepository;
     private final @NonNull
     @Named("Db") TextCipher textCipher;
 
     @Override
-    public @NonNull Optional<UserToken.Decrypted> findUserToken(@NonNull Platform platform, @NonNull String userId) {
+    public Optional<UserToken.Decrypted> findUserToken(Platform platform, String userId) {
         return userTokenRepository.findByPlatformAndPlatformUserId(platform, userId).map(UserTokenEntity::toView).map(textCipher::decrypt);
     }
 
     @Override
-    public @NonNull Optional<RefreshTokenInfo<Secret>> findUserRefreshToken(@NonNull Platform platform, @NonNull String userId) {
+    public Optional<RefreshTokenInfo<Secret>> findUserRefreshToken(Platform platform, String userId) {
         return userTokenRepository.findUserRefreshTokenInfo(platform, userId).map(textCipher::decrypt);
     }
 
     @Override
-    public void deleteUserToken(@NonNull Platform platform, @NonNull String userId) {
+    public void deleteUserToken(Platform platform, String userId) {
         userTokenRepository.deleteByPlatformAndUserIdentityId(platform, userId);
     }
 
     @Override
-    public void setUserToken(@NonNull TokenWithIdentity tokenWithIdentity) {
+    public void setUserToken(TokenWithIdentity tokenWithIdentity) {
 
         final var identity = userIdentityRepository.findByIdentification(tokenWithIdentity.identity()).orElse(null);
         final var encrypted = tokenWithIdentity.getEncryptedToken(textCipher);
@@ -59,12 +59,12 @@ public class JpaUserTokenService implements UserTokenService {
 
     }
 
-    private void updateUserIdentityWithToken(@NonNull UserIdentityEntity userIdentity, @NonNull UserToken.Encrypted userToken) {
+    private void updateUserIdentityWithToken(UserIdentityEntity userIdentity, UserToken.Encrypted userToken) {
         userIdentity.updateToken(userToken);
         userIdentityRepository.update(userIdentity);
     }
 
-    private void newUserIdentityWithToken(@NonNull UserInfo userInfo, @NonNull UserToken.Encrypted userToken) {
+    private void newUserIdentityWithToken(UserInfo userInfo, UserToken.Encrypted userToken) {
         final var userIdentity = UserIdentityEntity.createWith(userInfo, userTypeProvider.getUserType(userInfo));
         userIdentity.updateToken(userToken);
         userIdentityRepository.save(userIdentity);

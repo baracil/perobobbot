@@ -24,5 +24,6 @@ module perobobbot.web.controller {
     requires perobobbot.twitch.chat;
     requires jakarta.annotation;
     requires perobobbot.oauth.api;
+    requires fpc.tools.annotation;
 
 }

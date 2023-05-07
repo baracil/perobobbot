@@ -5,7 +5,6 @@ import io.micronaut.serde.Decoder;
 import io.micronaut.serde.ObjectMapper;
 import io.micronaut.serde.util.NullableDeserializer;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.api.TwitchApiPayload;
 import perobobbot.twitch.api.eventsub.EventSubNotification;
@@ -22,11 +21,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class NotificationDeserializer implements NullableDeserializer<EventSubNotification> {
 
-    private final @NonNull ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
     @Override
-    public @NonNull EventSubNotification deserializeNonNull(Decoder decoder, DecoderContext decoderContext, Argument<? super EventSubNotification> type) throws IOException {
+    public EventSubNotification deserializeNonNull(Decoder decoder, DecoderContext decoderContext, Argument<? super EventSubNotification> type) throws IOException {
         final Map<?, ?> object = (Map<?, ?>) decoder.decodeArbitrary();
+
+        assert object != null;
 
         final var subscriptionData = object.get("subscription");
         final var subscriptionNode = objectMapper.writeValueToTree(subscriptionData);
@@ -49,7 +50,7 @@ public class NotificationDeserializer implements NullableDeserializer<EventSubNo
         return new EventSubNotification(subscription, events);
     }
 
-    private @NonNull EventSubEvent extractSingleEvent(@NonNull Object eventData, @NonNull Class<? extends EventSubEvent> eventType) {
+    private EventSubEvent extractSingleEvent(Object eventData, Class<? extends EventSubEvent> eventType) {
         final Object effectiveEventData;
         if (TwitchApiPayload.class.isAssignableFrom(eventType)) {
             effectiveEventData = TwitchJsonPayloadModifier.modify(eventData);

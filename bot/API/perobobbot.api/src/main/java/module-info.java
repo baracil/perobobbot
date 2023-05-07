@@ -20,6 +20,7 @@ open module perobobbot.api {
 
     requires jplugman.annotation;
     requires jplugman.api;
+    requires fpc.tools.annotation;
 
     exports perobobbot.api.serder;
     exports perobobbot.api.data;

@@ -2,9 +2,9 @@ package perobobbot.command.impl;
 
 import fpc.tools.lang.Subscription;
 import fpc.tools.micronaut.EagerInit;
+import jakarta.annotation.Nullable;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.Synchronized;
 import perobobbot.api.data.Platform;
 import perobobbot.api.plugin.PerobobbotService;
@@ -21,17 +21,17 @@ import java.util.*;
 @PerobobbotService(serviceType = CommandRegistry.class, apiVersion = CommandManager.VERSION)
 public class PeroCommandManager implements CommandManager {
 
-    private final @NonNull Producer producer;
-    private final @NonNull CommandParser parser = CommandParser.chain(CommandParser.fullMatch(), CommandParser.regexp());
+    private final Producer producer;
+    private final CommandParser parser = CommandParser.chain(CommandParser.fullMatch(), CommandParser.regexp());
     private final Map<String, Set<CommandData>> commands = new HashMap<>();
 
-    public PeroCommandManager(@NonNull Bus bus) {
+    public PeroCommandManager(Bus bus) {
         this.producer = bus.createProducer(CommandManager.TRIGGER_COMMAND_TOPIC);
     }
 
     @Override
     @Synchronized
-    public @NonNull Subscription addCommand(@NonNull String commandDefinition) {
+    public Subscription addCommand(String commandDefinition) {
         final var command = parser.parse(commandDefinition);
         final var data = new CommandData(command);
 
@@ -46,7 +46,7 @@ public class PeroCommandManager implements CommandManager {
     }
 
     @Synchronized
-    private void removeCommand(@NonNull CommandData command) {
+    private void removeCommand(CommandData command) {
         final var set = commands.get(command.getCommandName());
         if (set == null) {
             return;
@@ -61,7 +61,7 @@ public class PeroCommandManager implements CommandManager {
 
 
     @Override
-    public void handleMessage(@NonNull CommandContext context, @NonNull String message) {
+    public void handleMessage(CommandContext context, String message) {
         final var preparedMessage = prepareMessage(context.getPlatform(), message);
         if (preparedMessage == null) {
             return;
@@ -78,7 +78,7 @@ public class PeroCommandManager implements CommandManager {
                       .ifPresent(producer::send);
     }
 
-    private String prepareMessage(@NonNull Platform platform, @NonNull String message) {
+    private @Nullable String prepareMessage(Platform platform, String message) {
         final var trimmed = message.trim();
         return switch (platform.name()) {
             case "TWITCH" -> trimmed.startsWith("!") ? trimmed.substring(1) : null;
@@ -87,7 +87,7 @@ public class PeroCommandManager implements CommandManager {
     }
 
 
-    private @NonNull String extractCommandName(@NonNull String message) {
+    private String extractCommandName(String message) {
         final var idx = message.indexOf(" ");
         if (idx < 0) {
             return message;

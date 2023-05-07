@@ -3,7 +3,6 @@ package perobobbot.launcher;
 import fpc.tools.lang.Secret;
 import io.micronaut.context.annotation.ConfigurationProperties;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 import perobobbot.api.data.Platform;
 
@@ -14,27 +13,27 @@ import java.util.Map;
 @Getter @Setter
 public class PerobobbotConfiguration {
 
-    private @NonNull Data data;
-    private @NonNull Plugin plugin;
-    private @NonNull OAuth oauth;
+    private Data data;
+    private Plugin plugin;
+    private OAuth oauth;
 
     @ConfigurationProperties("data")
     @Getter @Setter
     public static class Data {
-        private @NonNull Secret dbPassPhrase;
+        private Secret dbPassPhrase;
     }
 
     @ConfigurationProperties("oauth")
     @Getter @Setter
     public static class OAuth {
-        private @NonNull Map<Platform,String> defaultIds;
+        private Map<Platform,String> defaultIds;
     }
 
 
     @ConfigurationProperties("plugin")
     @Getter @Setter
     public static class Plugin {
-        private @NonNull Path folder;
+        private Path folder;
     }
 
 }

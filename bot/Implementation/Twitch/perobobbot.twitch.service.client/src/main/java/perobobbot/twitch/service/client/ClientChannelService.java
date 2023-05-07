@@ -1,7 +1,6 @@
 package perobobbot.twitch.service.client;
 
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.api.ChannelInformation;
 import perobobbot.twitch.service.api.ChannelService;
@@ -14,10 +13,10 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class ClientChannelService implements ChannelService {
 
-    private final @NonNull ChannelClient channelClient;
+    private final ChannelClient channelClient;
 
     @Override
-    public @NonNull List<ChannelInformation> getChannelInformation(@NonNull Set<String> broadcasterIds) {
+    public List<ChannelInformation> getChannelInformation(Set<String> broadcasterIds) {
         final var channelInformation = channelClient.getChannelInformation(broadcasterIds);
         if (channelInformation == null) {
             return List.of();

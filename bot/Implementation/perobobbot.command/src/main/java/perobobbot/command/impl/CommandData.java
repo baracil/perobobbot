@@ -2,7 +2,6 @@ package perobobbot.command.impl;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.Event;
@@ -21,7 +20,7 @@ public class CommandData implements Comparable<CommandData> {
 
     @Getter
     private final long id = ID.incrementAndGet();
-    private final @NonNull Command command;
+    private final Command command;
 
     @Override
     public int compareTo(CommandData o) {
@@ -47,7 +46,7 @@ public class CommandData implements Comparable<CommandData> {
         return command.getName();
     }
 
-    public @NonNull Optional<? extends Event> handle(@NonNull CommandContext context, @NonNull String message) {
+    public Optional<? extends Event> handle(CommandContext context, String message) {
         final var bind = command.bind(message);
 
         return bind.map(binding -> new CommandEvent(context, binding));

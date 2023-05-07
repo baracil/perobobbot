@@ -1,7 +1,6 @@
 package perobobbot.oauth.impl;
 
 import fpc.tools.lang.ThreadFactoryBuilder;
-import lombok.NonNull;
 import lombok.Synchronized;
 import lombok.experimental.Delegate;
 import perobobbot.oauth.api.AuthorizationCodeGranFlow;
@@ -26,13 +25,13 @@ public class RendezvousMaker {
     }
 
     @Synchronized
-    public void addFlow(@NonNull DefaultAuthorizationCodeGranFlow flow) {
+    public void addFlow(DefaultAuthorizationCodeGranFlow flow) {
         Optional.ofNullable(rdvs.put(flow.getState(), new Rendezvous(flow)))
                 .ifPresent(f -> f.completeWithError(new Failure.TimedOut()));
     }
 
     @Synchronized
-    public @NonNull Optional<AuthorizationCodeGranFlow> extractFlow(@NonNull String state) {
+    public Optional<AuthorizationCodeGranFlow> extractFlow(String state) {
         return Optional.ofNullable(rdvs.remove(state)).map(Rendezvous::flow);
     }
 
@@ -49,9 +48,9 @@ public class RendezvousMaker {
         }
     }
 
-    private record Rendezvous(@Delegate @NonNull DefaultAuthorizationCodeGranFlow flow,
+    private record Rendezvous(@Delegate DefaultAuthorizationCodeGranFlow flow,
                               long timeOfArrivalOfTheRabbit) implements AuthorizationCodeGranFlow {
-        private Rendezvous(@NonNull DefaultAuthorizationCodeGranFlow flow) {
+        private Rendezvous(DefaultAuthorizationCodeGranFlow flow) {
             this(flow, System.nanoTime() + Duration.ofMinutes(1).toNanos());
         }
     }

@@ -1,6 +1,5 @@
 package perobobbot.service.api;
 
-import lombok.NonNull;
 import perobobbot.api.Id;
 import perobobbot.api.Identity;
 import perobobbot.api.JoinedChannelProvider;
@@ -24,15 +23,15 @@ public interface UserIdentityService extends JoinedChannelProvider {
      * @return the {@link UserIdentity} associated with the provided id
      * @throws perobobbot.api.data.UnknownUserIdentityId if no userIdentity exists for the provided id
      */
-    @NonNull UserIdentity getUserIdentity(long userIdentityId);
+    UserIdentity getUserIdentity(long userIdentityId);
 
-    @NonNull Optional<UserInfo> findUserInfo(@NonNull Identity identity);
+    Optional<UserInfo> findUserInfo(Identity identity);
 
-    default @NonNull UserIdentity getUserIdentity(@NonNull Id id) {
+    default UserIdentity getUserIdentity(Id id) {
         return findUserIdentity(id).orElseThrow(() -> new UnknownUserId(id));
     }
 
-    @NonNull Optional<UserIdentity> findUserIdentity(@NonNull Id id);
+    Optional<UserIdentity> findUserIdentity(Id id);
 
     /**
      * List all the user identities
@@ -41,23 +40,23 @@ public interface UserIdentityService extends JoinedChannelProvider {
      * @param size the size of the page (-1 for no size)
      * @return a list of the {@link UserIdentity} for the provided page information
      */
-    @NonNull List<UserIdentity> listUserIdentities(int page, int size);
+    List<UserIdentity> listUserIdentities(int page, int size);
 
-    @NonNull List<UserIdentity> listUserIdentities(@NonNull Platform platform, int page, int size);
+    List<UserIdentity> listUserIdentities(Platform platform, int page, int size);
 
-    @NonNull JoinedChannel joinChannel(long userIdentityId, @NonNull String channelName, boolean readOnly);
+    JoinedChannel joinChannel(long userIdentityId, String channelName, boolean readOnly);
 
-    void partChannel(long userIdentityId, @NonNull String channelName);
+    void partChannel(long userIdentityId, String channelName);
 
-    @NonNull Set<JoinedChannel> listJoinedChannels(long userIdentityId);
+    Set<JoinedChannel> listJoinedChannels(long userIdentityId);
 
-    @NonNull JoinedChannel getJoinedChannel(long userIdentityId, @NonNull String channelName);
+    JoinedChannel getJoinedChannel(long userIdentityId, String channelName);
 
-    @NonNull UserIdentity getBotForPlatform(@NonNull Platform platform);
+    UserIdentity getBotForPlatform(Platform platform);
 
-    @NonNull Optional<UserIdentity> findBotForPlatform(@NonNull Platform platform);
+    Optional<UserIdentity> findBotForPlatform(Platform platform);
 
-    @NonNull Map<Identity, UserIdentity> findBots();
+    Map<Identity, UserIdentity> findBots();
 
-    @NonNull UserIdentity saveUserInfo(@NonNull UserInfo userInfo);
+    UserIdentity saveUserInfo(UserInfo userInfo);
 }

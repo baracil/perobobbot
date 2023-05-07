@@ -9,6 +9,7 @@ module perobobbot.oauth {
     requires org.slf4j;
 
     requires transitive perobobbot.oauth.api;
+    requires fpc.tools.annotation;
 
     provides OAuthManagerFactory with DefaultOAuthManagerFactory;
 }

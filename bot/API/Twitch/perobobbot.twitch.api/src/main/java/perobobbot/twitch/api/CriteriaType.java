@@ -2,7 +2,6 @@ package perobobbot.twitch.api;
 
 import fpc.tools.lang.IdentifiedEnum;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -20,6 +19,6 @@ public enum CriteriaType implements IdentifiedEnum {
     ;
 
     @Getter
-    private @NonNull String identification;
+    private final String identification;
 
 }

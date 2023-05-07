@@ -6,7 +6,6 @@ import io.micronaut.serde.Decoder;
 import io.micronaut.serde.Encoder;
 import io.micronaut.serde.Serde;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import perobobbot.twitch.api.Pagination;
 
 import java.io.IOException;
@@ -15,7 +14,7 @@ import java.io.IOException;
 public class PaginationSerDe implements Serde<Pagination> {
 
     @Override
-    public void serialize(Encoder encoder, @NonNull EncoderContext context, @NonNull Argument<? extends Pagination> type, Pagination value) throws IOException {
+    public void serialize(Encoder encoder, EncoderContext context, Argument<? extends Pagination> type, Pagination value) throws IOException {
         try (var e = encoder.encodeObject(Argument.mapOf(String.class, String.class))) {
             e.encodeKey("cursor");
             e.encodeString(value.getCursor());

@@ -3,7 +3,6 @@ package perobobbot.twitch.chat.message.from;
 import fpc.tools.irc.IRCParsing;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.ToString;
 import perobobbot.twitch.chat.ChannelSpecific;
 import perobobbot.twitch.chat.TwitchChannel;
@@ -18,20 +17,16 @@ import perobobbot.twitch.chat.message.TagKey;
 public class ClearMsg extends KnownMessageFromTwitch implements ChannelSpecific {
 
 
-    @NonNull
     private final String login;
 
-    @NonNull
     private final String clearedMessage;
 
-    @NonNull
     private final String targetMsgId;
 
-    @NonNull
     private final TwitchChannel channel;
 
     @Builder
-    public ClearMsg(@NonNull IRCParsing ircParsing, @NonNull String login, @NonNull String clearedMessage, @NonNull String targetMsgId, @NonNull TwitchChannel channel) {
+    public ClearMsg(IRCParsing ircParsing, String login, String clearedMessage, String targetMsgId, TwitchChannel channel) {
         super(ircParsing);
         this.login = login;
         this.clearedMessage = clearedMessage;
@@ -40,16 +35,16 @@ public class ClearMsg extends KnownMessageFromTwitch implements ChannelSpecific 
     }
 
     @Override
-    public @NonNull IRCCommand getCommand() {
+    public IRCCommand getCommand() {
         return IRCCommand.CLEARMSG;
     }
 
     @Override
-    public <T> T accept(@NonNull MessageFromTwitchVisitor<T> visitor) {
+    public <T> T accept(MessageFromTwitchVisitor<T> visitor) {
         return visitor.visit(this);
     }
 
-    public static @NonNull ClearMsg build(@NonNull AnswerBuilderHelper helper) {
+    public static ClearMsg build(AnswerBuilderHelper helper) {
         return ClearMsg.builder()
                        .ircParsing(helper.getIrcParsing())
                        .channel(helper.channelFromParameterAt(0))

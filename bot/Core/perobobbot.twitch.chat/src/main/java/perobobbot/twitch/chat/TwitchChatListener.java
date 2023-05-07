@@ -1,6 +1,5 @@
 package perobobbot.twitch.chat;
 
-import lombok.NonNull;
 import perobobbot.twitch.chat.message.from.MessageFromTwitch;
 import perobobbot.twitch.chat.message.to.MessageToTwitch;
 
@@ -12,9 +11,9 @@ public interface TwitchChatListener {
 
     void onDisconnected();
 
-    void onPostedMessage(@NonNull Instant postInstant, @NonNull MessageToTwitch message);
+    void onPostedMessage(Instant postInstant, MessageToTwitch message);
 
-    void onReceivedMessage(@NonNull Instant receptionInstant, @NonNull MessageFromTwitch message);
+    void onReceivedMessage(Instant receptionInstant, MessageFromTwitch message);
 
 
 }

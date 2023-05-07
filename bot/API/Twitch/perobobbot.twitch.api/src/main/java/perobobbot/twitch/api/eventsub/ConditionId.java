@@ -1,6 +1,5 @@
 package perobobbot.twitch.api.eventsub;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.twitch.api.CriteriaType;
 
@@ -13,7 +12,7 @@ public class ConditionId implements CharSequence {
 
     private final String id;
 
-    public ConditionId(@NonNull Map<CriteriaType, String> conditions) {
+    public ConditionId(Map<CriteriaType, String> conditions) {
         this.id = conditions.entrySet()
                             .stream()
                             .sorted(Comparator.comparing(e -> e.getKey().getIdentification()))

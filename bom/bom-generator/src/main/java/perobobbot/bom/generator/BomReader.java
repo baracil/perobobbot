@@ -14,24 +14,24 @@ import java.util.HashSet;
 @RequiredArgsConstructor
 public class BomReader {
 
-    public static @NonNull Bom read(@NonNull URL dependencyList) {
+    public static Bom read(URL dependencyList) {
         return new BomReader(dependencyList)._read();
     }
 
-    public static @NonNull Bom read() {
+    public static Bom read() {
         return read(BomReader.class.getResource("/dependencies.txt"));
     }
 
-    private final @NonNull URL dependencyList;
+    private final URL dependencyList;
 
-    private @NonNull Bom _read() {
+    private Bom _read() {
         try {
             return doRead();
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
     }
-    private @NonNull Bom doRead() throws IOException {
+    private Bom doRead() throws IOException {
         final var dependencies = new HashSet<Dependency>();
         try (var is = new BufferedReader(new InputStreamReader(dependencyList.openStream()))) {
             String line = null;

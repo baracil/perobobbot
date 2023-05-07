@@ -3,7 +3,6 @@ package perobobbot.twitch.web.client;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.QueryValue;
 import io.micronaut.http.client.annotation.Client;
-import lombok.NonNull;
 import perobobbot.twitch.api.Twitch;
 
 import java.util.Set;
@@ -12,6 +11,6 @@ import java.util.Set;
 public interface ChannelClient {
 
     @Get("/channels")
-    GetChannelInformationResponse getChannelInformation(@NonNull @QueryValue("broadcaster_id") Set<String> broadcasterId);
+    GetChannelInformationResponse getChannelInformation(@QueryValue("broadcaster_id") Set<String> broadcasterId);
 
 }

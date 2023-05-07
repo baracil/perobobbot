@@ -1,12 +1,13 @@
 package perobobbot.twitch.service.client;
 
 import fpc.tools.fp.TryResult;
+import fpc.tools.lang.ThrowableTool;
 import io.micronaut.aop.InterceptorBean;
 import io.micronaut.aop.MethodInterceptor;
 import io.micronaut.aop.MethodInvocationContext;
+import jakarta.annotation.Nullable;
 import jakarta.inject.Singleton;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.oauth.api.AuthHolder;
@@ -25,8 +26,8 @@ import java.util.Optional;
 @Slf4j
 public class TwitchServiceInterceptor implements MethodInterceptor<Object, Object> {
 
-    private final @NonNull AuthHolder authHolder;
-    private final @NonNull HeaderHolder headerHolder;
+    private final AuthHolder authHolder;
+    private final HeaderHolder headerHolder;
 
     @Override
     public Object intercept(MethodInvocationContext<Object, Object> context) {
@@ -35,19 +36,21 @@ public class TwitchServiceInterceptor implements MethodInterceptor<Object, Objec
 
     @RequiredArgsConstructor
     private class Interception {
-        private final @NonNull MethodInvocationContext<Object, Object> context;
-        private OAuthAccessMode accessMode;
-        private OAuthData oAuthData;
-        private TryResult<RuntimeException, Optional<Object>> result;
+        private final MethodInvocationContext<Object, Object> context;
+        private @Nullable OAuthAccessMode accessMode;
+        private @Nullable OAuthData oAuthData;
 
-        public Object intercept() {
+        public @Nullable Object intercept() {
+            TryResult<RuntimeException, Optional<Object>> result;
+
             this.extractAccessMode();
             if (hasNoAccessMode()) {
-                this.proceedWithoutAccessMode();
+                result = this.proceedWithoutAccessMode();
             } else {
                 this.getOAuthData();
-                this.proceedWithAccessMode();
+                result = this.proceedWithAccessMode();
             }
+
             return result.throwIfFailure().orElse(null);
         }
 
@@ -61,25 +64,25 @@ public class TwitchServiceInterceptor implements MethodInterceptor<Object, Objec
             return accessMode == null;
         }
 
-        private void proceedWithoutAccessMode() {
-            result = proceed(context);
+        private TryResult<RuntimeException, Optional<Object>> proceedWithoutAccessMode() {
+            return proceed(context);
         }
 
         private void getOAuthData() {
             oAuthData = authHolder.get(Twitch.PLATFORM);
         }
 
-        private void proceedWithAccessMode() {
+        private TryResult<RuntimeException, Optional<Object>> proceedWithAccessMode() {
             assert oAuthData != null;
             assert accessMode != null;
             final var wrappedMethod = new WrappedMethod(context, accessMode, oAuthData);
-            result = callWithOAuth(wrappedMethod, false);
+            return callWithOAuth(wrappedMethod, false);
         }
     }
 
 
-    private @NonNull TryResult<RuntimeException, Optional<Object>> callWithOAuth(@NonNull WrappedMethod method,
-                                                                                 boolean refreshFirst
+    private TryResult<RuntimeException, Optional<Object>> callWithOAuth(WrappedMethod method,
+                                                                        boolean refreshFirst
     ) {
         final var callerResult = method.call(refreshFirst);
         if (refreshFirst || callerResult.getEither().merge(this::isNotDuToInvalidToken, s -> true)) {
@@ -90,7 +93,7 @@ public class TwitchServiceInterceptor implements MethodInterceptor<Object, Objec
         return callWithOAuth(method, true);
     }
 
-    private boolean isNotDuToInvalidToken(@NonNull RuntimeException error) {
+    private boolean isNotDuToInvalidToken(RuntimeException error) {
         final var msg = error.getMessage();
         if (msg == null) {
             return true;
@@ -101,10 +104,10 @@ public class TwitchServiceInterceptor implements MethodInterceptor<Object, Objec
     @RequiredArgsConstructor
     private class WrappedMethod {
 
-        private final @NonNull MethodInvocationContext<Object, Object> context;
+        private final MethodInvocationContext<Object, Object> context;
         @Getter
-        private final @NonNull OAuthAccessMode oAuthAccessMode;
-        private final @NonNull OAuthData oauthData;
+        private final OAuthAccessMode oAuthAccessMode;
+        private final OAuthData oauthData;
 
 
         public TryResult<RuntimeException, Optional<Object>> call(boolean tryWithRefresh) {
@@ -130,7 +133,7 @@ public class TwitchServiceInterceptor implements MethodInterceptor<Object, Objec
         try {
             return TryResult.success(Optional.ofNullable(context.proceed()));
         } catch (RuntimeException e) {
-            LOG.warn("Failure when calling {} : '{}'", context.getDescription(true), e);
+            LOG.warn("Failure when calling {} : '{}'", context.getDescription(true), ThrowableTool.oneLineMessageLazy(e));
             return TryResult.failure(e);
         }
     }

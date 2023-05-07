@@ -1,7 +1,7 @@
 package perobobbot.tools;
 
 import fpc.tools.lang.ThrowableTool;
-import lombok.NonNull;
+import jakarta.annotation.Nullable;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
@@ -14,16 +14,16 @@ import java.util.function.Consumer;
 @Slf4j
 public class MessageSaver {
 
-    private final Path root;
+    private final @Nullable Path root;
 
-    private final @NonNull String filePrefix;
-    private final @NonNull String fileSuffix;
+    private final String filePrefix;
+    private final String fileSuffix;
 
-    public MessageSaver(@NonNull String filePrefix, @NonNull String fileSuffix) {
+    public MessageSaver(String filePrefix, String fileSuffix) {
         this("perobobbot_saves",filePrefix,fileSuffix);
     }
 
-    public MessageSaver(@NonNull String folder, @NonNull String filePrefix, @NonNull String fileSuffix) {
+    public MessageSaver(String folder, String filePrefix, String fileSuffix) {
         var root = Path.of(System.getProperty("user.home")).resolve(folder);
         try {
             Files.createDirectories(root);
@@ -37,7 +37,7 @@ public class MessageSaver {
 
     }
 
-    public void saveMessage(byte @NonNull [] content) {
+    public void saveMessage(byte [] content) {
         save(path -> {
             try {
                 Files.write(path,content);
@@ -47,7 +47,7 @@ public class MessageSaver {
         });
     }
 
-    public void saveMessage(@NonNull String content) {
+    public void saveMessage(String content) {
         save(path -> {
             try {
                 Files.write(path, List.of(content));
@@ -57,7 +57,7 @@ public class MessageSaver {
         });
     }
 
-    private void save(@NonNull Consumer<Path> writer) {
+    private void save(Consumer<Path> writer) {
         if (this.root == null) {
             return;
         }

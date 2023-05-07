@@ -1,7 +1,6 @@
 package perobobbot.twitch.chat.message.to;
 
 import fpc.tools.fp.TryResult;
-import lombok.NonNull;
 import perobobbot.twitch.chat.ChannelSpecific;
 import perobobbot.twitch.chat.JoinFailure;
 import perobobbot.twitch.chat.TwitchChannel;
@@ -19,23 +18,21 @@ import java.util.Optional;
  **/
 public class Join extends RequestToTwitch<UserState> {
 
-    @NonNull
     private final TwitchChannel channel;
 
-    public Join(@NonNull TwitchChannel channel) {
+    public Join(TwitchChannel channel) {
         super(IRCCommand.JOIN, UserState.class);
         this.channel = channel;
     }
 
     @Override
-    @NonNull
-    public String payload(@NonNull Instant dispatchInstant) {
+    public String payload(Instant dispatchInstant) {
         return "JOIN #"+channel.getName();
     }
 
     @Override
-    public @NonNull Optional<TryResult<Throwable,UserState>> isMyAnswer(@NonNull MessageFromTwitch messageFromTwitch,
-                                                                        @NonNull String nick) {
+    public Optional<TryResult<Throwable,UserState>> isMyAnswer(MessageFromTwitch messageFromTwitch,
+                                                                        String nick) {
         if (appliesToMyChannel(messageFromTwitch)) {
 
             if (messageFromTwitch instanceof Notice notice) {
@@ -56,16 +53,14 @@ public class Join extends RequestToTwitch<UserState> {
         return false;
     }
 
-    @NonNull
-    private Optional<TryResult<Throwable,UserState>> checkNotice(@NonNull Notice notice) {
+    private Optional<TryResult<Throwable,UserState>> checkNotice(Notice notice) {
         if (notice.getMsgId() == NoticeId.MSG_CHANNEL_SUSPENDED) {
             return Optional.of(TryResult.failure(new JoinFailure(notice.getMsgId(), notice.getMessage())));
         }
         return Optional.empty();
     }
 
-    @NonNull
-    private Optional<TryResult<Throwable,UserState>> checkUserState(@NonNull UserState userState) {
+    private Optional<TryResult<Throwable,UserState>> checkUserState(UserState userState) {
         return Optional.of(TryResult.success(userState));
     }
 

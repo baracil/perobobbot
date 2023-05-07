@@ -1,6 +1,5 @@
 package perobobbot.command.impl;
 
-import lombok.NonNull;
 import perobobbot.command.impl.parser.FullMatchCommandParser;
 import perobobbot.command.impl.parser.RegexpCommandParser;
 
@@ -12,18 +11,18 @@ public interface CommandParser {
      * @param commandDefinition the definition of the command
      * @return the parsed command that can be used to create binding
      */
-    @NonNull Command parse(@NonNull String commandDefinition);
+    Command parse(String commandDefinition);
 
 
-    static @NonNull CommandParser chain(@NonNull CommandParser... parsers) {
+    static CommandParser chain(CommandParser... parsers) {
         return new ChainedCommandParser(List.of(parsers));
     }
 
-    static @NonNull CommandParser regexp() {
+    static CommandParser regexp() {
         return RegexpCommandParser.create();
     }
 
-    static @NonNull CommandParser fullMatch() {
+    static CommandParser fullMatch() {
         return FullMatchCommandParser.create();
     }
 }

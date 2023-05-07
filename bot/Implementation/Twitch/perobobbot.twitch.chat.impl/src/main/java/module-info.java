@@ -20,6 +20,7 @@ module perobobbot.twitch.chat.impl {
     requires io.micronaut.inject;
     requires io.micronaut.core;
     requires io.micronaut.runtime;
+    requires fpc.tools.annotation;
 
     exports perobobbot.twitch.chat.impl;
 

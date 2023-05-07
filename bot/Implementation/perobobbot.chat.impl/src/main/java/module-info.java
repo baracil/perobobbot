@@ -11,6 +11,7 @@ module perobobbot.chat.impl {
     requires io.micronaut.context;
     requires jakarta.inject;
     requires jakarta.annotation;
+    requires fpc.tools.annotation;
 
     exports perobobbot.chat.impl;
 }

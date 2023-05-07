@@ -1,7 +1,6 @@
 package perobobbot.command.impl;
 
 import fpc.tools.lang.ListTool;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.command.api.CommandDefinitionParsingFailure;
 
@@ -10,10 +9,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ChainedCommandParser implements CommandParser {
 
-    private final @NonNull List<CommandParser> parsers;
+    private final List<CommandParser> parsers;
 
     @Override
-    public @NonNull Command parse(@NonNull String commandDefinition) {
+    public Command parse(String commandDefinition) {
         final var suppressed = ListTool.<Throwable>arrayList();
 
         for (CommandParser parser : parsers) {

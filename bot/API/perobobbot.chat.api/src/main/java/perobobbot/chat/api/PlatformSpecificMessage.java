@@ -1,6 +1,6 @@
 package perobobbot.chat.api;
 
-import lombok.NonNull;
+import jakarta.annotation.Nullable;
 import lombok.Value;
 
 import java.util.Optional;
@@ -8,10 +8,11 @@ import java.util.Optional;
 @Value
 public class PlatformSpecificMessage<T> {
 
-    @NonNull T message;
+    T message;
+    @Nullable
     String privateMessage;
 
-    public @NonNull Optional<String> getPrivateMessage() {
+    public Optional<String> getPrivateMessage() {
         return Optional.ofNullable(privateMessage);
     }
 }

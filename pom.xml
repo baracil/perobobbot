@@ -59,6 +59,12 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>net.femtoparsec.tools</groupId>
+            <artifactId>fpc-tools-annotation</artifactId>
+            <version>${fpc-tools.version}</version>
+        </dependency>
+
     </dependencies>
 
 

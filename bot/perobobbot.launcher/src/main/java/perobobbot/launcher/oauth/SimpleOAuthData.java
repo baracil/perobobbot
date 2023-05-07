@@ -3,7 +3,6 @@ package perobobbot.launcher.oauth;
 import fpc.tools.lang.Instants;
 import fpc.tools.lang.Secret;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Synchronized;
 import perobobbot.api.Identity;
 import perobobbot.api.UserInfo;
@@ -17,15 +16,15 @@ import perobobbot.service.api.UserTokenService;
 public class SimpleOAuthData implements OAuthData {
 
     @Getter
-    private final @NonNull Identity identity;
+    private final Identity identity;
     @Getter
-    private final @NonNull String login;
-    private final @NonNull UserTokenService userTokenService;
-    private final @NonNull ApplicationService applicationService;
-    private final @NonNull OAuthManager oAuthManager;
-    private final @NonNull Instants instants;
+    private final String login;
+    private final UserTokenService userTokenService;
+    private final ApplicationService applicationService;
+    private final OAuthManager oAuthManager;
+    private final Instants instants;
 
-    public SimpleOAuthData(@NonNull UserInfo userInfo, @NonNull UserTokenService userTokenService, @NonNull ApplicationService applicationService, @NonNull OAuthManager oAuthManager, @NonNull Instants instants) {
+    public SimpleOAuthData(UserInfo userInfo, UserTokenService userTokenService, ApplicationService applicationService, OAuthManager oAuthManager, Instants instants) {
         this.identity = userInfo.identity();
         this.login = userInfo.login();
         this.userTokenService = userTokenService;
@@ -35,17 +34,17 @@ public class SimpleOAuthData implements OAuthData {
     }
 
     @Override
-    public @NonNull Platform getPlatform() {
+    public Platform getPlatform() {
         return identity.platform();
     }
 
     @Override
-    public @NonNull String getClientId() {
+    public String getClientId() {
         return applicationService.getApplicationClientId(identity.platform());
     }
 
     @Override
-    public void refresh(@NonNull OAuthAccessMode oAuthAccessMode) {
+    public void refresh(OAuthAccessMode oAuthAccessMode) {
         switch (oAuthAccessMode) {
             case USER_ONLY -> refreshUserToken();
             case APP_ONLY -> refreshApplicationToken();
@@ -54,12 +53,12 @@ public class SimpleOAuthData implements OAuthData {
     }
 
     @Override
-    public @NonNull String getUserId() {
+    public String getUserId() {
         return identity.userId();
     }
 
     @Override
-    public @NonNull Secret getAccessToken(@NonNull OAuthAccessMode oAuthAccessMode) {
+    public Secret getAccessToken(OAuthAccessMode oAuthAccessMode) {
         final AccessTokenProvider provider = switch (oAuthAccessMode) {
             case USER_ONLY -> getUserToken();
             case APP_ONLY -> getApplicationToken();
@@ -69,7 +68,7 @@ public class SimpleOAuthData implements OAuthData {
     }
 
     @Synchronized
-    private @NonNull AccessTokenProvider getForBothAccepted() {
+    private AccessTokenProvider getForBothAccepted() {
         final var userToken = userTokenService.findUserToken(identity.platform(), identity.userId()).orElse(null);
         if (userToken != null) {
             return userToken;
@@ -78,12 +77,12 @@ public class SimpleOAuthData implements OAuthData {
     }
 
     @Synchronized
-    private @NonNull UserToken.Decrypted getUserToken() {
+    private UserToken.Decrypted getUserToken() {
         return userTokenService.getUserToken(identity.platform(), identity.userId());
     }
 
     @Synchronized
-    private @NonNull ApplicationToken.Decrypted getApplicationToken() {
+    private ApplicationToken.Decrypted getApplicationToken() {
         final var platform = identity.platform();
         final var token = applicationService.findApplicationToken(platform).orElse(null);
         if (token != null) {
@@ -108,7 +107,7 @@ public class SimpleOAuthData implements OAuthData {
         refreshUserToken(token);
     }
 
-    private void refreshUserToken(@NonNull RefreshTokenInfo<Secret> token) {
+    private void refreshUserToken(RefreshTokenInfo<Secret> token) {
         if (token.expirationInstant().isAfter(instants.now())) {
             return;
         }

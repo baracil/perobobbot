@@ -1,9 +1,9 @@
 package perobobbot.twitch.chat.message.from;
 
 import fpc.tools.irc.IRCParsing;
+import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NonNull;
 import perobobbot.twitch.chat.ChannelSpecific;
 import perobobbot.twitch.chat.TwitchChannel;
 import perobobbot.twitch.chat.message.IRCCommand;
@@ -18,26 +18,22 @@ import java.util.Optional;
 @Getter
 public class ClearChat extends KnownMessageFromTwitch implements ChannelSpecific {
 
-    @NonNull
-    public static ClearChat permanentBan(@NonNull IRCParsing ircParsing, @NonNull String user, @NonNull TwitchChannel channel) {
+    public static ClearChat permanentBan(IRCParsing ircParsing, String user, TwitchChannel channel) {
         return new ClearChat(ircParsing,user,channel,null);
     }
 
-    @NonNull
-    public static ClearChat temporaryBan(@NonNull IRCParsing ircParsing, @NonNull String user, @NonNull TwitchChannel channel, @NonNull Duration banDuration) {
+    public static ClearChat temporaryBan(IRCParsing ircParsing, String user, TwitchChannel channel, Duration banDuration) {
         return new ClearChat(ircParsing,user,channel,banDuration);
     }
 
-    @NonNull
     private final String user;
 
-    @NonNull
     private final TwitchChannel channel;
 
     @Getter(AccessLevel.NONE)
-    private final Duration banDuration;
+    private final @Nullable Duration banDuration;
 
-    public ClearChat(@NonNull IRCParsing ircParsing, @NonNull String user, @NonNull TwitchChannel channel, Duration banDuration) {
+    public ClearChat(IRCParsing ircParsing, String user, TwitchChannel channel, @Nullable Duration banDuration) {
         super(ircParsing);
         this.user = user;
         this.channel = channel;
@@ -45,11 +41,10 @@ public class ClearChat extends KnownMessageFromTwitch implements ChannelSpecific
     }
 
     @Override
-    public @NonNull IRCCommand getCommand() {
+    public IRCCommand getCommand() {
         return IRCCommand.CLEARCHAT;
     }
 
-    @NonNull
     public Optional<Duration> banDuration() {
         return Optional.ofNullable(banDuration);
     }
@@ -59,11 +54,11 @@ public class ClearChat extends KnownMessageFromTwitch implements ChannelSpecific
     }
 
     @Override
-    public <T> T accept(@NonNull MessageFromTwitchVisitor<T> visitor) {
+    public <T> T accept(MessageFromTwitchVisitor<T> visitor) {
         return visitor.visit(this);
     }
 
-    public static @NonNull ClearChat build(@NonNull AnswerBuilderHelper helper) {
+    public static ClearChat build(AnswerBuilderHelper helper) {
         final String user = helper.lastParameter();
         final TwitchChannel channel = helper.channelFromParameterAt(0);
         final Optional<Duration> banDuration = helper.optionalTagValueAsInt(TagKey.BAN_DURATION)

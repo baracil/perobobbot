@@ -5,7 +5,6 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.QueryValue;
-import lombok.NonNull;
 import perobobbot.api.data.Platform;
 
 import java.io.IOException;
@@ -18,20 +17,20 @@ public interface AuthenticationApi extends WebService {
     String PATH = ROOT_PATH+"/oauth";
 
     @Get("/platform")
-    @NonNull Set<Platform> listManagedPlatforms();
+    Set<Platform> listManagedPlatforms();
 
     @Get("/user/{platform}/uri")
-    @NonNull URI startAuthorizationCodeGrantFlow(@NonNull @PathVariable Platform platform);
+    URI startAuthorizationCodeGrantFlow(@PathVariable Platform platform);
 
     @Get("/user/{platform}/launch")
-    void launchAuthorizationCodeGrantFlow(@NonNull @PathVariable Platform platform) throws IOException;
+    void launchAuthorizationCodeGrantFlow(@PathVariable Platform platform) throws IOException;
 
     @Get("/user/{platform}")
-    @NonNull HttpResponse<?> authenticate(@NonNull @PathVariable Platform platform);
+    HttpResponse<?> authenticate(@PathVariable Platform platform);
 
     @Get("/callback/{platform}{?values*}")
-    void getCallback(@NonNull @PathVariable Platform platform,
-                            @NonNull @QueryValue("values") Map<String, String> values);
+    void getCallback(@PathVariable Platform platform,
+                            @QueryValue("values") Map<String, String> values);
 
 
 

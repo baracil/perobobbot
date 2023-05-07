@@ -2,7 +2,6 @@ package perobobbot.domain.jpa.repository;
 
 import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.jpa.repository.JpaRepository;
-import lombok.NonNull;
 import perobobbot.api.data.JoinedChannelNotFound;
 import perobobbot.domain.jpa.entity.JoinedChannelEntity;
 
@@ -12,11 +11,11 @@ import java.util.stream.Stream;
 @Repository
 public interface JoinedChannelRepository extends JpaRepository<JoinedChannelEntity,Long> {
 
-    @NonNull Stream<JoinedChannelEntity> getByUserIdentityId(long userIdentityId);
+    Stream<JoinedChannelEntity> getByUserIdentityId(long userIdentityId);
 
-    @NonNull Optional<JoinedChannelEntity> findByUserIdentityIdAndName(long userIdentityId, @NonNull String name);
+    Optional<JoinedChannelEntity> findByUserIdentityIdAndName(long userIdentityId, String name);
 
-    default @NonNull JoinedChannelEntity getByUserIdentityIdAndName(long userIdentityId, @NonNull String name) {
+    default JoinedChannelEntity getByUserIdentityIdAndName(long userIdentityId, String name) {
         return findByUserIdentityIdAndName(userIdentityId,name).orElseThrow(() -> new JoinedChannelNotFound(userIdentityId,name));
     }
 }

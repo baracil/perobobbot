@@ -1,6 +1,5 @@
 package perobobbot.twitch.api.channelpoints;
 
-import lombok.NonNull;
 import lombok.Value;
 import perobobbot.twitch.api.RewardRedemptionStatus;
 import perobobbot.twitch.api.TwitchApiPayload;
@@ -11,12 +10,12 @@ import java.time.Instant;
 @Value
 public class CustomRewardRedemption implements TwitchApiPayload {
 
-    @NonNull String id;
-    @NonNull UserInfo broadcaster;
-    @NonNull UserInfo user;
-    @NonNull BasicReward reward;
-    @NonNull String userInput;
-    @NonNull RewardRedemptionStatus status;
-    @NonNull Instant redeemedAt;
+    String id;
+    UserInfo broadcaster;
+    UserInfo user;
+    BasicReward reward;
+    String userInput;
+    RewardRedemptionStatus status;
+    Instant redeemedAt;
 
 }

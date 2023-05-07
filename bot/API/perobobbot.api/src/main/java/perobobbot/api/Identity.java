@@ -1,40 +1,39 @@
 package perobobbot.api;
 
 import io.micronaut.serde.annotation.Serdeable;
-import lombok.NonNull;
 import perobobbot.api.data.Platform;
 
 @Serdeable
-public record Identity(@NonNull Platform platform, @NonNull String userId) implements Id {
+public record Identity(Platform platform, String userId) implements Id {
 
 
     @Override
-    public <T> @NonNull T accept(@NonNull Visitor<T> visitor) {
+    public <T> T accept(Visitor<T> visitor) {
         return visitor.visit(this);
     }
 
 
-    public boolean isSameIdentity(@NonNull Platform platform, @NonNull String userId) {
+    public boolean isSameIdentity(Platform platform, String userId) {
         return platform.equals(this.platform) && userId.equals(this.userId);
     }
 
 
-    public void checkSameIdentity(@NonNull Identity other) {
+    public void checkSameIdentity(Identity other) {
         if (other.equals(this)) {
             return;
         }
         throw new IncompatibleIdentification(this, other);
     }
 
-    public void checkSameIdentity(@NonNull Identity.Provider other) {
+    public void checkSameIdentity(Identity.Provider other) {
         checkSameIdentity(other.identity());
     }
 
 
     public interface Provider {
-        @NonNull Identity identity();
+        Identity identity();
 
-        default void checkSameIdentity(@NonNull Identity.Provider other) {
+        default void checkSameIdentity(Identity.Provider other) {
             identity().checkSameIdentity(other);
         }
 

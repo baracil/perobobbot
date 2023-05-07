@@ -2,7 +2,6 @@ package perobobbot.bus.impl;
 
 import fpc.tools.lang.Subscription;
 import fpc.tools.lang.SubscriptionHolder;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.PerobobbotExecutors;
 import perobobbot.bus.api.Consumer;
@@ -18,15 +17,15 @@ import java.util.concurrent.LinkedBlockingDeque;
 @RequiredArgsConstructor
 public class SimpleConsumer<T> implements Consumer<T> {
 
-    private final @NonNull PerobobbotExecutors executors;
+    private final PerobobbotExecutors executors;
     private final BlockingDeque<Message<T>> pending = new LinkedBlockingDeque<>();
 
     private final SubscriptionHolder subscription = new SubscriptionHolder();
 
-    public SimpleConsumer(@NonNull SimpleBus bus,
-                          @NonNull PerobobbotExecutors executors,
-                          @NonNull Set<Topic> topics,
-                          @NonNull Class<T> payloadType) {
+    public SimpleConsumer(SimpleBus bus,
+                          PerobobbotExecutors executors,
+                          Set<Topic> topics,
+                          Class<T> payloadType) {
         this.executors = executors;
         this.subscription.replace(() ->
                 topics.stream()
@@ -37,12 +36,12 @@ public class SimpleConsumer<T> implements Consumer<T> {
 
 
     @Override
-    public @NonNull Message<T> receive() throws InterruptedException {
+    public Message<T> receive() throws InterruptedException {
         return pending.take();
     }
 
     @Override
-    public @NonNull CompletionStage<Message<T>> receiveAsync() {
+    public CompletionStage<Message<T>> receiveAsync() {
         final var future = new CompletableFuture<Message<T>>();
         executors.submit(() -> {
             try {

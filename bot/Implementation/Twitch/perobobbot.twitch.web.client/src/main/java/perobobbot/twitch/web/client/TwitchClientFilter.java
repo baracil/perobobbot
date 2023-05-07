@@ -5,7 +5,6 @@ import io.micronaut.http.MutableHttpRequest;
 import io.micronaut.http.annotation.Filter;
 import io.micronaut.http.filter.ClientFilterChain;
 import io.micronaut.http.filter.HttpClientFilter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.reactivestreams.Publisher;
 import perobobbot.oauth.api.HeaderHolder;
@@ -14,7 +13,7 @@ import perobobbot.oauth.api.HeaderHolder;
 @RequiredArgsConstructor
 public class TwitchClientFilter implements HttpClientFilter {
 
-    private final @NonNull HeaderHolder headerHolder;
+    private final HeaderHolder headerHolder;
 
     @Override
     public Publisher<? extends HttpResponse<?>> doFilter(MutableHttpRequest<?> request, ClientFilterChain chain) {

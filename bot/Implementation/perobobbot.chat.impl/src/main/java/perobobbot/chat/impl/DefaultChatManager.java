@@ -7,7 +7,6 @@ import fpc.tools.micronaut.EagerInit;
 import io.micronaut.scheduling.annotation.Scheduled;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.Identity;
@@ -29,14 +28,14 @@ import java.util.concurrent.ExecutionException;
 @PerobobbotService(serviceType = ChatManager.class, apiVersion = ChatManager.VERSION)
 public class DefaultChatManager implements ChatManager {
 
-    private final @NonNull UserIdentityService userIdentityService;
-    private final @NonNull ChatFactory chatFactory;
+    private final UserIdentityService userIdentityService;
+    private final ChatFactory chatFactory;
 
     private final Map<Identity, Chat> chats = new HashMap<>();
 
     public DefaultChatManager(
-            @NonNull UserIdentityService userIdentityService,
-            @NonNull List<PlatformChatFactory> platformChatFactories
+            UserIdentityService userIdentityService,
+            List<PlatformChatFactory> platformChatFactories
     ) {
         this.userIdentityService = userIdentityService;
         this.chatFactory = DefaultChatFactory.create(platformChatFactories);
@@ -44,7 +43,7 @@ public class DefaultChatManager implements ChatManager {
 
     @Override
     @Synchronized
-    public @NonNull Optional<ChatIO> findChat(@NonNull Identity identity) {
+    public Optional<ChatIO> findChat(Identity identity) {
         return Optional.ofNullable(chats.get(identity));
     }
 

@@ -1,13 +1,12 @@
 package perobobbot.web.controller;
 
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.QueryValue;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
-import jakarta.annotation.Nullable;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.data.JoinChannelParameters;
 import perobobbot.api.data.JoinedChannel;
@@ -17,47 +16,49 @@ import perobobbot.service.api.UserIdentityService;
 import perobobbot.web.api.UserIdentityApi;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller(UserIdentityApi.PATH)
 @RequiredArgsConstructor
 @ExecuteOn(TaskExecutors.IO)
 public class UserIdentityController implements UserIdentityApi {
 
-    private final @NonNull UserIdentityService userIdentityService;
+    private final UserIdentityService userIdentityService;
 
     @Override
-    public @NonNull List<UserIdentity> listUserIdentity(@Nullable @QueryValue Optional<Platform> platform,
+    public List<UserIdentity> listUserIdentity(@Nullable @QueryValue Platform platform,
                                                         @QueryValue(defaultValue = "0") int page,
                                                         @QueryValue(defaultValue = "-1") int size) {
-        return platform.map(p -> userIdentityService.listUserIdentities(p,page,size))
-                .orElseGet(() -> userIdentityService.listUserIdentities(page,size));
+        if (platform == null) {
+            return userIdentityService.listUserIdentities(page,size);
+        } else {
+            return userIdentityService.listUserIdentities(platform,page,size);
+        }
     }
 
     @Override
-    public @NonNull List<JoinedChannel> listJoinedChannels(@PathVariable long userIdentityId) {
+    public List<JoinedChannel> listJoinedChannels(@PathVariable long userIdentityId) {
         final var userIdentity = userIdentityService.getUserIdentity(userIdentityId);
         return userIdentity.joinedChannels();
     }
 
     @Override
-    public @NonNull UserIdentity getUserIdentity(@PathVariable long userIdentityId) {
+    public UserIdentity getUserIdentity(@PathVariable long userIdentityId) {
         return userIdentityService.getUserIdentity(userIdentityId);
     }
 
     @Override
-    public @NonNull JoinedChannel getJoinedChannel(@PathVariable long userIdentityId, @PathVariable @NonNull String channelName) {
+    public JoinedChannel getJoinedChannel(@PathVariable long userIdentityId, @PathVariable String channelName) {
         return userIdentityService.getJoinedChannel(userIdentityId,channelName);
 
     }
 
     @Override
-    public void partChannel(@PathVariable long userIdentityId, @PathVariable @NonNull String channelName) {
+    public void partChannel(@PathVariable long userIdentityId, @PathVariable String channelName) {
         userIdentityService.partChannel(userIdentityId,channelName);
     }
 
     @Override
-    public @NonNull JoinedChannel joinChannel(@PathVariable long userIdentityId, @PathVariable @NonNull String channelName, @Body @NonNull JoinChannelParameters parameters) {
+    public JoinedChannel joinChannel(@PathVariable long userIdentityId, @PathVariable String channelName, @Body JoinChannelParameters parameters) {
         return userIdentityService.joinChannel(userIdentityId,channelName, parameters.readOnly());
     }
 }

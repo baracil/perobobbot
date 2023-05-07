@@ -2,7 +2,6 @@ package perobobbot.service.jpa;
 
 import io.micronaut.data.model.Pageable;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.Id;
 import perobobbot.api.Identity;
@@ -30,23 +29,23 @@ import java.util.stream.Collectors;
 @PerobobbotService(serviceType = UserIdentityService.class, apiVersion = UserIdentityService.VERSION)
 public class JpaUserIdentityService implements UserIdentityService {
 
-    private final @NonNull UserIdentityRepository userIdentityRepository;
-    private final @NonNull JoinedChannelRepository joinedChannelRepository;
-    private final @NonNull UserTypeProvider userTypeProvider;
+    private final UserIdentityRepository userIdentityRepository;
+    private final JoinedChannelRepository joinedChannelRepository;
+    private final UserTypeProvider userTypeProvider;
 
     @Override
-    public @NonNull UserIdentity getUserIdentity(long userIdentityId) {
+    public UserIdentity getUserIdentity(long userIdentityId) {
         return userIdentityRepository.getById(userIdentityId).toView();
     }
 
     @Override
-    public @NonNull Optional<UserInfo> findUserInfo(@NonNull Identity identity) {
+    public Optional<UserInfo> findUserInfo(Identity identity) {
         return userIdentityRepository.findByIdentification(identity)
                                      .map(UserIdentityEntity::toUserInfo);
     }
 
     @Override
-    public @NonNull UserIdentity saveUserInfo(@NonNull UserInfo userInfo) {
+    public UserIdentity saveUserInfo(UserInfo userInfo) {
         final var identity = new Identity(userInfo.platform(), userInfo.userId());
         final var existing = userIdentityRepository.findByIdentification(identity).orElse(null);
         if (existing != null) {
@@ -58,36 +57,36 @@ public class JpaUserIdentityService implements UserIdentityService {
     }
 
     @Override
-    public @NonNull Optional<UserIdentity> findUserIdentity(@NonNull Id id) {
+    public Optional<UserIdentity> findUserIdentity(Id id) {
         return id.accept(new UserIdentityFinder(userIdentityRepository)).map(UserIdentityEntity::toView);
     }
 
     @Override
-    public @NonNull Set<JoinedChannel> listJoinedChannels(long userIdentityId) {
+    public Set<JoinedChannel> listJoinedChannels(long userIdentityId) {
         return joinedChannelRepository.getByUserIdentityId(userIdentityId)
                                       .map(JoinedChannelEntity::toView)
                                       .collect(Collectors.toSet());
     }
 
     @Override
-    public @NonNull JoinedChannel getJoinedChannel(long userIdentityId, @NonNull String channelName) {
+    public JoinedChannel getJoinedChannel(long userIdentityId, String channelName) {
         return joinedChannelRepository.getByUserIdentityIdAndName(userIdentityId, channelName).toView();
     }
 
     @Override
-    public @NonNull UserIdentity getBotForPlatform(@NonNull Platform platform) {
+    public UserIdentity getBotForPlatform(Platform platform) {
         return userIdentityRepository.findByPlatformAndUserType(platform, UserType.BOT)
                                      .orElseThrow(() -> new NoBotDefined(platform)).toView();
     }
 
     @Override
-    public @NonNull Optional<UserIdentity> findBotForPlatform(@NonNull Platform platform) {
+    public Optional<UserIdentity> findBotForPlatform(Platform platform) {
         return userIdentityRepository.findByPlatformAndUserType(platform, UserType.BOT)
                                      .map(UserIdentityEntity::toView);
     }
 
     @Override
-    public @NonNull List<UserIdentity> listUserIdentities(int page, int size) {
+    public List<UserIdentity> listUserIdentities(int page, int size) {
         return userIdentityRepository.findAll(Pageable.from(page, size))
                                      .getContent()
                                      .stream()
@@ -96,7 +95,7 @@ public class JpaUserIdentityService implements UserIdentityService {
     }
 
     @Override
-    public @NonNull List<UserIdentity> listUserIdentities(@NonNull Platform platform, int page, int size) {
+    public List<UserIdentity> listUserIdentities(Platform platform, int page, int size) {
         return userIdentityRepository.findByPlatform(platform, Pageable.from(page, size))
                                      .getContent()
                                      .stream()
@@ -105,7 +104,7 @@ public class JpaUserIdentityService implements UserIdentityService {
     }
 
     @Override
-    public @NonNull JoinedChannel joinChannel(long userIdentityId, @NonNull String channelName, boolean readOnly) {
+    public JoinedChannel joinChannel(long userIdentityId, String channelName, boolean readOnly) {
         final var userIdentity = userIdentityRepository.getById(userIdentityId);
         final var result = userIdentity.joinedChannel(channelName, readOnly);
         userIdentityRepository.save(userIdentity);
@@ -113,7 +112,7 @@ public class JpaUserIdentityService implements UserIdentityService {
     }
 
     @Override
-    public void partChannel(long userIdentityId, @NonNull String channelName) {
+    public void partChannel(long userIdentityId, String channelName) {
         final var userIdentity = userIdentityRepository.getById(userIdentityId);
         if (userIdentity.partChannel(channelName)) {
             userIdentityRepository.save(userIdentity);
@@ -121,7 +120,7 @@ public class JpaUserIdentityService implements UserIdentityService {
     }
 
     @Override
-    public @NonNull Map<Identity, UserIdentity> findBots() {
+    public Map<Identity, UserIdentity> findBots() {
         return userIdentityRepository.findByUserType(UserType.BOT)
                                      .map(UserIdentityEntity::toView)
                                      .collect(Collectors.toMap(UserIdentity::identity, Function.identity()));

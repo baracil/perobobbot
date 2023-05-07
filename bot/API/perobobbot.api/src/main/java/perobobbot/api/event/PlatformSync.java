@@ -1,27 +1,27 @@
 package perobobbot.api.event;
 
-import lombok.NonNull;
+import io.micronaut.core.annotation.Nullable;
 import perobobbot.api.Event;
 import perobobbot.api.data.Platform;
 
 
 public final class PlatformSync implements Event {
 
-    public static @NonNull PlatformSync forPlatform(@NonNull Platform platform) {
+    public static PlatformSync forPlatform(Platform platform) {
         return new PlatformSync(platform);
     }
 
-    public static @NonNull PlatformSync forAllPlatforms() {
+    public static PlatformSync forAllPlatforms() {
         return new PlatformSync(null);
     }
 
-    private final Platform platform;
+    private final @Nullable Platform platform;
 
-    private PlatformSync(Platform platform) {
+    private PlatformSync(@Nullable Platform platform) {
         this.platform = platform;
     }
 
-    public boolean appliesTo(@NonNull Platform platform) {
+    public boolean appliesTo(Platform platform) {
         return this.platform == null || this.platform.equals(platform);
     }
 

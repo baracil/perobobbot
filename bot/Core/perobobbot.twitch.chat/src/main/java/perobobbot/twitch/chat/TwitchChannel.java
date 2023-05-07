@@ -1,7 +1,6 @@
 package perobobbot.twitch.chat;
 
 import lombok.AccessLevel;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
@@ -12,11 +11,10 @@ import lombok.Value;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class TwitchChannel {
 
-    @NonNull String name;
+    String name;
 
 
-    @NonNull
-    public static TwitchChannel create(@NonNull String channelName) {
+    public static TwitchChannel create(String channelName) {
         if (channelName.startsWith("#")) {
             return new TwitchChannel(channelName.substring(1).toLowerCase());
         } else {

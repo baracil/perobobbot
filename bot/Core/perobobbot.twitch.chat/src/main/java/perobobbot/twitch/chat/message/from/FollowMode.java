@@ -1,13 +1,11 @@
 package perobobbot.twitch.chat.message.from;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class FollowMode {
 
-    @NonNull
     public static FollowMode create(int ircValue) {
         return new FollowMode(ircValue);
     }

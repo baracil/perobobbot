@@ -5,7 +5,6 @@ import fpc.tools.micronaut.EagerInit;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.callback.api.CallbackManager;
 import perobobbot.twitch.eventsub.callback.EventSubCallback;
@@ -17,9 +16,9 @@ import java.util.List;
 @EagerInit
 @RequiredArgsConstructor
 public class MicronautPlug {
-    private final @NonNull CallbackManager callbackManager;
-    private final @NonNull List<EventSubHandler> eventSubHandler;
-    private final @NonNull SubscriptionHolder subscriptionHolder = new SubscriptionHolder();
+    private final CallbackManager callbackManager;
+    private final List<EventSubHandler> eventSubHandler;
+    private final SubscriptionHolder subscriptionHolder = new SubscriptionHolder();
 
     @PostConstruct
     public void registerCallback() {

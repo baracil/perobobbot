@@ -1,7 +1,7 @@
 package perobobbot.twitch.api.serde;
 
+import jakarta.annotation.Nullable;
 import lombok.AccessLevel;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.Contract;
 
@@ -17,7 +17,7 @@ public class TwitchJsonPayloadModifier {
 
 
     @Contract("null->null; !null -> !null")
-    public static Object modify(Object input) {
+    public static @Nullable Object modify(@Nullable Object input) {
         if (input == null) {
             return null;
         }
@@ -39,7 +39,7 @@ public class TwitchJsonPayloadModifier {
     private final Map<String, Object> input;
     private Set<String> candidates;
 
-    public @NonNull Map<String, Object> modify() {
+    public Map<String, Object> modify() {
         findCandidates();
         candidates.forEach(this::rewrite);
         return input;
@@ -54,14 +54,14 @@ public class TwitchJsonPayloadModifier {
                           .collect(Collectors.toSet());
     }
 
-    private String extractPrefix(@NonNull String fieldName, String suffix) {
+    private @Nullable String extractPrefix(String fieldName, String suffix) {
         if (fieldName.endsWith(suffix)) {
             return fieldName.substring(0, fieldName.length() - suffix.length());
         }
         return null;
     }
 
-    private boolean haveAllFields(@NonNull String prefix) {
+    private boolean haveAllFields(String prefix) {
         return FULL_SUFFIX.stream().map(s -> prefix + s).allMatch(input::containsKey);
     }
 

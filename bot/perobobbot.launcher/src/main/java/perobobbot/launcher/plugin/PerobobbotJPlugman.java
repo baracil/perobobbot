@@ -4,23 +4,21 @@ import io.micronaut.context.ApplicationContext;
 import io.micronaut.context.annotation.Requires;
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.discovery.event.ServiceReadyEvent;
+import jakarta.annotation.PreDestroy;
 import jakarta.inject.Singleton;
 import jplugman.base.JPlugman;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.launcher.PerobobbotConfiguration;
-
-import javax.annotation.PreDestroy;
 
 @Singleton
 @Requires(bean = PerobobbotConfiguration.class)
 @Slf4j
 public class PerobobbotJPlugman implements ApplicationEventListener<ServiceReadyEvent> {
 
-    private final @NonNull JPlugman jPlugman;
+    private final JPlugman jPlugman;
 
-    public PerobobbotJPlugman(@NonNull ApplicationContext applicationContext,
-                              @NonNull PerobobbotConfiguration configuration) {
+    public PerobobbotJPlugman(ApplicationContext applicationContext,
+                              PerobobbotConfiguration configuration) {
         final var application = new PluginApplication(VersionedServiceLister.list(applicationContext));
         this.jPlugman = new JPlugman(application, configuration.getPlugin().getFolder());
     }

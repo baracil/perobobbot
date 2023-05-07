@@ -3,7 +3,6 @@ package perobobbot.twitch.chat.message.from;
 import fpc.tools.irc.IRCParsing;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.ToString;
 import perobobbot.twitch.chat.ChannelSpecific;
 import perobobbot.twitch.chat.TwitchChannel;
@@ -21,7 +20,6 @@ public class RoomState extends KnownMessageFromTwitch implements ChannelSpecific
 
     private final boolean emoteOnly;
 
-    @NonNull
     private final FollowMode followMode;
 
     private final boolean r9kMode;
@@ -31,7 +29,7 @@ public class RoomState extends KnownMessageFromTwitch implements ChannelSpecific
     private final boolean subsOnly;
 
     @Builder
-    public RoomState(@NonNull IRCParsing ircParsing, TwitchChannel channel, boolean emoteOnly, @NonNull FollowMode followMode, boolean r9kMode, int slow, boolean subsOnly) {
+    public RoomState(IRCParsing ircParsing, TwitchChannel channel, boolean emoteOnly, FollowMode followMode, boolean r9kMode, int slow, boolean subsOnly) {
         super(ircParsing);
         this.channel = channel;
         this.emoteOnly = emoteOnly;
@@ -42,17 +40,16 @@ public class RoomState extends KnownMessageFromTwitch implements ChannelSpecific
     }
 
     @Override
-    public @NonNull IRCCommand getCommand() {
+    public IRCCommand getCommand() {
         return IRCCommand.ROOMSTATE;
     }
 
     @Override
-    public <T> T accept(@NonNull MessageFromTwitchVisitor<T> visitor) {
+    public <T> T accept(MessageFromTwitchVisitor<T> visitor) {
         return visitor.visit(this);
     }
 
-    @NonNull
-    public static RoomState build(@NonNull AnswerBuilderHelper helper) {
+    public static RoomState build(AnswerBuilderHelper helper) {
         return RoomState.builder()
                         .ircParsing(helper.getIrcParsing())
                         .channel(helper.channelFromParameterAt(0))

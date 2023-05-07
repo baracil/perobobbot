@@ -1,7 +1,6 @@
 package perobobbot.chat.api._private;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.data.Platform;
 import perobobbot.chat.api.ChannelChatIO;
@@ -14,16 +13,16 @@ import java.util.concurrent.CompletionStage;
 @Getter
 public class SimpleChannelChatIO implements ChannelChatIO {
 
-    private final @NonNull ChatIO chatIO;
-    private final @NonNull String channelName;
+    private final ChatIO chatIO;
+    private final String channelName;
 
     @Override
-    public @NonNull CompletionStage<DispatchSlip> sendMessage(@NonNull String message) {
+    public CompletionStage<DispatchSlip> sendMessage(String message) {
         return chatIO.sendMessage(channelName,message);
     }
 
     @Override
-    public @NonNull Platform getPlatform() {
+    public Platform getPlatform() {
         return chatIO.getPlatform();
     }
 }

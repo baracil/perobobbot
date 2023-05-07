@@ -21,6 +21,7 @@ module perobobbot.twitch.eventsub {
     requires perobobbot.callback.api;
     requires perobobbot.service.api;
     requires perobobbot.twitch.service.api;
+    requires fpc.tools.annotation;
 
 
     exports perobobbot.twitch.eventsub;

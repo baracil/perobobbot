@@ -1,17 +1,26 @@
 package perobobbot.bus.api;
 
-import lombok.NonNull;
-
 import java.util.Map;
 import java.util.Optional;
 
 public interface Message<T> {
 
-    @NonNull Map<String,String> getHeaders();
+    /**
+     * @return headers associated with this message
+     */
+    Map<String,String> getHeaders();
 
-    @NonNull Optional<String> getHeader(@NonNull String key);
+    /**
+     * find a header value from its key
+     * @param key the header key
+     * @return an optional containing the header value associated with the key if one exists, an empty optional otherwise
+     */
+    Optional<String> findHeader(String key);
 
-    @NonNull T getPayload();
+    /**
+     * @return the payload of this message
+     */
+    T getPayload();
 
-    @NonNull <U> Optional<Message<U>> cast(@NonNull Class<U> type);
+    <U> Optional<Message<U>> cast(Class<U> type);
 }

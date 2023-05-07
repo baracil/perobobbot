@@ -2,7 +2,6 @@ package perobobbot.twitch.api.eventsub.event;
 
 import io.micronaut.serde.annotation.Serdeable;
 import io.micronaut.serde.config.naming.SnakeCaseStrategy;
-import lombok.NonNull;
 import lombok.Value;
 import perobobbot.twitch.api.TwitchApiPayload;
 import perobobbot.twitch.api.UserInfo;
@@ -15,17 +14,17 @@ import java.util.List;
 @Serdeable(naming = SnakeCaseStrategy.class)
 public class PredictionBeginEvent implements PredicationEvent, TwitchApiPayload {
 
-    @NonNull String id;
-    @NonNull UserInfo broadcaster;
-    @NonNull String title;
-    @NonNull List<Outcome> outcomes;
+    String id;
+    UserInfo broadcaster;
+    String title;
+    List<Outcome> outcomes;
 
     @Serdeable.Serializable(using = ISOInstantSerde.class)
     @Serdeable.Deserializable(using = ISOInstantSerde.class)
-    @NonNull Instant startedAt;
+    Instant startedAt;
 
     @Serdeable.Serializable(using = ISOInstantSerde.class)
     @Serdeable.Deserializable(using = ISOInstantSerde.class)
-    @NonNull Instant locksAt;
+    Instant locksAt;
 
 }

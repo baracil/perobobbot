@@ -16,6 +16,7 @@ module perobobbot.command {
 
 
     requires io.micronaut.core;
+    requires fpc.tools.annotation;
 
     exports perobobbot.command.impl;
 }

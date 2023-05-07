@@ -2,8 +2,8 @@ package perobobbot.launcher.eventsub;
 
 import fpc.tools.lang.MapTool;
 import io.micronaut.retry.annotation.Fallback;
+import jakarta.annotation.PostConstruct;
 import jakarta.inject.Singleton;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.api.PlatformSubscriptionManager;
 import perobobbot.api.SubscriptionManager;
@@ -12,7 +12,6 @@ import perobobbot.api.event.PlatformSync;
 import perobobbot.bus.api.Bus;
 import perobobbot.bus.api.Producer;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
 
@@ -21,12 +20,12 @@ import java.util.Map;
 @Fallback
 public class PeroSubscriptionManager implements SubscriptionManager {
 
-    private final @NonNull Map<Platform, PlatformSubscriptionManager> managers;
+    private final Map<Platform, PlatformSubscriptionManager> managers;
 
     private final Producer producer;
 
-    public PeroSubscriptionManager(@NonNull Bus bus,
-                                   @NonNull List<PlatformSubscriptionManager> managers) {
+    public PeroSubscriptionManager(Bus bus,
+                                   List<PlatformSubscriptionManager> managers) {
         this.producer = bus.createProducer(SYSTEM_SUBSCRIPTION_TOPIC);
         this.managers = managers.stream()
                                 .collect(MapTool.collector(PlatformSubscriptionManager::getPlatform));
@@ -38,7 +37,7 @@ public class PeroSubscriptionManager implements SubscriptionManager {
     }
 
     @Override
-    public @NonNull String getCallbackUrl(@NonNull Platform platform) {
+    public String getCallbackUrl(Platform platform) {
         final var manager = managers.get(platform);
         if (manager == null) {
             throw new IllegalArgumentException("'" + platform + "' is not managed");
@@ -47,7 +46,7 @@ public class PeroSubscriptionManager implements SubscriptionManager {
     }
 
     @Override
-    public void requestSynchronization(@NonNull Platform platform) {
+    public void requestSynchronization(Platform platform) {
         producer.send(PlatformSync.forPlatform(platform));
     }
 

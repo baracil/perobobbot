@@ -3,7 +3,6 @@ package perobobbot.twitch.api.channelpoints;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.EqualsAndHashCode;
-import lombok.NonNull;
 import lombok.Value;
 import lombok.experimental.SuperBuilder;
 
@@ -13,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CreateCustomRewardParameter extends CustomRewardParameterBase{
 
-    @NonNull String title;
+    String title;
     int cost;
 
 }

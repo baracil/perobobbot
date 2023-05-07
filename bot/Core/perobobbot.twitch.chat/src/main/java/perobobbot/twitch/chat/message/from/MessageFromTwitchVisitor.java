@@ -1,72 +1,50 @@
 package perobobbot.twitch.chat.message.from;
 
 import fpc.tools.fp.Function1;
-import lombok.NonNull;
 
 public interface MessageFromTwitchVisitor<T> {
 
-    @NonNull
     default Function1<MessageFromTwitch, T> toFunction() {
         return m -> m.accept(this);
     }
 
-    @NonNull
-    T visit(@NonNull CapAck start);
+    T visit(CapAck start);
 
-    @NonNull
-    T visit(@NonNull HostTarget.Stop stop);
+    T visit(HostTarget.Stop stop);
 
-    @NonNull
-    T visit(@NonNull HostTarget.Start start);
+    T visit(HostTarget.Start start);
 
-    @NonNull
-    T visit(@NonNull ClearChat clearChat);
+    T visit(ClearChat clearChat);
 
-    @NonNull
-    T visit(@NonNull ClearMsg clearMsg);
+    T visit(ClearMsg clearMsg);
 
-    @NonNull
-    T visit(@NonNull GenericKnownMessageFromTwitch genericKnownMessageFromTwitch);
+    T visit(GenericKnownMessageFromTwitch genericKnownMessageFromTwitch);
 
-    @NonNull
-    T visit(@NonNull GlobalUserState globalUserState);
+    T visit(GlobalUserState globalUserState);
 
-    @NonNull
-    T visit(@NonNull InvalidIRCCommand invalidIRCCommand);
+    T visit(InvalidIRCCommand invalidIRCCommand);
 
-    @NonNull
-    T visit(@NonNull Join join);
+    T visit(Join join);
 
-    @NonNull
-    T visit(@NonNull Mode mode);
+    T visit(Mode mode);
 
-    @NonNull
-    T visit(@NonNull Notice notice);
+    T visit(Notice notice);
 
-    @NonNull
-    T visit(@NonNull Part part);
+    T visit(Part part);
 
-    @NonNull
-    T visit(@NonNull PingFromTwitch pingFromTwitch);
+    T visit(PingFromTwitch pingFromTwitch);
 
-    @NonNull
-    T visit(@NonNull PongFromTwitch pongFromTwitch);
+    T visit(PongFromTwitch pongFromTwitch);
 
-    @NonNull
-    T visit(@NonNull PrivMsgFromTwitch privMsgFromTwitch);
+    T visit(PrivMsgFromTwitch privMsgFromTwitch);
 
-    @NonNull
-    T visit(@NonNull RoomState roomState);
+    T visit(RoomState roomState);
 
-    @NonNull
-    T visit(@NonNull UnknownMessageFromTwitch unknownMessageFromTwitch);
+    T visit(UnknownMessageFromTwitch unknownMessageFromTwitch);
 
-    @NonNull
-    T visit(@NonNull UserNotice userNotice);
+    T visit(UserNotice userNotice);
 
-    @NonNull
-    T visit(@NonNull UserState userState);
+    T visit(UserState userState);
 
-    @NonNull
-    T visit(@NonNull Welcome welcome);
+    T visit(Welcome welcome);
 }

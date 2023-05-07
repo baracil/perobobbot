@@ -1,6 +1,5 @@
 package perobobbot.launcher.oauth;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.api.Id;
 import perobobbot.api.data.Platform;
@@ -18,12 +17,12 @@ public class MainAuthHolder implements AuthHolder {
 
     private final static ThreadLocal<Map<Platform,OAuthData>> THREAD_LOCAL = ThreadLocal.withInitial(HashMap::new);
 
-    private @NonNull UserIdentityService userIdentityService;
-    private @NonNull OAuthDataFactory oAuthDataFactory;
-    private @NonNull Map<Platform,OAuthData> defaultOAuthData;
+    private final UserIdentityService userIdentityService;
+    private final OAuthDataFactory oAuthDataFactory;
+    private final Map<Platform,OAuthData> defaultOAuthData;
 
     @Override
-    public @NonNull OAuthData get(@NonNull Platform platform) {
+    public OAuthData get(Platform platform) {
         final var values = THREAD_LOCAL.get();
         final var value = values.get(platform);
         if (value != null) {
@@ -37,7 +36,7 @@ public class MainAuthHolder implements AuthHolder {
     }
 
     @Override
-    public void executeWith(@NonNull Id id, @NonNull Runnable action) {
+    public void executeWith(Id id, Runnable action) {
         final var current = THREAD_LOCAL.get().get(id.platform());
         try {
             setId(id);
@@ -53,14 +52,14 @@ public class MainAuthHolder implements AuthHolder {
     }
 
     @Override
-    public void setId(@NonNull Id id) {
+    public void setId(Id id) {
         final var userIdentity = userIdentityService.getUserIdentity(id);
         final var oAuthData = oAuthDataFactory.create(userIdentity.toUserInfo());
         THREAD_LOCAL.get().put(id.platform(),oAuthData);
     }
 
     @Override
-    public void clearId(@NonNull Platform platform) {
+    public void clearId(Platform platform) {
         final var map = THREAD_LOCAL.get();
         map.remove(platform);
         if (map.isEmpty()) {

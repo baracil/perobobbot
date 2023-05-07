@@ -2,7 +2,6 @@ package perobobbot.twitch.eventsub;
 
 import io.micronaut.serde.ObjectMapper;
 import lombok.AccessLevel;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import perobobbot.twitch.api.eventsub.EventSubNotification;
@@ -20,15 +19,15 @@ import java.util.Optional;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class TwitchRequestDeserializer {
 
-    public static @NonNull Optional<EventSubRequest> deserialize(@NonNull ObjectMapper objectMapper,
-                                                                 @NonNull String type,
-                                                                 byte @NonNull [] content) {
+    public static Optional<EventSubRequest> deserialize(ObjectMapper objectMapper,
+                                                                 String type,
+                                                                 byte [] content) {
         return new TwitchRequestDeserializer(objectMapper, type, content).deserialize();
     }
 
-    public static @NonNull Optional<EventSubRequest> deserialize(@NonNull ObjectMapper objectMapper,
-                                                                 @NonNull String type,
-                                                                 @NonNull String content) {
+    public static Optional<EventSubRequest> deserialize(ObjectMapper objectMapper,
+                                                                 String type,
+                                                                 String content) {
         return new TwitchRequestDeserializer(objectMapper, type, content.getBytes(StandardCharsets.UTF_8)).deserialize();
     }
 
@@ -38,9 +37,9 @@ public class TwitchRequestDeserializer {
             "revocation", EventSubVerification.class
     );
 
-    private final @NonNull ObjectMapper objectMapper;
-    private final @NonNull String type;
-    private final byte @NonNull [] content;
+    private final ObjectMapper objectMapper;
+    private final String type;
+    private final byte [] content;
 
     private Optional<EventSubRequest> deserialize() {
         final var clazz = CLASS_PER_TYPE.get(type);

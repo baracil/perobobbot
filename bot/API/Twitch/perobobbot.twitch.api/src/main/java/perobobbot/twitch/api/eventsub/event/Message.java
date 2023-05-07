@@ -1,7 +1,6 @@
 package perobobbot.twitch.api.eventsub.event;
 
 import io.micronaut.serde.annotation.Serdeable;
-import lombok.NonNull;
 import lombok.Value;
 
 import java.util.List;
@@ -10,6 +9,6 @@ import java.util.List;
 @Serdeable
 public class Message {
 
-    @NonNull String text;
-    @NonNull List<Emote> emotes;
+    String text;
+    List<Emote> emotes;
 }

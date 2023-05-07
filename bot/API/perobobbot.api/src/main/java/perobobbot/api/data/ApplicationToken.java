@@ -6,47 +6,46 @@ import fpc.tools.cipher.TextDecryptor;
 import fpc.tools.cipher.TextEncryptor;
 import fpc.tools.lang.Secret;
 import io.micronaut.core.annotation.Introspected;
-import lombok.NonNull;
 
 import java.time.Instant;
 
 public sealed interface ApplicationToken<T> extends Decryptable<ApplicationToken.Decrypted>, Encryptable<ApplicationToken.Encrypted> permits ApplicationToken.Decrypted, ApplicationToken.Encrypted {
 
-    @NonNull Platform platform();
+    Platform platform();
 
-    @NonNull T accessToken();
+    T accessToken();
 
-    @NonNull Instant expirationInstant();
+    Instant expirationInstant();
 
 
     @Introspected
-    record Decrypted(@NonNull Platform platform, @NonNull Secret accessToken,
-                     @NonNull Instant expirationInstant) implements ApplicationToken<Secret>, AccessTokenProvider {
+    record Decrypted(Platform platform, Secret accessToken,
+                     Instant expirationInstant) implements ApplicationToken<Secret>, AccessTokenProvider {
 
-        public @NonNull ApplicationToken.Encrypted encrypt(@NonNull TextEncryptor textEncryptor) {
+        public ApplicationToken.Encrypted encrypt(TextEncryptor textEncryptor) {
             return new Encrypted(platform, textEncryptor.encrypt(accessToken), expirationInstant);
         }
 
         @Override
-        public @NonNull ApplicationToken.Decrypted decrypt(@NonNull TextDecryptor textDecryptor) {
+        public ApplicationToken.Decrypted decrypt(TextDecryptor textDecryptor) {
             return this;
         }
 
         @Override
-        public <T> @NonNull T accept(@NonNull Visitor<T> visitor) {
+        public <T> T accept(Visitor<T> visitor) {
             return visitor.visit(this);
         }
     }
 
     @Introspected
-    record Encrypted(@NonNull Platform platform, @NonNull String accessToken,
-                     @NonNull Instant expirationInstant) implements ApplicationToken<String> {
-        public @NonNull ApplicationToken.Decrypted decrypt(@NonNull TextDecryptor textDecryptor) {
+    record Encrypted(Platform platform, String accessToken,
+                     Instant expirationInstant) implements ApplicationToken<String> {
+        public ApplicationToken.Decrypted decrypt(TextDecryptor textDecryptor) {
             return new Decrypted(platform, textDecryptor.decrypt(accessToken), expirationInstant);
         }
 
         @Override
-        public @NonNull ApplicationToken.Encrypted encrypt(@NonNull TextEncryptor textEncryptor) {
+        public ApplicationToken.Encrypted encrypt(TextEncryptor textEncryptor) {
             return this;
         }
     }

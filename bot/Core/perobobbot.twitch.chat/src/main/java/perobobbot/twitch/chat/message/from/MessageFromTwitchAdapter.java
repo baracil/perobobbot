@@ -1,129 +1,106 @@
 package perobobbot.twitch.chat.message.from;
 
-import lombok.NonNull;
-
 public abstract class MessageFromTwitchAdapter<T> implements MessageFromTwitchVisitor<T> {
 
-    @NonNull
-    protected abstract T fallbackVisit(@NonNull MessageFromTwitch messageFromTwitch);
+    protected abstract T fallbackVisit(MessageFromTwitch messageFromTwitch);
 
-    @NonNull
     @Override
-    public T visit(@NonNull CapAck start) {
+    public T visit(CapAck start) {
         return fallbackVisit(start);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull HostTarget.Stop stop) {
+    public T visit(HostTarget.Stop stop) {
         return fallbackVisit(stop);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull HostTarget.Start start) {
+    public T visit(HostTarget.Start start) {
         return fallbackVisit(start);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull ClearChat clearChat) {
+    public T visit(ClearChat clearChat) {
         return fallbackVisit(clearChat);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull ClearMsg clearMsg) {
+    public T visit(ClearMsg clearMsg) {
         return fallbackVisit(clearMsg);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull GenericKnownMessageFromTwitch genericKnownMessageFromTwitch) {
+    public T visit(GenericKnownMessageFromTwitch genericKnownMessageFromTwitch) {
         return fallbackVisit(genericKnownMessageFromTwitch);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull GlobalUserState globalUserState) {
+    public T visit(GlobalUserState globalUserState) {
         return fallbackVisit(globalUserState);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull InvalidIRCCommand invalidIRCCommand) {
+    public T visit(InvalidIRCCommand invalidIRCCommand) {
         return fallbackVisit(invalidIRCCommand);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull Join join) {
+    public T visit(Join join) {
         return fallbackVisit(join);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull Mode mode) {
+    public T visit(Mode mode) {
         return fallbackVisit(mode);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull Notice notice) {
+    public T visit(Notice notice) {
         return fallbackVisit(notice);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull Part part) {
+    public T visit(Part part) {
         return fallbackVisit(part);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull PingFromTwitch pingFromTwitch) {
+    public T visit(PingFromTwitch pingFromTwitch) {
         return fallbackVisit(pingFromTwitch);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull PongFromTwitch pongFromTwitch) {
+    public T visit(PongFromTwitch pongFromTwitch) {
         return fallbackVisit(pongFromTwitch);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull PrivMsgFromTwitch privMsgFromTwitch) {
+    public T visit(PrivMsgFromTwitch privMsgFromTwitch) {
         return fallbackVisit(privMsgFromTwitch);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull RoomState roomState) {
+    public T visit(RoomState roomState) {
         return fallbackVisit(roomState);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull UnknownMessageFromTwitch unknownMessageFromTwitch) {
+    public T visit(UnknownMessageFromTwitch unknownMessageFromTwitch) {
         return fallbackVisit(unknownMessageFromTwitch);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull UserNotice userNotice) {
+    public T visit(UserNotice userNotice) {
         return fallbackVisit(userNotice);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull UserState userState) {
+    public T visit(UserState userState) {
         return fallbackVisit(userState);
     }
 
-    @NonNull
     @Override
-    public T visit(@NonNull Welcome welcome) {
+    public T visit(Welcome welcome) {
         return fallbackVisit(welcome);
     }
 }

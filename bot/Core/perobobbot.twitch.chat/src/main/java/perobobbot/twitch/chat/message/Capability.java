@@ -1,7 +1,6 @@
 package perobobbot.twitch.chat.message;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
@@ -17,11 +16,10 @@ public enum Capability {
     MEMBERSHIP("twitch.tv/membership"),
     ;
 
-    @NonNull
     @Getter
     private final String ircValue;
 
-    public static Optional<Capability> find(@NonNull String ircValue) {
+    public static Optional<Capability> find(String ircValue) {
         for (Capability value : Holder.VALUES) {
             if (value.ircValue.equals(ircValue)) {
                 return Optional.of(value);
@@ -30,7 +28,6 @@ public enum Capability {
         return Optional.empty();
     }
 
-    @NonNull
     public static Set<Capability> AllCapabilities() {
         return Holder.VALUES;
     }

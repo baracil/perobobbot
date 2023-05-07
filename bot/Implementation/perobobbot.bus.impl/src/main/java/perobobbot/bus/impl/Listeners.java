@@ -5,7 +5,6 @@ import fpc.tools.lang.MapTool;
 import fpc.tools.lang.Subscription;
 import fpc.tools.lang.ThrowableTool;
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +26,7 @@ public class Listeners {
 
     private Map<String, List<Listener<?>>> listeners = Map.of();
 
-    public void dispatch(@NonNull RegularTopic topic, @NonNull Message<?> message) {
+    public void dispatch(RegularTopic topic, Message<?> message) {
         listeners.values()
                  .stream()
                  .flatMap(Collection::stream)
@@ -49,15 +48,15 @@ public class Listeners {
     }
 
     @Synchronized
-    private void remove(@NonNull String topicAsString, long id) {
+    private void remove(String topicAsString, long id) {
         final Predicate<Listener<?>> dataMatcher = d -> d.getId() == id;
         this.listeners = update(topicAsString, list -> ListTool.removeOnceFrom(list).apply(dataMatcher), Optional::empty);
     }
 
 
-    private Map<String, List<Listener<?>>> update(@NonNull String topicAsString,
-                                                                    @NonNull UnaryOperator<List<Listener<?>>> updater,
-                                                                    @NonNull Supplier<Optional<List<Listener<?>>>> ifAbsent) {
+    private Map<String, List<Listener<?>>> update(String topicAsString,
+                                                                    UnaryOperator<List<Listener<?>>> updater,
+                                                                    Supplier<Optional<List<Listener<?>>>> ifAbsent) {
 
 
         final var builder = MapTool.<String,List<Listener<?>>>hashMap();
@@ -92,15 +91,15 @@ public class Listeners {
         private static final AtomicLong ID_GENERATOR = new AtomicLong(0);
         @Getter
         long id = ID_GENERATOR.incrementAndGet();
-        private final @NonNull Topic topic;
-        private final @NonNull Class<T> eventType;
-        private final @NonNull BusListener<T> listener;
+        private final Topic topic;
+        private final Class<T> eventType;
+        private final BusListener<T> listener;
 
-        public boolean isConcerned(@NonNull RegularTopic topic) {
+        public boolean isConcerned(RegularTopic topic) {
             return this.topic.matches(topic.topicAsString());
         }
 
-        public void dispatch(@NonNull Message<?> message) {
+        public void dispatch(Message<?> message) {
             message.cast(eventType).ifPresent(msg -> {
                 try {
                     listener.onBusEvent(msg);

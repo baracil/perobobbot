@@ -2,7 +2,6 @@ package perobobbot.twitch.eventsub.callback;
 
 import io.micronaut.http.HttpRequest;
 import io.micronaut.http.HttpResponse;
-import lombok.NonNull;
 import perobobbot.callback.api.Callback;
 
 import java.util.Comparator;
@@ -10,16 +9,16 @@ import java.util.List;
 
 public class EventSubCallback implements Callback {
 
-    private final @NonNull List<EventSubHandler> handlers;
+    private final List<EventSubHandler> handlers;
 
-    public EventSubCallback(@NonNull List<EventSubHandler> handlers) {
+    public EventSubCallback(List<EventSubHandler> handlers) {
         this.handlers = handlers.stream()
                                 .sorted(Comparator.comparingInt(EventSubHandler::priority))
                                 .toList();
     }
 
     @Override
-    public @NonNull HttpResponse<?> handleCall(@NonNull HttpRequest<?> request, @NonNull String body) {
+    public HttpResponse<?> handleCall(HttpRequest<?> request, String body) {
         return new Context().proceed(request, body);
     }
 
@@ -27,7 +26,7 @@ public class EventSubCallback implements Callback {
         private int index = 0;
 
         @Override
-        public @NonNull HttpResponse<?> proceed(@NonNull HttpRequest<?> request, @NonNull String body) {
+        public HttpResponse<?> proceed(HttpRequest<?> request, String body) {
             if (index >= handlers.size()) {
                 return HttpResponse.notFound();
             }

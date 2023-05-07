@@ -1,7 +1,7 @@
 package perobobbot.chat.api.irc;
 
+import jakarta.annotation.Nullable;
 import lombok.Builder;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;
 
@@ -12,15 +12,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class Tag {
     boolean client;
-    String vendor;
-    @NonNull String keyName;
-    @NonNull String value;
+    @Nullable String vendor;
+    String keyName;
+    String value;
 
-    public @NonNull Optional<String> getVendor() {
+    public Optional<String> getVendor() {
         return Optional.ofNullable(vendor);
     }
 
-    public static @NonNull Tag fromFpc(@NonNull fpc.tools.irc.Tag tag) {
+    public static Tag fromFpc(fpc.tools.irc.Tag tag) {
         return Tag.builder()
                   .client(tag.isClient())
                   .vendor(tag.vendor().orElse(null))

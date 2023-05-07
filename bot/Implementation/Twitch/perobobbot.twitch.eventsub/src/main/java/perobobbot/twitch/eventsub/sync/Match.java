@@ -1,6 +1,9 @@
 package perobobbot.twitch.eventsub.sync;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Singular;
 import perobobbot.api.SubscriptionData;
 import perobobbot.api.SubscriptionView;
 import perobobbot.twitch.api.eventsub.TwitchSubscription;
@@ -14,15 +17,15 @@ import java.util.Map;
 public class Match {
 
     @Singular
-    private final @NonNull List<String> toRevokeSubs;
+    private final List<String> toRevokeSubs;
     @Singular
-    private final @NonNull Map<Long, TwitchSubscription> toUpdateSubs;
+    private final Map<Long, TwitchSubscription> toUpdateSubs;
     @Singular
-    private final @NonNull Map<Long, SubscriptionData> toReplaces;
+    private final Map<Long, SubscriptionData> toReplaces;
     @Singular
-    private final @NonNull List<SubscriptionView> toRefreshSubs;
+    private final List<SubscriptionView> toRefreshSubs;
     @Singular
-    private final @NonNull List<SubscriptionView> toCreates;
+    private final List<SubscriptionView> toCreates;
 
     public boolean hasAnyChange() {
         return !toRevokeSubs.isEmpty() || !toUpdateSubs.isEmpty() || !toRefreshSubs.isEmpty() || !toCreates.isEmpty();

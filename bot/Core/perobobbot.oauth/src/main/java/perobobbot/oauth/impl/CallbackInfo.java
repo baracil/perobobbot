@@ -1,6 +1,5 @@
 package perobobbot.oauth.impl;
 
-import lombok.NonNull;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
@@ -8,9 +7,9 @@ import java.util.Optional;
 
 public sealed interface CallbackInfo {
 
-    @NonNull String state();
+    String state();
 
-    static Optional<CallbackInfo> parse(@NonNull Map<String, String> queryValues) {
+    static Optional<CallbackInfo> parse(Map<String, String> queryValues) {
         final var log = LoggerFactory.getLogger(CallbackInfo.class);
         final var state = queryValues.get("state");
         final var error = queryValues.get("error");
@@ -34,9 +33,9 @@ public sealed interface CallbackInfo {
     }
 
 
-    record Error(@NonNull String state, @NonNull String description) implements CallbackInfo {
+    record Error(String state, String description) implements CallbackInfo {
     }
 
-    record Success(@NonNull String state, @NonNull String code) implements CallbackInfo {
+    record Success(String state, String code) implements CallbackInfo {
     }
 }

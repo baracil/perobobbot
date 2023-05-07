@@ -2,7 +2,6 @@ package perobobbot.launcher;
 
 import io.micronaut.context.event.ApplicationEventListener;
 import io.micronaut.discovery.event.ServiceReadyEvent;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import perobobbot.service.api.CreateSubscriptionParameters;
 import perobobbot.service.api.SubscriptionService;
@@ -18,7 +17,7 @@ import perobobbot.twitch.api.eventsub.TwitchSubscriptionRequest;
 //@Singleton
 public class Setup implements ApplicationEventListener<ServiceReadyEvent> {
 
-    private final @NonNull SubscriptionService subscriptionService;
+    private final SubscriptionService subscriptionService;
 
     @Override
     public void onApplicationEvent(ServiceReadyEvent event) {

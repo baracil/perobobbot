@@ -2,7 +2,6 @@ package perobobbot.twitch.api.eventsub;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.micronaut.serde.annotation.Serdeable;
-import lombok.NonNull;
 import lombok.Value;
 import perobobbot.api.data.Platform;
 import perobobbot.twitch.api.Conditions;
@@ -18,21 +17,21 @@ import java.time.Instant;
 @Serdeable
 public class TwitchSubscription {
 
-    @NonNull String id;
-    @NonNull SubscriptionType type;
-    @NonNull String version;
-    @NonNull SubscriptionStatus status;
+    String id;
+    SubscriptionType type;
+    String version;
+    SubscriptionStatus status;
     int cost;
-    @NonNull Conditions condition;
+    Conditions condition;
 
 
     @MySerdeable(property = "created_at",serwith = ISOInstantSerde.class, deserwith = ISOInstantSerde.class)
-    @NonNull Instant createdAt;
+    Instant createdAt;
 
-    @NonNull Transport transport;
+    Transport transport;
 
     @JsonIgnore
-    public @NonNull Class<? extends EventSubEvent> getEventType() {
+    public Class<? extends EventSubEvent> getEventType() {
         return type.getEventType();
     }
 
@@ -47,27 +46,27 @@ public class TwitchSubscription {
     }
 
     @JsonIgnore
-    public @NonNull Platform getPlatform() {
+    public Platform getPlatform() {
         return Twitch.PLATFORM;
     }
 
     @JsonIgnore
-    public @NonNull String getSubscriptionType() {
+    public String getSubscriptionType() {
         return type.getIdentification();
     }
 
     @JsonIgnore
-    public @NonNull Conditions getConditions() {
+    public Conditions getConditions() {
         return condition;
     }
 
     @JsonIgnore
-    public @NonNull String getSubscriptionId() {
+    public String getSubscriptionId() {
         return id;
     }
 
     @JsonIgnore
-    public @NonNull String getCallbackUrl() {
+    public String getCallbackUrl() {
         return transport.getCallback();
     }
 

@@ -1,7 +1,6 @@
 package perobobbot.twitch.api.eventsub.event;
 
 import io.micronaut.serde.annotation.Serdeable;
-import lombok.NonNull;
 import lombok.Value;
 import perobobbot.twitch.api.TwitchApiPayload;
 import perobobbot.twitch.api.UserInfo;
@@ -10,6 +9,6 @@ import perobobbot.twitch.api.UserInfo;
 @Serdeable
 public class ChannelModeratorRemoveEvent implements BroadcasterProvider, EventSubEvent, TwitchApiPayload {
 
-    @NonNull UserInfo broadcaster;
-    @NonNull UserInfo user;
+    UserInfo broadcaster;
+    UserInfo user;
 }
